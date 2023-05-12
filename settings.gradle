@@ -14,3 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Ssam_D_Android"
 include ':app'
+include ':data'
+include ':presentation'
+include ':domain'

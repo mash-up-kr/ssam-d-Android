@@ -1,4 +1,4 @@
-package com.mashup.ssamd
+package com.mashup.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
