@@ -1,3 +1,6 @@
+import dependencies.Dep
+import dependencies.Modules
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -38,22 +41,23 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
-    implementation(project(":domain"))
-    implementation(project(":presentation"))
+    implementation(project(Modules.data))
+    implementation(project(Modules.domain))
+    implementation(project(Modules.presentation))
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation Dep.AndroidX.Core.core
+    implementation Dep.AndroidX.appCompat
+    implementation Dep.Google.material
+    implementation Dep.AndroidX.constraintLayout
+
+    testImplementation Dep.UnitTest.junit
+    androidTestImplementation Dep.AndroidTest.junit
+    androidTestImplementation Dep.AndroidTest.espresso
 
     // hilt
-    implementation "com.google.dagger:hilt-android:2.44"
-    kapt "com.google.dagger:hilt-compiler:2.44"
+    implementation Dep.Dagger.Hilt.hilt
+    kapt Dep.Dagger.Hilt.compiler
 
     // timber - log
-    implementation "com.jakewharton.timber:timber:5.0.1"
+    implementation Dep.Logger.timber
 }
