@@ -1,3 +1,6 @@
+import dependencies.Dep
+import dependencies.Modules
+
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
@@ -33,37 +36,37 @@ android {
 }
 
 dependencies {
-    implementation(project(":domain"))
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation(project(Modules.domain))
+
+    implementation Dep.AndroidX.Core.core
+    implementation Dep.AndroidX.appCompat
+
+    testImplementation Dep.UnitTest.junit
+    androidTestImplementation Dep.AndroidTest.junit
+    androidTestImplementation Dep.AndroidTest.espresso
 
     // retrofit
-    implementation "com.squareup.retrofit2:retrofit:2.9.0"
-    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+    implementation Dep.SquareUp.Retrofit.retrofit
+    implementation Dep.SquareUp.Retrofit.converterMoshi
 
     // okhttp3
-    implementation "com.squareup.okhttp3:okhttp:4.10.0"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
+    implementation Dep.SquareUp.OkHttp.okHttp
+    implementation Dep.SquareUp.OkHttp.loggingInterceptor
 
     // moshi
-    implementation "com.squareup.moshi:moshi-kotlin:1.14.0"
-    implementation "com.squareup.moshi:moshi-adapters:1.14.0"
+    implementation Dep.SquareUp.Moshi.moshi
+    implementation Dep.SquareUp.Moshi.moshiAdapter
 
     // hilt
-    implementation "com.google.dagger:hilt-android:2.44"
-    kapt "com.google.dagger:hilt-compiler:2.44"
+    implementation Dep.Dagger.Hilt.hilt
+    kapt Dep.Dagger.Hilt.compiler
 
     // coroutine
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+    implementation Dep.Kotlin.Coroutine.core
 
     // room
-    implementation "androidx.room:room-runtime:2.5.1"
-    kapt "androidx.room:room-compiler:2.5.1"
+    implementation Dep.AndroidX.Room.runtime
+    kapt Dep.AndroidX.Room.compiler
 
 }
