@@ -1,6 +1,8 @@
 package com.mashup.ssamd
 
 import android.app.Application
+import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.common.util.Utility
 import com.mashup.ssamd.util.CustomTimberDebugTree
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
@@ -23,5 +25,8 @@ class SsamDApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(customTimberTree)
         }
+
+        val keyHash = Utility.getKeyHash(this)
+        KakaoSdk.init(this, keyHash)
     }
 }

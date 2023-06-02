@@ -150,4 +150,8 @@ object Dep {
     object Javax {
         const val inject = "javax.inject:javax.inject:1"
     }
+
+    object Kakao {
+        const val sdk = "com.kakao.sdk:v2-user:2.13.0"
+    }
 }
