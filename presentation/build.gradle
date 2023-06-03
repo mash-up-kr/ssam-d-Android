@@ -1,3 +1,6 @@
+import dependencies.Dep
+import dependencies.Modules
+
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
@@ -41,50 +44,51 @@ android {
 }
 
 dependencies {
-    implementation(project(":domain"))
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation(project(Modules.domain))
+
+    implementation Dep.AndroidX.Core.core
+    implementation Dep.AndroidX.appCompat
+
+    testImplementation Dep.UnitTest.junit
+    androidTestImplementation Dep.AndroidTest.junit
+    androidTestImplementation Dep.AndroidTest.espresso
 
     // lifecycle
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.5.1"
-    kapt "androidx.lifecycle:lifecycle-compiler:2.5.1"
+    implementation Dep.AndroidX.Lifecycle.viewModel
+    implementation Dep.AndroidX.Lifecycle.savedState
+    kapt Dep.AndroidX.Lifecycle.compiler
 
     // ViewModel utilities for Compose
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
+    implementation Dep.AndroidX.Lifecycle.Compose.viewModel
 
     // glide
-    implementation "com.github.bumptech.glide:glide:4.13.2"
-    kapt "com.github.bumptech.glide:compiler:4.13.2"
+    implementation Dep.Glide.glide
+    kapt Dep.Glide.compiler
 
     // glide-compose
-    implementation "com.github.bumptech.glide:compose:1.0.0-alpha.1"
+    implementation Dep.GlideCompose.glideCompose
 
     // hilt
-    implementation "com.google.dagger:hilt-android:2.44"
-    kapt "com.google.dagger:hilt-compiler:2.44"
+    implementation Dep.Dagger.Hilt.hilt
+    kapt Dep.Dagger.Hilt.compiler
 
     // navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
-    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
+    implementation Dep.Navigation.fragment
+    implementation Dep.Navigation.ui
 
     // coroutine
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+    implementation Dep.Kotlin.Coroutine.core
+    implementation Dep.Kotlin.Coroutine.android
 
     // timber - log
-    implementation "com.jakewharton.timber:timber:5.0.1"
+    implementation Dep.Logger.timber
 
     // compose
-    implementation "androidx.compose.ui:ui:1.4.1"
-    implementation "androidx.activity:activity-compose:1.7.1"
-    implementation "androidx.compose.ui:ui-tooling-preview:1.4.1"
-    implementation "androidx.compose.material:material:1.4.1"
-    androidTestImplementation"androidx.compose.ui:ui-test-junit4:1.4.1"
-    debugImplementation "androidx.compose.ui:ui-tooling:1.4.1"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:1.4.1"
+    implementation Dep.Compose.ui
+    implementation Dep.Compose.preview
+    implementation Dep.Compose.material
+    implementation Dep.AndroidX.Activity.compose
+    androidTestImplementation Dep.Compose.Test.ui
+    debugImplementation Dep.Compose.Debug.uiTooling
+    debugImplementation Dep.Compose.Debug.uiTestManifest
 }
