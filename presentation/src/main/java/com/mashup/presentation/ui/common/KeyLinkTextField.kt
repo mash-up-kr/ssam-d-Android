@@ -37,7 +37,6 @@ fun KeyLinkTextField(
                 onValueChanged(it)
             }
         },
-        maxLines = 2,
         placeholder = { Text(text = hint, fontSize = fontSize.sp, color = Gray04) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
