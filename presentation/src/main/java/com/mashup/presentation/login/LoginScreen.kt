@@ -17,9 +17,10 @@ import com.mashup.presentation.R
 @Composable
 fun LoginScreen() {
     Box {
-        Background()
+        LoginBackground()
         
         Scaffold(
+            modifier = Modifier.padding(vertical = 120.dp),
             backgroundColor = Color.Transparent
         ) {
             Column(
@@ -30,18 +31,18 @@ fun LoginScreen() {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    KeylinkTitle()
+                    LoginTitle()
 
                     Image(
                         modifier = Modifier.fillMaxWidth(),
-                        painter = painterResource(R.drawable.img_plant),
+                        painter = painterResource(R.drawable.img_planet),
                         contentDescription = null
                     )
                 }
 
                 Image(
                     modifier = Modifier
-                        .padding(bottom = 118.dp, start = 20.dp, end = 20.dp)
+                        .padding(horizontal = 24.dp)
                         .height(52.dp)
                         .width(312.dp)
                         .clickable {},
@@ -54,7 +55,7 @@ fun LoginScreen() {
 }
 
 @Composable
-private fun Background() {
+private fun LoginBackground() {
     Image(
         modifier = Modifier.fillMaxSize(),
         painter = painterResource(R.drawable.img_space),
@@ -64,10 +65,9 @@ private fun Background() {
 }
 
 @Composable
-private fun KeylinkTitle() {
+private fun LoginTitle() {
     Column(
-        modifier = Modifier
-            .padding(top = 120.dp, start = 20.dp, end = 20.dp)
+        modifier = Modifier.padding(horizontal = 20.dp)
     ) {
         Image(
             modifier = Modifier
