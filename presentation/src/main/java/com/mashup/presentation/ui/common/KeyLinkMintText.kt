@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.sp
 import com.mashup.presentation.ui.theme.Mint
 
 @Composable
-fun KeyLinkText(
+fun KeyLinkMintText(
     modifier: Modifier = Modifier,
     text: String
 ) {
