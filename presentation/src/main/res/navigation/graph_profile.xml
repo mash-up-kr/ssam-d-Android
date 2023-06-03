@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/graph_home"
+    app:startDestination="@id/profileFragment">
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.mashup.presentation.profile.ProfileFragment"
+        android:label="ProfileFragment">
+        <action
+            android:id="@+id/action_profile_to_tos"
+            app:destination="@id/tosFragment" />
+        <action
+            android:id="@+id/action_profile_to_privacyPolicy"
+            app:destination="@id/privacyPolicyFragment" />
+        <action
+            android:id="@+id/action_profile_to_notificationSetting"
+            app:destination="@id/notificationSettingFragment" />
+        <action
+            android:id="@+id/action_profile_to_openSource"
+            app:destination="@id/openSourceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tosFragment"
+        android:name="com.mashup.presentation.profile.TosFragment"
+        android:label="TosFragment" />
+    <fragment
+        android:id="@+id/notificationSettingFragment"
+        android:name="com.mashup.presentation.profile.NotificationSettingFragment"
+        android:label="NotificationSettingFragment" />
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.mashup.presentation.profile.PrivacyPolicyFragment"
+        android:label="PrivacyPolicyFragment" />
+    <fragment
+        android:id="@+id/openSourceFragment"
+        android:name="com.mashup.presentation.profile.OpenSourceFragment"
+        android:label="OpenSourceFragment" />
+</navigation>
