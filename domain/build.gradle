@@ -1,3 +1,5 @@
+import dependencies.Dep
+
 plugins {
     id 'java-library'
     id 'org.jetbrains.kotlin.jvm'
@@ -9,8 +11,8 @@ java {
 }
 
 dependencies {
-    implementation "javax.inject:javax.inject:1"
+    implementation Dep.Javax.inject
 
     // coroutine
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+    implementation Dep.Kotlin.Coroutine.core
 }
