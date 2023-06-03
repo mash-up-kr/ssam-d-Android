@@ -22,7 +22,7 @@ object Dep {
             const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
             const val process = "androidx.lifecycle:lifecycle-process:$version"
             const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
-            const val compiler = "androidx.lifecycle:lifecycle-compiler::$version"
+            const val compiler = "androidx.lifecycle:lifecycle-compiler:$version"
 
             object Compose {
                 const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:$version"
