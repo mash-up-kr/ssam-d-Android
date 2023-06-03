@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: WeatherApp CI
+    name: Keylink CI
     runs-on: ubuntu-latest
     steps:
       # 레포지토리 접근을 위한 checkout
