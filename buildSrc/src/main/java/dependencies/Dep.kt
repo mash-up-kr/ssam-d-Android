@@ -98,7 +98,7 @@ object Dep {
     }
 
     object Kotlin {
-        private const val version = "1.7.0"
+        private const val version = "1.8.0"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:$version"
