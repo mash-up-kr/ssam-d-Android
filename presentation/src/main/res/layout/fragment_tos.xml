@@ -9,7 +9,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="이용약관" />
+            android:text="이용약관"
+            android:textColor="@color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
