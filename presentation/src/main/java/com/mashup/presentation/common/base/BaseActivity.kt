@@ -25,8 +25,4 @@ open class BaseActivity<VB : ViewDataBinding>(@LayoutRes private val layoutId: I
 
     /* must implement */
     open fun initViews() {}
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 }
