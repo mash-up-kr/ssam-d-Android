@@ -9,8 +9,8 @@
         android:name="com.mashup.presentation.profile.ProfileFragment"
         android:label="ProfileFragment">
         <action
-            android:id="@+id/action_profile_to_tos"
-            app:destination="@id/tosFragment" />
+            android:id="@+id/action_profile_to_termsOfService"
+            app:destination="@id/termsOfServiceFragment" />
         <action
             android:id="@+id/action_profile_to_privacyPolicy"
             app:destination="@id/privacyPolicyFragment" />
@@ -22,8 +22,8 @@
             app:destination="@id/openSourceFragment" />
     </fragment>
     <fragment
-        android:id="@+id/tosFragment"
-        android:name="com.mashup.presentation.profile.TosFragment"
+        android:id="@+id/termsOfServiceFragment"
+        android:name="com.mashup.presentation.profile.TermsOfServiceFragment"
         android:label="TosFragment" />
     <fragment
         android:id="@+id/notificationSettingFragment"
