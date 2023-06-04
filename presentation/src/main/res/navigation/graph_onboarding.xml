@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/graph_onboarding">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph_onboarding"
+    app:startDestination="@id/notificationPermissionGuideFragment">
 
+    <fragment
+        android:id="@+id/notificationPermissionGuideFragment"
+        android:name="com.mashup.presentation.onboarding.NotificationPermissionGuideFragment"
+        android:label="NotificationPermissionGuideFragment"
+        tools:layout="@layout/fragment_notification_permission_guide" />
 </navigation>
