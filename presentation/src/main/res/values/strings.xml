@@ -3,4 +3,11 @@
     <string name="navigation_home">홈</string>
     <string name="navigation_signal">시그널 보내기</string>
     <string name="navigation_reels">릴스</string>
+    <string name="settings">환경설정</string>
+    <string name="notification">알림</string>
+    <string name="tos">이용약관</string>
+    <string name="privacy_policy">개인정보 정책</string>
+    <string name="open_source">오픈소스</string>
+    <string name="app_version">버전</string>
+    <string name="logout">로그아웃</string>
 </resources>
