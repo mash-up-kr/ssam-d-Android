@@ -36,8 +36,29 @@
         <item name="android:textFontWeight">600</item>
     </style>
 
+    <style name="KeyringTextAppearance.Title2.Gray06">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/Gray06</item>
+        <item name="android:lineHeight">22sp</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
     <style name="KeyringTextAppearance.Body1">
         <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">26sp</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="KeyringTextAppearance.Body1.Gray09">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/Gray09</item>
+        <item name="android:lineHeight">26sp</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="KeyringTextAppearance.Body1.Red">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/Red</item>
         <item name="android:lineHeight">26sp</item>
         <item name="android:textFontWeight">400</item>
     </style>
@@ -48,9 +69,23 @@
         <item name="android:textFontWeight">400</item>
     </style>
 
+    <style name="KeyringTextAppearance.Body2.Red">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/Red</item>
+        <item name="android:lineHeight">22sp</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
     <style name="KeyringTextAppearance.Body2.Gray05">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/Gray05</item>
+        <item name="android:lineHeight">22sp</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="KeyringTextAppearance.Body2.Gray06">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/Gray06</item>
         <item name="android:lineHeight">22sp</item>
         <item name="android:textFontWeight">400</item>
     </style>
