@@ -41,10 +41,6 @@ class KeyLinkToolbar @JvmOverloads constructor(
         }
     }
 
-    fun setRightButtonVisibility(isVisible: Boolean = true) {
-        binding.btnRight.isVisible = isVisible
-    }
-
     fun setTitle(title: String) {
         binding.tvTitle.text = title
     }
@@ -69,12 +65,6 @@ class KeyLinkToolbar @JvmOverloads constructor(
         @BindingAdapter("key_link_right_drawable")
         fun KeyLinkToolbar.setKeyLinkRightDrawable(@DrawableRes drawableId: Int) {
             setRightButtonDrawable(drawableId)
-        }
-
-        @JvmStatic
-        @BindingAdapter("key_link_right_visibility")
-        fun KeyLinkToolbar.setKeyLinkRightVisibility(isVisible: Boolean) {
-            setRightButtonVisibility(isVisible)
         }
     }
 }
