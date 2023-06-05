@@ -6,16 +6,15 @@
     <merge
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingTop="14dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="14dp"
         tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btn_back"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
             android:background="@null"
             android:src="@drawable/ic_chevron_left_24"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -25,7 +24,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_title"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:textAppearance="@style/KeyringTextAppearance.Body1"
@@ -40,6 +39,9 @@
             android:id="@+id/btn_right"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="14dp"
             android:background="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
