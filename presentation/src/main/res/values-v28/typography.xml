@@ -58,7 +58,6 @@
 
     <style name="KeyLinkTextAppearance.Body1.Red">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/Red</item>
         <item name="android:lineHeight">26sp</item>
         <item name="android:textFontWeight">400</item>
     </style>
