@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="KeyringTextAppearance.Heading1">
+        <item name="android:textSize">32sp</item>
+        <item name="android:lineHeight">40sp</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+
+    <style name="KeyringTextAppearance.Heading2">
+        <item name="android:textSize">24sp</item>
+        <item name="android:lineHeight">34sp</item>
+        <item name="android:textFontWeight">700</item>
+    </style>
+
+    <style name="KeyringTextAppearance.Heading3">
+        <item name="android:textSize">22sp</item>
+        <item name="android:lineHeight">31sp</item>
+        <item name="android:textFontWeight">700</item>
+    </style>
+
+    <style name="KeyringTextAppearance.Heading4">
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineHeight">28sp</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <style name="KeyringTextAppearance.Title1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">24sp</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <style name="KeyringTextAppearance.Title2">
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineHeight">22sp</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <style name="KeyringTextAppearance.Body1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">26sp</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="KeyringTextAppearance.Body2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">22sp</item>
+        <item name="android:textFontWeight">400</item>
+    </style>
+
+    <style name="KeyringTextAppearance.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">18sp</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+
+</resources>
