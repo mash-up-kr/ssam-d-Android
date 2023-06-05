@@ -52,6 +52,13 @@
         <item name="fontWeight">400</item>
     </style>
 
+    <style name="KeyringTextAppearance.Body2.Gray05">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/Gray05</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="fontWeight">400</item>
+    </style>
+
     <style name="KeyringTextAppearance.Caption">
         <item name="android:textSize">12sp</item>
         <item name="android:lineSpacingExtra">6sp</item>
