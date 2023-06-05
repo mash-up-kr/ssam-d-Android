@@ -6,6 +6,7 @@
     <merge
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/Gray01"
         tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
         <androidx.appcompat.widget.AppCompatImageButton
