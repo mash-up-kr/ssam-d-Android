@@ -32,7 +32,7 @@ fun LoginScreen(
                     .padding(it),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                LoginTitle()
+                LoginTitle(modifier = Modifier.padding(bottom = 24.dp))
 
                 Image(
                     modifier = Modifier.fillMaxWidth(),
@@ -67,9 +67,9 @@ private fun LoginBackground() {
 }
 
 @Composable
-private fun LoginTitle() {
+private fun LoginTitle(modifier: Modifier) {
     Column(
-        modifier = Modifier.padding(horizontal = 20.dp),
+        modifier = modifier.padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Image(
