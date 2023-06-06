@@ -6,9 +6,8 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
-import com.mashup.presentation.databinding.ViewKeylinkToolbarBinding
+import com.mashup.presentation.databinding.ViewKeyLinkToolbarBinding
 
 /**
  * Ssam_D_Android
@@ -21,8 +20,8 @@ class KeyLinkToolbar @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private val binding: ViewKeylinkToolbarBinding by lazy {
-        ViewKeylinkToolbarBinding.inflate(LayoutInflater.from(context), this, true)
+    private val binding: ViewKeyLinkToolbarBinding by lazy {
+        ViewKeyLinkToolbarBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
 
