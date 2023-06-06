@@ -3,4 +3,5 @@
     <string name="navigation_home">홈</string>
     <string name="navigation_signal">시그널 보내기</string>
     <string name="navigation_reels">릴스</string>
+    <string name="input_maximum_10">최대 10자 입력</string>
 </resources>
