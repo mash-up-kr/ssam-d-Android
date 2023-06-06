@@ -41,9 +41,9 @@
                     android:layout_height="64dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="24dp"
-                    app:shapeAppearanceOverlay="ShapeAppera"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/KeyLinkShapeAppearanceOverlay.App.Corner50" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_user_name"
