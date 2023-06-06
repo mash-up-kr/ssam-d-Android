@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_signal"
+    app:startDestination="@id/signalRecipientFragment">
+
+    <fragment
+        android:id="@+id/signalRecipientFragment"
+        android:name="com.mashup.presentation.signal.SignalRecipientFragment"
+        android:label="SignalRecipientFragment"
+        tools:layout="@layout/fragment_signal_recipient">
+        <action
+            android:id="@+id/action_signalRecipient_to_signalContent"
+            app:destination="@id/signalContentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signalContentFragment"
+        android:name="com.mashup.presentation.signal.SignalContentFragment"
+        android:label="SignalContentFragment"
+        tools:layout="@layout/fragment_signal_content">
+        <action
+            android:id="@+id/action_signalContent_to_signalComplete"
+            app:destination="@id/signalCompleteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signalCompleteFragment"
+        android:name="com.mashup.presentation.signal.SignalCompleteFragment"
+        android:label="SignalCompleteFragment"
+        tools:layout="@layout/fragment_signal_complete" />
+
+</navigation>

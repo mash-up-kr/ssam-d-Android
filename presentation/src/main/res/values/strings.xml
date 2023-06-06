@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Ssam_D_Android</string>
-
+    <string name="navigation_home">홈</string>
+    <string name="navigation_signal">시그널 보내기</string>
+    <string name="navigation_reels">릴스</string>
+  
     <string name="login_title">나의 키워드 행성을 찾아서</string>
 </resources>
