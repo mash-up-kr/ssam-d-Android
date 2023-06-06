@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Ssam_D_Android</string>
+
+    <string name="login_title">나의 키워드 행성을 찾아서</string>
 </resources>

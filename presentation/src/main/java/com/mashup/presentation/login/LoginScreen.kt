@@ -4,15 +4,16 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.R
+import com.mashup.presentation.ui.common.KeyLinkMintText
 
 @Composable
 fun LoginScreen() {
@@ -24,21 +25,20 @@ fun LoginScreen() {
             backgroundColor = Color.Transparent
         ) {
             Column(
-                modifier = Modifier.fillMaxSize().padding(it),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    LoginTitle()
+                LoginTitle()
 
-                    Image(
-                        modifier = Modifier.fillMaxWidth(),
-                        painter = painterResource(R.drawable.img_planet),
-                        contentDescription = null
-                    )
-                }
+                Image(
+                    modifier = Modifier.fillMaxWidth(),
+                    painter = painterResource(R.drawable.img_planet),
+                    contentDescription = null
+                )
+
+                Spacer(modifier = Modifier.weight(1f))
 
                 Image(
                     modifier = Modifier
@@ -67,17 +67,17 @@ private fun LoginBackground() {
 @Composable
 private fun LoginTitle() {
     Column(
-        modifier = Modifier.padding(horizontal = 20.dp)
+        modifier = Modifier.padding(horizontal = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Image(
             modifier = Modifier
-                .padding(bottom = 4.dp)
                 .height(61.dp)
                 .width(209.dp),
             painter = painterResource(R.drawable.img_keylink),
             contentDescription = null
         )
 
-        Text(text = "나의 키워드 행성을 찾아서")
+        KeyLinkMintText(text = stringResource(R.string.login_title))
     }
 }
