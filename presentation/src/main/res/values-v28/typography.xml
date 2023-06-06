@@ -1,96 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="KeyringTextAppearance.Heading1">
+    <style name="KeyLinkTextAppearance.Heading1">
         <item name="android:textSize">32sp</item>
         <item name="android:lineHeight">40sp</item>
         <item name="android:textFontWeight">500</item>
     </style>
 
-    <style name="KeyringTextAppearance.Heading2">
+    <style name="KeyLinkTextAppearance.Heading2">
         <item name="android:textSize">24sp</item>
         <item name="android:lineHeight">34sp</item>
         <item name="android:textFontWeight">700</item>
     </style>
 
-    <style name="KeyringTextAppearance.Heading3">
+    <style name="KeyLinkTextAppearance.Heading3">
         <item name="android:textSize">22sp</item>
         <item name="android:lineHeight">31sp</item>
         <item name="android:textFontWeight">700</item>
     </style>
 
-    <style name="KeyringTextAppearance.Heading4">
+    <style name="KeyLinkTextAppearance.Heading4">
         <item name="android:textSize">20sp</item>
         <item name="android:lineHeight">28sp</item>
         <item name="android:textFontWeight">600</item>
     </style>
 
-    <style name="KeyringTextAppearance.Title1">
+    <style name="KeyLinkTextAppearance.Title1">
         <item name="android:textSize">16sp</item>
         <item name="android:lineHeight">24sp</item>
         <item name="android:textFontWeight">600</item>
     </style>
 
-    <style name="KeyringTextAppearance.Title2">
+    <style name="KeyLinkTextAppearance.Title2">
         <item name="android:textSize">15sp</item>
         <item name="android:lineHeight">22sp</item>
         <item name="android:textFontWeight">600</item>
     </style>
 
-    <style name="KeyringTextAppearance.Title2.Gray06">
+    <style name="KeyLinkTextAppearance.Title2.Gray06">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/Gray06</item>
         <item name="android:lineHeight">22sp</item>
         <item name="android:textFontWeight">600</item>
     </style>
 
-    <style name="KeyringTextAppearance.Body1">
+    <style name="KeyLinkTextAppearance.Body1">
         <item name="android:textSize">16sp</item>
         <item name="android:lineHeight">26sp</item>
         <item name="android:textFontWeight">400</item>
     </style>
 
-    <style name="KeyringTextAppearance.Body1.Gray09">
+    <style name="KeyLinkTextAppearance.Body1.Gray09">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/Gray09</item>
         <item name="android:lineHeight">26sp</item>
         <item name="android:textFontWeight">400</item>
     </style>
 
-    <style name="KeyringTextAppearance.Body1.Red">
+    <style name="KeyLinkTextAppearance.Body1.Red">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/Red</item>
         <item name="android:lineHeight">26sp</item>
         <item name="android:textFontWeight">400</item>
     </style>
 
-    <style name="KeyringTextAppearance.Body2">
+    <style name="KeyLinkTextAppearance.Body2">
         <item name="android:textSize">14sp</item>
         <item name="android:lineHeight">22sp</item>
         <item name="android:textFontWeight">400</item>
     </style>
 
-    <style name="KeyringTextAppearance.Body2.Red">
+    <style name="KeyLinkTextAppearance.Body2.Red">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/Red</item>
         <item name="android:lineHeight">22sp</item>
         <item name="android:textFontWeight">400</item>
     </style>
 
-    <style name="KeyringTextAppearance.Body2.Gray05">
+    <style name="KeyLinkTextAppearance.Body2.Gray05">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/Gray05</item>
         <item name="android:lineHeight">22sp</item>
         <item name="android:textFontWeight">400</item>
     </style>
 
-    <style name="KeyringTextAppearance.Body2.Gray06">
+    <style name="KeyLinkTextAppearance.Body2.Gray06">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/Gray06</item>
         <item name="android:lineHeight">22sp</item>
         <item name="android:textFontWeight">400</item>
     </style>
 
-    <style name="KeyringTextAppearance.Caption">
+    <style name="KeyLinkTextAppearance.Caption">
         <item name="android:textSize">12sp</item>
         <item name="android:lineHeight">18sp</item>
         <item name="android:textFontWeight">500</item>
