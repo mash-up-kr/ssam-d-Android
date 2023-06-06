@@ -17,7 +17,9 @@ class LoginActivity : AppCompatActivity() {
 
         setContent {
             SsamDTheme {
-                LoginScreen()
+                LoginScreen(
+                    onLoginButtonClicked = loginViewModel::handleKakaoLogin
+                )
             }
         }
     }

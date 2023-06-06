@@ -16,7 +16,9 @@ import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.KeyLinkMintText
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    onLoginButtonClicked: () -> Unit
+) {
     Box {
         LoginBackground()
         
@@ -45,7 +47,7 @@ fun LoginScreen() {
                         .padding(horizontal = 24.dp)
                         .height(52.dp)
                         .width(312.dp)
-                        .clickable {},
+                        .clickable { onLoginButtonClicked() },
                     painter = painterResource(R.drawable.img_kakao_login),
                     contentDescription = null
                 )
