@@ -5,14 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.presentation.R
 import com.mashup.presentation.databinding.*
-import timber.log.Timber
 
 /**
  * Ssam_D_Android
  * @author jaesung
  * @created 2023/06/07
  */
-class ProfileAdapter(private val onButtonClick: (ClickEventType) -> Unit) :
+class ProfileAdapter(private val onButtonClick: (Pair<ClickEventType, Int?>) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var optionsList: List<ProfileViewType> = listOf()
@@ -27,7 +26,7 @@ class ProfileAdapter(private val onButtonClick: (ClickEventType) -> Unit) :
             R.layout.item_profile_user_info -> {
                 val binding = ItemProfileUserInfoBinding.inflate(layoutInflater, parent, false)
                 UserInfoViewHolder(binding) {
-                    onButtonClick.invoke(ClickEventType.UpdateName)
+                    onButtonClick.invoke(Pair(ClickEventType.UpdateName, null))
                 }
             }
             R.layout.item_profile_header -> {
@@ -37,8 +36,8 @@ class ProfileAdapter(private val onButtonClick: (ClickEventType) -> Unit) :
             R.layout.item_profile_navigation_content -> {
                 val binding =
                     ItemProfileNavigationContentBinding.inflate(layoutInflater, parent, false)
-                NavigationContentViewHolder(binding) {
-                    onButtonClick.invoke(it)
+                NavigationContentViewHolder(binding) { actionId ->
+                    onButtonClick.invoke(Pair(ClickEventType.Navigate, actionId))
                 }
             }
             R.layout.item_profile_app_version_content -> {
@@ -49,7 +48,7 @@ class ProfileAdapter(private val onButtonClick: (ClickEventType) -> Unit) :
             R.layout.item_profile_logout_content -> {
                 val binding = ItemProfileLogoutContentBinding.inflate(layoutInflater, parent, false)
                 LogoutViewHolder(binding) {
-                    onButtonClick.invoke(ClickEventType.Logout)
+                    onButtonClick.invoke(Pair(ClickEventType.Logout, null))
                 }
             }
             else -> throw IllegalStateException("Unknown ViewType $viewType")
@@ -111,19 +110,14 @@ class ProfileAdapter(private val onButtonClick: (ClickEventType) -> Unit) :
 
     class NavigationContentViewHolder(
         private val binding: ItemProfileNavigationContentBinding,
-        onNavigateButtonClick: (ClickEventType) -> Unit,
+        private val onNavigateButtonClick: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            binding.btnNavigationIcon.setOnClickListener {
-                Timber.e("아이콘 클릭")
-//                onNavigateButtonClick.invoke(ClickEventType.Navigate)
-            }
-        }
-
         fun bindItems(item: ProfileViewType.NavigationContent) {
             with(binding) {
                 content = item
+                btnNavigationIcon.setOnClickListener {
+                    onNavigateButtonClick.invoke(content.actionId)
+                }
                 executePendingBindings()
             }
         }
@@ -151,12 +145,9 @@ class ProfileAdapter(private val onButtonClick: (ClickEventType) -> Unit) :
         }
     }
 
-    sealed class ClickEventType() {
+    sealed class ClickEventType {
         object UpdateName : ClickEventType()
-        data class Navigate(
-            val action: Int
-        ) : ClickEventType()
-
+        object Navigate : ClickEventType()
         object Logout : ClickEventType()
     }
 }

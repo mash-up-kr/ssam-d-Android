@@ -2,6 +2,7 @@ package com.mashup.presentation.mypage.profile
 
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
+import com.mashup.presentation.common.extension.navigate
 import com.mashup.presentation.databinding.FragmentProfileBinding
 import com.mashup.presentation.mypage.profile.ProfileAdapter.ClickEventType
 import timber.log.Timber
@@ -13,13 +14,11 @@ import timber.log.Timber
  */
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
     private val profileAdapter: ProfileAdapter by lazy {
-        ProfileAdapter { event ->
-            when (event) {
-                ClickEventType.UpdateName -> updateUserName()
-                ClickEventType.Logout -> logout()
-                else -> {
-                    Timber.e("미처리 이벤트")
-                }
+        ProfileAdapter { eventTypePair ->
+            when (eventTypePair.first) {
+                is ClickEventType.UpdateName -> updateUserName()
+                is ClickEventType.Logout -> logout()
+                is ClickEventType.Navigate -> navigate(eventTypePair.second ?: -1)
             }
         }
     }
