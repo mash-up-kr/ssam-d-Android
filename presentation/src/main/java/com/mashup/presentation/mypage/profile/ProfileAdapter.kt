@@ -11,7 +11,7 @@ import com.mashup.presentation.databinding.*
  * @author jaesung
  * @created 2023/06/07
  */
-class ProfileAdapter(private val onButtonClick: (ClickEvent) -> Unit) :
+class ProfileAdapter(private val onButtonClick: (ClickEventType) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var optionsList: List<ProfileViewType> = listOf()
@@ -26,7 +26,7 @@ class ProfileAdapter(private val onButtonClick: (ClickEvent) -> Unit) :
             R.layout.item_profile_user_info -> {
                 val binding = ItemProfileUserInfoBinding.inflate(layoutInflater, parent, false)
                 UserInfoViewHolder(binding) {
-                    onButtonClick.invoke(ClickEvent.UPDATE_NAME)
+                    onButtonClick.invoke(ClickEventType.UPDATE_NAME)
                 }
             }
             R.layout.item_profile_header -> {
@@ -37,7 +37,7 @@ class ProfileAdapter(private val onButtonClick: (ClickEvent) -> Unit) :
                 val binding =
                     ItemProfileNavigationContentBinding.inflate(layoutInflater, parent, false)
                 NavigationContentViewHolder(binding) {
-                    onButtonClick.invoke(ClickEvent.NAVIGATE)
+                    onButtonClick.invoke(ClickEventType.NAVIGATE)
                 }
             }
             R.layout.item_profile_app_version_content -> {
@@ -48,7 +48,7 @@ class ProfileAdapter(private val onButtonClick: (ClickEvent) -> Unit) :
             R.layout.item_profile_logout_content -> {
                 val binding = ItemProfileLogoutContentBinding.inflate(layoutInflater, parent, false)
                 LogoutViewHolder(binding) {
-                    onButtonClick.invoke(ClickEvent.LOGOUT)
+                    onButtonClick.invoke(ClickEventType.LOGOUT)
                 }
             }
             else -> throw IllegalStateException("Unknown ViewType $viewType")
@@ -149,7 +149,7 @@ class ProfileAdapter(private val onButtonClick: (ClickEvent) -> Unit) :
         }
     }
 
-    enum class ClickEvent {
+    enum class ClickEventType {
         UPDATE_NAME, NAVIGATE, LOGOUT
     }
 }
