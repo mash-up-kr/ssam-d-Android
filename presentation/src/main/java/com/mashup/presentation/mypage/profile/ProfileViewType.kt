@@ -1,6 +1,6 @@
 package com.mashup.presentation.mypage.profile
 
-import androidx.annotation.DrawableRes
+import android.graphics.drawable.Drawable
 
 /**
  * Ssam_D_Android
@@ -13,17 +13,12 @@ sealed class ProfileViewType {
         val id: Int
     }
 
-    interface ClickableViewType {
-        val onClick: () -> Unit
-    }
-
     data class UserInfo(
         override val id: Int,
-        override val onClick: () -> Unit,
         val userName: String,
         val userEmail: String,
         val userAvatarImage: String,
-    ) : BaseViewType, ClickableViewType, ProfileViewType()
+    ) : BaseViewType, ProfileViewType()
 
     data class Header(
         override val id: Int,
@@ -32,10 +27,10 @@ sealed class ProfileViewType {
 
     data class NavigationContent(
         override val id: Int,
-        override val onClick: () -> Unit,
+        val actionId: Int,
         val description: String,
-        @DrawableRes val drawableRes: Int,
-    ) : BaseViewType, ClickableViewType, ProfileViewType()
+        val drawable: Drawable?,
+    ) : BaseViewType, ProfileViewType()
 
     data class AppVersionContent(
         override val id: Int,
@@ -44,6 +39,5 @@ sealed class ProfileViewType {
 
     data class LogoutContent(
         override val id: Int,
-        override val onClick: () -> Unit,
-    ) : BaseViewType, ClickableViewType, ProfileViewType()
+    ) : BaseViewType, ProfileViewType()
 }
