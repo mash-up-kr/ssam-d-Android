@@ -116,7 +116,7 @@ class ProfileAdapter(private val onButtonClick: (Pair<ClickEventType, Int?>) -> 
             with(binding) {
                 content = item
                 btnNavigationIcon.setOnClickListener {
-                    onNavigateButtonClick.invoke(content.actionId)
+                    onNavigateButtonClick.invoke(item.actionId)
                 }
                 executePendingBindings()
             }
