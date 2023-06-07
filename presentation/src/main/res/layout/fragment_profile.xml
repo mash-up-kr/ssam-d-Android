@@ -6,20 +6,13 @@
         android:layout_height="match_parent"
         android:background="@color/Gray01">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/abl_profile"
+        <com.mashup.presentation.common.widget.KeyLinkToolbar
+            android:id="@+id/tb_profile"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:background="@color/Gray01"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:navigationIcon="@drawable/ic_chevron_right_24" />
-        </com.google.android.material.appbar.AppBarLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_profile"
@@ -30,7 +23,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/abl_profile"
+            app:layout_constraintTop_toBottomOf="@id/tb_profile"
             tools:listitem="@layout/item_profile_navigation_content" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
