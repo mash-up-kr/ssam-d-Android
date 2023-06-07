@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.presentation.R
 import com.mashup.presentation.databinding.*
+import timber.log.Timber
 
 /**
  * Ssam_D_Android
@@ -26,7 +27,7 @@ class ProfileAdapter(private val onButtonClick: (ClickEventType) -> Unit) :
             R.layout.item_profile_user_info -> {
                 val binding = ItemProfileUserInfoBinding.inflate(layoutInflater, parent, false)
                 UserInfoViewHolder(binding) {
-                    onButtonClick.invoke(ClickEventType.UPDATE_NAME)
+                    onButtonClick.invoke(ClickEventType.UpdateName)
                 }
             }
             R.layout.item_profile_header -> {
@@ -37,7 +38,7 @@ class ProfileAdapter(private val onButtonClick: (ClickEventType) -> Unit) :
                 val binding =
                     ItemProfileNavigationContentBinding.inflate(layoutInflater, parent, false)
                 NavigationContentViewHolder(binding) {
-                    onButtonClick.invoke(ClickEventType.NAVIGATE)
+                    onButtonClick.invoke(it)
                 }
             }
             R.layout.item_profile_app_version_content -> {
@@ -48,7 +49,7 @@ class ProfileAdapter(private val onButtonClick: (ClickEventType) -> Unit) :
             R.layout.item_profile_logout_content -> {
                 val binding = ItemProfileLogoutContentBinding.inflate(layoutInflater, parent, false)
                 LogoutViewHolder(binding) {
-                    onButtonClick.invoke(ClickEventType.LOGOUT)
+                    onButtonClick.invoke(ClickEventType.Logout)
                 }
             }
             else -> throw IllegalStateException("Unknown ViewType $viewType")
@@ -81,12 +82,12 @@ class ProfileAdapter(private val onButtonClick: (ClickEventType) -> Unit) :
 
     class UserInfoViewHolder(
         private val binding: ItemProfileUserInfoBinding,
-        onUpdateButtonClick: () -> Unit,
+        onUpdateButtonClick: (ClickEventType) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.btnUpdateUserName.setOnClickListener {
-                onUpdateButtonClick.invoke()
+                onUpdateButtonClick(ClickEventType.UpdateName)
             }
         }
 
@@ -110,12 +111,13 @@ class ProfileAdapter(private val onButtonClick: (ClickEventType) -> Unit) :
 
     class NavigationContentViewHolder(
         private val binding: ItemProfileNavigationContentBinding,
-        onNavigateButtonClick: () -> Unit,
+        onNavigateButtonClick: (ClickEventType) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.btnNavigationIcon.setOnClickListener {
-                onNavigateButtonClick.invoke()
+                Timber.e("아이콘 클릭")
+//                onNavigateButtonClick.invoke(ClickEventType.Navigate)
             }
         }
 
@@ -139,17 +141,22 @@ class ProfileAdapter(private val onButtonClick: (ClickEventType) -> Unit) :
 
     class LogoutViewHolder(
         private val binding: ItemProfileLogoutContentBinding,
-        onLogoutButtonClick: () -> Unit,
+        onLogoutButtonClick: (ClickEventType) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.btnLogout.setOnClickListener {
-                onLogoutButtonClick.invoke()
+                onLogoutButtonClick.invoke(ClickEventType.Logout)
             }
         }
     }
 
-    enum class ClickEventType {
-        UPDATE_NAME, NAVIGATE, LOGOUT
+    sealed class ClickEventType() {
+        object UpdateName : ClickEventType()
+        data class Navigate(
+            val action: Int
+        ) : ClickEventType()
+
+        object Logout : ClickEventType()
     }
 }
