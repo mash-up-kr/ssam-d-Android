@@ -27,7 +27,6 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:textAppearance="@style/KeyLinkTextAppearance.Body1"
-            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_right"
             app:layout_constraintStart_toEndOf="@id/btn_back"
