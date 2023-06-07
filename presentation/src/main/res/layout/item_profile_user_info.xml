@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="userInfo"
+            type="com.mashup.presentation.profile.ProfileViewType.UserInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,10 +20,12 @@
             android:layout_height="64dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
+            android:src="@{userInfo.userAvatarImage}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/KeyLinkShapeAppearanceOverlay.App.Corner50" />
+            app:shapeAppearanceOverlay="@style/KeyLinkShapeAppearanceOverlay.App.Corner50"
+            tools:src="@drawable/ic_launcher_foreground" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_user_name"
@@ -29,6 +34,7 @@
             android:layout_marginStart="16dp"
             android:ellipsize="end"
             android:maxLines="1"
+            android:text="@{userInfo.userName}"
             android:textAppearance="@style/KeyLinkTextAppearance.Heading4"
             app:layout_constraintBottom_toTopOf="@id/tv_user_email"
             app:layout_constraintEnd_toStartOf="@id/btn_update_user_name"
@@ -53,6 +59,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:text="@{userInfo.userEmail}"
             android:textAppearance="@style/KeyLinkTextAppearance.Body2.Gray05"
             app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
             app:layout_constraintEnd_toEndOf="@id/tv_user_name"

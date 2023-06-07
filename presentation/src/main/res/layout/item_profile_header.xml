@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="header"
+            type="com.mashup.presentation.profile.ProfileViewType.Header" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +23,7 @@
             android:paddingTop="12dp"
             android:paddingEnd="20dp"
             android:paddingBottom="12dp"
+            android:text="@{header.description}"
             android:textAppearance="@style/KeyLinkTextAppearance.Body2.Gray06"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
