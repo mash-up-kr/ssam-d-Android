@@ -7,7 +7,7 @@
 
         <variable
             name="header"
-            type="com.mashup.presentation.profile.ProfileViewType.Header" />
+            type="com.mashup.presentation.mypage.profile.ProfileViewType.Header" />
 
     </data>
 
@@ -24,6 +24,7 @@
             android:paddingEnd="20dp"
             android:paddingBottom="12dp"
             android:text="@{header.description}"
+            android:background="@color/Gray01"
             android:textAppearance="@style/KeyLinkTextAppearance.Body2.Gray06"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
