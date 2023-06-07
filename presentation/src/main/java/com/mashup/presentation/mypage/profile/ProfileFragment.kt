@@ -28,8 +28,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     }
 
     private fun initRecyclerView() {
-        binding.rvProfile.adapter = profileAdapter.apply {
-            optionsList = Options(requireActivity()).getOptions()
+        with(binding.rvProfile) {
+            adapter = profileAdapter.apply {
+                optionsList = Options(requireActivity()).getOptions()
+            }
+            addItemDecoration(ProfileItemDecoration())
         }
     }
 
