@@ -1,4 +1,4 @@
-package com.mashup.presentation.profile
+package com.mashup.presentation.mypage.profile
 
 import androidx.annotation.DrawableRes
 
