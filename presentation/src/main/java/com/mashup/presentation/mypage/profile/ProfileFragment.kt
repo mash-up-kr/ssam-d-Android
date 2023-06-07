@@ -5,7 +5,6 @@ import com.mashup.presentation.common.base.BaseFragment
 import com.mashup.presentation.common.extension.navigate
 import com.mashup.presentation.databinding.FragmentProfileBinding
 import com.mashup.presentation.mypage.profile.ProfileAdapter.ClickEventType
-import timber.log.Timber
 
 /**
  * Ssam_D_Android
@@ -37,10 +36,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     }
 
     private fun updateUserName() {
-        Timber.e("이름 업데이트")
+        /* 이름 업데이트 */
     }
 
     private fun logout() {
-        Timber.e("로그아웃 로직")
+        /* 로그아웃 로직 */
     }
 }
