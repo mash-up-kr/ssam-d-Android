@@ -45,16 +45,16 @@ jobs:
 
       # ci 빌드를 위한 secrets 세팅
       - name: Generate file from Github actions secrets
-          env:
-            KAKAO_NATIVE_APP_KEY: ${{ secrets.KAKAO_NATIVE_APP_KEY }}
-            KAKAO_REDIRECTION_SCHEME: ${{ secrets.KAKAO_REDIRECTION_SCHEME }}
-            path: presentation/src/main/res/values/kakao_strings.xml
-          run: |
-            touch $path
-            echo \<resources\> >> $path
-            echo \<string name=\"kakao_native_app_key\"\>$KAKAO_NATIVE_APP_KEY\</string\> >> $path
-            echo \<string name=\"kakao_native_app_key\"\>$KAKAO_REDIRECTION_SCHEME\</string\> >> $path
-            echo \</resources\> >> $path
+        env:
+          KAKAO_NATIVE_APP_KEY: ${{ secrets.KAKAO_NATIVE_APP_KEY }}
+          KAKAO_REDIRECTION_SCHEME: ${{ secrets.KAKAO_REDIRECTION_SCHEME }}
+          path: presentation/src/main/res/values/kakao_strings.xml
+        run: |
+          touch $path
+          echo \<resources\> >> $path
+          echo \<string name=\"kakao_native_app_key\"\>$KAKAO_NATIVE_APP_KEY\</string\> >> $path
+          echo \<string name=\"kakao_native_app_key\"\>$KAKAO_REDIRECTION_SCHEME\</string\> >> $path
+          echo \</resources\> >> $path
 
       # 최종 빌드
       - name: Build with Gradle
