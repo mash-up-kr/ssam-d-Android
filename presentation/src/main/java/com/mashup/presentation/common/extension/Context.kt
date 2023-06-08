@@ -5,6 +5,7 @@ import android.graphics.Point
 import android.os.Build
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
+import com.mashup.presentation.R
 
 /**
  * Ssam_D_Android
@@ -12,7 +13,7 @@ import androidx.fragment.app.DialogFragment
  * @created 2023/06/08
  */
 
-internal fun Context.resizeDialogFragment(
+internal fun Context.resizeDialogFragmentWithScale(
     dialogFragment: DialogFragment,
     widthScale: Float,
     heightScale: Float
@@ -21,6 +22,7 @@ internal fun Context.resizeDialogFragment(
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         val rect = windowManager.currentWindowMetrics.bounds
+        windowManager.currentWindowMetrics.windowInsets
         val window = dialogFragment.dialog?.window
 
         val width = (rect.width() * widthScale).toInt()
@@ -36,6 +38,34 @@ internal fun Context.resizeDialogFragment(
         val width = (size.x * widthScale).toInt()
         val height = (size.y * heightScale).toInt()
 
+        window?.setLayout(width, height)
+    }
+}
+
+internal fun Context.resizeDialogFragment(dialogFragment: DialogFragment) {
+    val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        val rect = windowManager.currentWindowMetrics.bounds
+        windowManager.currentWindowMetrics.windowInsets
+
+        val width =
+            (rect.width() - (resources.getDimension(R.dimen.dialog_horizontal_margin) * 2)).toInt()
+        val height =
+            (rect.height() - (resources.getDimension(R.dimen.dialog_vertical_margin) * 2)).toInt()
+
+        val window = dialogFragment.dialog?.window
+        window?.setLayout(width, height)
+    } else {
+        val display = windowManager.defaultDisplay
+        val size = Point()
+        display.getSize(size)
+
+        val width =
+            (size.x - (resources.getDimension(R.dimen.dialog_horizontal_margin) * 2)).toInt()
+        val height = (size.y - (resources.getDimension(R.dimen.dialog_vertical_margin) * 2)).toInt()
+
+        val window = dialogFragment.dialog?.window
         window?.setLayout(width, height)
     }
 }
