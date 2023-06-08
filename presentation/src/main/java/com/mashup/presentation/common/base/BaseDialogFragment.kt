@@ -47,7 +47,7 @@ open class BaseDialogFragment<VB : ViewDataBinding>(@LayoutRes private val layou
 
     override fun onResume() {
         super.onResume()
-        context?.resizeDialogFragment(this, 0.78f, 0.22f)
+        context?.resizeDialogFragment(this)
     }
 
     override fun onDestroyView() {
