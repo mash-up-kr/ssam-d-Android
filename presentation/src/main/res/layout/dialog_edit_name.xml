@@ -11,7 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/bg_dialog_gray02_16">
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -47,7 +47,7 @@
             android:layout_marginTop="28dp"
             android:layout_marginEnd="4dp"
             app:key_link_button_background="@{R.drawable.bg_button_gray03_10}"
-            app:key_link_button_text='@{"닫기"}'
+            app:key_link_button_text="@{R.string.close}"
             app:key_link_button_text_appearance="@{R.style.KeyringTextAppearance_Title2}"
             app:layout_constraintEnd_toStartOf="@id/btn_update_name"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -62,7 +62,7 @@
             android:layout_marginTop="28dp"
             android:layout_marginEnd="20dp"
             app:key_link_button_background="@{R.drawable.bg_button_blurple_10}"
-            app:key_link_button_text='@{"변경"}'
+            app:key_link_button_text="@{R.string.update}"
             app:key_link_button_text_appearance="@{R.style.KeyringTextAppearance_Title2}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_dismiss"
