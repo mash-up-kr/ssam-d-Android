@@ -1,6 +1,7 @@
 package com.mashup.presentation.common.extension
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Point
 import android.os.Build
 import android.view.WindowManager
@@ -49,23 +50,22 @@ internal fun Context.resizeDialogFragment(dialogFragment: DialogFragment) {
         val rect = windowManager.currentWindowMetrics.bounds
         windowManager.currentWindowMetrics.windowInsets
 
-        val width =
-            (rect.width() - (resources.getDimension(R.dimen.dialog_horizontal_margin) * 2)).toInt()
-        val height =
-            (rect.height() - (resources.getDimension(R.dimen.dialog_vertical_margin) * 2)).toInt()
+        val width = (rect.width() - (resources.getDimension(R.dimen.dialog_horizontal_margin) * 2)).toInt()
 
         val window = dialogFragment.dialog?.window
-        window?.setLayout(width, height)
+        window?.setLayout(width, 200.toPx())
     } else {
         val display = windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
 
-        val width =
-            (size.x - (resources.getDimension(R.dimen.dialog_horizontal_margin) * 2)).toInt()
-        val height = (size.y - (resources.getDimension(R.dimen.dialog_vertical_margin) * 2)).toInt()
+        val width = (size.x - (resources.getDimension(R.dimen.dialog_horizontal_margin) * 2)).toInt()
 
         val window = dialogFragment.dialog?.window
-        window?.setLayout(width, height)
+        window?.setLayout(width, 200.toPx())
     }
+}
+
+fun Int.toPx(): Int {
+    return (this * Resources.getSystem().displayMetrics.density).toInt()
 }
