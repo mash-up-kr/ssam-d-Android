@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
@@ -24,8 +25,8 @@ class KeyLinkButton @JvmOverloads constructor(
         ViewKeyLinkButtonBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
-    fun setButtonText(text: String) {
-        binding.tvButtonStatus.text = text
+    fun setButtonText(@StringRes resId: Int) {
+        binding.tvButtonStatus.setText(resId)
     }
 
     fun setButtonTextAppearance(@StyleRes resId: Int) {
@@ -39,8 +40,8 @@ class KeyLinkButton @JvmOverloads constructor(
     companion object {
         @JvmStatic
         @BindingAdapter("key_link_button_text")
-        fun KeyLinkButton.setKeyLinkButtonText(text: String?) {
-            text?.let { setButtonText(it) }
+        fun KeyLinkButton.setKeyLinkButtonText(resId: Int) {
+            setButtonText(resId)
         }
 
         @JvmStatic
