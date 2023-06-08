@@ -53,7 +53,7 @@ jobs:
           touch $path
           echo \<resources\> >> $path
           echo \<string name=\"kakao_native_app_key\"\>$KAKAO_NATIVE_APP_KEY\</string\> >> $path
-          echo \<string name=\"kakao_native_app_key\"\>$KAKAO_REDIRECTION_SCHEME\</string\> >> $path
+          echo \<string name=\"kakao_redirection_scheme\"\>$KAKAO_REDIRECTION_SCHEME\</string\> >> $path
           echo \</resources\> >> $path
 
       # 최종 빌드
