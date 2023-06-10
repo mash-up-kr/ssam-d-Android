@@ -25,6 +25,11 @@ sealed class ProfileViewType {
         val description: String,
     ) : BaseViewType, ProfileViewType()
 
+    data class NotificationContent(
+        override val id: Int,
+        val description: String,
+    ) : BaseViewType, ProfileViewType()
+
     data class NavigationContent(
         override val id: Int,
         val actionId: Int,
