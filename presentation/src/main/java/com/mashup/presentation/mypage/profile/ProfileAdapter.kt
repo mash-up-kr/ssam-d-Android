@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.presentation.R
 import com.mashup.presentation.databinding.*
+import com.mashup.presentation.mypage.profile.holder.*
 
 /**
  * Ssam_D_Android
@@ -66,9 +67,8 @@ class ProfileAdapter(private val onButtonClick: (Triple<ClickEventType, Boolean?
         when (val option = optionsList[position]) {
             is ProfileViewType.UserInfo -> (holder as UserInfoViewHolder).bindItems(option)
             is ProfileViewType.Header -> (holder as HeaderViewHolder).bindItems(option)
-            is ProfileViewType.NotificationContent -> (holder as NotificationViewHolder).bindItems(
-                option
-            )
+            is ProfileViewType.NotificationContent ->
+                (holder as NotificationViewHolder).bindItems(option)
             is ProfileViewType.NavigationContent ->
                 (holder as NavigationContentViewHolder).bindItems(option)
             is ProfileViewType.AppVersionContent ->
@@ -89,93 +89,6 @@ class ProfileAdapter(private val onButtonClick: (Triple<ClickEventType, Boolean?
     }
 
     override fun getItemCount(): Int = optionsList.size
-
-    class UserInfoViewHolder(
-        private val binding: ItemProfileUserInfoBinding,
-        onUpdateButtonClick: (ClickEventType) -> Unit,
-    ) : RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            binding.btnUpdateUserName.setOnClickListener {
-//                onUpdateButtonClick(ClickEventType.UpdateName)
-            }
-        }
-
-        fun bindItems(item: ProfileViewType.UserInfo) {
-            with(binding) {
-                userInfo = item
-                executePendingBindings()
-            }
-        }
-    }
-
-    class HeaderViewHolder(private val binding: ItemProfileHeaderBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bindItems(item: ProfileViewType.Header) {
-            with(binding) {
-                header = item
-                executePendingBindings()
-            }
-        }
-    }
-
-    class NotificationViewHolder(
-        private val binding: ItemProfileNotificationBinding,
-        isSwitchChecked: (Boolean) -> Unit,
-    ) : RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.swNotification.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    binding.swNotification.isChecked = true
-                }
-                isSwitchChecked.invoke(isChecked)
-            }
-        }
-
-        fun bindItems(item: ProfileViewType.NotificationContent) {
-            with(binding) {
-                content = item
-                executePendingBindings()
-            }
-        }
-    }
-
-    class NavigationContentViewHolder(
-        private val binding: ItemProfileNavigationContentBinding,
-        private val onNavigateButtonClick: (Int) -> Unit
-    ) : RecyclerView.ViewHolder(binding.root) {
-        fun bindItems(item: ProfileViewType.NavigationContent) {
-            with(binding) {
-                content = item
-                btnNavigationIcon.setOnClickListener {
-                    onNavigateButtonClick.invoke(item.actionId)
-                }
-                executePendingBindings()
-            }
-        }
-    }
-
-    class AppVersionViewHolder(private val binding: ItemProfileAppVersionContentBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bindItems(item: ProfileViewType.AppVersionContent) {
-            with(binding) {
-                content = item
-                executePendingBindings()
-            }
-        }
-    }
-
-    class LogoutViewHolder(
-        private val binding: ItemProfileLogoutContentBinding,
-        onLogoutButtonClick: (ClickEventType) -> Unit,
-    ) : RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            binding.btnLogout.setOnClickListener {
-                onLogoutButtonClick.invoke(ClickEventType.Logout)
-            }
-        }
-    }
 
     sealed class ClickEventType {
         object UpdateName : ClickEventType()
