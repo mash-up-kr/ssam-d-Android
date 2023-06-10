@@ -1,10 +1,8 @@
 package com.mashup.presentation.mypage.profile
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.presentation.R
-import com.mashup.presentation.databinding.*
 import com.mashup.presentation.mypage.profile.holder.*
 
 /**
@@ -27,40 +25,22 @@ class ProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            R.layout.item_profile_user_info -> {
-                val binding = ItemProfileUserInfoBinding.inflate(layoutInflater, parent, false)
-                UserInfoViewHolder(binding)
-            }
+            R.layout.item_profile_user_info -> UserInfoViewHolder.create(parent)
             R.layout.item_profile_notification -> {
-                val binding =
-                    ItemProfileNotificationBinding.inflate(layoutInflater, parent, false)
-                NotificationViewHolder(binding) { isChecked ->
+                NotificationViewHolder.create(parent) { isChecked ->
                     clickListener.onNotificationClick(isChecked)
                 }
             }
-            R.layout.item_profile_header -> {
-                val binding = ItemProfileHeaderBinding.inflate(layoutInflater, parent, false)
-                HeaderViewHolder(binding)
-            }
+            R.layout.item_profile_header -> HeaderViewHolder.create(parent)
             R.layout.item_profile_navigation_content -> {
-                val binding =
-                    ItemProfileNavigationContentBinding.inflate(layoutInflater, parent, false)
-                NavigationContentViewHolder(binding) { actionId ->
+                NavigationContentViewHolder.create(parent) { actionId ->
                     clickListener.onNavigateClick(actionId)
                 }
             }
-            R.layout.item_profile_app_version_content -> {
-                val binding =
-                    ItemProfileAppVersionContentBinding.inflate(layoutInflater, parent, false)
-                AppVersionViewHolder(binding)
-            }
+            R.layout.item_profile_app_version_content -> AppVersionViewHolder.create(parent)
             R.layout.item_profile_logout_content -> {
-                val binding = ItemProfileLogoutContentBinding.inflate(layoutInflater, parent, false)
-                LogoutViewHolder(binding) {
-                    clickListener.onLogoutClick()
-                }
+                LogoutViewHolder.create(parent) { clickListener.onLogoutClick() }
             }
             else -> throw IllegalStateException("Unknown ViewType $viewType")
         }

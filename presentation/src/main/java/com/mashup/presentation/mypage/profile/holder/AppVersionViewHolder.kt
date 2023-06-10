@@ -1,5 +1,7 @@
 package com.mashup.presentation.mypage.profile.holder
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.presentation.databinding.ItemProfileAppVersionContentBinding
 import com.mashup.presentation.mypage.profile.ProfileViewType
@@ -15,6 +17,18 @@ class AppVersionViewHolder(private val binding: ItemProfileAppVersionContentBind
         with(binding) {
             content = item
             executePendingBindings()
+        }
+    }
+    companion object {
+        fun create(parent: ViewGroup): AppVersionViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            return AppVersionViewHolder(
+                binding = ItemProfileAppVersionContentBinding.inflate(
+                    layoutInflater,
+                    parent,
+                    false
+                )
+            )
         }
     }
 }

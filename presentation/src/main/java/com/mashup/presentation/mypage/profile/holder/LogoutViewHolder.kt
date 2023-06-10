@@ -1,8 +1,9 @@
 package com.mashup.presentation.mypage.profile.holder
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.presentation.databinding.ItemProfileLogoutContentBinding
-import com.mashup.presentation.mypage.profile.ProfileAdapter
 
 /**
  * Ssam_D_Android
@@ -17,6 +18,20 @@ class LogoutViewHolder(
     init {
         binding.btnLogout.setOnClickListener {
             onLogoutButtonClick.invoke()
+        }
+    }
+
+    companion object {
+        fun create(parent: ViewGroup, onLogoutButtonClick: () -> Unit): LogoutViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            return LogoutViewHolder(
+                binding = ItemProfileLogoutContentBinding.inflate(
+                    layoutInflater,
+                    parent,
+                    false
+                ),
+                onLogoutButtonClick = onLogoutButtonClick
+            )
         }
     }
 }

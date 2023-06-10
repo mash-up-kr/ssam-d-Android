@@ -1,8 +1,9 @@
 package com.mashup.presentation.mypage.profile.holder
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.presentation.databinding.ItemProfileUserInfoBinding
-import com.mashup.presentation.mypage.profile.ProfileAdapter
 import com.mashup.presentation.mypage.profile.ProfileViewType
 
 /**
@@ -18,6 +19,19 @@ class UserInfoViewHolder(
         with(binding) {
             userInfo = item
             executePendingBindings()
+        }
+    }
+
+    companion object {
+        fun create(parent: ViewGroup): UserInfoViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            return UserInfoViewHolder(
+                binding = ItemProfileUserInfoBinding.inflate(
+                    layoutInflater,
+                    parent,
+                    false
+                )
+            )
         }
     }
 }

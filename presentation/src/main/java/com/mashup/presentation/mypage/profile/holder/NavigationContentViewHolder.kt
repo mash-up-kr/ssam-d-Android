@@ -1,5 +1,7 @@
 package com.mashup.presentation.mypage.profile.holder
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.presentation.databinding.ItemProfileNavigationContentBinding
 import com.mashup.presentation.mypage.profile.ProfileViewType
@@ -20,6 +22,20 @@ class NavigationContentViewHolder(
                 onNavigateButtonClick.invoke(item.actionId)
             }
             executePendingBindings()
+        }
+    }
+
+    companion object {
+        fun create(parent: ViewGroup, onNavigateButtonClick: (Int) -> Unit): NavigationContentViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            return NavigationContentViewHolder(
+                binding = ItemProfileNavigationContentBinding.inflate(
+                    layoutInflater,
+                    parent,
+                    false
+                ),
+                onNavigateButtonClick = onNavigateButtonClick
+            )
         }
     }
 }

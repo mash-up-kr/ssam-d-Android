@@ -1,5 +1,7 @@
 package com.mashup.presentation.mypage.profile.holder
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mashup.presentation.databinding.ItemProfileHeaderBinding
 import com.mashup.presentation.mypage.profile.ProfileViewType
@@ -15,6 +17,19 @@ class HeaderViewHolder(private val binding: ItemProfileHeaderBinding) :
         with(binding) {
             header = item
             executePendingBindings()
+        }
+    }
+
+    companion object {
+        fun create(parent: ViewGroup): HeaderViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            return HeaderViewHolder(
+                binding = ItemProfileHeaderBinding.inflate(
+                    layoutInflater,
+                    parent,
+                    false
+                )
+            )
         }
     }
 }
