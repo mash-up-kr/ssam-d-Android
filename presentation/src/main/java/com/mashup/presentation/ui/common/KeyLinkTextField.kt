@@ -13,7 +13,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.ui.theme.Gray04
 import com.mashup.presentation.ui.theme.Mint
@@ -26,7 +28,7 @@ fun KeyLinkTextField(
     onValueChanged: (String) -> Unit = {},
     hint: String,
     onClickDone: () -> Unit = {},
-    fontSize: Int,
+    fontSize: TextUnit,
     maxLength: Int = 0
 ) {
     TextField(
@@ -37,7 +39,7 @@ fun KeyLinkTextField(
                 onValueChanged(it)
             }
         },
-        placeholder = { Text(text = hint, fontSize = fontSize.sp, color = Gray04) },
+        placeholder = { Text(textAlign = TextAlign.Center, text = hint, fontSize = fontSize, color = Gray04) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Done
@@ -46,7 +48,7 @@ fun KeyLinkTextField(
             onDone = { onClickDone.invoke() },
         ),
         textStyle = TextStyle(
-            fontSize = fontSize.sp,
+            fontSize = fontSize,
             color = White
         ),
         colors = TextFieldDefaults.textFieldColors(
@@ -70,7 +72,7 @@ fun PreviewKeyLinkTextField() {
             value = nickname,
             onValueChanged = { nickname = it },
             hint = "닉네임 입력",
-            fontSize = 32,
+            fontSize = 32.sp,
             maxLength = 10,
         )
     }
