@@ -11,15 +11,8 @@ import com.mashup.presentation.mypage.profile.ProfileViewType
  * @created 2023/06/10
  */
 class UserInfoViewHolder(
-    private val binding: ItemProfileUserInfoBinding,
-    onUpdateButtonClick: (ProfileAdapter.ClickEventType) -> Unit,
+    private val binding: ItemProfileUserInfoBinding
 ) : RecyclerView.ViewHolder(binding.root) {
-
-    init {
-        binding.btnUpdateUserName.setOnClickListener {
-//            onUpdateButtonClick(ClickEventType.UpdateName)
-        }
-    }
 
     fun bindItems(item: ProfileViewType.UserInfo) {
         with(binding) {

@@ -11,12 +11,12 @@ import com.mashup.presentation.mypage.profile.ProfileAdapter
  */
 class LogoutViewHolder(
     private val binding: ItemProfileLogoutContentBinding,
-    onLogoutButtonClick: (ProfileAdapter.ClickEventType) -> Unit,
+    onLogoutButtonClick: () -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
         binding.btnLogout.setOnClickListener {
-            onLogoutButtonClick.invoke(ProfileAdapter.ClickEventType.Logout)
+            onLogoutButtonClick.invoke()
         }
     }
 }

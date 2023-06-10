@@ -12,8 +12,9 @@ import com.mashup.presentation.mypage.profile.holder.*
  * @author jaesung
  * @created 2023/06/07
  */
-class ProfileAdapter(private val onButtonClick: (Triple<ClickEventType, Boolean?, Int?>) -> Unit) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ProfileAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private lateinit var clickListener: ClickEventListener
 
     var optionsList: List<ProfileViewType> = listOf()
         set(value) {
@@ -21,20 +22,22 @@ class ProfileAdapter(private val onButtonClick: (Triple<ClickEventType, Boolean?
             notifyDataSetChanged()
         }
 
+    fun setClickListener(clickEventListener: ClickEventListener) {
+        this.clickListener = clickEventListener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             R.layout.item_profile_user_info -> {
                 val binding = ItemProfileUserInfoBinding.inflate(layoutInflater, parent, false)
-                UserInfoViewHolder(binding) {
-//                    onButtonClick.invoke(Pair(ClickEventType.UpdateName, null))
-                }
+                UserInfoViewHolder(binding)
             }
             R.layout.item_profile_notification -> {
                 val binding =
                     ItemProfileNotificationBinding.inflate(layoutInflater, parent, false)
-                NotificationViewHolder(binding) {
-                    onButtonClick.invoke(Triple(ClickEventType.Notification, it, null))
+                NotificationViewHolder(binding) { isChecked ->
+                    clickListener.onNotificationClick(isChecked)
                 }
             }
             R.layout.item_profile_header -> {
@@ -45,7 +48,7 @@ class ProfileAdapter(private val onButtonClick: (Triple<ClickEventType, Boolean?
                 val binding =
                     ItemProfileNavigationContentBinding.inflate(layoutInflater, parent, false)
                 NavigationContentViewHolder(binding) { actionId ->
-                    onButtonClick.invoke(Triple(ClickEventType.Navigate, null, actionId))
+                    clickListener.onNavigateClick(actionId)
                 }
             }
             R.layout.item_profile_app_version_content -> {
@@ -56,7 +59,7 @@ class ProfileAdapter(private val onButtonClick: (Triple<ClickEventType, Boolean?
             R.layout.item_profile_logout_content -> {
                 val binding = ItemProfileLogoutContentBinding.inflate(layoutInflater, parent, false)
                 LogoutViewHolder(binding) {
-                    onButtonClick.invoke(Triple(ClickEventType.Logout, null, null))
+                    clickListener.onLogoutClick()
                 }
             }
             else -> throw IllegalStateException("Unknown ViewType $viewType")
@@ -90,10 +93,9 @@ class ProfileAdapter(private val onButtonClick: (Triple<ClickEventType, Boolean?
 
     override fun getItemCount(): Int = optionsList.size
 
-    sealed class ClickEventType {
-        object UpdateName : ClickEventType()
-        object Notification : ClickEventType()
-        object Navigate : ClickEventType()
-        object Logout : ClickEventType()
+    interface ClickEventListener {
+        fun onNotificationClick(isChecked: Boolean)
+        fun onNavigateClick(actionId: Int)
+        fun onLogoutClick()
     }
 }
