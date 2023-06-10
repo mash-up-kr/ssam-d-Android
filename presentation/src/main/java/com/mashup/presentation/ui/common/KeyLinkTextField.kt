@@ -77,3 +77,66 @@ fun PreviewKeyLinkTextField() {
         )
     }
 }
+@Composable
+fun KeyLinkNicknameField(
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit,
+    maxLength: Int = 0,
+    fontSize: TextUnit,
+    onClickDone: () -> Unit,
+    hint: String
+) {
+    var isHintVisible by remember { mutableStateOf(true) }
+    val nickname = remember { mutableStateOf("") }
+
+    Box(modifier = modifier) {
+        BasicTextField(
+            value = nickname.value,
+            onValueChange = {
+                if (maxLength > 0 && it.length <= maxLength) {
+                    nickname.value = it
+                    onValueChange(it)
+                }
+            },
+            textStyle = TextStyle(
+                textAlign = TextAlign.Center,
+                fontSize = fontSize,
+                color = White
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusChanged { focusState ->
+                    if (!focusState.isFocused && nickname.value.isBlank()) {
+                        nickname.value = ""
+                        isHintVisible = true
+                    } else {
+                        isHintVisible = false
+                    }
+                },
+            cursorBrush = SolidColor(Mint),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    onClickDone()
+                }
+            ),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            decorationBox = { innerTextField ->
+                if (isHintVisible) {
+                    Text(
+                        text = hint,
+                        style = TextStyle(
+                            color = Color.Gray,
+                            textAlign = TextAlign.Center,
+                            fontSize = fontSize
+                        ),
+                        modifier = Modifier
+                            .padding(start = 4.dp)
+                            .fillMaxWidth()
+                            .alpha(ContentAlpha.medium)
+                    )
+                }
+                innerTextField()
+            }
+        )
+    }
+}
