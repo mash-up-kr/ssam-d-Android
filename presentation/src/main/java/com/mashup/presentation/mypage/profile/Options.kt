@@ -30,11 +30,9 @@ class Options(private val context: Context) {
                 )
             )
             add(
-                ProfileViewType.NavigationContent(
+                ProfileViewType.NotificationContent(
                     id = 2,
-                    actionId = R.id.action_profile_to_notificationSetting,
                     description = context.getString(R.string.notification),
-                    drawable = ContextCompat.getDrawable(context, R.drawable.ic_chevron_right_24)
                 )
             )
             add(
