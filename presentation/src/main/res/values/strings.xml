@@ -7,4 +7,6 @@
     <string name="close">닫기</string>
     <string name="logout">로그아웃</string>
     <string name="update">변경</string>
+    <string name="logout_title">정말 로그아웃 하세요?</string>
+    <string name="logout_subtitle">정보는 유지되지만 다시 로그인 해야하는 번거로움이 생겨요 ㅠ</string>
 </resources>

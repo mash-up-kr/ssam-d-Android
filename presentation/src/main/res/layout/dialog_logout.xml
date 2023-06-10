@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="24dp"
-            android:text="정말 로그아웃 하세요?"
+            android:text="@string/logout_title"
             android:textAppearance="@style/KeyringTextAppearance.Heading4"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="12dp"
-            android:text="정보는 유지되지만 다시 로그인 해야하는 번거로움이 생겨요 ㅠ"
+            android:text="@string/logout_subtitle"
             android:textAppearance="@style/KeyringTextAppearance.Body2"
             android:textColor="@color/Gray06"
             app:layout_constraintTop_toBottomOf="@id/tv_title" />
