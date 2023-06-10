@@ -15,9 +15,6 @@
             android:id="@+id/action_profile_to_privacyPolicy"
             app:destination="@id/privacyPolicyFragment" />
         <action
-            android:id="@+id/action_profile_to_notificationSetting"
-            app:destination="@id/notificationSettingFragment" />
-        <action
             android:id="@+id/action_profile_to_openSource"
             app:destination="@id/openSourceFragment" />
     </fragment>
@@ -25,10 +22,6 @@
         android:id="@+id/termsOfServiceFragment"
         android:name="com.mashup.presentation.mypage.TermsOfServiceFragment"
         android:label="TosFragment" />
-    <fragment
-        android:id="@+id/notificationSettingFragment"
-        android:name="com.mashup.presentation.mypage.NotificationSettingFragment"
-        android:label="NotificationSettingFragment" />
     <fragment
         android:id="@+id/privacyPolicyFragment"
         android:name="com.mashup.presentation.mypage.PrivacyPolicyFragment"
