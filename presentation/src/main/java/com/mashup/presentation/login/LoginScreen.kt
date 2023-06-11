@@ -37,7 +37,7 @@ fun LoginScreen(
                 Image(
                     modifier = Modifier.fillMaxWidth(),
                     painter = painterResource(R.drawable.img_planet),
-                    contentDescription = null
+                    contentDescription = stringResource(R.string.login_description_planet)
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
@@ -49,7 +49,7 @@ fun LoginScreen(
                         .width(312.dp)
                         .clickable { onLoginButtonClicked() },
                     painter = painterResource(R.drawable.img_kakao_login),
-                    contentDescription = null
+                    contentDescription = stringResource(R.string.login_description_kakao_btn)
                 )
             }
         }
@@ -61,7 +61,7 @@ private fun LoginBackground() {
     Image(
         modifier = Modifier.fillMaxSize(),
         painter = painterResource(R.drawable.img_space),
-        contentDescription = null,
+        contentDescription = stringResource(R.string.login_description_space),
         contentScale = ContentScale.Crop
     )
 }
@@ -77,7 +77,7 @@ private fun LoginTitle(modifier: Modifier) {
                 .height(61.dp)
                 .width(209.dp),
             painter = painterResource(R.drawable.img_keylink),
-            contentDescription = null
+            contentDescription = stringResource(R.string.login_description_keylink)
         )
 
         KeyLinkMintText(text = stringResource(R.string.login_title))
