@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.mashup.presentation.profile.ProfileFragment"
+        android:name="com.mashup.presentation.mypage.profile.ProfileFragment"
         android:label="ProfileFragment">
         <action
             android:id="@+id/action_profile_to_termsOfService"
@@ -15,26 +15,19 @@
             android:id="@+id/action_profile_to_privacyPolicy"
             app:destination="@id/privacyPolicyFragment" />
         <action
-            android:id="@+id/action_profile_to_notificationSetting"
-            app:destination="@id/notificationSettingFragment" />
-        <action
             android:id="@+id/action_profile_to_openSource"
             app:destination="@id/openSourceFragment" />
     </fragment>
     <fragment
         android:id="@+id/termsOfServiceFragment"
-        android:name="com.mashup.presentation.profile.TermsOfServiceFragment"
+        android:name="com.mashup.presentation.mypage.TermsOfServiceFragment"
         android:label="TosFragment" />
     <fragment
-        android:id="@+id/notificationSettingFragment"
-        android:name="com.mashup.presentation.profile.NotificationSettingFragment"
-        android:label="NotificationSettingFragment" />
-    <fragment
         android:id="@+id/privacyPolicyFragment"
-        android:name="com.mashup.presentation.profile.PrivacyPolicyFragment"
+        android:name="com.mashup.presentation.mypage.PrivacyPolicyFragment"
         android:label="PrivacyPolicyFragment" />
     <fragment
         android:id="@+id/openSourceFragment"
-        android:name="com.mashup.presentation.profile.OpenSourceFragment"
+        android:name="com.mashup.presentation.mypage.OpenSourceFragment"
         android:label="OpenSourceFragment" />
 </navigation>

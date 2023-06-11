@@ -1,4 +1,4 @@
-package com.mashup.presentation.profile
+package com.mashup.presentation.mypage
 
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
