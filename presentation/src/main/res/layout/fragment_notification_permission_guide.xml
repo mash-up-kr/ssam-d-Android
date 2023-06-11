@@ -1,16 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.mashup.presentation.R" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="85dp"
+            android:text="@string/notification_subtitle"
+            android:textAppearance="@style/KeyLinkTextAppearance.Body2.Gray05"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/cpv_title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_subtitle" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/bg_gradient_blurple_mint_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cpv_title">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="14dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/img_avatar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="2dp"
+                android:text="@string/notification_content"
+                android:textAppearance="@style/KeyLinkTextAppearance.Title1.Gray10"
+                app:layout_constraintBottom_toTopOf="@id/tv_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_avatar"
+                app:layout_constraintTop_toTopOf="@id/iv_avatar"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/notification_description"
+                android:textAppearance="@style/KeyLinkTextAppearance.Caption.Gray07"
+                app:layout_constraintBottom_toBottomOf="@id/iv_avatar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_avatar"
+                app:layout_constraintTop_toBottomOf="@id/tv_content" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="39dp"
+            android:src="@drawable/img_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_content" />
+
+        <com.mashup.presentation.common.widget.KeyLinkButton
+            android:id="@+id/btn_allow"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="12dp"
+            app:key_link_button_background="@{R.drawable.bg_button_blurple_10}"
+            app:key_link_button_text="@{R.string.get_notification}"
+            app:key_link_button_text_appearance="@{R.style.KeyLinkTextAppearance_Body1}"
+            app:layout_constraintBottom_toTopOf="@id/btn_disallow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_disallow"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:text="푸시권한가이드"
-            android:textColor="@color/white" />
+            android:text="@string/notification_disallow"
+            android:textAppearance="@style/KeyLinkTextAppearance.Body1.Gray06"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
