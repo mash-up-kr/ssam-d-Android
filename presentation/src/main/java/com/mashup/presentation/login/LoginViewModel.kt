@@ -2,21 +2,22 @@ package com.mashup.presentation.login
 
 import android.app.Application
 import android.content.Context
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
-import com.mashup.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     application: Application
-) : BaseViewModel(application) {
+) : AndroidViewModel(application) {
+
+    private val context: Context
+        get() = getApplication<Application>().applicationContext
 
     fun handleKakaoLogin() {
         // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오 계정으로 로그인
