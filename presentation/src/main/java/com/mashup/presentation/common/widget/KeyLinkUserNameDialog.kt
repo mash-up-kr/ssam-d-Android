@@ -1,18 +1,17 @@
 package com.mashup.presentation.common.widget
 
-import android.os.Bundle
-import androidx.fragment.app.DialogFragment
+import com.mashup.presentation.R
+import com.mashup.presentation.common.base.BaseDialogFragment
+import com.mashup.presentation.databinding.DialogEditNameBinding
 
 /**
  * Ssam_D_Android
  * @author jaesung
  * @created 2023/06/06
  */
-class KeyLinkUserNameDialog : DialogFragment() {
+class KeyLinkUserNameDialog : BaseDialogFragment<DialogEditNameBinding>(R.layout.dialog_edit_name) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
+    companion object {
+        const val DIALOG_TAG = "user_name_dialog"
     }
 }
