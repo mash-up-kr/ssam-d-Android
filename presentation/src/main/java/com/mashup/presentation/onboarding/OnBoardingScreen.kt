@@ -79,7 +79,8 @@ fun OnBoardingPager(
     HorizontalPager(
         modifier = modifier,
         pageCount = 2,
-        state = pagerState
+        state = pagerState,
+        userScrollEnabled = false
     ) { page ->
         when (page) {
             0 -> NicknameScreen()
