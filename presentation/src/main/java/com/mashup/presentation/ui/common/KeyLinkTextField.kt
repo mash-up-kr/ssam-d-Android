@@ -1,22 +1,25 @@
 package com.mashup.presentation.ui.common
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.*
 import com.mashup.presentation.ui.theme.Gray04
 import com.mashup.presentation.ui.theme.Mint
 import com.mashup.presentation.ui.theme.White
@@ -25,9 +28,9 @@ import com.mashup.presentation.ui.theme.White
 fun KeyLinkTextField(
     modifier: Modifier = Modifier,
     value: String,
-    onValueChanged: (String) -> Unit = {},
+    onValueChange: (String) -> Unit,
     hint: String,
-    onClickDone: () -> Unit = {},
+    onClickDone: () -> Unit,
     fontSize: TextUnit,
     maxLength: Int = 0
 ) {
@@ -35,8 +38,8 @@ fun KeyLinkTextField(
         modifier = modifier,
         value = value,
         onValueChange = {
-            if (maxLength > 0 && it.length <= maxLength) {
-                onValueChanged(it)
+            if (maxLength == 0 || it.length <= maxLength) {
+                onValueChange(it)
             }
         },
         placeholder = { Text(textAlign = TextAlign.Center, text = hint, fontSize = fontSize, color = Gray04) },
@@ -70,31 +73,32 @@ fun PreviewKeyLinkTextField() {
         KeyLinkTextField(
             modifier = Modifier.fillMaxWidth(),
             value = nickname,
-            onValueChanged = { nickname = it },
+            onValueChange = { nickname = it },
             hint = "닉네임 입력",
             fontSize = 32.sp,
             maxLength = 10,
+            onClickDone = {}
         )
     }
 }
+
 @Composable
-fun KeyLinkNicknameField(
+fun KeyLinkOnBoardingTextField(
     modifier: Modifier = Modifier,
+    value: String,
     onValueChange: (String) -> Unit,
-    maxLength: Int = 0,
+    hint: String,
     fontSize: TextUnit,
     onClickDone: () -> Unit,
-    hint: String
+    maxLength: Int = 0
 ) {
     var isHintVisible by remember { mutableStateOf(true) }
-    val nickname = remember { mutableStateOf("") }
 
-    Box(modifier = modifier) {
+    Box(modifier) {
         BasicTextField(
-            value = nickname.value,
+            value = value,
             onValueChange = {
-                if (maxLength > 0 && it.length <= maxLength) {
-                    nickname.value = it
+                if (maxLength == 0 || it.length <= maxLength) {
                     onValueChange(it)
                 }
             },
@@ -104,13 +108,12 @@ fun KeyLinkNicknameField(
                 color = White
             ),
             modifier = Modifier
-                .fillMaxWidth()
                 .onFocusChanged { focusState ->
-                    if (!focusState.isFocused && nickname.value.isBlank()) {
-                        nickname.value = ""
-                        isHintVisible = true
+                    isHintVisible = if (!focusState.isFocused && value.isBlank()) {
+                        onValueChange("")
+                        true
                     } else {
-                        isHintVisible = false
+                        false
                     }
                 },
             cursorBrush = SolidColor(Mint),
