@@ -132,9 +132,7 @@ fun KeywordScreen() {
         Spacer(modifier = Modifier.height(20.dp))
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
-            modifier = Modifier
-                .padding(horizontal = 12.dp)
-                .verticalScroll(scrollState)
+            modifier = Modifier.verticalScroll(scrollState)
         ) {
             for (chip in chips) {
                 KeywordChip(text = chip)
