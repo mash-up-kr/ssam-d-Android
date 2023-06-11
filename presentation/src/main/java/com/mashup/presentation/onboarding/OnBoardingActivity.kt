@@ -33,6 +33,7 @@ class OnBoardingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setThemeContent {
+            OnBoardingScreen()
         }
     }
 }
