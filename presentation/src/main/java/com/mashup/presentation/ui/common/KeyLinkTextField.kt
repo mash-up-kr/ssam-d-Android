@@ -1,5 +1,6 @@
 package com.mashup.presentation.ui.common
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -9,8 +10,11 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -22,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import com.mashup.presentation.ui.theme.Gray04
 import com.mashup.presentation.ui.theme.Mint
+import com.mashup.presentation.ui.theme.Red
 import com.mashup.presentation.ui.theme.White
 
 @Composable
@@ -42,7 +47,14 @@ fun KeyLinkTextField(
                 onValueChange(it)
             }
         },
-        placeholder = { Text(textAlign = TextAlign.Center, text = hint, fontSize = fontSize, color = Gray04) },
+        placeholder = {
+            Text(
+                textAlign = TextAlign.Center,
+                text = hint,
+                fontSize = fontSize,
+                color = Gray04
+            )
+        },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Done
@@ -92,54 +104,40 @@ fun KeyLinkOnBoardingTextField(
     onClickDone: () -> Unit,
     maxLength: Int = 0
 ) {
-    var isHintVisible by remember { mutableStateOf(true) }
-
-    Box(modifier) {
-        BasicTextField(
-            value = value,
-            onValueChange = {
-                if (maxLength == 0 || it.length <= maxLength) {
-                    onValueChange(it)
-                }
-            },
-            textStyle = TextStyle(
-                textAlign = TextAlign.Center,
-                fontSize = fontSize,
-                color = White
-            ),
-            modifier = Modifier
-                .onFocusChanged { focusState ->
-                    isHintVisible = if (!focusState.isFocused && value.isBlank()) {
-                        onValueChange("")
-                        true
-                    } else {
-                        false
-                    }
-                },
-            cursorBrush = SolidColor(Mint),
-            keyboardActions = KeyboardActions(
-                onDone = {
-                    onClickDone()
-                }
-            ),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            decorationBox = { innerTextField ->
-                if (isHintVisible) {
-                    Text(
-                        text = hint,
-                        style = TextStyle(
-                            color = Color.Gray,
-                            textAlign = TextAlign.Center,
-                            fontSize = fontSize
-                        ),
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                            .fillMaxWidth()
-                            .alpha(ContentAlpha.medium)
-                    )
-                }
-                innerTextField()
+    BasicTextField(
+        value = value,
+        onValueChange = {
+            if (maxLength == 0 || it.length <= maxLength) {
+                onValueChange(it)
             }
-        )
-    }
+        },
+        textStyle = TextStyle(
+            fontSize = fontSize,
+            color = White
+        ),
+        modifier = modifier
+            .width(IntrinsicSize.Max)
+            .padding(vertical = 8.dp, horizontal = 20.dp),
+        cursorBrush = SolidColor(Mint),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                onClickDone()
+            }
+        ),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        decorationBox = { innerTextField ->
+            if (value.isEmpty()) {
+                Text(
+                    text = hint,
+                    style = TextStyle(
+                        color = Color.Gray,
+                        fontSize = fontSize
+                    ),
+                    modifier = Modifier
+                        .alpha(ContentAlpha.medium)
+                )
+            }
+            innerTextField()
+        }
+    )
 }
