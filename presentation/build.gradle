@@ -91,4 +91,7 @@ dependencies {
     androidTestImplementation Dep.Compose.Test.ui
     debugImplementation Dep.Compose.Debug.uiTooling
     debugImplementation Dep.Compose.Debug.uiTestManifest
+
+    // kakao login
+    implementation Dep.Kakao.sdk
 }

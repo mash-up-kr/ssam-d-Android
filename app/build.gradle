@@ -64,4 +64,7 @@ dependencies {
 
     // timber - log
     implementation Dep.Logger.timber
+
+    // kakao login
+    implementation Dep.Kakao.sdk
 }
