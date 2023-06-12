@@ -13,6 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.R
+import com.mashup.presentation.ui.common.KeyLinkButton
 import com.mashup.presentation.ui.common.KeyLinkMintText
 
 @Composable
@@ -88,5 +89,25 @@ private fun LoginTitle(modifier: Modifier) {
         )
 
         KeyLinkMintText(text = stringResource(R.string.login_title))
+    }
+}
+
+@Composable
+fun LoginCompletionScreen(onStartButtonClicked: () -> Unit) {
+    Box {
+        LoginBackground()
+
+        LoginContainer(modifier = Modifier.padding(top = 155.dp, bottom = 48.dp, start = 20.dp, end = 20.dp)) {
+            KeyLinkMintText(
+                modifier = Modifier.weight(1f),
+                text = stringResource(R.string.login_completion_title)
+            )
+
+            KeyLinkButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.login_completion_btn),
+                onClick = onStartButtonClicked
+            )
+        }
     }
 }
