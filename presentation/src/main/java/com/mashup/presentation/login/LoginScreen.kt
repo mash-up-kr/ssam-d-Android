@@ -21,37 +21,27 @@ fun LoginScreen(
 ) {
     Box {
         LoginBackground()
-        
-        Scaffold(
-            modifier = Modifier.padding(vertical = 120.dp),
-            backgroundColor = Color.Transparent
-        ) {
-            Column(
+
+        LoginContainer(modifier = Modifier.padding(vertical = 120.dp)) {
+            LoginTitle(modifier = Modifier.padding(bottom = 24.dp))
+
+            Image(
+                modifier = Modifier.fillMaxWidth(),
+                painter = painterResource(R.drawable.img_planet),
+                contentDescription = stringResource(R.string.login_description_planet)
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Image(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                LoginTitle(modifier = Modifier.padding(bottom = 24.dp))
-
-                Image(
-                    modifier = Modifier.fillMaxWidth(),
-                    painter = painterResource(R.drawable.img_planet),
-                    contentDescription = stringResource(R.string.login_description_planet)
-                )
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                Image(
-                    modifier = Modifier
-                        .padding(horizontal = 24.dp)
-                        .height(52.dp)
-                        .width(312.dp)
-                        .clickable { onLoginButtonClicked() },
-                    painter = painterResource(R.drawable.img_kakao_login),
-                    contentDescription = stringResource(R.string.login_description_kakao_btn)
-                )
-            }
+                    .padding(horizontal = 24.dp)
+                    .height(52.dp)
+                    .width(312.dp)
+                    .clickable { onLoginButtonClicked() },
+                painter = painterResource(R.drawable.img_kakao_login),
+                contentDescription = stringResource(R.string.login_description_kakao_btn)
+            )
         }
     }
 }
@@ -64,6 +54,23 @@ private fun LoginBackground() {
         contentDescription = stringResource(R.string.login_description_space),
         contentScale = ContentScale.Crop
     )
+}
+
+@Composable
+private fun LoginContainer(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
+    Scaffold(
+        modifier = modifier,
+        backgroundColor = Color.Transparent
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            content()
+        }
+    }
 }
 
 @Composable
