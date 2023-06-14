@@ -29,7 +29,6 @@ class TermsOfServiceFragment :
             }
 
             tbTos.setOnBackButtonClickListener {
-                Toast.makeText(requireActivity(), "C", Toast.LENGTH_SHORT).show()
                 navigateUp()
             }
         }

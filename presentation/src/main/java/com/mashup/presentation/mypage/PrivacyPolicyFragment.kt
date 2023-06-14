@@ -29,7 +29,6 @@ class PrivacyPolicyFragment :
             }
 
             tbPrivacyPolicy.setOnBackButtonClickListener {
-                Toast.makeText(requireActivity(), "C", Toast.LENGTH_SHORT).show()
                 navigateUp()
             }
         }
