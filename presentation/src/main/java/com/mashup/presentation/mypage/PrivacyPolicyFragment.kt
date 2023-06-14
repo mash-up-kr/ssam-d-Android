@@ -1,7 +1,11 @@
 package com.mashup.presentation.mypage
 
+import android.annotation.SuppressLint
+import android.webkit.WebViewClient
+import android.widget.Toast
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
+import com.mashup.presentation.common.extension.navigateUp
 import com.mashup.presentation.databinding.FragmentPrivacyPolicyBinding
 
 /**
@@ -11,4 +15,23 @@ import com.mashup.presentation.databinding.FragmentPrivacyPolicyBinding
  */
 class PrivacyPolicyFragment :
     BaseFragment<FragmentPrivacyPolicyBinding>(R.layout.fragment_privacy_policy) {
+    @SuppressLint("SetJavaScriptEnabled")
+    override fun initViews() {
+        with(binding) {
+            wvPrivacyPolicy.apply {
+                settings.apply {
+                    javaScriptEnabled = true
+                    loadWithOverviewMode = true
+                    useWideViewPort = true
+                }
+                webViewClient = WebViewClient()
+                loadUrl("https://www.naver.com")
+            }
+
+            tbPrivacyPolicy.setOnBackButtonClickListener {
+                Toast.makeText(requireActivity(), "C", Toast.LENGTH_SHORT).show()
+                navigateUp()
+            }
+        }
+    }
 }
