@@ -3,17 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_signal"
-    app:startDestination="@id/signalRecipientFragment">
+    app:startDestination="@id/signalContentFragment">
 
-    <fragment
-        android:id="@+id/signalRecipientFragment"
-        android:name="com.mashup.presentation.signal.SignalRecipientFragment"
-        android:label="SignalRecipientFragment"
-        tools:layout="@layout/fragment_signal_recipient">
-        <action
-            android:id="@+id/action_signalRecipient_to_signalContent"
-            app:destination="@id/signalContentFragment" />
-    </fragment>
     <fragment
         android:id="@+id/signalContentFragment"
         android:name="com.mashup.presentation.signal.SignalContentFragment"
@@ -22,11 +13,19 @@
         <action
             android:id="@+id/action_signalContent_to_signalComplete"
             app:destination="@id/signalCompleteFragment" />
+        <action
+            android:id="@+id/action_signalContent_to_signalKeyword"
+            app:destination="@id/signalKeywordFragment" />
     </fragment>
     <fragment
         android:id="@+id/signalCompleteFragment"
         android:name="com.mashup.presentation.signal.SignalCompleteFragment"
         android:label="SignalCompleteFragment"
         tools:layout="@layout/fragment_signal_complete" />
+    <fragment
+        android:id="@+id/signalKeywordFragment"
+        android:name="com.mashup.presentation.signal.SignalKeywordFragment"
+        android:label="SignalKeywordFragment"
+        tools:layout="@layout/fragment_signal_keyword" />
 
 </navigation>

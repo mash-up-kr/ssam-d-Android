@@ -4,7 +4,11 @@
     <application>
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="false" />
+
+        <activity
+            android:name=".signal.SignalActivity"
+            android:exported="false" />
 
         <activity
             android:name=".login.LoginActivity"
@@ -20,10 +24,12 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:host="oauth"
+                <data
+                    android:host="oauth"
                     android:scheme="@string/kakao_redirection_scheme" />
             </intent-filter>
         </activity>
