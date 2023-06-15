@@ -20,6 +20,7 @@ class KeyLinkLogoutDialog(
 
         binding.btnLogout.setOnClickListener {
             onLogoutClick.invoke()
+            dismiss()
         }
 
     }
