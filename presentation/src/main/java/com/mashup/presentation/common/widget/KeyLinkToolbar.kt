@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.mashup.presentation.databinding.ViewKeyLinkToolbarBinding
@@ -40,8 +41,8 @@ class KeyLinkToolbar @JvmOverloads constructor(
         }
     }
 
-    fun setTitle(title: String) {
-        binding.tvTitle.text = title
+    fun setTitle(@StringRes resId: Int) {
+        binding.tvTitle.setText(resId)
     }
 
     fun setTitleGravity(gravity: Int = Gravity.START) {
@@ -56,8 +57,8 @@ class KeyLinkToolbar @JvmOverloads constructor(
 
         @JvmStatic
         @BindingAdapter("key_link_title")
-        fun KeyLinkToolbar.setKeyLinkTitle(title: String?) = title?.let {
-            setTitle(it)
+        fun KeyLinkToolbar.setKeyLinkTitle(@StringRes resId: Int) {
+            setTitle(resId)
         }
 
         @JvmStatic
