@@ -23,5 +23,6 @@
     <string name="login_description_planet">행성 사진입니다.</string>
     <string name="login_description_kakao_btn">카카오 로그인 버튼입니다.</string>
     <string name="login_completion_title">반가워요! 질문에 답하고\n나만의 키워드 행성을 만들어 볼까요?</string>
+    <string name="login_description_blueplanet">우주 배경 아래에 위치한 푸른 행성 사진입니다.</string>
     <string name="login_completion_btn">시작하기</string>
 </resources>

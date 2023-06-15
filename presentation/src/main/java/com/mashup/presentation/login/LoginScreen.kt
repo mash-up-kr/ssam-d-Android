@@ -97,6 +97,12 @@ fun LoginCompletionScreen(onStartButtonClicked: () -> Unit) {
     Box {
         LoginBackground()
 
+        Image(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            painter = painterResource(R.drawable.img_blueplanet),
+            contentDescription = stringResource(R.string.login_description_blueplanet)
+        )
+
         LoginContainer(modifier = Modifier.padding(top = 155.dp, bottom = 48.dp, start = 20.dp, end = 20.dp)) {
             KeyLinkMintText(
                 modifier = Modifier.weight(1f),
