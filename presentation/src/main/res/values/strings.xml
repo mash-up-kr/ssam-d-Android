@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Ssam_D_Android</string>
+    <string name="empty_text" />
     <string name="navigation_home">홈</string>
     <string name="navigation_signal">시그널 보내기</string>
     <string name="navigation_reels">릴스</string>
@@ -11,12 +12,12 @@
     <string name="logout_subtitle">정보는 유지되지만 다시 로그인 해야하는 번거로움이 생겨요 ㅠ</string>
     <string name="settings">환경설정</string>
     <string name="notification">알림 소식 받기</string>
+    <string name="get_notification">알림 수신 동의</string>
     <string name="tos">이용약관</string>
     <string name="privacy_policy">개인정보 정책</string>
     <string name="open_source">오픈소스</string>
     <string name="app_version">버전</string>
     <string name="information">정보</string>
-  
     <string name="login_title">나의 키워드 행성을 찾아서</string>
     <string name="login_description_space">우주 배경 사진입니다.</string>
     <string name="login_description_keylink">keylink 타이틀 사진입니다.</string>
@@ -25,4 +26,8 @@
     <string name="login_completion_title">반가워요! 질문에 답하고\n나만의 키워드 행성을 만들어 볼까요?</string>
     <string name="login_description_blueplanet">우주 배경 아래에 위치한 푸른 행성 사진입니다.</string>
     <string name="login_completion_btn">시작하기</string>
+    <string name="notification_disallow">나중에 하기</string>
+    <string name="notification_subtitle">삐리삐리 삐리리...</string>
+    <string name="notification_content">혁신앱키링에게 온 시그널</string>
+    <string name="notification_description">#인기앱 외 2개 키워드 일치!</string>
 </resources>

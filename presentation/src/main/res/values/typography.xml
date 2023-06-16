@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="KeyLinkTextAppearance" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/white</item>
     </style>
@@ -34,6 +35,13 @@
         <item name="fontWeight">600</item>
     </style>
 
+    <style name="KeyLinkTextAppearance.Title1.Gray10">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/Gray10</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="fontWeight">600</item>
+    </style>
+
     <style name="KeyLinkTextAppearance.Title2">
         <item name="android:textSize">15sp</item>
         <item name="android:lineSpacingExtra">7sp</item>
@@ -49,6 +57,13 @@
 
     <style name="KeyLinkTextAppearance.Body1">
         <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">10sp</item>
+        <item name="fontWeight">400</item>
+    </style>
+
+    <style name="KeyLinkTextAppearance.Body1.Gray06">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/Gray06</item>
         <item name="android:lineSpacingExtra">10sp</item>
         <item name="fontWeight">400</item>
     </style>
@@ -96,6 +111,13 @@
 
     <style name="KeyLinkTextAppearance.Caption">
         <item name="android:textSize">12sp</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+        <item name="fontWeight">500</item>
+    </style>
+
+    <style name="KeyLinkTextAppearance.Caption.Gray07">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/Gray07</item>
         <item name="android:lineSpacingExtra">6sp</item>
         <item name="fontWeight">500</item>
     </style>

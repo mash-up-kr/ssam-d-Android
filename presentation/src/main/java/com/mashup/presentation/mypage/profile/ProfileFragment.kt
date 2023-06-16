@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
 import com.mashup.presentation.common.extension.navigate
+import com.mashup.presentation.common.widget.KeyLinkLogoutDialog
 import com.mashup.presentation.databinding.FragmentProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,12 +35,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
                     }
 
                     override fun onLogoutClick() {
-                        viewModel.logout()
+                        KeyLinkLogoutDialog {
+                            viewModel.logout()
+                        }.show(childFragmentManager, KeyLinkLogoutDialog.DIALOG_TAG)
                     }
                 })
             }
             addItemDecoration(ProfileItemDecoration())
         }
     }
-
 }

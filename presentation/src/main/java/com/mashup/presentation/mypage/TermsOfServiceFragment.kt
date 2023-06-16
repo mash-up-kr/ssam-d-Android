@@ -1,7 +1,11 @@
 package com.mashup.presentation.mypage
 
+import android.annotation.SuppressLint
+import android.webkit.WebViewClient
+import android.widget.Toast
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
+import com.mashup.presentation.common.extension.navigateUp
 import com.mashup.presentation.databinding.FragmentTermsOfServiceBinding
 
 /**
@@ -11,4 +15,22 @@ import com.mashup.presentation.databinding.FragmentTermsOfServiceBinding
  */
 class TermsOfServiceFragment :
     BaseFragment<FragmentTermsOfServiceBinding>(R.layout.fragment_terms_of_service) {
+    @SuppressLint("SetJavaScriptEnabled")
+    override fun initViews() {
+        with(binding) {
+            wvTos.apply {
+                settings.apply {
+                    javaScriptEnabled = true
+                    loadWithOverviewMode = true
+                    useWideViewPort = true
+                }
+                webViewClient = WebViewClient()
+                loadUrl("https://www.naver.com")
+            }
+
+            tbTos.setOnBackButtonClickListener {
+                navigateUp()
+            }
+        }
+    }
 }

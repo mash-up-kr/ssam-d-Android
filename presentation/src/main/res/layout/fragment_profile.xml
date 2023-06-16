@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="com.mashup.presentation.R" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,7 +17,7 @@
             android:id="@+id/tb_profile"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            app:key_link_title='@{""}'
+            app:key_link_title='@{R.string.empty_text}'
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -23,8 +28,10 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tb_profile"
+            app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/item_profile_navigation_content" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

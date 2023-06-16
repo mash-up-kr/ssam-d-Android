@@ -24,3 +24,11 @@ inline fun Fragment.setThemeContent(
         }
     }
 }
+
+inline fun ComposeView.setThemeContent(
+    crossinline content: @Composable () -> Unit
+) = setContent {
+    SsamDTheme {
+        content()
+    }
+}
