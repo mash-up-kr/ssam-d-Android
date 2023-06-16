@@ -28,5 +28,5 @@
     <string name="notification_content">혁신앱키링에게 온 시그널</string>
     <string name="notification_description">#인기앱 외 2개 키워드 일치!</string>
     <string name="send_complete">보내기 완료!</string>
-    <string name="send_complete_subtitle">링크가 도착하기 전까지 시간이 걸릴 수 있어요.\n그동안 다른 링크를 구경해보세요.</string>
+    <string name="send_complete_subtitle">시그널이 연결되면 대화방이 만들어져요.</string>
 </resources>
