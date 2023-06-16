@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
+import com.mashup.presentation.common.extension.makeSnackBar
 import com.mashup.presentation.common.util.permission.PermissionType
 import com.mashup.presentation.common.util.permission.manager.PermissionManager
 import com.mashup.presentation.common.util.permission.manager.PermissionManagerImpl
@@ -63,17 +64,13 @@ class NotificationPermissionGuideFragment :
                 Toast.makeText(requireActivity(), "이미 권한 존재", Toast.LENGTH_SHORT).show()
             }
             shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-                Snackbar.make(
-                    binding.root,
-                    "설정으로 이동합니다",
-                    Snackbar.LENGTH_LONG
-                ).setAction("Settings") {
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    val uri: Uri = Uri.fromParts("package", "com.mashup.ssamd", null)
-                    intent.data = uri
+                binding.root.makeSnackBar("설정으로 이동합니다", "Settings") {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        data = Uri.fromParts("package", "com.mashup.ssamd", null)
+                    }
                     startActivity(intent)
-                }.show()
+                }
             }
             else -> {
                 requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
