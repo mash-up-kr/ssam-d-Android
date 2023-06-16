@@ -32,27 +32,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="20dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{userInfo.userName}"
             android:textAppearance="@style/KeyLinkTextAppearance.Heading4"
             app:layout_constraintBottom_toTopOf="@id/tv_user_email"
-            app:layout_constraintEnd_toStartOf="@id/btn_update_user_name"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_avatar"
             app:layout_constraintTop_toTopOf="@id/iv_avatar"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="끼워드링꾸ttasdfasdfasdfasdfasdf" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btn_update_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:background="@null"
-            android:src="@drawable/ic_pen_24"
-            app:layout_constraintBottom_toBottomOf="@id/tv_user_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_user_name" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_user_email"
