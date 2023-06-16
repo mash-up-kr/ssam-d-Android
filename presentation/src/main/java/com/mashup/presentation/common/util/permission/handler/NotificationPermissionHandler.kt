@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Build
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.NotificationManagerCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.mashup.presentation.common.util.permission.PermissionType
 
@@ -29,16 +28,16 @@ class NotificationPermissionHandler : PermissionHandler {
     }
 
     override fun permissionLauncher(
-        fragment: Fragment,
+        activity: FragmentActivity,
         isPermissionGranted: (Boolean) -> Unit
     ): ActivityResultLauncher<String> {
-        return super.permissionLauncher(fragment, isPermissionGranted)
+        return super.permissionLauncher(activity, isPermissionGranted)
     }
 
     override fun requestPermission(
-        fragment: Fragment,
+        activity: FragmentActivity,
         isPermissionGranted: (Boolean) -> Unit
     ) {
-        super.requestPermission(fragment, isPermissionGranted)
+        super.requestPermission(activity, isPermissionGranted)
     }
 }

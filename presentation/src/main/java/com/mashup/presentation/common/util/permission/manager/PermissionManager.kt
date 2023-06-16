@@ -1,7 +1,6 @@
 package com.mashup.presentation.common.util.permission.manager
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.mashup.presentation.common.util.permission.PermissionType
 
@@ -15,13 +14,13 @@ interface PermissionManager {
     fun hasPermission(context: Context, permission: PermissionType): Boolean
 
     fun requestPermission(
-        fragment: Fragment,
+        activity: FragmentActivity,
         permission: PermissionType,
         isPermissionGranted: (Boolean) -> Unit
     )
 
     fun performPermission(
-        fragment: Fragment,
+        activity: FragmentActivity,
         permission: PermissionType,
         isPermissionGranted: (Boolean) -> Unit
     )

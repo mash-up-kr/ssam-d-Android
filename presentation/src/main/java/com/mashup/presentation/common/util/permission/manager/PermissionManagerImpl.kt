@@ -1,7 +1,6 @@
 package com.mashup.presentation.common.util.permission.manager
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.mashup.presentation.common.util.permission.PermissionType
 import com.mashup.presentation.common.util.permission.handler.NotificationPermissionHandler
@@ -27,16 +26,16 @@ class PermissionManagerImpl : PermissionManager {
 
 
     override fun requestPermission(
-        fragment: Fragment,
+        activity: FragmentActivity,
         permission: PermissionType,
         isPermissionGranted: (Boolean) -> Unit
-    ) = getPermissionHandler(permission).requestPermission(fragment, isPermissionGranted)
+    ) = getPermissionHandler(permission).requestPermission(activity, isPermissionGranted)
 
 
     override fun performPermission(
-        fragment: Fragment,
+        activity: FragmentActivity,
         permission: PermissionType,
         isPermissionGranted: (Boolean) -> Unit
-    ) = getPermissionHandler(permission).checkPermission(fragment.requireContext(), fragment, isPermissionGranted)
+    ) = getPermissionHandler(permission).checkPermission(activity, activity, isPermissionGranted)
 
 }

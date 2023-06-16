@@ -3,7 +3,6 @@ package com.mashup.presentation.common.util.permission.handler
 import android.content.Context
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.mashup.presentation.common.util.permission.PermissionType
 
@@ -20,29 +19,29 @@ interface PermissionHandler {
     fun hasPermission(context: Context): Boolean
 
     fun permissionLauncher(
-        fragment: Fragment,
+        activity: FragmentActivity,
         isPermissionGranted: (Boolean) -> Unit,
     ): ActivityResultLauncher<String> =
-        fragment.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+        activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             isPermissionGranted.invoke(isGranted)
         }
 
     fun requestPermission(
-        fragment: Fragment,
+        activity: FragmentActivity,
         isPermissionGranted: (Boolean) -> Unit
     ) {
-        permissionLauncher(fragment, isPermissionGranted).launch(permission)
+        permissionLauncher(activity, isPermissionGranted).launch(permission)
     }
 
     fun checkPermission(
         context: Context,
-        fragment: Fragment,
+        activity: FragmentActivity,
         isPermissionGranted: (Boolean) -> Unit,
     ) {
         if (hasPermission(context)) {
             isPermissionGranted.invoke(true)
         } else {
-            requestPermission(fragment, isPermissionGranted)
+            requestPermission(activity, isPermissionGranted)
         }
     }
 }
