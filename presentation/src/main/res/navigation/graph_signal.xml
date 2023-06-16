@@ -11,21 +11,21 @@
         android:label="SignalContentFragment"
         tools:layout="@layout/fragment_signal_content">
         <action
-            android:id="@+id/action_signalContent_to_signalComplete"
-            app:destination="@id/signalCompleteFragment" />
-        <action
             android:id="@+id/action_signalContent_to_signalKeyword"
             app:destination="@id/signalKeywordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signalKeywordFragment"
+        android:name="com.mashup.presentation.signal.SignalKeywordFragment"
+        android:label="SignalKeywordFragment"
+        tools:layout="@layout/fragment_signal_keyword">
+        <action
+            android:id="@+id/action_signalKeyword_to_signalComplete"
+            app:destination="@id/signalCompleteFragment" />
     </fragment>
     <fragment
         android:id="@+id/signalCompleteFragment"
         android:name="com.mashup.presentation.signal.SignalCompleteFragment"
         android:label="SignalCompleteFragment"
         tools:layout="@layout/fragment_signal_complete" />
-    <fragment
-        android:id="@+id/signalKeywordFragment"
-        android:name="com.mashup.presentation.signal.SignalKeywordFragment"
-        android:label="SignalKeywordFragment"
-        tools:layout="@layout/fragment_signal_keyword" />
-
 </navigation>

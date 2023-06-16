@@ -9,5 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/asd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="키워드 입력"
+            android:textColor="@color/white" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

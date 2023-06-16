@@ -17,7 +17,7 @@ class SignalContentFragment :
 
     override fun initViews() {
         binding.asd.setOnClickListener {
-            navigate(R.id.action_signalContent_to_signalComplete)
+            navigate(R.id.action_signalContent_to_signalKeyword)
         }
     }
 }
