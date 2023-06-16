@@ -68,6 +68,11 @@ object Dep {
             const val hilt = "com.google.dagger:hilt-android:$version"
             const val compiler = "com.google.dagger:hilt-android-compiler:$version"
         }
+
+        object HiltNavigation {
+            const val version = "1.0.0"
+            const val compose = "androidx.hilt:hilt-navigation-compose:$version"
+        }
     }
 
 

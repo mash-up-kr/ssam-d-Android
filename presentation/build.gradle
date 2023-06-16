@@ -70,6 +70,7 @@ dependencies {
 
     // hilt
     implementation Dep.Dagger.Hilt.hilt
+    implementation Dep.Dagger.HiltNavigation.compose
     kapt Dep.Dagger.Hilt.compiler
 
     // navigation
