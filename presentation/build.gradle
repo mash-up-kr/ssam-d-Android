@@ -70,12 +70,12 @@ dependencies {
 
     // hilt
     implementation Dep.Dagger.Hilt.hilt
-    implementation Dep.Dagger.HiltNavigation.compose
     kapt Dep.Dagger.Hilt.compiler
 
     // navigation
     implementation Dep.Navigation.fragment
     implementation Dep.Navigation.ui
+    implementation Dep.Navigation.compose
 
     // coroutine
     implementation Dep.Kotlin.Coroutine.core
