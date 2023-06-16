@@ -97,4 +97,5 @@ dependencies {
 
     // lottie
     implementation Dep.Airbnb.lottie
+    implementation Dep.Airbnb.lottieCompose
 }
