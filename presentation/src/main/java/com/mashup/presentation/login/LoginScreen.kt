@@ -16,18 +16,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.KeyLinkButton
 import com.mashup.presentation.ui.common.KeyLinkMintText
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun LoginScreen(viewModel: LoginViewModel = hiltViewModel()) {
+fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
     val pagerState = rememberPagerState(0)
 
-    LaunchedEffect(viewModel.currentPage) {
-        pagerState.animateScrollToPage(viewModel.currentPage)
+    LaunchedEffect(loginViewModel.currentPage) {
+        pagerState.animateScrollToPage(loginViewModel.currentPage)
     }
     
     HorizontalPager(
@@ -38,10 +38,10 @@ fun LoginScreen(viewModel: LoginViewModel = hiltViewModel()) {
     ) { page ->
         when (page) {
             0 -> LoginContentScreen (
-                onLoginButtonClicked = viewModel::handleKakaoLogin
+                onLoginButtonClicked = loginViewModel::handleKakaoLogin
             )
             1 -> LoginCompletionScreen (
-                onStartButtonClicked = viewModel::handleKakaoLogin
+                onStartButtonClicked = loginViewModel::handleKakaoLogin
             )
         }
     }
