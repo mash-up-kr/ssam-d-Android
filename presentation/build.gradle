@@ -94,4 +94,8 @@ dependencies {
 
     // kakao login
     implementation Dep.Kakao.sdk
+
+    // lottie
+    implementation Dep.Airbnb.lottie
+    implementation Dep.Airbnb.lottieCompose
 }
