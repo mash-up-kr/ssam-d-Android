@@ -57,12 +57,6 @@ fun LoginContentScreen(
         LoginContainer(modifier = Modifier.padding(vertical = 120.dp)) {
             LoginTitle(modifier = Modifier.padding(bottom = 24.dp))
 
-            Image(
-                modifier = Modifier.fillMaxWidth(),
-                painter = painterResource(R.drawable.img_planet),
-                contentDescription = stringResource(R.string.login_description_planet)
-            )
-
             Spacer(modifier = Modifier.weight(1f))
 
             Image(
