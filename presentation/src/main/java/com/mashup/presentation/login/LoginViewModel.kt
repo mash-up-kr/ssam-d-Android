@@ -2,6 +2,9 @@ package com.mashup.presentation.login
 
 import android.app.Application
 import android.content.Context
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
@@ -18,6 +21,8 @@ class LoginViewModel @Inject constructor(
 
     private val context: Context
         get() = getApplication<Application>().applicationContext
+
+    var currentPage by mutableStateOf(0)
 
     fun handleKakaoLogin() {
         // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오 계정으로 로그인
@@ -43,6 +48,7 @@ class LoginViewModel @Inject constructor(
                 loginKakaoAccount()
             } else if (token != null) {
                 Timber.i("카카오톡으로 로그인 성공 ${token.accessToken}")
+                currentPage++
             }
         }
     }
@@ -53,6 +59,7 @@ class LoginViewModel @Inject constructor(
                 Timber.e("카카오 계정으로 로그인 실패", error)
             } else if (token != null) {
                 Timber.i("카카오 계정으로 로그인 성공 ${token.accessToken}")
+                currentPage++
             }
         }
 
