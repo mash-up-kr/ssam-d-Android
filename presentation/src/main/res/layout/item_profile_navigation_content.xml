@@ -25,7 +25,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="16dp"
             android:text="@{content.description}"
-            android:textAppearance="@style/KeyLinkTextAppearance.Body1"
+            android:textAppearance="@{content.textStyle}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_navigation_icon"
             app:layout_constraintStart_toStartOf="parent"
