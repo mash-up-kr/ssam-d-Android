@@ -2,6 +2,7 @@ package com.mashup.presentation.login
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
@@ -9,6 +10,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.airbnb.lottie.compose.*
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.KeyLinkButton
 import com.mashup.presentation.ui.common.KeyLinkMintText
@@ -56,6 +59,8 @@ fun LoginContentScreen(
 
         LoginContainer(modifier = Modifier.padding(vertical = 120.dp)) {
             LoginTitle(modifier = Modifier.padding(bottom = 24.dp))
+
+            LoginPlanetLottie(modifier = Modifier.fillMaxWidth().height(279.dp))
 
             Spacer(modifier = Modifier.weight(1f))
 
@@ -115,6 +120,19 @@ private fun LoginTitle(modifier: Modifier) {
 
         KeyLinkMintText(text = stringResource(R.string.login_title))
     }
+}
+
+@Composable
+private fun LoginPlanetLottie(modifier: Modifier = Modifier) {
+    val composition by rememberLottieComposition(
+        LottieCompositionSpec.RawRes(R.raw.lottie_splash_planet)
+    )
+
+    LottieAnimation(
+        modifier = modifier,
+        composition = composition,
+        iterations = LottieConstants.IterateForever
+    )
 }
 
 @Composable
