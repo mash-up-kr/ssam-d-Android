@@ -24,9 +24,10 @@ class ProfileItemDecoration : ItemDecoration() {
             }
 
         outRect.top = when (position) {
-            1 -> 32.dpToPx()
-            3 -> 20.dpToPx()
-            7 -> 53.dpToPx()
+            1 -> 36.dpToPx()
+            2 -> 20.dpToPx()
+            4 -> 20.dpToPx()
+            8 -> 52.dpToPx()
             else -> 0.dpToPx()
         }
     }
