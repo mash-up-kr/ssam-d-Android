@@ -128,6 +128,7 @@ object Dep {
         private const val version = "2.5.3"
         const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
         const val ui = "androidx.navigation:navigation-ui-ktx:$version"
+        const val compose = "androidx.navigation:navigation-compose:$version"
         const val gradlePlugin = "androidx.navigation:navigation-safe-args-gradle-plugin:$version"
     }
 
