@@ -155,4 +155,10 @@ object Dep {
     object Kakao {
         const val sdk = "com.kakao.sdk:v2-user:2.13.0"
     }
+
+    object Airbnb {
+        private const val lottieVersion = "6.0.0"
+        const val lottie = "com.airbnb.android:lottie:$lottieVersion"
+        const val lottieCompose = "com.airbnb.android:lottie-compose:$lottieVersion"
+    }
 }

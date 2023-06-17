@@ -6,6 +6,7 @@
     <string name="navigation_reels">릴스</string>
     <string name="input_maximum_10">최대 10자 입력</string>
     <string name="close">닫기</string>
+    <string name="look_around">둘러보기</string>
     <string name="logout">로그아웃</string>
     <string name="update">변경</string>
     <string name="logout_title">정말 로그아웃 하세요?</string>
@@ -30,4 +31,6 @@
     <string name="notification_subtitle">삐리삐리 삐리리...</string>
     <string name="notification_content">혁신앱키링에게 온 시그널</string>
     <string name="notification_description">#인기앱 외 2개 키워드 일치!</string>
+    <string name="send_complete">보내기 완료!</string>
+    <string name="send_complete_subtitle">시그널이 연결되면 대화방이 만들어져요.</string>
 </resources>
