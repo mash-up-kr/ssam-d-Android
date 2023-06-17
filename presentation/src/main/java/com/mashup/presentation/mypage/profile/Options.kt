@@ -24,56 +24,68 @@ class Options(private val context: Context) {
                 )
             )
             add(
-                ProfileViewType.Header(
+                ProfileViewType.NavigationContent(
                     id = 1,
+                    actionId = R.id.action_profile_to_sendSignalList,
+                    description = context.getString(R.string.profile_sent_signal),
+                    textStyle = R.style.KeyLinkTextAppearance_Body1_Mint,
+                    drawable = ContextCompat.getDrawable(context, R.drawable.ic_chevron_right_24)
+                )
+            )
+            add(
+                ProfileViewType.Header(
+                    id = 2,
                     description = context.getString(R.string.settings)
                 )
             )
             add(
                 ProfileViewType.NotificationContent(
-                    id = 2,
+                    id = 3,
                     description = context.getString(R.string.notification),
                 )
             )
             add(
                 ProfileViewType.Header(
-                    id = 3,
+                    id = 4,
                     description = context.getString(R.string.information)
                 )
             )
             add(
                 ProfileViewType.NavigationContent(
-                    id = 4,
+                    id = 5,
                     actionId = R.id.action_profile_to_termsOfService,
                     description = context.getString(R.string.tos),
-                    drawable = ContextCompat.getDrawable(context, R.drawable.ic_chevron_right_24)
-                )
-            )
-            add(
-                ProfileViewType.NavigationContent(
-                    id = 5,
-                    actionId = R.id.action_profile_to_privacyPolicy,
-                    description = context.getString(R.string.privacy_policy),
+                    textStyle = R.style.KeyLinkTextAppearance_Body1,
                     drawable = ContextCompat.getDrawable(context, R.drawable.ic_chevron_right_24)
                 )
             )
             add(
                 ProfileViewType.NavigationContent(
                     id = 6,
+                    actionId = R.id.action_profile_to_privacyPolicy,
+                    description = context.getString(R.string.privacy_policy),
+                    textStyle = R.style.KeyLinkTextAppearance_Body1,
+                    drawable = ContextCompat.getDrawable(context, R.drawable.ic_chevron_right_24)
+                )
+            )
+            add(
+                ProfileViewType.NavigationContent(
+                    id = 7,
                     actionId = R.id.action_profile_to_openSource,
                     description = context.getString(R.string.open_source),
+                    textStyle = R.style.KeyLinkTextAppearance_Body1,
                     drawable = ContextCompat.getDrawable(context, R.drawable.ic_chevron_right_24)
                 )
             )
             add(
                 ProfileViewType.AppVersionContent(
-                    id = 7,
+                    id = 8,
                     version = getVersionName(),
                 )
             )
             add(
                 ProfileViewType.LogoutContent(
-                    id = 8
+                    id = 9
                 )
             )
         }

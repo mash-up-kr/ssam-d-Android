@@ -32,4 +32,5 @@
     <string name="notification_description">#인기앱 외 2개 키워드 일치!</string>
     <string name="send_complete">보내기 완료!</string>
     <string name="send_complete_subtitle">시그널이 연결되면 대화방이 만들어져요.</string>
+    <string name="profile_sent_signal">보낸 시그널</string>
 </resources>
