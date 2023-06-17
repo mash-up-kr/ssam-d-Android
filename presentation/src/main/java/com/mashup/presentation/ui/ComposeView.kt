@@ -9,7 +9,7 @@ import com.mashup.presentation.ui.theme.SsamDTheme
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun ComponentActivity.setThemeContent(
-    noinline content: @Composable () -> Unit
+    crossinline content: @Composable () -> Unit
 ) = setContent {
     SsamDTheme {
         content()
@@ -18,7 +18,7 @@ inline fun ComponentActivity.setThemeContent(
 
 @Suppress("NOTHING_TO_INLINE")
 inline fun Fragment.setThemeContent(
-    noinline content: @Composable () -> Unit
+    crossinline content: @Composable () -> Unit
 ) = ComposeView(requireContext()).apply {
     setContent {
         SsamDTheme {
