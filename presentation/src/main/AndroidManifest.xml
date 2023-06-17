@@ -22,7 +22,7 @@
         <activity
             android:name=".onboarding.OnBoardingActivity"
             android:windowSoftInputMode="adjustResize"
-            android:exported="true"/>
+            android:exported="false"/>
 
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
