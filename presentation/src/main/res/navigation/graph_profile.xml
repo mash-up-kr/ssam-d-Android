@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_profile_to_openSource"
             app:destination="@id/openSourceFragment" />
+        <action
+            android:id="@+id/action_profile_to_sendSignalList"
+            app:destination="@id/sendSignalListFragment" />
     </fragment>
     <fragment
         android:id="@+id/termsOfServiceFragment"
@@ -30,4 +33,8 @@
         android:id="@+id/openSourceFragment"
         android:name="com.mashup.presentation.mypage.OpenSourceFragment"
         android:label="OpenSourceFragment" />
+    <fragment
+        android:id="@+id/sendSignalListFragment"
+        android:name="com.mashup.presentation.mypage.SendSignalListFragment"
+        android:label="SendSignalListFragment" />
 </navigation>
