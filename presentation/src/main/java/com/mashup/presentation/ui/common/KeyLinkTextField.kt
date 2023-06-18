@@ -105,12 +105,24 @@ fun KeyLinkOnBoardingTextField(
     maxLength: Int = 0,
     minLength: Int = 0
 ) {
-    Box(modifier = modifier.padding(top = 22.dp)) {
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        // 항상 커서 보일 수 있도록
+        focusRequester.requestFocus()
+    }
+
+    Box(modifier = modifier
+        .padding(top = 22.dp)
+        .fillMaxWidth()
+    ) {
         BasicTextField(
             value = value,
             onValueChange = {
-                if (maxLength == 0 || it.length <= maxLength) {
-                    onValueChange(it)
+                // 띄어쓰기 제거
+                val noSpaceText = it.replace("\\s".toRegex(), "")
+                if (maxLength == 0 || noSpaceText.length <= maxLength) {
+                    onValueChange(noSpaceText)
                 }
             },
             textStyle = TextStyle(
@@ -118,7 +130,7 @@ fun KeyLinkOnBoardingTextField(
                 color = White
             ),
             modifier = modifier
-                .width(IntrinsicSize.Max),
+                .focusRequester(focusRequester),
             cursorBrush = SolidColor(Mint),
             keyboardActions = KeyboardActions(
                 onDone = {
@@ -144,5 +156,4 @@ fun KeyLinkOnBoardingTextField(
             }
         )
     }
-
 }

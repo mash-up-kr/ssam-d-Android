@@ -124,7 +124,7 @@ fun KeywordScreen(
             KeyLinkOnBoardingTextField(
                 value = keyword,
                 onValueChange = { keyword = it },
-                hint = "예) #매쉬업 #운동",
+                hint = "예) 매쉬업",
                 fontSize = 24.sp,
                 onClickDone = {
                     onKeywordAdd(keyword)
