@@ -24,19 +24,21 @@ import com.mashup.presentation.ui.theme.White
 
 @Composable
 fun OnBoardingScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToNotificationPermission: () -> Unit
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         KeyLinkToolbar(
             onClickBack = {}
         )
-        OnBoardingContent(modifier)
+        OnBoardingContent(modifier, navigateToNotificationPermission)
     }
 }
 
 @Composable
 fun OnBoardingContent(
-    modifier: Modifier
+    modifier: Modifier,
+    navigateToNotificationPermission: () -> Unit
 ) {
     val keywords = remember { mutableStateListOf<String>() }
 
@@ -62,7 +64,12 @@ fun OnBoardingContent(
                 .fillMaxWidth()
                 .padding(vertical = 12.dp),
             text = "모두 입력했어요",
-            onClick = {},
+            onClick = {
+                /**
+                 * 일단 navigate 되게 만들어놨고, onboarding api 연결하는걸로 수정 예정
+                 */
+                navigateToNotificationPermission()
+            },
             enable = keywords.size > 0
         )
     }
@@ -183,6 +190,6 @@ fun KeywordChip(text: String, index: Int, onKeywordDelete: (Int) -> Unit) {
 @Composable
 fun PreviewOnBoardingScreen() {
     SsamDTheme {
-        OnBoardingScreen(modifier = Modifier)
+        OnBoardingScreen(modifier = Modifier) {}
     }
 }
