@@ -11,9 +11,12 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.Gray02
 import com.mashup.presentation.ui.theme.Gray07
@@ -146,7 +149,7 @@ fun KeywordChip(text: String) {
                     .size(24.dp)
                     .padding(start = 4.dp)
             ) {
-                Icon(Icons.Default.Delete, contentDescription = "키워드 지우기")
+                Icon(painterResource(id = R.drawable.ic_delete), contentDescription = "키워드 지우기", tint = Color.White)
             }
         }
     }
