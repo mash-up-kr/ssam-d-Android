@@ -1,13 +1,11 @@
 package com.mashup.presentation.onboarding
 
 import androidx.compose.foundation.*
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,6 +38,8 @@ fun OnBoardingScreen(
 fun OnBoardingContent(
     modifier: Modifier
 ) {
+    val keywords = remember { mutableStateListOf<String>() }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -48,13 +48,22 @@ fun OnBoardingContent(
         KeywordScreen(
             modifier = modifier
                 .fillMaxSize()
-                .weight(1f)
+                .weight(1f),
+            keywords = keywords,
+            onKeywordAdd = {
+                keywords.add(it)
+            },
+            onKeywordDelete = {
+                keywords.removeAt(it)
+            }
         )
-        KeyLinkButton(modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 12.dp),
+        KeyLinkButton(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 12.dp),
             text = "모두 입력했어요",
-            onClick = {}
+            onClick = {},
+            enable = keywords.size > 0
         )
     }
 }
@@ -87,8 +96,12 @@ fun NicknameScreen() {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun KeywordScreen(modifier: Modifier) {
-    var chips by remember { mutableStateOf(emptyList<String>()) }
+fun KeywordScreen(
+    modifier: Modifier,
+    keywords: MutableList<String>,
+    onKeywordAdd: (String) -> Unit,
+    onKeywordDelete: (Int) -> Unit
+) {
     var keyword by remember { mutableStateOf("") }
     val scrollState = rememberScrollState()
 
@@ -104,8 +117,8 @@ fun KeywordScreen(modifier: Modifier) {
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.verticalScroll(scrollState)
         ) {
-            for (chip in chips) {
-                KeywordChip(text = chip)
+            keywords.forEachIndexed { i, keyword ->
+                KeywordChip(text = keyword, index = i, onKeywordDelete)
             }
 
             KeyLinkOnBoardingTextField(
@@ -114,7 +127,7 @@ fun KeywordScreen(modifier: Modifier) {
                 hint = "예) #매쉬업 #운동",
                 fontSize = 24.sp,
                 onClickDone = {
-                    chips = chips + keyword
+                    onKeywordAdd(keyword)
                     keyword = ""
                 },
                 minLength = 1
@@ -126,7 +139,7 @@ fun KeywordScreen(modifier: Modifier) {
 
 
 @Composable
-fun KeywordChip(text: String) {
+fun KeywordChip(text: String, index: Int, onKeywordDelete: (Int) -> Unit) {
     Box(
         modifier = Modifier
             .padding(top = 16.dp)
@@ -144,14 +157,20 @@ fun KeywordChip(text: String) {
                 fontSize = 24.sp
             )
 
-            IconButton(
-                onClick = { /*TODO*/ },
+            Icon(
+                painterResource(id = R.drawable.ic_delete),
+                contentDescription = "키워드 지우기",
+                tint = Color.White,
                 modifier = Modifier
                     .size(24.dp)
                     .padding(start = 4.dp)
-            ) {
-                Icon(painterResource(id = R.drawable.ic_delete), contentDescription = "키워드 지우기", tint = Color.White)
-            }
+                    .clickable(
+                        indication = null,
+                        interactionSource = MutableInteractionSource()
+                    ) {
+                        onKeywordDelete(index)
+                    }
+            )
         }
     }
 }
