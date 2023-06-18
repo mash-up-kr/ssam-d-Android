@@ -102,7 +102,8 @@ fun KeyLinkOnBoardingTextField(
     hint: String,
     fontSize: TextUnit,
     onClickDone: () -> Unit,
-    maxLength: Int = 0
+    maxLength: Int = 0,
+    minLength: Int = 0
 ) {
     Box(modifier = modifier.padding(top = 22.dp)) {
         BasicTextField(
@@ -121,7 +122,9 @@ fun KeyLinkOnBoardingTextField(
             cursorBrush = SolidColor(Mint),
             keyboardActions = KeyboardActions(
                 onDone = {
-                    onClickDone()
+                    if (value.length >= minLength) {
+                        onClickDone()
+                    }
                 }
             ),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
