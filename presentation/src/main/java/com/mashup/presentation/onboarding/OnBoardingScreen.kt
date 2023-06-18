@@ -105,6 +105,10 @@ fun KeywordScreen(
     var keyword by remember { mutableStateOf("") }
     val scrollState = rememberScrollState()
 
+    LaunchedEffect(keywords.size) {
+        scrollState.animateScrollTo(Int.MAX_VALUE)
+    }
+
     Column(
         modifier = modifier
     ) {
