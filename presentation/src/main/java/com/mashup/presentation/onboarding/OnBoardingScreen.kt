@@ -116,7 +116,8 @@ fun KeywordScreen(modifier: Modifier) {
                 onClickDone = {
                     chips = chips + keyword
                     keyword = ""
-                }
+                },
+                minLength = 1
             )
         }
 
