@@ -1,6 +1,7 @@
 package com.mashup.presentation.mypage.profile
 
 import android.graphics.drawable.Drawable
+import androidx.annotation.StyleRes
 
 /**
  * Ssam_D_Android
@@ -34,6 +35,7 @@ sealed class ProfileViewType {
         override val id: Int,
         val actionId: Int,
         val description: String,
+        @StyleRes val textStyle: Int,
         val drawable: Drawable?,
     ) : BaseViewType, ProfileViewType()
 
