@@ -19,7 +19,10 @@ fun NicknameScreen(onNextButtonClicked: () -> Unit){
 
         LoginContainer(modifier = Modifier.padding(top = 233.dp, bottom = 12.dp, start = 20.dp, end = 20.dp)) {
             Column(modifier = Modifier.weight(1f)) {
-                KeyLinkMintText(text = stringResource(R.string.login_nickname))
+                KeyLinkMintText(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp),
+                    text = stringResource(R.string.login_nickname)
+                )
             }
 
             KeyLinkButton(
