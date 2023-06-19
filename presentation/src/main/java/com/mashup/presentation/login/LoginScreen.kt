@@ -28,6 +28,7 @@ import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.KeyLinkButton
 import com.mashup.presentation.ui.common.KeyLinkMintText
 import com.mashup.presentation.ui.theme.Gray06
+import com.mashup.presentation.ui.theme.White
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -183,11 +184,8 @@ fun LoginCompletionScreen(onStartButtonClicked: () -> Unit) {
             contentDescription = stringResource(R.string.login_description_blueplanet)
         )
 
-        LoginContainer(modifier = Modifier.padding(top = 155.dp, bottom = 48.dp, start = 20.dp, end = 20.dp)) {
-            KeyLinkMintText(
-                modifier = Modifier.weight(1f),
-                text = stringResource(R.string.login_completion_title)
-            )
+        LoginContainer(modifier = Modifier.padding(top = 160.dp, bottom = 72.dp, start = 20.dp, end = 20.dp)) {
+            LoginCompletionText(modifier = Modifier.weight(1f), nickname = "test")
 
             KeyLinkButton(
                 modifier = Modifier.fillMaxWidth(),
@@ -196,4 +194,18 @@ fun LoginCompletionScreen(onStartButtonClicked: () -> Unit) {
             )
         }
     }
+}
+
+@Composable
+fun LoginCompletionText(modifier: Modifier = Modifier, nickname: String) {
+    Text(
+        modifier = modifier.fillMaxWidth(),
+        text = nickname + stringResource(R.string.login_completion_title),
+        style = TextStyle(
+            fontWeight = FontWeight.Medium,
+            fontSize = 20.sp,
+            lineHeight = 28.sp,
+            color = White
+        )
+    )
 }
