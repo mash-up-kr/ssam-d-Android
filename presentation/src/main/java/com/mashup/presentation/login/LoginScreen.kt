@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -50,7 +52,8 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
                 onLoginButtonClicked = loginViewModel::handleKakaoLogin
             )
             1 -> LoginCompletionScreen (
-                onStartButtonClicked = loginViewModel::handleKakaoLogin
+                onStartButtonClicked = loginViewModel::handleKakaoLogin,
+                nickname = "일이삼사오육칠팔구구"
             )
         }
     }
@@ -74,7 +77,6 @@ fun LoginContentScreen(
 
             Column(
                 modifier = Modifier.padding(horizontal = 20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(53.dp)
             ) {
                 KakaoLoginButton(modifier = Modifier.padding(horizontal = 4.dp)) {
@@ -88,7 +90,7 @@ fun LoginContentScreen(
 }
 
 @Composable
-private fun LoginBackground() {
+fun LoginBackground() {
     Image(
         modifier = Modifier.fillMaxSize(),
         painter = painterResource(R.drawable.img_space),
@@ -151,7 +153,7 @@ private fun KakaoLoginButton(modifier: Modifier = Modifier, onLoginButtonClicked
     Image(
         modifier = modifier
             .height(52.dp)
-            .width(312.dp)
+            .fillMaxWidth()
             .clickable { onLoginButtonClicked() },
         painter = painterResource(R.drawable.img_kakao_login),
         contentDescription = stringResource(R.string.login_description_kakao_btn)
@@ -161,7 +163,7 @@ private fun KakaoLoginButton(modifier: Modifier = Modifier, onLoginButtonClicked
 @Composable
 private fun LoginGuideText(modifier: Modifier = Modifier) {
     Text(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         text = stringResource(R.string.login_privacy_policy),
         textAlign = TextAlign.Center,
         style = TextStyle(
@@ -174,7 +176,7 @@ private fun LoginGuideText(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun LoginCompletionScreen(onStartButtonClicked: () -> Unit) {
+fun LoginCompletionScreen(onStartButtonClicked: () -> Unit, nickname: String) {
     Box {
         LoginBackground()
 
@@ -185,7 +187,10 @@ fun LoginCompletionScreen(onStartButtonClicked: () -> Unit) {
         )
 
         LoginContainer(modifier = Modifier.padding(top = 160.dp, bottom = 72.dp, start = 20.dp, end = 20.dp)) {
-            LoginCompletionText(modifier = Modifier.weight(1f), nickname = "test")
+            Column(modifier = Modifier.weight(1f)) {
+                LoginProfileImage(modifier = Modifier.padding(bottom = 24.dp))
+                LoginCompletionText(nickname = nickname)
+            }
 
             KeyLinkButton(
                 modifier = Modifier.fillMaxWidth(),
@@ -197,7 +202,7 @@ fun LoginCompletionScreen(onStartButtonClicked: () -> Unit) {
 }
 
 @Composable
-fun LoginCompletionText(modifier: Modifier = Modifier, nickname: String) {
+private fun LoginCompletionText(modifier: Modifier = Modifier, nickname: String) {
     Text(
         modifier = modifier.fillMaxWidth(),
         text = nickname + stringResource(R.string.login_completion_title),
@@ -207,5 +212,15 @@ fun LoginCompletionText(modifier: Modifier = Modifier, nickname: String) {
             lineHeight = 28.sp,
             color = White
         )
+    )
+}
+
+@Composable
+private fun LoginProfileImage(modifier: Modifier = Modifier) {
+    Image(
+        modifier = modifier.size(64.dp).clip(CircleShape),
+        painter = painterResource(R.drawable.img_kakao_login),
+        contentDescription = stringResource(R.string.login_description_profile_img),
+        contentScale = ContentScale.Crop
     )
 }
