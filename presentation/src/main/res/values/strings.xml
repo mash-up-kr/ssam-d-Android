@@ -19,7 +19,8 @@
     <string name="open_source">오픈소스</string>
     <string name="app_version">버전</string>
     <string name="information">정보</string>
-    <string name="login_title">나의 키워드 행성을 찾아서</string>
+    <string name="login_title">내 관심사에 대한 쪽지를 받아보세요</string>
+    <string name="login_privacy_policy">이용 시 이용약관 프라이버시 정책에 동의한 것으로 합니다</string>
     <string name="login_description_space">우주 배경 사진입니다.</string>
     <string name="login_description_keylink">keylink 타이틀 사진입니다.</string>
     <string name="login_description_kakao_btn">카카오 로그인 버튼입니다.</string>
