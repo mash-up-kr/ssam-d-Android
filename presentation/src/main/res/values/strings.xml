@@ -24,6 +24,8 @@
     <string name="login_description_space">우주 배경 사진입니다.</string>
     <string name="login_description_keylink">keylink 타이틀 사진입니다.</string>
     <string name="login_description_kakao_btn">카카오 로그인 버튼입니다.</string>
+    <string name="login_nickname">먼저, 키링에서\n사용할 닉네임을 입력해주세요</string>
+    <string name="login_next_btn">다음</string>
     <string name="login_completion_title">님\n반가워요!\n\n키링에선 내가 만든 키워드에\n어울리는 사람과 대화할 수 있어요.\n\n지금 나만의 키워드를 만들어보세요.</string>
     <string name="login_description_blueplanet">우주 배경 아래에 위치한 푸른 행성 사진입니다.</string>
     <string name="login_description_profile_img">프로필 사진입니다.</string>

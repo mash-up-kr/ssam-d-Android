@@ -43,7 +43,7 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
     
     HorizontalPager(
         modifier = Modifier.fillMaxSize(),
-        pageCount = 2,
+        pageCount = 3,
         state = pagerState,
         userScrollEnabled = false
     ) { page ->
@@ -51,7 +51,10 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
             0 -> LoginContentScreen (
                 onLoginButtonClicked = loginViewModel::handleKakaoLogin
             )
-            1 -> LoginCompletionScreen (
+            1 -> NicknameScreen(
+                onNextButtonClicked = loginViewModel::handleKakaoLogin
+            )
+            2 -> LoginCompletionScreen (
                 onStartButtonClicked = loginViewModel::handleKakaoLogin,
                 nickname = "일이삼사오육칠팔구구"
             )
@@ -100,7 +103,7 @@ fun LoginBackground() {
 }
 
 @Composable
-private fun LoginContainer(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
+fun LoginContainer(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
     Scaffold(
         modifier = modifier,
         backgroundColor = Color.Transparent
