@@ -8,6 +8,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseActivity
+import com.mashup.presentation.common.extension.addBadge
+import com.mashup.presentation.common.extension.removeBadge
 import com.mashup.presentation.databinding.ActivityHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,13 +33,18 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
     private fun initBottomNavigationView() {
         binding.bnvHome.setupWithNavController(navController)
         addSignalIconItemView()
+        binding.bnvHome.addBadge(this, 1000)
     }
 
     private fun initDestinationChangeListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.bnvHome.visibility = when (destination.id) {
                 /* 디자인 명세에 따라 수정 */
-                R.id.homeFragment, R.id.reelsFragment -> View.VISIBLE
+                R.id.homeFragment -> View.VISIBLE
+                R.id.reelsFragment -> {
+                    binding.bnvHome.removeBadge()
+                    View.VISIBLE
+                }
                 else -> View.GONE
             }
         }
