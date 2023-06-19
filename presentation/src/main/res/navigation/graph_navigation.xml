@@ -6,5 +6,5 @@
 
     <include app:graph="@navigation/graph_home" />
     <include app:graph="@navigation/graph_signal" />
-    <include app:graph="@navigation/graph_reels" />
+    <include app:graph="@navigation/graph_chat" />
 </navigation>
