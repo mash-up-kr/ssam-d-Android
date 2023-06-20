@@ -102,42 +102,58 @@ fun KeyLinkOnBoardingTextField(
     hint: String,
     fontSize: TextUnit,
     onClickDone: () -> Unit,
-    maxLength: Int = 0
+    maxLength: Int = 0,
+    minLength: Int = 0
 ) {
-    BasicTextField(
-        value = value,
-        onValueChange = {
-            if (maxLength == 0 || it.length <= maxLength) {
-                onValueChange(it)
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        // 항상 커서 보일 수 있도록
+        focusRequester.requestFocus()
+    }
+
+    Box(modifier = modifier
+        .padding(top = 22.dp)
+        .fillMaxWidth()
+    ) {
+        BasicTextField(
+            value = value,
+            onValueChange = {
+                // 띄어쓰기 제거
+                val noSpaceText = it.replace("\\s".toRegex(), "")
+                if (maxLength == 0 || noSpaceText.length <= maxLength) {
+                    onValueChange(noSpaceText)
+                }
+            },
+            textStyle = TextStyle(
+                fontSize = fontSize,
+                color = White
+            ),
+            modifier = modifier
+                .focusRequester(focusRequester),
+            cursorBrush = SolidColor(Mint),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    if (value.length >= minLength) {
+                        onClickDone()
+                    }
+                }
+            ),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            decorationBox = { innerTextField ->
+                if (value.isEmpty()) {
+                    Text(
+                        text = hint,
+                        style = TextStyle(
+                            color = Color.Gray,
+                            fontSize = fontSize
+                        ),
+                        modifier = Modifier
+                            .alpha(ContentAlpha.medium)
+                    )
+                }
+                innerTextField()
             }
-        },
-        textStyle = TextStyle(
-            fontSize = fontSize,
-            color = White
-        ),
-        modifier = modifier
-            .width(IntrinsicSize.Max)
-            .padding(vertical = 8.dp, horizontal = 20.dp),
-        cursorBrush = SolidColor(Mint),
-        keyboardActions = KeyboardActions(
-            onDone = {
-                onClickDone()
-            }
-        ),
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        decorationBox = { innerTextField ->
-            if (value.isEmpty()) {
-                Text(
-                    text = hint,
-                    style = TextStyle(
-                        color = Color.Gray,
-                        fontSize = fontSize
-                    ),
-                    modifier = Modifier
-                        .alpha(ContentAlpha.medium)
-                )
-            }
-            innerTextField()
-        }
-    )
+        )
+    }
 }
