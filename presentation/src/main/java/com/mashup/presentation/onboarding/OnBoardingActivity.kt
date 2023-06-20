@@ -1,9 +1,16 @@
 package com.mashup.presentation.onboarding
 
-import com.mashup.presentation.R
-import com.mashup.presentation.common.base.BaseActivity
-import com.mashup.presentation.databinding.ActivitySignalBinding
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import com.mashup.presentation.common.extension.setThemeContent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OnBoardingActivity : BaseActivity<ActivitySignalBinding>(R.layout.activity_onboarding)
+class OnBoardingActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setThemeContent {
+            OnBoardingScreen()
+        }
+    }
+}

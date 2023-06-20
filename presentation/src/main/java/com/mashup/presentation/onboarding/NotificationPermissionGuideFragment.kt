@@ -9,18 +9,13 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
-import com.google.android.material.snackbar.Snackbar
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
 import com.mashup.presentation.common.extension.makeSnackBar
-import com.mashup.presentation.common.util.permission.PermissionType
-import com.mashup.presentation.common.util.permission.manager.PermissionManager
-import com.mashup.presentation.common.util.permission.manager.PermissionManagerImpl
 import com.mashup.presentation.databinding.FragmentNotificationPermissionGuideBinding
 import com.mashup.presentation.ui.common.KeyLinkMintText
-import com.mashup.presentation.ui.setThemeContent
+import com.mashup.presentation.common.extension.setThemeContent
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 /**
  * Ssam_D_Android
