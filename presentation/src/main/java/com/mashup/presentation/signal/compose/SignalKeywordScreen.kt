@@ -1,10 +1,10 @@
 package com.mashup.presentation.signal.compose
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -13,7 +13,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.R
+import com.mashup.presentation.ui.common.KeyLinkOnBoardingTextField
 import com.mashup.presentation.ui.common.KeyLinkToolbar
+import com.mashup.presentation.ui.common.KeywordChip
 import com.mashup.presentation.ui.theme.Gray06
 import com.mashup.presentation.ui.theme.SsamDTheme
 import com.mashup.presentation.ui.theme.White
@@ -29,6 +31,7 @@ fun SignalKeywordScreen(
     navigateUp: () -> Unit = {},
     isLoading: Boolean
 ) {
+    val keywords = remember { mutableStateListOf<String>() }
 //    var isLoading by rememberSaveable { mutableStateOf(false) }
 
 //    SideEffect {
@@ -48,7 +51,14 @@ fun SignalKeywordScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 20.dp, vertical = 8.dp)
-                        .weight(1f)
+                        .weight(1f),
+                    keywords = keywords,
+                    onKeywordAdd = {
+                        keywords.add(it)
+                    },
+                    onKeywordDelete = {
+                        keywords.removeAt(it)
+                    },
                 )
             }
         )
@@ -68,10 +78,21 @@ fun NameScreen(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SignalKeyword(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    keywords: MutableList<String>,
+    onKeywordAdd: (String) -> Unit,
+    onKeywordDelete: (Int) -> Unit
 ) {
+    var keyword by remember { mutableStateOf("") }
+    val scrollState = rememberScrollState()
+
+    LaunchedEffect(keywords.size) {
+        scrollState.animateScrollTo(Int.MAX_VALUE)
+    }
+
     Column(modifier = modifier) {
         Text(
             text = stringResource(R.string.signal_keyword_title),
@@ -90,6 +111,35 @@ fun SignalKeyword(
             ),
             modifier = Modifier.padding(top = 8.dp)
         )
+
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier
+                .padding(top = 28.dp)
+                .verticalScroll(scrollState)
+        ) {
+            keywords.forEachIndexed { i, keyword ->
+                KeywordChip(
+                    text = keyword,
+                    drawBorder = true,
+                    chipTextSize = 14.sp,
+                    index = i,
+                    onKeywordDelete = onKeywordDelete
+                )
+            }
+
+            KeyLinkOnBoardingTextField(
+                value = keyword,
+                onValueChange = { keyword = it },
+                hint = "예) 매쉬업",
+                fontSize = 14.sp,
+                onClickDone = {
+                    onKeywordAdd(keyword)
+                    keyword = ""
+                },
+                minLength = 1
+            )
+        }
     }
 }
 
