@@ -16,7 +16,7 @@ class SignalKeywordFragment :
 
     override fun initViews() {
         binding.composeView.setThemeContent {
-            SignalKeywordScreen(isLoading = true)
+            SignalKeywordScreen(isLoading = false)
         }
     }
 }

@@ -38,4 +38,6 @@
     <string name="ok">확인</string>
     <string name="hint_signal_content">오늘의 날씨, 기분, 나눈 대화들을 누군가에게 전달해보세요. 대화는 1:1로 프라이빗하게 이루어집니다.</string>
     <string name="dialog_signal_content">300자 까지 입력할 수 있어요.</string>
+    <string name="signal_keyword_title">쓴 내용의 키워드를 추출했어요</string>
+    <string name="signal_keyword_subtitle">키워드를 확인하고 시그널을 보내보세요</string>
 </resources>
