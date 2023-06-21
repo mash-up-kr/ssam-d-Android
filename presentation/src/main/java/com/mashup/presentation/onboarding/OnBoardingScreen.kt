@@ -129,7 +129,13 @@ fun KeywordScreen(
             modifier = Modifier.verticalScroll(scrollState)
         ) {
             keywords.forEachIndexed { i, keyword ->
-                KeywordChip(text = keyword, drawBorder = false, index = i, onKeywordDelete)
+                KeywordChip(
+                    text = keyword,
+                    drawBorder = false,
+                    chipTextSize = 24.sp,
+                    index = i,
+                    onKeywordDelete = onKeywordDelete
+                )
             }
 
             KeyLinkOnBoardingTextField(

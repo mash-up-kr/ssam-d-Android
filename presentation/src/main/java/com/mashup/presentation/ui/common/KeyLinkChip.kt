@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.R
@@ -31,6 +32,7 @@ fun KeywordChip(
     text: String,
     drawBorder: Boolean,
     index: Int,
+    chipTextSize: TextUnit,
     onKeywordDelete: (Int) -> Unit
 ) {
     Box(
@@ -48,7 +50,7 @@ fun KeywordChip(
             Text(
                 text = "#$text",
                 color = White,
-                fontSize = 24.sp
+                fontSize = chipTextSize
             )
 
             Icon(
@@ -78,8 +80,20 @@ fun ChipPreview() {
                 .fillMaxWidth()
                 .padding(10.dp)
         ) {
-            KeywordChip(text = "키워드", drawBorder = false, index = 0, onKeywordDelete = {})
-            KeywordChip(text = "버스커버스커장범준노래", drawBorder = true, index = 0, onKeywordDelete = {})
+            KeywordChip(
+                text = "키워드",
+                drawBorder = false,
+                chipTextSize = 24.sp,
+                index = 0,
+                onKeywordDelete = {}
+            )
+            KeywordChip(
+                text = "버스커버스커장범준노래",
+                drawBorder = true,
+                chipTextSize = 14.sp,
+                index = 0,
+                onKeywordDelete = {}
+            )
         }
     }
 }
