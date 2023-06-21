@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.R
@@ -25,7 +26,8 @@ fun NicknameScreen(onNextButtonClicked: (String) -> Unit){
             Column(modifier = Modifier.weight(1f)) {
                 KeyLinkMintText(
                     modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp),
-                    text = stringResource(R.string.login_nickname)
+                    text = stringResource(R.string.login_nickname),
+                    textAlign = TextAlign.Left
                 )
 
                 KeyLinkBoxTextField(
