@@ -140,7 +140,10 @@ private fun LoginTitle(modifier: Modifier) {
             contentDescription = stringResource(R.string.login_description_keylink)
         )
 
-        KeyLinkMintText(text = stringResource(R.string.login_title))
+        KeyLinkMintText(
+            text = stringResource(R.string.login_title),
+            fontSize = 16.sp
+        )
     }
 }
 
@@ -198,7 +201,8 @@ fun NicknameScreen(onNextButtonClicked: (String) -> Unit){
                 KeyLinkMintText(
                     modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp),
                     text = stringResource(R.string.login_nickname),
-                    textAlign = TextAlign.Left
+                    textAlign = TextAlign.Left,
+                    fontSize = 22.sp
                 )
 
                 KeyLinkBoxTextField(
