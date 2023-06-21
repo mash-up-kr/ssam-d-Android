@@ -35,5 +35,7 @@
     <string name="profile_sent_signal">보낸 시그널</string>
     <string name="create_signal">시그널 생성</string>
     <string name="next">다음</string>
+    <string name="ok">확인</string>
     <string name="hint_signal_content">오늘의 날씨, 기분, 나눈 대화들을 누군가에게 전달해보세요. 대화는 1:1로 프라이빗하게 이루어집니다.</string>
+    <string name="dialog_signal_content">300자 까지 입력할 수 있어요.</string>
 </resources>
