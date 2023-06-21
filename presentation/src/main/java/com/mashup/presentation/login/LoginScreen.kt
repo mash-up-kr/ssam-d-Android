@@ -45,7 +45,11 @@ fun LoginScreen(
     }
     
     HorizontalPager(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .windowInsetsPadding(
+                WindowInsets.systemBars.only(WindowInsetsSides.Vertical)
+            ),
         pageCount = 3,
         state = pagerState,
         userScrollEnabled = false
@@ -194,7 +198,7 @@ fun LoginCompletionScreen(onStartButtonClicked: () -> Unit, nickname: String) {
             contentDescription = stringResource(R.string.login_description_blueplanet)
         )
 
-        LoginContainer(modifier = Modifier.padding(top = 160.dp, bottom = 72.dp, start = 20.dp, end = 20.dp)) {
+        LoginContainer(modifier = Modifier.padding(top = 112.dp, bottom = 72.dp, start = 20.dp, end = 20.dp)) {
             Column(modifier = Modifier.weight(1f)) {
                 LoginProfileImage(modifier = Modifier.padding(bottom = 24.dp))
                 LoginCompletionText(nickname = nickname)
@@ -229,7 +233,7 @@ private fun LoginProfileImage(modifier: Modifier = Modifier) {
         modifier = modifier
             .size(64.dp)
             .clip(CircleShape),
-        painter = painterResource(R.drawable.img_kakao_login),
+        painter = painterResource(R.drawable.img_profile_01),
         contentDescription = stringResource(R.string.login_description_profile_img),
         contentScale = ContentScale.Crop
     )

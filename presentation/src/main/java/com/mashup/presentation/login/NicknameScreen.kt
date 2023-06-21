@@ -1,9 +1,6 @@
 package com.mashup.presentation.login
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -22,7 +19,7 @@ fun NicknameScreen(onNextButtonClicked: (String) -> Unit){
     Box {
         LoginBackground()
 
-        LoginContainer(modifier = Modifier.padding(top = 185.dp, bottom = 12.dp, start = 20.dp, end = 20.dp)) {
+        LoginContainer(modifier = Modifier.padding(top = 185.dp, start = 20.dp, end = 20.dp)) {
             Column(modifier = Modifier.weight(1f)) {
                 KeyLinkMintText(
                     modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp),
@@ -46,7 +43,7 @@ fun NicknameScreen(onNextButtonClicked: (String) -> Unit){
             }
 
             KeyLinkButton(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
+                modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp).imePadding(),
                 text = stringResource(R.string.login_next_btn),
                 onClick = { onNextButtonClicked(nickname) },
                 enable = validation == ValidationState.SUCCESS
