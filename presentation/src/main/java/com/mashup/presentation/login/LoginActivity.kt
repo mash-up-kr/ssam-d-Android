@@ -11,7 +11,11 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setThemeContent {
-            LoginScreen()
+            LoginScreen(navigateToOnBoarding = ::navigateToOnBoarding)
         }
+    }
+
+    private fun navigateToOnBoarding() {
+        // 임시 생성
     }
 }

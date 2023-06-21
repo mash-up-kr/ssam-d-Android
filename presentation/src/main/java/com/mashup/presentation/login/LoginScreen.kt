@@ -34,7 +34,10 @@ import com.mashup.presentation.ui.theme.White
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
+fun LoginScreen(
+    loginViewModel: LoginViewModel = viewModel(),
+    navigateToOnBoarding: () -> Unit
+) {
     val pagerState = rememberPagerState(0)
 
     LaunchedEffect(loginViewModel.currentPage) {
@@ -52,11 +55,13 @@ fun LoginScreen(loginViewModel: LoginViewModel = viewModel()) {
                 onLoginButtonClicked = loginViewModel::handleKakaoLogin
             )
             1 -> NicknameScreen(
-                onNextButtonClicked = loginViewModel::handleKakaoLogin
+                onNextButtonClicked = { nickname ->
+                    loginViewModel.setNicknameAndAddPage(nickname)
+                },
             )
             2 -> LoginCompletionScreen (
-                onStartButtonClicked = loginViewModel::handleKakaoLogin,
-                nickname = "일이삼사오육칠팔구구"
+                onStartButtonClicked = navigateToOnBoarding,
+                nickname = loginViewModel.nickname
             )
         }
     }
@@ -221,7 +226,9 @@ private fun LoginCompletionText(modifier: Modifier = Modifier, nickname: String)
 @Composable
 private fun LoginProfileImage(modifier: Modifier = Modifier) {
     Image(
-        modifier = modifier.size(64.dp).clip(CircleShape),
+        modifier = modifier
+            .size(64.dp)
+            .clip(CircleShape),
         painter = painterResource(R.drawable.img_kakao_login),
         contentDescription = stringResource(R.string.login_description_profile_img),
         contentScale = ContentScale.Crop

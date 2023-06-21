@@ -23,6 +23,7 @@ class LoginViewModel @Inject constructor(
         get() = getApplication<Application>().applicationContext
 
     var currentPage by mutableStateOf(0)
+    var nickname by mutableStateOf("")
 
     fun handleKakaoLogin() {
         // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오 계정으로 로그인
@@ -48,7 +49,7 @@ class LoginViewModel @Inject constructor(
                 loginKakaoAccount()
             } else if (token != null) {
                 Timber.i("카카오톡으로 로그인 성공 ${token.accessToken}")
-                currentPage++
+                addPage()
             }
         }
     }
@@ -59,10 +60,17 @@ class LoginViewModel @Inject constructor(
                 Timber.e("카카오 계정으로 로그인 실패", error)
             } else if (token != null) {
                 Timber.i("카카오 계정으로 로그인 성공 ${token.accessToken}")
-                currentPage++
+                addPage()
             }
         }
 
         UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
     }
+
+    fun setNicknameAndAddPage(nickname: String) {
+        this.nickname = nickname
+        addPage()
+    }
+
+    private fun addPage() = currentPage++
 }
