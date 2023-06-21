@@ -82,23 +82,21 @@ fun SignalContent(
             .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
-        Column(
-            modifier = modifier.weight(1f)
-        ) {
-            KeyLinkTextField(
-                modifier = Modifier.fillMaxSize(),
-                value = text,
-                onValueChange = {
-                    if (it.length >= 300) onLengthOver.invoke()
-                    text = it
-                },
-                hint = stringResource(id = R.string.hint_signal_content),
-                hintAlign = TextAlign.Start,
-                onClickDone = { /*TODO*/ },
-                fontSize = 18.sp,
-                maxLength = 300
-            )
-        }
+        KeyLinkTextField(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f),
+            value = text,
+            onValueChange = {
+                if (it.length >= 300) onLengthOver.invoke()
+                text = it
+            },
+            hint = stringResource(id = R.string.hint_signal_content),
+            hintAlign = TextAlign.Start,
+            onClickDone = { /*TODO*/ },
+            fontSize = 18.sp,
+            maxLength = 300
+        )
         KeyLinkButton(
             modifier = Modifier
                 .fillMaxWidth()
