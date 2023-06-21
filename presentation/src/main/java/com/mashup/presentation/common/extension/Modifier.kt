@@ -15,9 +15,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
-import com.mashup.presentation.ui.theme.Gray07
-import com.mashup.presentation.ui.theme.Gray08
-import com.mashup.presentation.ui.theme.Gray09
+import com.mashup.presentation.ui.theme.*
 
 /**
  * Ssam_D_Android
@@ -38,7 +36,7 @@ internal fun Modifier.shimmerEffect(): Modifier = composed {
 
     background(
         brush = Brush.linearGradient(
-            colors = listOf(Gray09, Gray08, Gray07),
+            colors = listOf(Gray04, Gray03, Gray02),
             start = Offset(startOffsetX, 0f),
             end = Offset(startOffsetX + size.width.toFloat(), size.height.toFloat())
         ),

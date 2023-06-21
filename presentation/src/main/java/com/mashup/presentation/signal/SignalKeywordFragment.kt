@@ -2,8 +2,9 @@ package com.mashup.presentation.signal
 
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
-import com.mashup.presentation.common.extension.navigate
+import com.mashup.presentation.common.extension.setThemeContent
 import com.mashup.presentation.databinding.FragmentSignalKeywordBinding
+import com.mashup.presentation.signal.compose.SignalKeywordScreen
 
 /**
  * Ssam_D_Android
@@ -14,8 +15,8 @@ class SignalKeywordFragment :
     BaseFragment<FragmentSignalKeywordBinding>(R.layout.fragment_signal_keyword) {
 
     override fun initViews() {
-        binding.asd.setOnClickListener {
-            navigate(R.id.action_signalKeyword_to_signalComplete)
+        binding.composeView.setThemeContent {
+            SignalKeywordScreen(isLoading = true)
         }
     }
 }
