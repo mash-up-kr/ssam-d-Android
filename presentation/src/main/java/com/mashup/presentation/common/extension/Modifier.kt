@@ -23,20 +23,29 @@ import com.mashup.presentation.ui.theme.*
  * @created 2023/06/21
  */
 
-internal fun Modifier.shimmerEffect(): Modifier = composed {
+internal fun Modifier.shimmerEffect(delay: Int = 0): Modifier = composed {
     var size by remember { mutableStateOf(IntSize.Zero) }
     val transition = rememberInfiniteTransition()
     val startOffsetX by transition.animateFloat(
         initialValue = -2 * size.width.toFloat(),
         targetValue = 2 * size.width.toFloat(),
         animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1000)
+            animation = tween(
+                durationMillis = 1300,
+                delayMillis = delay
+            )
         )
     )
 
     background(
         brush = Brush.linearGradient(
-            colors = listOf(Gray04, Gray03, Gray02),
+            colors = listOf(
+                Gray04,
+                Gray03,
+                Gray02,
+                Gray03,
+                Gray04,
+            ),
             start = Offset(startOffsetX, 0f),
             end = Offset(startOffsetX + size.width.toFloat(), size.height.toFloat())
         ),
