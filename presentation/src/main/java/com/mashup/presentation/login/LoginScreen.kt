@@ -9,9 +9,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,8 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.airbnb.lottie.compose.*
 import com.mashup.presentation.R
-import com.mashup.presentation.ui.common.KeyLinkButton
-import com.mashup.presentation.ui.common.KeyLinkMintText
+import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.Gray06
 import com.mashup.presentation.ui.theme.White
 
@@ -102,7 +99,7 @@ fun LoginContentScreen(
 }
 
 @Composable
-fun LoginBackground() {
+private fun LoginBackground() {
     Image(
         modifier = Modifier.fillMaxSize(),
         painter = painterResource(R.drawable.img_space),
@@ -112,7 +109,7 @@ fun LoginBackground() {
 }
 
 @Composable
-fun LoginContainer(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
+private fun LoginContainer(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
     Scaffold(
         modifier = modifier,
         backgroundColor = Color.Transparent
@@ -185,6 +182,48 @@ private fun LoginGuideText(modifier: Modifier = Modifier) {
             color = Gray06
         )
     )
+}
+
+@Composable
+fun NicknameScreen(onNextButtonClicked: (String) -> Unit){
+    var nickname by remember { mutableStateOf("") }
+    var validation by remember { mutableStateOf(ValidationState.EMPTY) }
+    val expectedText = "올바른 닉네임"
+
+    Box {
+        LoginBackground()
+
+        LoginContainer(modifier = Modifier.padding(top = 185.dp, start = 20.dp, end = 20.dp)) {
+            Column(modifier = Modifier.weight(1f)) {
+                KeyLinkMintText(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp),
+                    text = stringResource(R.string.login_nickname),
+                    textAlign = TextAlign.Left
+                )
+
+                KeyLinkBoxTextField(
+                    value = nickname,
+                    onValueChange = { value ->
+                        nickname = value
+                        checkValidation(nickname, expectedText) { validationState ->
+                            validation = validationState
+                        }
+                    },
+                    hint = stringResource(R.string.login_nickname_hint),
+                    maxLength = 10,
+                    fontSize = 32.sp,
+                    validationState = validation
+                )
+            }
+
+            KeyLinkButton(
+                modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp).imePadding(),
+                text = stringResource(R.string.login_next_btn),
+                onClick = { onNextButtonClicked(nickname) },
+                enable = validation == ValidationState.SUCCESS
+            )
+        }
+    }
 }
 
 @Composable
