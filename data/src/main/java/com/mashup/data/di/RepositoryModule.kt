@@ -1,5 +1,6 @@
 package com.mashup.data.di
 
+import com.mashup.data.repository.OnboardingRepositoryImpl
 import com.mashup.domain.repository.OnboardingRepository
 import dagger.Binds
 import dagger.Module
@@ -13,5 +14,5 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
-    fun bindLoginRepository(onboardingRepository: OnboardingRepository): OnboardingRepository
+    fun bindOnboardingRepository(onboardingRepository: OnboardingRepositoryImpl): OnboardingRepository
 }
