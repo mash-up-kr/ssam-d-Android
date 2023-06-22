@@ -40,4 +40,11 @@
     <string name="dialog_signal_content">300자 까지 입력할 수 있어요.</string>
     <string name="signal_keyword_title">쓴 내용의 키워드를 추출했어요</string>
     <string name="signal_keyword_subtitle">키워드를 확인하고 시그널을 보내보세요</string>
+
+    // 온보딩
+    <string name="onboarding_keywords_complete">모두 입력했어요</string>
+    <string name="onboarding_keywords_input">대화하고 싶은 키워드를 적어주세요</string>
+    <string name="onboarding_keywords_input_description">입력한 키워드를 기반으로 매칭해드려</string>
+    <string name="onboarding_keywords_chip_hint">입력한 키워드를 기반으로 매칭해드려요</string>
+    <string name="onboarding_delete_keyword_content_description">키워드 지우기</string>
 </resources>

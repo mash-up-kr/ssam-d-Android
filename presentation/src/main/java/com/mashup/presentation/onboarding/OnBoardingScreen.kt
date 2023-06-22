@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -63,7 +64,7 @@ fun OnBoardingContent(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(vertical = 12.dp),
-            text = "모두 입력했어요",
+            text = stringResource(id = R.string.onboarding_keywords_complete),
             onClick = {
                 /**
                  * 일단 navigate 되게 만들어놨고, onboarding api 연결하는걸로 수정 예정
@@ -120,9 +121,13 @@ fun KeywordScreen(
         modifier = modifier
     ) {
         Spacer(modifier = Modifier.height(12.dp))
-        KeyLinkMintText(text = "대화하고 싶은 키워드를 적어주세요")
+        KeyLinkMintText(text = stringResource(id = R.string.onboarding_keywords_input))
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "입력한 키워드를 기반으로 매칭해드려요", fontSize = 14.sp, color = Gray07)
+        Text(
+            text = stringResource(id = R.string.onboarding_keywords_input_description),
+            fontSize = 14.sp,
+            color = Gray07
+        )
         Spacer(modifier = Modifier.height(4.dp))
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -141,7 +146,7 @@ fun KeywordScreen(
             KeyLinkOnBoardingTextField(
                 value = keyword,
                 onValueChange = { keyword = it },
-                hint = "예) 매쉬업",
+                hint = stringResource(id = R.string.onboarding_keywords_chip_hint),
                 fontSize = 24.sp,
                 onClickDone = {
                     onKeywordAdd(keyword)
