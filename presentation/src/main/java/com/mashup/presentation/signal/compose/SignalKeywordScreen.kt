@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.KeyLinkOnBoardingTextField
 import com.mashup.presentation.ui.common.KeyLinkToolbar
-import com.mashup.presentation.ui.common.KeywordChip
+import com.mashup.presentation.ui.common.KeywordBorderChip
 import com.mashup.presentation.ui.theme.Gray06
 import com.mashup.presentation.ui.theme.SsamDTheme
 import com.mashup.presentation.ui.theme.White
@@ -119,10 +119,8 @@ fun SignalKeyword(
                 .verticalScroll(scrollState)
         ) {
             keywords.forEachIndexed { i, keyword ->
-                KeywordChip(
+                KeywordBorderChip(
                     text = keyword,
-                    drawBorder = true,
-                    chipTextSize = 14.sp,
                     index = i,
                     onKeywordDelete = onKeywordDelete
                 )

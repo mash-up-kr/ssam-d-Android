@@ -136,8 +136,6 @@ fun KeywordScreen(
             keywords.forEachIndexed { i, keyword ->
                 KeywordChip(
                     text = keyword,
-                    drawBorder = false,
-                    chipTextSize = 24.sp,
                     index = i,
                     onKeywordDelete = onKeywordDelete
                 )
