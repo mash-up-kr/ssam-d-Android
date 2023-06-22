@@ -57,15 +57,3 @@ internal fun Modifier.shimmerEffect(delay: Int = 0): Modifier = composed {
         size = it.size
     }
 }
-
-internal fun Modifier.drawBorder(draw: Boolean) = this.then(
-    if (draw) {
-        Modifier.border(
-            width = 1.dp,
-            brush = Brush.linearGradient(
-                colors = listOf(Purple, Mint)
-            ),
-            shape = RoundedCornerShape(10.dp)
-        )
-    } else Modifier
-)
