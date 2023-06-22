@@ -31,8 +31,10 @@ internal fun BottomNavigationView.removeBadge() {
     val bottomMenu = getChildAt(0) as BottomNavigationMenuView
     val itemView = bottomMenu.getChildAt(2) as BottomNavigationItemView
 
-    if (itemView.childCount == 3) {  // badge까지 추가되면 3
-        itemView.removeViewAt(2)
+    findViewById<FrameLayout>(R.id.fl_badge)?.let {
+        if (itemView.contains(it)) {
+            itemView.removeView(it)
+        }
     }
 }
 
