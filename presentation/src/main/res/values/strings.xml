@@ -52,7 +52,7 @@
     <string name="home_my_planet">내 행성: %s</string>
     <string name="home_my_page_icon_content_description">내 행성: %s</string>
     <string name="home_planet_guide">당신은 %s행성에 떨어졌습니다.\n지금 가이드를 확인해주세요</string>
-    <string name="home_planet_guide_button">당신은 Æ X-03 행성에 떨어졌습니다.\n지금 가이드를 확인해주세요</string>
+    <string name="home_planet_guide_button">가이드 보기</string>
     <string name="home_signal_icon_content_description">시그널 아이콘</string>
     <string name="home_subscribe_keywords">%d개 키워드 구독중</string>
 </resources>
