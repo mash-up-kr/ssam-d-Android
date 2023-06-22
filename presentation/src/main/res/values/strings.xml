@@ -47,4 +47,12 @@
     <string name="onboarding_keywords_input_description">입력한 키워드를 기반으로 매칭해드려</string>
     <string name="onboarding_keywords_chip_hint">입력한 키워드를 기반으로 매칭해드려요</string>
     <string name="onboarding_delete_keyword_content_description">키워드 지우기</string>
+
+    // 홈
+    <string name="home_my_planet">내 행성: %s</string>
+    <string name="home_my_page_icon_content_description">내 행성: %s</string>
+    <string name="home_planet_guide">당신은 %s행성에 떨어졌습니다.\n지금 가이드를 확인해주세요</string>
+    <string name="home_planet_guide_button">당신은 Æ X-03 행성에 떨어졌습니다.\n지금 가이드를 확인해주세요</string>
+    <string name="home_signal_icon_content_description">시그널 아이콘</string>
+    <string name="home_subscribe_keywords">%d개 키워드 구독중</string>
 </resources>
