@@ -2,8 +2,8 @@ package com.mashup.presentation.home
 
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
+import com.mashup.presentation.common.extension.setThemeContent
 import com.mashup.presentation.databinding.FragmentHomeBinding
-import com.mashup.presentation.ui.setThemeContent
 
 /**
  * Ssam_D_Android
