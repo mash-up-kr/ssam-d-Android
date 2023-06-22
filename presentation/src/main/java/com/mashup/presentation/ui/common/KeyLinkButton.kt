@@ -7,7 +7,6 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -44,21 +43,21 @@ fun KeyLinkButton(
 }
 
 @Composable
-fun KeyLinkPurpleButton(
+fun KeyLinkRoundButton(
     text: String,
     onClick: () -> Unit = {}
 ) {
     Button(
-        modifier = Modifier.height(55.dp),
+        modifier = Modifier.wrapContentSize(),
         onClick = { onClick.invoke() },
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = Purple,
+            backgroundColor = Blurple,
             contentColor = White,
             disabledBackgroundColor = Gray02,
             disabledContentColor = Gray06
         ),
-        shape = RoundedCornerShape(6.dp),
-        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp)
+        shape = RoundedCornerShape(24.dp),
+        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp)
     ) {
         Text(
             text = text,

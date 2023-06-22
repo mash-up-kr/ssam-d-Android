@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.R
-import com.mashup.presentation.ui.common.KeyLinkPurpleButton
+import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.theme.*
 
 @Composable
@@ -141,7 +141,7 @@ private fun EmptySignal() {
             color = White,
             textAlign = TextAlign.Center
         )
-        KeyLinkPurpleButton(text = "가이드 보기") {
+        KeyLinkRoundButton(text = "가이드 보기") {
             // TODO: navigate to 가이드
         }
     }
