@@ -99,7 +99,8 @@ private fun HomeKeywordInfoContainer() {
             Image(
                 painter = painterResource(id = R.drawable.ic_signal_32),
                 contentDescription = "시그널 아이콘",
-                contentScale = ContentScale.None
+                modifier = Modifier.size(24.dp),
+                contentScale = ContentScale.Inside
             )
             Text(
                 text = "4개 키워드 구독중",
