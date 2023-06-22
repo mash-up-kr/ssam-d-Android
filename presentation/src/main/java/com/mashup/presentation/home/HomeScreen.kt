@@ -35,12 +35,12 @@ fun HomeScreen() {
             painter = painterResource(R.drawable.img_blueplanet),
             contentDescription = stringResource(R.string.login_description_blueplanet)
         )
+        EmptyContent()
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
             HomeScreenToolBar()
             HomeKeywordInfoContainer()
-            HomeContent()
         }
     }
 }
@@ -116,10 +116,12 @@ private fun HomeKeywordInfoContainer() {
 }
 
 @Composable
-private fun HomeContent() {
-    Box(modifier = Modifier
-        .padding(top = 176.dp)
-        .fillMaxSize()) {
+private fun EmptyContent() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .wrapContentSize(Alignment.Center)
+    ) {
         EmptySignal()
     }
 }
