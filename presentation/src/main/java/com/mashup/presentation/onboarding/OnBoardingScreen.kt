@@ -134,7 +134,11 @@ fun KeywordScreen(
             modifier = Modifier.verticalScroll(scrollState)
         ) {
             keywords.forEachIndexed { i, keyword ->
-                KeywordChip(text = keyword, index = i, onKeywordDelete)
+                KeywordChip(
+                    text = keyword,
+                    index = i,
+                    onKeywordDelete = onKeywordDelete
+                )
             }
 
             KeyLinkOnBoardingTextField(
@@ -150,44 +154,6 @@ fun KeywordScreen(
             )
         }
 
-    }
-}
-
-
-@Composable
-fun KeywordChip(text: String, index: Int, onKeywordDelete: (Int) -> Unit) {
-    Box(
-        modifier = Modifier
-            .padding(top = 16.dp)
-            .background(Gray02, shape = RoundedCornerShape(10.dp))
-            .padding(vertical = 6.dp, horizontal = 20.dp)
-    ) {
-        Row(
-            modifier = Modifier.align(Alignment.Center),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "#$text",
-                color = White,
-                fontSize = 24.sp
-            )
-
-            Icon(
-                painterResource(id = R.drawable.ic_delete),
-                contentDescription = stringResource(id = R.string.onboarding_delete_keyword_content_description),
-                tint = Color.White,
-                modifier = Modifier
-                    .size(24.dp)
-                    .padding(start = 4.dp)
-                    .clickable(
-                        indication = null,
-                        interactionSource = MutableInteractionSource()
-                    ) {
-                        onKeywordDelete(index)
-                    }
-            )
-        }
     }
 }
 
