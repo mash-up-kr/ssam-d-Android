@@ -128,7 +128,7 @@ private fun LoginContainer(modifier: Modifier = Modifier, content: @Composable C
 @Composable
 private fun LoginTitle(modifier: Modifier) {
     Column(
-        modifier = modifier.padding(horizontal = 20.dp),
+        modifier = modifier.fillMaxWidth().padding(horizontal = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
