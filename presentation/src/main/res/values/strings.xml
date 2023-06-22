@@ -33,4 +33,11 @@
     <string name="send_complete">보내기 완료!</string>
     <string name="send_complete_subtitle">시그널이 연결되면 대화방이 만들어져요.</string>
     <string name="profile_sent_signal">보낸 시그널</string>
+
+    // 온보딩
+    <string name="onboarding_keywords_complete">모두 입력했어요</string>
+    <string name="onboarding_keywords_input">대화하고 싶은 키워드를 적어주세요</string>
+    <string name="onboarding_keywords_input_description">입력한 키워드를 기반으로 매칭해드려</string>
+    <string name="onboarding_keywords_chip_hint">입력한 키워드를 기반으로 매칭해드려요</string>
+    <string name="onboarding_delete_keyword_content_description">키워드 지우기</string>
 </resources>
