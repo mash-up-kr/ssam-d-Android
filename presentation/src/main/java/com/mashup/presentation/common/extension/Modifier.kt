@@ -26,14 +26,15 @@ import com.mashup.presentation.ui.theme.*
  * @created 2023/06/21
  */
 
+/* ShimmerEffect를 적용하기 위해 사용되는 Modifier */
 internal fun Modifier.shimmerEffect(delay: Int = 0): Modifier = composed {
     var size by remember { mutableStateOf(IntSize.Zero) }
     val transition = rememberInfiniteTransition()
     val startOffsetX by transition.animateFloat(
-        initialValue = -2 * size.width.toFloat(),
+        initialValue = -2 * size.width.toFloat(),  // 애니메이션이 적용될 마이너스 x좌표부터 시작됨 (외부)
         targetValue = 2 * size.width.toFloat(),
         animationSpec = infiniteRepeatable(
-            animation = tween(
+            animation = tween(  // 주어진 값 동안에 initialValue와 targetValue 간에 애니메이션 적용
                 durationMillis = 1300,
                 delayMillis = delay
             )
@@ -52,7 +53,7 @@ internal fun Modifier.shimmerEffect(delay: Int = 0): Modifier = composed {
             start = Offset(startOffsetX, 0f),
             end = Offset(startOffsetX + size.width.toFloat(), size.height.toFloat())
         ),
-    ).onGloballyPositioned {
+    ).onGloballyPositioned {  // 반환된 size를 remember시키기 위해 필요
         size = it.size
     }
 }
