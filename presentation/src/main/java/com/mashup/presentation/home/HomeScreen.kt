@@ -67,7 +67,7 @@ private fun HomeScreenToolBar() {
                     .background(color = Amber, shape = RoundedCornerShape(size = 8.7.dp))
             )
             Text(
-                text = "내 행성: Æ X-03",
+                text = stringResource(id = R.string.home_my_planet, "Æ X-03"),
                 fontSize = 20.sp,
                 fontWeight = FontWeight(600),
                 color = White
@@ -75,7 +75,7 @@ private fun HomeScreenToolBar() {
         }
         Image(
             painter = painterResource(id = R.drawable.ic_profile_fill),
-            contentDescription = "마이 페이지",
+            contentDescription = stringResource(id = R.string.home_my_page_icon_content_description),
             contentScale = ContentScale.None
         )
     }
@@ -98,12 +98,12 @@ private fun HomeKeywordInfoContainer() {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_signal_32),
-                contentDescription = "시그널 아이콘",
+                contentDescription = stringResource(id = R.string.home_signal_icon_content_description),
                 modifier = Modifier.size(24.dp),
                 contentScale = ContentScale.Inside
             )
             Text(
-                text = "4개 키워드 구독중",
+                text = stringResource(id = R.string.home_subscribe_keywords, 4),
                 fontSize = 14.sp,
                 color = White
             )
@@ -135,13 +135,13 @@ private fun EmptySignal() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "당신은 Æ X-03 행성에 떨어졌습니다. \n지금 가이드를 확인해주세요",
+            text = stringResource(id = R.string.home_planet_guide, "Æ X-03"),
             fontSize = 16.sp,
             fontWeight = FontWeight(500),
             color = White,
             textAlign = TextAlign.Center
         )
-        KeyLinkRoundButton(text = "가이드 보기") {
+        KeyLinkRoundButton(text = stringResource(id = R.string.home_planet_guide_button)) {
             // TODO: navigate to 가이드
         }
     }
