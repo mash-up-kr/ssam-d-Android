@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Ssam_D_Android</string>
     <string name="empty_text" />
+
     <string name="navigation_home">홈</string>
     <string name="navigation_signal">시그널 보내기</string>
     <string name="navigation_chat">채팅</string>
@@ -36,8 +37,9 @@
     <string name="create_signal">시그널 생성</string>
     <string name="next">다음</string>
     <string name="ok">확인</string>
+    <string name="exit">나가기</string>
+    <string name="disconnect">끊기</string>
     <string name="hint_signal_content">오늘의 날씨, 기분, 나눈 대화들을 누군가에게 전달해보세요. 대화는 1:1로 프라이빗하게 이루어집니다.</string>
-    <string name="dialog_signal_content">300자 까지 입력할 수 있어요.</string>
     <string name="signal_keyword_title">쓴 내용의 키워드를 추출했어요</string>
     <string name="signal_keyword_subtitle">키워드를 확인하고 시그널을 보내보세요</string>
 
@@ -46,5 +48,22 @@
     <string name="onboarding_keywords_input">대화하고 싶은 키워드를 적어주세요</string>
     <string name="onboarding_keywords_input_description">입력한 키워드를 기반으로 매칭해드려</string>
     <string name="onboarding_keywords_chip_hint">입력한 키워드를 기반으로 매칭해드려요</string>
-    <string name="onboarding_delete_keyword_content_description">키워드 지우기</string>
+    <string name="onboarding_delete_keyword_content_description">키워드 지우기</string>로
+
+    <!-- Dialog -->
+    <string name="dialog_signal_content_title">300자 까지 입력할 수 있어요.</string>
+    <string name="dialog_go_back_title">뒤로 갈까요?</string>
+    <string name="dialog_go_back_subtitle">지금까지 쓴 내용은 저장되지 않아요.</string>기
+    <string name="dialog_go_back">뒤로가기</string>
+    <string name="dialog_disconnect_signal_title">시그널을 끊을까요?</string>
+    <string name="dialog_disconnect_signal_subtitle">연결이 끊기면 대화 내용이 사라져요.</string>
+    <string name="dialog_disconnect_signal">끊기</string>
+    <string name="dialog_go_first_title">처음으로 돌아갈까요?</string>
+    <string name="dialog_go_first_subtitle">입력한 모든 내용이 초기화 돼요.</string>
+    <string name="dialog_go_first_yes">예</string>
+    <string name="dialog_go_first_no">아니요</string>
+    <string name="dialog_logout_title">정말 로그아웃 하세요?</string>
+    <string name="dialog_logout_subtitle">정보는 유지되지만 다시 로그인 해야하는 번거로움이 생겨요 ㅠ</string>
+    <string name="dialog_logout">로그아웃</string>
+
 </resources>
