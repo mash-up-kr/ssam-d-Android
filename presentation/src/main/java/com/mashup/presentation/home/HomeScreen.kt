@@ -148,6 +148,32 @@ private fun EmptySignal() {
 }
 
 @Composable
+@Composable
+private fun SignalCardUserInfo(signal: SignalUiModel) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Image(
+            modifier = Modifier.size(24.dp),
+            painter = painterResource(id = R.drawable.img_avatar),
+            contentDescription = "아바타",
+            contentScale = ContentScale.Inside
+        )
+        Text(
+            text = signal.nickname,
+            fontSize = 12.sp,
+            color = White
+        )
+        Text(
+            text = "1일전",
+            fontSize = 12.sp,
+            color = Gray06
+        )
+    }
+}
+
+@Composable
 private fun SignalCardKeywordsChips(keywords: List<String>) {
     val maxKeywordCount = 3
 
