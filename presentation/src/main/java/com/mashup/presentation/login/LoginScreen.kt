@@ -20,8 +20,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,10 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.airbnb.lottie.compose.*
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.*
-import com.mashup.presentation.ui.theme.Gray06
-import com.mashup.presentation.ui.theme.Heading3
-import com.mashup.presentation.ui.theme.Title1
-import com.mashup.presentation.ui.theme.White
+import com.mashup.presentation.ui.theme.*
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -183,12 +178,8 @@ private fun LoginGuideText(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxWidth(),
         text = stringResource(R.string.login_privacy_policy),
         textAlign = TextAlign.Center,
-        style = TextStyle(
-            fontWeight = FontWeight.Medium,
-            fontSize = 12.sp,
-            lineHeight = 18.sp,
-            color = Gray06
-        )
+        color = Gray06,
+        style = Caption
     )
 }
 
