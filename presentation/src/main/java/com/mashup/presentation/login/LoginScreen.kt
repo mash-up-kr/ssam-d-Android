@@ -3,6 +3,7 @@ package com.mashup.presentation.login
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -14,7 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -194,11 +197,19 @@ fun NicknameScreen(onNextButtonClicked: (String) -> Unit){
     var nickname by remember { mutableStateOf("") }
     var validation by remember { mutableStateOf(ValidationState.EMPTY) }
     val expectedText = "올바른 닉네임"
+    val focusManager = LocalFocusManager.current
 
     Box {
         LoginBackground()
 
-        LoginContainer(modifier = Modifier.padding(top = 185.dp, start = 20.dp, end = 20.dp)) {
+        LoginContainer(modifier = Modifier
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                })
+            }
+            .padding(top = 185.dp, start = 20.dp, end = 20.dp)
+        ) {
             Column(modifier = Modifier.weight(1f)) {
                 KeyLinkMintText(
                     modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp),
@@ -225,7 +236,10 @@ fun NicknameScreen(onNextButtonClicked: (String) -> Unit){
             KeyLinkButton(
                 modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp).imePadding(),
                 text = stringResource(R.string.login_next_btn),
-                onClick = { onNextButtonClicked(nickname) },
+                onClick = {
+                    focusManager.clearFocus()
+                    onNextButtonClicked(nickname)
+                },
                 enable = validation == ValidationState.SUCCESS
             )
         }
