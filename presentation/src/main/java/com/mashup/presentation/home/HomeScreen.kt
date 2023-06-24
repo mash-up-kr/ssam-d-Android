@@ -147,6 +147,29 @@ private fun EmptySignal() {
     }
 }
 
+@Composable
+private fun SignalCardKeywordsChip(keyword: String) {
+    Box(
+        modifier = Modifier
+            .background(color = Gray01, shape = RoundedCornerShape(10.dp)),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(vertical = 4.dp, horizontal = 8.dp),
+            text = keyword,
+            fontSize = 10.sp,
+            color = Gray10,
+            textAlign = TextAlign.Center,
+            style = TextStyle(
+                lineHeight = 2.5.em,
+                platformStyle = PlatformTextStyle(
+                    includeFontPadding = false
+                )
+            )
+        )
+    }
+}
 @Preview
 @Composable
 fun PreviewHomeScreen() {
