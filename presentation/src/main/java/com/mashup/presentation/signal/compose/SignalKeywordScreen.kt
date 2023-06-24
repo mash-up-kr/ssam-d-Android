@@ -29,6 +29,7 @@ fun SignalKeywordScreen(
     isLoading: Boolean,
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit = {},
+    navigateToComplete: () -> Unit = {}
 ) {
     val keywords = remember { mutableStateListOf<String>() }
     var showGoBackDialog by remember { mutableStateOf(false) }
@@ -42,7 +43,6 @@ fun SignalKeywordScreen(
         KeywordScreen(
             isLoading = isLoading,
             modifier = Modifier
-                .fillMaxSize()
                 .padding(horizontal = 20.dp, vertical = 8.dp)
                 .weight(1f),
             afterLoadingContent = {
@@ -60,6 +60,14 @@ fun SignalKeywordScreen(
                     },
                 )
             }
+        )
+        KeyLinkButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 48.dp, start = 20.dp, end = 20.dp),
+            text = stringResource(R.string.button_send_signal),
+            enable = !isLoading,
+            onClick = { navigateToComplete() }
         )
     }
 
