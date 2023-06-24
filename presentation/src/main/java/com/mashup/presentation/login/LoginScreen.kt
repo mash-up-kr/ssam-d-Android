@@ -27,6 +27,8 @@ import com.airbnb.lottie.compose.*
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.Gray06
+import com.mashup.presentation.ui.theme.Heading3
+import com.mashup.presentation.ui.theme.Title1
 import com.mashup.presentation.ui.theme.White
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -142,7 +144,7 @@ private fun LoginTitle(modifier: Modifier) {
 
         KeyLinkMintText(
             text = stringResource(R.string.login_title),
-            fontSize = 16.sp
+            textStyle = Title1
         )
     }
 }
@@ -201,8 +203,8 @@ fun NicknameScreen(onNextButtonClicked: (String) -> Unit){
                 KeyLinkMintText(
                     modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp),
                     text = stringResource(R.string.login_nickname),
-                    textAlign = TextAlign.Left,
-                    fontSize = 22.sp
+                    textStyle = Heading3,
+                    textAlign = TextAlign.Left
                 )
 
                 KeyLinkBoxTextField(
