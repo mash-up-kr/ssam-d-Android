@@ -263,12 +263,8 @@ private fun LoginCompletionText(modifier: Modifier = Modifier, nickname: String)
     Text(
         modifier = modifier.fillMaxWidth(),
         text = nickname + stringResource(R.string.login_completion_title),
-        style = TextStyle(
-            fontWeight = FontWeight.Medium,
-            fontSize = 20.sp,
-            lineHeight = 28.sp,
-            color = White
-        )
+        color = White,
+        style = Title1
     )
 }
 
