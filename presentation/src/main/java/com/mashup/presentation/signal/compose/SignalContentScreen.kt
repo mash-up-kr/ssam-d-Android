@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.KeyLinkButton
+import com.mashup.presentation.ui.common.KeyLinkContentLengthDialog
 import com.mashup.presentation.ui.common.KeyLinkTextField
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.SsamDTheme
@@ -60,8 +61,8 @@ fun SignalContentScreen(
         )
 
         if (dialogState) {
-            NotifyContentLengthDialog(
-                modifier = Modifier,
+            KeyLinkContentLengthDialog(
+                onDismissRequest = { /* @TODO */},
                 onButtonClick = { dialogState = false }
             )
         }

@@ -7,8 +7,10 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.ui.theme.*
@@ -18,17 +20,23 @@ fun KeyLinkButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     buttonHeight: ButtonHeight = ButtonHeight.Large,
+    backgroundColor: Color = Blurple,
+    contentColor: Color = White,
+    disabledBackgroundColor: Color = Gray02,
+    disabledContentColor: Color = Gray06,
     text: String,
+    fontWeight: FontWeight = FontWeight.Normal,
+    fontSize: TextUnit = 16.sp,
     enable: Boolean = true
 ) {
     Button(
         modifier = modifier.height(buttonHeight.height.dp),
         onClick = { onClick.invoke() },
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = Blurple,
-            contentColor = White,
-            disabledBackgroundColor = Gray02,
-            disabledContentColor = Gray06
+            backgroundColor = backgroundColor,
+            contentColor = contentColor,
+            disabledBackgroundColor = disabledBackgroundColor,
+            disabledContentColor = disabledContentColor
         ),
         shape = RoundedCornerShape(10.dp),
         contentPadding = PaddingValues(horizontal = 16.dp),
@@ -36,7 +44,8 @@ fun KeyLinkButton(
     ) {
         Text(
             text = text,
-            fontSize = 16.sp,
+            fontSize = fontSize,
+            fontWeight = fontWeight,
             maxLines = 1
         )
     }
