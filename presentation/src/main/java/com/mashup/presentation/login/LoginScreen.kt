@@ -1,5 +1,6 @@
 package com.mashup.presentation.login
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -40,6 +41,10 @@ fun LoginScreen(
     LaunchedEffect(loginViewModel.currentPage) {
         pagerState.animateScrollToPage(loginViewModel.currentPage)
     }
+
+    BackHandler(enabled = true, onBack = {
+        loginViewModel.onBackPressed()
+    })
     
     HorizontalPager(
         modifier = Modifier

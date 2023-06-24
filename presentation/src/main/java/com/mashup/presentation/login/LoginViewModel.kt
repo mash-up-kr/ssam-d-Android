@@ -73,4 +73,13 @@ class LoginViewModel @Inject constructor(
     }
 
     private fun addPage() = currentPage++
+
+    fun onBackPressed() {
+        if (currentPage > 0) {
+            currentPage--
+        } else {
+            // 두 번 클릭 시 종료되게?
+            // or 다이얼로그 띄우기?
+        }
+    }
 }
