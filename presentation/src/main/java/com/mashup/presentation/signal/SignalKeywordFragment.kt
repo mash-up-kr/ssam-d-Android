@@ -2,6 +2,7 @@ package com.mashup.presentation.signal
 
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
+import com.mashup.presentation.common.extension.navigateUp
 import com.mashup.presentation.common.extension.setThemeContent
 import com.mashup.presentation.databinding.FragmentSignalKeywordBinding
 import com.mashup.presentation.signal.compose.SignalKeywordScreen
@@ -16,7 +17,10 @@ class SignalKeywordFragment :
 
     override fun initViews() {
         binding.composeView.setThemeContent {
-            SignalKeywordScreen(isLoading = false)
+            SignalKeywordScreen(
+                isLoading = false,
+                navigateUp = { navigateUp() }
+            )
         }
     }
 }
