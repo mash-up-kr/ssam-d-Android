@@ -7,12 +7,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mashup.presentation.R
@@ -66,11 +65,8 @@ fun KeyLinkContentLengthDialog(
             Text(
                 text = stringResource(id = R.string.dialog_signal_content_title),
                 modifier = Modifier.fillMaxWidth(),
-                style = TextStyle(
-                    color = White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                style = Heading4,
+                color = White
             )
 
             Spacer(modifier = Modifier.height(36.dp))
@@ -94,57 +90,15 @@ fun KeyLinkGoBackDialog(
     onCloseClick: () -> Unit = {}
 ) {
     KeyLinkDialog(onDismissRequest = { onDismissRequest() }) {
-        Column(
-            modifier = Modifier.padding(KeyLinkDialogPadding)
-        ) {
-            Text(
-                text = stringResource(id = R.string.dialog_go_back_title),
-                modifier = Modifier.fillMaxWidth(),
-                style = TextStyle(
-                    color = White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            )
-
-            Text(
-                text = stringResource(id = R.string.dialog_go_back_subtitle),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp),
-                style = TextStyle(
-                    color = Gray06,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal
-                )
-            )
-
-            Spacer(modifier = Modifier.height(36.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                KeyLinkButton(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(id = R.string.close),
-                    buttonHeight = ButtonHeight.Medium,
-                    fontWeight = FontWeight.SemiBold,
-                    backgroundColor = Gray03,
-                    contentColor = Gray06,
-                    enable = true,
-                    onClick = { onCloseClick() }
-                )
-                KeyLinkButton(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(id = R.string.dialog_go_back),
-                    buttonHeight = ButtonHeight.Medium,
-                    fontWeight = FontWeight.SemiBold,
-                    backgroundColor = Red,
-                    enable = true,
-                    onClick = { onGoBackClick() }
-                )
-            }
-        }
+        KeyLinkTwoButtonContent(
+            titleText = stringResource(id = R.string.dialog_go_back_title),
+            subtitleText = stringResource(id = R.string.dialog_go_back_subtitle),
+            positiveText = stringResource(id = R.string.dialog_go_back),
+            negativeText = stringResource(id = R.string.close),
+            positiveButtonColor = Red,
+            onPositiveClick = { onGoBackClick() },
+            onNegativeClick = { onCloseClick() }
+        )
     }
 }
 
@@ -155,57 +109,15 @@ fun KeyLinkDisconnectSignalDialog(
     onCloseClick: () -> Unit = {}
 ) {
     KeyLinkDialog(onDismissRequest = { onDismissRequest() }) {
-        Column(
-            modifier = Modifier.padding(KeyLinkDialogPadding)
-        ) {
-            Text(
-                text = stringResource(id = R.string.dialog_disconnect_signal_title),
-                modifier = Modifier.fillMaxWidth(),
-                style = TextStyle(
-                    color = White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            )
-
-            Text(
-                text = stringResource(id = R.string.dialog_disconnect_signal_subtitle),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp),
-                style = TextStyle(
-                    color = Gray06,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal
-                )
-            )
-
-            Spacer(modifier = Modifier.height(36.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                KeyLinkButton(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(id = R.string.close),
-                    buttonHeight = ButtonHeight.Medium,
-                    fontWeight = FontWeight.SemiBold,
-                    backgroundColor = Gray03,
-                    contentColor = Gray06,
-                    enable = true,
-                    onClick = { onCloseClick() }
-                )
-                KeyLinkButton(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(id = R.string.dialog_disconnect_signal),
-                    buttonHeight = ButtonHeight.Medium,
-                    fontWeight = FontWeight.SemiBold,
-                    backgroundColor = Red,
-                    enable = true,
-                    onClick = { onDisconnectClick() }
-                )
-            }
-        }
+        KeyLinkTwoButtonContent(
+            titleText = stringResource(id = R.string.dialog_disconnect_signal_title),
+            subtitleText = stringResource(id = R.string.dialog_disconnect_signal_subtitle),
+            positiveText = stringResource(id = R.string.dialog_disconnect_signal),
+            negativeText = stringResource(id = R.string.close),
+            positiveButtonColor = Red,
+            onPositiveClick = { onDisconnectClick() },
+            onNegativeClick = { onCloseClick() }
+        )
     }
 }
 
@@ -216,57 +128,15 @@ fun KeyLinkGoFirstDialog(
     onNegativeClick: () -> Unit = {}
 ) {
     KeyLinkDialog(onDismissRequest = { onDismissRequest() }) {
-        Column(
-            modifier = Modifier.padding(KeyLinkDialogPadding)
-        ) {
-            Text(
-                text = stringResource(id = R.string.dialog_go_first_title),
-                modifier = Modifier.fillMaxWidth(),
-                style = TextStyle(
-                    color = White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            )
-
-            Text(
-                text = stringResource(id = R.string.dialog_go_first_subtitle),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp),
-                style = TextStyle(
-                    color = Gray06,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal
-                )
-            )
-
-            Spacer(modifier = Modifier.height(36.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                KeyLinkButton(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(id = R.string.dialog_go_first_no),
-                    buttonHeight = ButtonHeight.Medium,
-                    fontWeight = FontWeight.SemiBold,
-                    backgroundColor = Gray03,
-                    contentColor = Gray06,
-                    enable = true,
-                    onClick = { onNegativeClick() }
-                )
-                KeyLinkButton(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(id = R.string.dialog_go_first_yes),
-                    buttonHeight = ButtonHeight.Medium,
-                    fontWeight = FontWeight.SemiBold,
-                    backgroundColor = Red,
-                    enable = true,
-                    onClick = { onPositiveClick() }
-                )
-            }
-        }
+        KeyLinkTwoButtonContent(
+            titleText = stringResource(id = R.string.dialog_go_first_title),
+            subtitleText = stringResource(id = R.string.dialog_go_first_subtitle),
+            positiveText = stringResource(id = R.string.dialog_go_first_yes),
+            negativeText = stringResource(id = R.string.dialog_go_first_no),
+            positiveButtonColor = Red,
+            onPositiveClick = { onPositiveClick() },
+            onNegativeClick = { onNegativeClick() }
+        )
     }
 }
 
@@ -277,55 +147,71 @@ fun KeyLinkLogoutDialog(
     onLogoutClick: () -> Unit = {}
 ) {
     KeyLinkDialog(onDismissRequest = { onDismissRequest() }) {
-        Column(
-            modifier = Modifier.padding(KeyLinkDialogPadding)
+        KeyLinkTwoButtonContent(
+            titleText = stringResource(id = R.string.dialog_logout_title),
+            subtitleText = stringResource(id = R.string.dialog_logout_subtitle),
+            positiveText = stringResource(id = R.string.dialog_logout),
+            negativeText = stringResource(id = R.string.close),
+            positiveButtonColor = Blurple,
+            onPositiveClick = { onLogoutClick() },
+            onNegativeClick = { onCloseClick() }
+        )
+    }
+}
+
+@Composable
+private fun KeyLinkTwoButtonContent(
+    titleText: String,
+    subtitleText: String,
+    positiveText: String,
+    negativeText: String,
+    positiveButtonColor: Color,
+    onPositiveClick: () -> Unit,
+    onNegativeClick: () -> Unit,
+) {
+    Column(
+        modifier = Modifier.padding(KeyLinkDialogPadding)
+    ) {
+        Text(
+            text = titleText,
+            modifier = Modifier.fillMaxWidth(),
+            style = Heading4,
+            color = White
+        )
+
+        Text(
+            text = subtitleText,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            style = Body2,
+            color = Gray06
+        )
+
+        Spacer(modifier = Modifier.height(36.dp))
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text(
-                text = stringResource(id = R.string.dialog_logout_title),
-                modifier = Modifier.fillMaxWidth(),
-                style = TextStyle(
-                    color = White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
+            KeyLinkButton(
+                modifier = Modifier.weight(1f),
+                text = negativeText,
+                buttonHeight = ButtonHeight.Medium,
+                fontWeight = FontWeight.SemiBold,
+                backgroundColor = Gray03,
+                contentColor = Gray06,
+                enable = true,
+                onClick = { onNegativeClick() }
             )
-
-            Text(
-                text = stringResource(id = R.string.dialog_logout_subtitle),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp),
-                style = TextStyle(
-                    color = Gray06,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal
-                )
+            KeyLinkButton(
+                modifier = Modifier.weight(1f),
+                text = positiveText,
+                buttonHeight = ButtonHeight.Medium,
+                backgroundColor = positiveButtonColor,
+                fontWeight = FontWeight.SemiBold,
+                enable = true,
+                onClick = { onPositiveClick() }
             )
-
-            Spacer(modifier = Modifier.height(36.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                KeyLinkButton(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(id = R.string.close),
-                    buttonHeight = ButtonHeight.Medium,
-                    fontWeight = FontWeight.SemiBold,
-                    backgroundColor = Gray03,
-                    contentColor = Gray06,
-                    enable = true,
-                    onClick = { onCloseClick() }
-                )
-                KeyLinkButton(
-                    modifier = Modifier.weight(1f),
-                    text = stringResource(id = R.string.dialog_logout),
-                    buttonHeight = ButtonHeight.Medium,
-                    fontWeight = FontWeight.SemiBold,
-                    enable = true,
-                    onClick = { onLogoutClick() }
-                )
-            }
         }
     }
 }
