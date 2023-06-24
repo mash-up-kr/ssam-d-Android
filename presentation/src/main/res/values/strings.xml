@@ -75,4 +75,5 @@
     <string name="home_subscribe_keywords">%d개 키워드 구독중</string>
     <string name="signal_complete_title">시그널 보내기 완료!</string>
     <string name="button_send_signal">시그널 보내기</string>
+    <string name="signal_complete_subtitle">연결되면 [채팅]에 대화방이 만들어져요.</string>
 </resources>
