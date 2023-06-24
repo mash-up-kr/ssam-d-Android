@@ -34,7 +34,7 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel = viewModel(),
-    navigateToOnBoarding: () -> Unit
+    loginToOnBoarding: () -> Unit
 ) {
     val pagerState = rememberPagerState(0)
 
