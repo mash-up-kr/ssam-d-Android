@@ -148,6 +148,29 @@ private fun EmptySignal() {
 }
 
 @Composable
+private fun SignalCardKeywordsChips(keywords: List<String>) {
+    val maxKeywordCount = 3
+
+    val keywordChipItems = mutableListOf<String>().apply {
+        if (keywords.size > maxKeywordCount) {
+            addAll(keywords.subList(0, maxKeywordCount))
+            add(
+                "+${keywords.size.minus(maxKeywordCount)}"
+            )
+        } else {
+            addAll(keywords)
+        }
+    }
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.Start),
+    ) {
+        items(keywordChipItems.size) {
+            SignalCardKeywordsChip(keyword = keywordChipItems[it])
+        }
+    }
+}
+
+@Composable
 private fun SignalCardKeywordsChip(keyword: String) {
     Box(
         modifier = Modifier
