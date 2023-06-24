@@ -3,6 +3,8 @@ package com.mashup.presentation.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
@@ -12,12 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.R
+import com.mashup.presentation.home.model.SignalUiModel
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.theme.*
 
@@ -148,6 +152,43 @@ private fun EmptySignal() {
 }
 
 @Composable
+private fun SignalCardList() {
+    val signals = emptyList<SignalUiModel>()
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
+        horizontalAlignment = Alignment.Start,
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp)
+    ) {
+        items(signals.size) {
+            SignalCard(signals[it])
+        }
+    }
+}
+
+@Composable
+private fun SignalCard(signal: SignalUiModel) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(shape = RoundedCornerShape(12.dp), color = GrayAlpha20)
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .padding(vertical = 12.dp, horizontal = 16.dp),
+        ) {
+            SignalCardUserInfo(signal)
+            Text(
+                text = signal.summery,
+                fontSize = 14.sp,
+                color = White,
+                maxLines = 3
+            )
+            SignalCardKeywordsChips(signal.keywords)
+        }
+    }
+}
+
 @Composable
 private fun SignalCardUserInfo(signal: SignalUiModel) {
     Row(
@@ -210,11 +251,9 @@ private fun SignalCardKeywordsChip(keyword: String) {
             fontSize = 10.sp,
             color = Gray10,
             textAlign = TextAlign.Center,
-            style = TextStyle(
-                lineHeight = 2.5.em,
-                platformStyle = PlatformTextStyle(
-                    includeFontPadding = false
-                )
+        )
+    }
+}
             )
         )
     }
