@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -207,7 +206,7 @@ private fun SignalCardUserInfo(signal: SignalUiModel) {
             color = White
         )
         Text(
-            text = "1일전",
+            text = signal.getDisplayedTime(),
             fontSize = 12.sp,
             color = Gray06
         )
@@ -254,10 +253,7 @@ private fun SignalCardKeywordsChip(keyword: String) {
         )
     }
 }
-            )
-        )
-    }
-}
+
 @Preview
 @Composable
 fun PreviewHomeScreen() {
