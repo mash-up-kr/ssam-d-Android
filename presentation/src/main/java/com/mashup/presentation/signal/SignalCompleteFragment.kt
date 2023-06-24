@@ -5,7 +5,7 @@ import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
 import com.mashup.presentation.databinding.FragmentSignalCompleteBinding
 import com.mashup.presentation.ui.common.KeyLinkMintText
-import com.mashup.presentation.ui.setThemeContent
+import com.mashup.presentation.common.extension.setThemeContent
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

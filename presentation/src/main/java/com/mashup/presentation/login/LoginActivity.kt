@@ -2,7 +2,7 @@ package com.mashup.presentation.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.mashup.presentation.ui.setThemeContent
+import com.mashup.presentation.common.extension.setThemeContent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

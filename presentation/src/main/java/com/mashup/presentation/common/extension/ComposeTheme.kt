@@ -1,6 +1,5 @@
-package com.mashup.presentation.ui
+package com.mashup.presentation.common.extension
 
-import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
@@ -9,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.mashup.presentation.ui.theme.SsamDTheme
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun ComponentActivity.setThemeContent(
+internal inline fun ComponentActivity.setThemeContent(
     crossinline content: @Composable () -> Unit
 ) = setContent {
     SsamDTheme {
@@ -18,7 +17,7 @@ inline fun ComponentActivity.setThemeContent(
 }
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun Fragment.setThemeContent(
+internal inline fun Fragment.setThemeContent(
     crossinline content: @Composable () -> Unit
 ) = ComposeView(requireContext()).apply {
     setContent {
@@ -28,7 +27,7 @@ inline fun Fragment.setThemeContent(
     }
 }
 
-inline fun ComposeView.setThemeContent(
+internal inline fun ComposeView.setThemeContent(
     crossinline content: @Composable () -> Unit
 ) = setContent {
     SsamDTheme {

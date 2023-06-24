@@ -31,6 +31,7 @@ fun KeyLinkTextField(
     value: String,
     onValueChange: (String) -> Unit,
     hint: String,
+    hintAlign: TextAlign = TextAlign.Center,
     onClickDone: () -> Unit,
     fontSize: TextUnit,
     maxLength: Int = 0
@@ -45,7 +46,7 @@ fun KeyLinkTextField(
         },
         placeholder = {
             Text(
-                textAlign = TextAlign.Center,
+                textAlign = hintAlign,
                 text = hint,
                 fontSize = fontSize,
                 color = Gray04
