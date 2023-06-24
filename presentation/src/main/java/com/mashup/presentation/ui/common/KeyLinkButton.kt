@@ -51,6 +51,32 @@ fun KeyLinkButton(
     }
 }
 
+@Composable
+fun KeyLinkRoundButton(
+    text: String,
+    onClick: () -> Unit = {}
+) {
+    Button(
+        modifier = Modifier.wrapContentSize(),
+        onClick = { onClick.invoke() },
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = Blurple,
+            contentColor = White,
+            disabledBackgroundColor = Gray02,
+            disabledContentColor = Gray06
+        ),
+        shape = RoundedCornerShape(24.dp),
+        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp)
+    ) {
+        Text(
+            text = text,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.W500,
+            maxLines = 1
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewKeyLinkButton() {
