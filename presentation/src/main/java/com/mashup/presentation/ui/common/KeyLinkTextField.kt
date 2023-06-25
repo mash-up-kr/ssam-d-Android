@@ -191,7 +191,7 @@ fun KeyLinkBoxTextField(
                     Text(
                         text = hint,
                         style = TextStyle(
-                            color = Color.Gray,
+                            color = Gray04,
                             fontSize = fontSize
                         ),
                         modifier = Modifier
@@ -258,7 +258,7 @@ fun PreviewKeyLinkOnBoardingTextField() {
     }
 }
 
-private fun checkValidation(
+fun checkValidation(
     text: String,
     expectedString: String,
     onValidate: (ValidationState) -> Unit,
