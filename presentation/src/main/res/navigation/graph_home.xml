@@ -18,5 +18,16 @@
         android:id="@+id/subscribeKeywordFragment"
         android:name="com.mashup.presentation.home.SubscribeKeywordFragment"
         android:label="SubscribeKeywordFragment"
-        tools:layout="@layout/fragment_subscribe_keyword" />
+        tools:layout="@layout/fragment_subscribe_keyword">
+        <action
+            android:id="@+id/action_subscribeKeyword_to_home"
+            app:destination="@id/homeActivity"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="com.mashup.presentation.home.HomeActivity"
+        android:label="HomeActivity" />
 </navigation>

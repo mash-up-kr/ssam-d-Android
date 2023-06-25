@@ -80,4 +80,5 @@
     <string name="home_subscribe_keywords">%d개 키워드 구독중</string>
     <string name="subscribe_keyword_title">구독중인 키워드</string>
     <string name="subscribe_keyword_subtitle">키워드를 확인하고 시그널을 받아보세요</string>
+    <string name="button_save">저장하기</string>
 </resources>
