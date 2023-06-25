@@ -34,7 +34,8 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel = viewModel(),
-    loginToOnBoarding: () -> Unit
+    loginToOnBoarding: () -> Unit,
+    handleOnBackPressed: () -> Unit
 ) {
     val pagerState = rememberPagerState(0)
 
@@ -42,10 +43,13 @@ fun LoginScreen(
         pagerState.animateScrollToPage(loginViewModel.currentPage)
     }
 
-    BackHandler(enabled = true, onBack = {
-        loginViewModel.onBackPressed()
-    })
-    
+    BackHandler(enabled = true) {
+        when (loginViewModel.currentPage) {
+            0 -> handleOnBackPressed()
+            else -> loginViewModel.backPage()
+        }
+    }
+
     HorizontalPager(
         modifier = Modifier
             .fillMaxSize()
