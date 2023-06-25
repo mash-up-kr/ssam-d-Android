@@ -73,28 +73,29 @@ private fun SignalCompleteContent(
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LottieAnimation(
             composition = lottieComposition,
             progress = { progress },
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .fillMaxWidth()
                 .height(220.dp)
+                .aspectRatio(11f / 8f)
         )
 
         KeyLinkMintText(
             text = stringResource(R.string.signal_complete_title),
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp, start = 82.dp, end = 82.dp)
+                .wrapContentWidth()
+                .padding(top = 20.dp)
         )
 
         Text(
             text = stringResource(R.string.signal_complete_subtitle),
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp, start = 20.dp, end = 20.dp),
+                .wrapContentWidth()
+                .padding(top = 12.dp),
             style = Body2,
             color = Gray06,
             textAlign = TextAlign.Center
