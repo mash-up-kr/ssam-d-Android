@@ -66,7 +66,7 @@ fun LoginScreen(
                 },
             )
             2 -> LoginCompletionScreen (
-                onStartButtonClicked = navigateToOnBoarding,
+                onStartButtonClicked = loginToOnBoarding,
                 nickname = loginViewModel.nickname
             )
         }
