@@ -2,6 +2,7 @@ package com.mashup.presentation.home
 
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
+import com.mashup.presentation.common.extension.navigate
 import com.mashup.presentation.common.extension.navigateUp
 import com.mashup.presentation.common.extension.setThemeContent
 import com.mashup.presentation.databinding.FragmentSubscribeKeywordBinding
@@ -16,7 +17,10 @@ class SubscribeKeywordFragment :
 
     override fun initViews() {
         binding.composeView.setThemeContent {
-            SubscribeKeywordScreen(navigateUp = { navigateUp() })
+            SubscribeKeywordScreen(
+                navigateUp = { navigateUp() },
+                navigateToHome = { navigate(R.id.action_subscribeKeyword_to_home) }
+            )
         }
     }
 }

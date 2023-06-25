@@ -7,8 +7,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,6 +26,7 @@ import com.mashup.presentation.ui.theme.*
 fun SubscribeKeywordScreen(
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit = {},
+    navigateToHome: () -> Unit = {}
 ) {
     val keywords = remember { mutableStateListOf<String>() }
 
@@ -46,10 +45,11 @@ fun SubscribeKeywordScreen(
             }
         )
         KeyLinkButton(
-            text = "저장하기",
+            text = stringResource(R.string.button_save),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 12.dp, start = 20.dp, end = 20.dp)
+                .padding(bottom = 12.dp, start = 20.dp, end = 20.dp),
+            onClick = { navigateToHome() }
         )
     }
 }
