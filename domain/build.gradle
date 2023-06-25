@@ -15,4 +15,7 @@ dependencies {
 
     // coroutine
     implementation Dep.Kotlin.Coroutine.core
+
+    // timber - log
+    implementation Dep.Logger.timber
 }
