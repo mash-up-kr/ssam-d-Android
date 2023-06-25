@@ -3,7 +3,7 @@ package com.mashup.domain.usecase
 import com.mashup.domain.repository.OnboardingRepository
 import javax.inject.Inject
 
-class SaveOnboardingKeywords @Inject constructor(
+class SaveOnboardingKeywordsUseCase @Inject constructor(
     private val onboardingRepository: OnboardingRepository
 ) : BaseUseCase<List<String>, Result<Unit>>() {
 
