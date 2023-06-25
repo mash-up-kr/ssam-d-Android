@@ -19,7 +19,7 @@ class NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl("http://49.50.166.183:30000/")
+            .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
@@ -32,4 +32,8 @@ class NetworkModule {
             .addInterceptor(HttpLoggingInterceptor())
             .addInterceptor(tokenInterceptor)
             .build()
+
+    companion object {
+        const val BASE_URL = "http://49.50.166.183:30000/"
+    }
 }
