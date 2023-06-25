@@ -2,6 +2,7 @@ package com.mashup.presentation.signal
 
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
+import com.mashup.presentation.common.extension.navigate
 import com.mashup.presentation.common.extension.setThemeContent
 import com.mashup.presentation.databinding.FragmentSignalCompleteBinding
 import com.mashup.presentation.signal.compose.SignalCompleteScreen
@@ -19,7 +20,9 @@ class SignalCompleteFragment :
     override fun initViews() {
         binding.composeView.setThemeContent {
             SignalCompleteScreen(
-                finishActivity = { requireActivity().finish() }
+                finishActivity = {
+                    navigate(actionId = R.id.action_signalComplete_to_home)
+                }
             )
         }
     }
