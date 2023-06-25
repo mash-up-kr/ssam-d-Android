@@ -71,8 +71,7 @@ private fun HomeScreenToolBar() {
             )
             Text(
                 text = stringResource(id = R.string.home_my_planet, "Æ X-03"),
-                fontSize = 20.sp,
-                fontWeight = FontWeight(600),
+                style = Typography.h4,
                 color = White
             )
         }
@@ -107,7 +106,7 @@ private fun HomeKeywordInfoContainer() {
             )
             Text(
                 text = stringResource(id = R.string.home_subscribe_keywords, 4),
-                fontSize = 14.sp,
+                style = Typography.body2,
                 color = White
             )
         }
@@ -139,8 +138,7 @@ private fun EmptySignal() {
     ) {
         Text(
             text = stringResource(id = R.string.home_planet_guide, "Æ X-03"),
-            fontSize = 16.sp,
-            fontWeight = FontWeight(500),
+            style = Typography.body1,
             color = White,
             textAlign = TextAlign.Center
         )
@@ -179,7 +177,7 @@ private fun SignalCard(signal: SignalUiModel) {
             SignalCardUserInfo(signal)
             Text(
                 text = signal.summery,
-                fontSize = 14.sp,
+                style = Typography.body1,
                 color = White,
                 maxLines = 3
             )
@@ -202,12 +200,12 @@ private fun SignalCardUserInfo(signal: SignalUiModel) {
         )
         Text(
             text = signal.nickname,
-            fontSize = 12.sp,
+            style = Typography.body2,
             color = White
         )
         Text(
             text = signal.getDisplayedTime(),
-            fontSize = 12.sp,
+            style = Typography.caption,
             color = Gray06
         )
     }
