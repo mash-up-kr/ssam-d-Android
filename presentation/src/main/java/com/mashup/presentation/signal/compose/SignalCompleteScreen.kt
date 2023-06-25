@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -71,9 +72,8 @@ private fun SignalCompleteContent(
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
     ) {
-        Spacer(modifier = Modifier.height(124.dp))
-
         LottieAnimation(
             composition = lottieComposition,
             progress = { progress },
