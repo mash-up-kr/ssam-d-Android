@@ -51,7 +51,7 @@
     // 온보딩
     <string name="onboarding_keywords_complete">모두 입력했어요</string>
     <string name="onboarding_keywords_input">대화하고 싶은 키워드를 적어주세요</string>
-    <string name="onboarding_keywords_input_description">입력한 키워드를 기반으로 매칭해드려</string>
+    <string name="onboarding_keywords_input_description">입력한 키워드를 기반으로 매칭해드려요</string>
     <string name="onboarding_keywords_chip_hint">입력한 키워드를 기반으로 매칭해드려요</string>
     <string name="onboarding_delete_keyword_content_description">키워드 지우기</string>
 
@@ -81,4 +81,5 @@
     <string name="signal_complete_title">시그널 보내기 완료!</string>
     <string name="button_send_signal">시그널 보내기</string>
     <string name="signal_complete_subtitle">연결되면 [채팅]에 대화방이 만들어져요.</string>
+    <string name="home_item_avatar_content_description">아바타</string>
 </resources>

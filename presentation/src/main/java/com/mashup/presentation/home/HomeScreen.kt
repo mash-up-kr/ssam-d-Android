@@ -3,6 +3,8 @@ package com.mashup.presentation.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
@@ -18,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.R
+import com.mashup.presentation.home.model.SignalUiModel
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.theme.*
 
@@ -68,8 +71,7 @@ private fun HomeScreenToolBar() {
             )
             Text(
                 text = stringResource(id = R.string.home_my_planet, "Æ X-03"),
-                fontSize = 20.sp,
-                fontWeight = FontWeight(600),
+                style = Typography.h4,
                 color = White
             )
         }
@@ -104,7 +106,7 @@ private fun HomeKeywordInfoContainer() {
             )
             Text(
                 text = stringResource(id = R.string.home_subscribe_keywords, 4),
-                fontSize = 14.sp,
+                style = Typography.body2,
                 color = White
             )
         }
@@ -136,14 +138,117 @@ private fun EmptySignal() {
     ) {
         Text(
             text = stringResource(id = R.string.home_planet_guide, "Æ X-03"),
-            fontSize = 16.sp,
-            fontWeight = FontWeight(500),
+            style = Typography.body1,
             color = White,
             textAlign = TextAlign.Center
         )
         KeyLinkRoundButton(text = stringResource(id = R.string.home_planet_guide_button)) {
             // TODO: navigate to 가이드
         }
+    }
+}
+
+@Composable
+private fun SignalCardList() {
+    val signals = emptyList<SignalUiModel>()
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
+        horizontalAlignment = Alignment.Start,
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp)
+    ) {
+        items(signals.size) {
+            SignalCard(signals[it])
+        }
+    }
+}
+
+@Composable
+private fun SignalCard(signal: SignalUiModel) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(shape = RoundedCornerShape(12.dp), color = GrayAlpha20)
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .padding(vertical = 12.dp, horizontal = 16.dp),
+        ) {
+            SignalCardUserInfo(signal)
+            Text(
+                text = signal.summery,
+                style = Typography.body1,
+                color = White,
+                maxLines = 3
+            )
+            SignalCardKeywordsChips(signal.keywords)
+        }
+    }
+}
+
+@Composable
+private fun SignalCardUserInfo(signal: SignalUiModel) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Image(
+            modifier = Modifier.size(24.dp),
+            painter = painterResource(id = R.drawable.img_avatar),
+            contentDescription = stringResource(id = R.string.home_item_avatar_content_description),
+            contentScale = ContentScale.Inside
+        )
+        Text(
+            text = signal.nickname,
+            style = Typography.body2,
+            color = White
+        )
+        Text(
+            text = signal.getDisplayedTime(),
+            style = Typography.caption,
+            color = Gray06
+        )
+    }
+}
+
+@Composable
+private fun SignalCardKeywordsChips(keywords: List<String>) {
+    val maxKeywordCount = 3
+
+    val keywordChipItems = mutableListOf<String>().apply {
+        if (keywords.size > maxKeywordCount) {
+            addAll(keywords.subList(0, maxKeywordCount))
+            add(
+                "+${keywords.size.minus(maxKeywordCount)}"
+            )
+        } else {
+            addAll(keywords)
+        }
+    }
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.Start),
+    ) {
+        items(keywordChipItems.size) {
+            SignalCardKeywordsChip(keyword = keywordChipItems[it])
+        }
+    }
+}
+
+@Composable
+private fun SignalCardKeywordsChip(keyword: String) {
+    Box(
+        modifier = Modifier
+            .background(color = Gray01, shape = RoundedCornerShape(10.dp)),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(vertical = 4.dp, horizontal = 8.dp),
+            text = keyword,
+            fontSize = 10.sp,
+            color = Gray10,
+            textAlign = TextAlign.Center,
+        )
     }
 }
 
