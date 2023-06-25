@@ -81,7 +81,7 @@ private fun SignalCompleteContent(
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .height(220.dp)
-                .aspectRatio(11f / 8f)
+                .aspectRatio(18f / 11f)
         )
 
         KeyLinkMintText(
