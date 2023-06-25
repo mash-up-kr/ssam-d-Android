@@ -66,7 +66,7 @@ fun SignalKeywordScreen(
                 .fillMaxWidth()
                 .padding(bottom = 48.dp, start = 20.dp, end = 20.dp),
             text = stringResource(R.string.button_send_signal),
-            enable = !isLoading,
+            enable = !(isLoading || keywords.isEmpty()),
             onClick = { navigateToComplete() }
         )
     }
