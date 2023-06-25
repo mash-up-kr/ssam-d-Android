@@ -197,7 +197,7 @@ private fun SignalCardUserInfo(signal: SignalUiModel) {
         Image(
             modifier = Modifier.size(24.dp),
             painter = painterResource(id = R.drawable.img_avatar),
-            contentDescription = "아바타",
+            contentDescription = stringResource(id = R.string.home_item_avatar_content_description),
             contentScale = ContentScale.Inside
         )
         Text(
