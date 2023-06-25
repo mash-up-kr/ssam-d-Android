@@ -27,5 +27,17 @@
         android:id="@+id/signalCompleteFragment"
         android:name="com.mashup.presentation.signal.SignalCompleteFragment"
         android:label="SignalCompleteFragment"
-        tools:layout="@layout/fragment_signal_complete" />
+        tools:layout="@layout/fragment_signal_complete">
+        <action
+            android:id="@+id/action_signalComplete_to_home"
+            app:destination="@id/homeActivity"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/signalContentFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="com.mashup.presentation.home.HomeActivity"
+        android:label="HomeActivity" />
+
 </navigation>

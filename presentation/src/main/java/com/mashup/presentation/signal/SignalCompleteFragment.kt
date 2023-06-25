@@ -1,11 +1,11 @@
 package com.mashup.presentation.signal
 
-import androidx.compose.ui.res.stringResource
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
-import com.mashup.presentation.databinding.FragmentSignalCompleteBinding
-import com.mashup.presentation.ui.common.KeyLinkMintText
+import com.mashup.presentation.common.extension.navigate
 import com.mashup.presentation.common.extension.setThemeContent
+import com.mashup.presentation.databinding.FragmentSignalCompleteBinding
+import com.mashup.presentation.signal.compose.SignalCompleteScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -18,14 +18,12 @@ class SignalCompleteFragment :
     BaseFragment<FragmentSignalCompleteBinding>(R.layout.fragment_signal_complete) {
 
     override fun initViews() {
-        with(binding) {
-            tvTitle.setThemeContent {
-                KeyLinkMintText(text = stringResource(id = R.string.send_complete))
-            }
-
-            btnClose.setOnClickListener {
-                requireActivity().finish()
-            }
+        binding.composeView.setThemeContent {
+            SignalCompleteScreen(
+                finishActivity = {
+                    navigate(actionId = R.id.action_signalComplete_to_home)
+                }
+            )
         }
     }
 }

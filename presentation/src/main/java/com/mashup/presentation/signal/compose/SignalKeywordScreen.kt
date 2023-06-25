@@ -1,5 +1,6 @@
 package com.mashup.presentation.signal.compose
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -13,9 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.R
-import com.mashup.presentation.ui.common.KeyLinkOnBoardingTextField
-import com.mashup.presentation.ui.common.KeyLinkToolbar
-import com.mashup.presentation.ui.common.KeywordBorderChip
+import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.Gray06
 import com.mashup.presentation.ui.theme.SsamDTheme
 import com.mashup.presentation.ui.theme.White
@@ -27,23 +26,23 @@ import com.mashup.presentation.ui.theme.White
  */
 @Composable
 fun SignalKeywordScreen(
+    isLoading: Boolean,
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit = {},
-    isLoading: Boolean
+    navigateToComplete: () -> Unit = {}
 ) {
     val keywords = remember { mutableStateListOf<String>() }
-//    var isLoading by rememberSaveable { mutableStateOf(false) }
+    var showGoBackDialog by remember { mutableStateOf(false) }
 
-//    SideEffect {
-//        isLoading = true
-//    }
+    BackHandler(true) {
+        showGoBackDialog = true
+    }
 
     Column(modifier = modifier.fillMaxSize()) {
-        KeyLinkToolbar(onClickBack = navigateUp)
-        NameScreen(
+        KeyLinkToolbar(onClickBack = { showGoBackDialog = true })
+        KeywordScreen(
             isLoading = isLoading,
             modifier = Modifier
-                .fillMaxSize()
                 .padding(horizontal = 20.dp, vertical = 8.dp)
                 .weight(1f),
             afterLoadingContent = {
@@ -62,14 +61,30 @@ fun SignalKeywordScreen(
                 )
             }
         )
+        KeyLinkButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 48.dp, start = 20.dp, end = 20.dp),
+            text = stringResource(R.string.button_send_signal),
+            enable = !(isLoading || keywords.isEmpty()),
+            onClick = { navigateToComplete() }
+        )
+    }
+
+    if (showGoBackDialog) {
+        KeyLinkGoBackDialog(
+            onDismissRequest = { },
+            onGoBackClick = { navigateUp() },
+            onCloseClick = { showGoBackDialog = false }
+        )
     }
 }
 
 @Composable
-fun NameScreen(
-    modifier: Modifier = Modifier,
+fun KeywordScreen(
     isLoading: Boolean,
-    afterLoadingContent: @Composable () -> Unit
+    afterLoadingContent: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     if (isLoading) {
         ShimmerScreen(modifier = modifier)
@@ -81,10 +96,10 @@ fun NameScreen(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SignalKeyword(
-    modifier: Modifier = Modifier,
     keywords: MutableList<String>,
     onKeywordAdd: (String) -> Unit,
-    onKeywordDelete: (Int) -> Unit
+    onKeywordDelete: (Int) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     var keyword by remember { mutableStateOf("") }
     val scrollState = rememberScrollState()
@@ -143,8 +158,16 @@ fun SignalKeyword(
 
 @Preview(showBackground = true)
 @Composable
-fun SignalKeywordScreenPreview() {
+fun SignalKeywordLoadingScreenPreview() {
     SsamDTheme {
         SignalKeywordScreen(isLoading = true)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SignalKeywordScreenPreview() {
+    SsamDTheme {
+        SignalKeywordScreen(isLoading = false)
     }
 }

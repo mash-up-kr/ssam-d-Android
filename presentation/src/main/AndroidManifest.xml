@@ -4,12 +4,13 @@
     <application>
         <activity
             android:name=".home.HomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".signal.SignalActivity"
+            android:name=".onboarding.OnBoardingActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".login.LoginActivity"
@@ -20,11 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".onboarding.OnBoardingActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false"/>
 
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
