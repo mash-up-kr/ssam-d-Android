@@ -2,6 +2,7 @@ package com.mashup.presentation.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -25,7 +26,9 @@ import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.theme.*
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navigateToSubscribeKeyword: () -> Unit = {},
+) {
     Box {
         Image(
             modifier = Modifier.fillMaxSize(),
@@ -43,7 +46,9 @@ fun HomeScreen() {
             modifier = Modifier.fillMaxSize()
         ) {
             HomeScreenToolBar()
-            HomeKeywordInfoContainer()
+            HomeKeywordInfoContainer(
+                onClick = { navigateToSubscribeKeyword() }
+            )
         }
     }
 }
@@ -78,11 +83,14 @@ private fun HomeScreenToolBar() {
 }
 
 @Composable
-private fun HomeKeywordInfoContainer() {
+private fun HomeKeywordInfoContainer(
+    onClick: () -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(color = Gray01)
+            .clickable { onClick() }
     ) {
         Row(
             modifier = Modifier
@@ -96,7 +104,7 @@ private fun HomeKeywordInfoContainer() {
                 painter = painterResource(id = R.drawable.ic_signal_32),
                 contentDescription = stringResource(id = R.string.home_signal_icon_content_description),
                 modifier = Modifier.size(24.dp),
-                contentScale = ContentScale.Inside
+                contentScale = ContentScale.Inside,
             )
             Text(
                 text = stringResource(id = R.string.home_subscribe_keywords, 4),
