@@ -63,15 +63,9 @@ private fun HomeScreenToolBar() {
             horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                modifier = Modifier
-                    .width(8.7.dp)
-                    .height(8.7.dp)
-                    .background(color = Amber, shape = RoundedCornerShape(size = 8.7.dp))
-            )
             Text(
                 text = stringResource(id = R.string.home_my_planet, "Æ X-03"),
-                style = Typography.h4,
+                style = Heading4,
                 color = White
             )
         }
@@ -106,7 +100,7 @@ private fun HomeKeywordInfoContainer() {
             )
             Text(
                 text = stringResource(id = R.string.home_subscribe_keywords, 4),
-                style = Typography.body2,
+                style = Body2,
                 color = White
             )
         }
@@ -138,7 +132,7 @@ private fun EmptySignal() {
     ) {
         Text(
             text = stringResource(id = R.string.home_planet_guide, "Æ X-03"),
-            style = Typography.body1,
+            style = Body1,
             color = White,
             textAlign = TextAlign.Center
         )
@@ -177,7 +171,7 @@ private fun SignalCard(signal: SignalUiModel) {
             SignalCardUserInfo(signal)
             Text(
                 text = signal.summery,
-                style = Typography.body1,
+                style = Body1,
                 color = White,
                 maxLines = 3
             )
@@ -200,12 +194,12 @@ private fun SignalCardUserInfo(signal: SignalUiModel) {
         )
         Text(
             text = signal.nickname,
-            style = Typography.body2,
+            style = Body2,
             color = White
         )
         Text(
             text = signal.getDisplayedTime(),
-            style = Typography.caption,
+            style = Caption,
             color = Gray06
         )
     }
