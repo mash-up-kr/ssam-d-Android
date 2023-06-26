@@ -8,5 +8,10 @@
         android:id="@+id/chatFragment"
         android:name="com.mashup.presentation.chat.ChatFragment"
         android:label="ChatFragment"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat">
+        <action
+            android:id="@+id/action_chat_to_send_signal"
+            app:destination="@id/navigation_signal" />
+    </fragment>
+    <include app:graph="@navigation/graph_signal" />
 </navigation>
