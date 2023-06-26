@@ -41,7 +41,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
             binding.bnvHome.visibility = when (destination.id) {
                 /* 디자인 명세에 따라 수정 */
                 R.id.homeFragment -> View.VISIBLE
-                R.id.reelsFragment -> {
+                R.id.chatFragment -> {
                     binding.bnvHome.removeBadge()
                     View.VISIBLE
                 }
