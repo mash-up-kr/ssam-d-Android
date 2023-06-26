@@ -54,6 +54,7 @@ fun KeyLinkButton(
 @Composable
 fun KeyLinkRoundButton(
     text: String,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
     Button(
@@ -97,6 +98,9 @@ fun PreviewKeyLinkButton() {
                 KeyLinkButton(text = "왼쪽", enable = false)
                 KeyLinkButton(text = "오른쪽", enable = true)
             }
+            KeyLinkRoundButton(
+                text = "둥근 버튼"
+            )
         }
     }
 }
