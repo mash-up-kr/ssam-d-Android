@@ -161,7 +161,7 @@ private fun SignalCard(signal: SignalUiModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(shape = RoundedCornerShape(12.dp), color = GrayAlpha20)
+            .background(shape = RoundedCornerShape(12.dp), color = BlackAlpha20)
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
