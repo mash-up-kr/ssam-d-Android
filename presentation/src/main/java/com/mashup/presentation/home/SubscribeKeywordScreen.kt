@@ -49,6 +49,7 @@ fun SubscribeKeywordScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 12.dp, start = 20.dp, end = 20.dp),
+            enable = !keywords.isEmpty(),
             onClick = { navigateToHome() }
         )
     }
