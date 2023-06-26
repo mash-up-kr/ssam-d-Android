@@ -58,7 +58,7 @@ fun KeyLinkRoundButton(
     onClick: () -> Unit = {}
 ) {
     Button(
-        modifier = Modifier.wrapContentSize(),
+        modifier = modifier.wrapContentSize(),
         onClick = { onClick.invoke() },
         colors = ButtonDefaults.buttonColors(
             backgroundColor = Blurple,
