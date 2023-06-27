@@ -64,10 +64,15 @@ fun ChatContent(
     if (!isConnected) {
         EmptyChatScreen(
             onButtonClick = { navigateToSendSignal() },
-            modifier = modifier,
+            modifier = modifier.fillMaxSize(),
         )
     } else {
-        ChatListScreen()
+        ChatListScreen(
+            onMessageClick = { navigateToChatDetail() },
+            modifier = modifier
+                .fillMaxSize()
+                .padding(top = 8.dp)
+        )
     }
 }
 
