@@ -1,6 +1,5 @@
 package com.mashup.presentation.ui.common
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -11,10 +10,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.R
-import com.mashup.presentation.ui.theme.*
+import com.mashup.presentation.ui.theme.BlackAlpha50
+import com.mashup.presentation.ui.theme.Caption
+import com.mashup.presentation.ui.theme.Mint
+import com.mashup.presentation.ui.theme.White
 
 
 /**
@@ -22,16 +23,23 @@ import com.mashup.presentation.ui.theme.*
  * @author jaesung
  * @created 2023/06/27
  */
-val KeyLinkSnackBarHost: @Composable (SnackbarHostState) -> Unit = { snackbarHostState ->
+@Composable
+fun KeyLinkSnackBar(
+    snackBarHostState: SnackbarHostState,
+    modifier: Modifier = Modifier
+) {
     SnackbarHost(
-        hostState = snackbarHostState,
-    ) { snackBarData ->
-        KeyLinkSnackBar(snackBarData.message)
+        hostState = snackBarHostState,
+        modifier = modifier,
+    ) {
+        snackBarHostState.currentSnackbarData?.let{ snackBarData ->
+            KeyLinkSnackBarContent(snackBarData.message)
+        }
     }
 }
 
 @Composable
-fun KeyLinkSnackBar(
+fun KeyLinkSnackBarContent(
     snackBarMessage: String,
     modifier: Modifier = Modifier
 ) {
@@ -58,14 +66,5 @@ fun KeyLinkSnackBar(
                 modifier = Modifier.padding(start = 8.dp)
             )
         }
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-private fun KeyLinkSnackBarPreview() {
-    SsamDTheme {
-        KeyLinkSnackBar(snackBarMessage = "신고가 접수 되었습니다.")
     }
 }
