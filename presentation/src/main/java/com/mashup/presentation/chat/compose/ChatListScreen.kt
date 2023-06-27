@@ -1,13 +1,13 @@
 package com.mashup.presentation.chat.compose
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -51,11 +51,15 @@ private val messageList = List(100) {
 
 @Composable
 fun ChatListScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onMessageClick: () -> Unit = {}
 ) {
     LazyColumn(modifier = modifier) {
         items(messageList) { message ->
-            ChatItem(message)
+            ChatItem(
+                message = message,
+                onMessageClick = { onMessageClick() }
+            )
         }
     }
 }
@@ -63,13 +67,15 @@ fun ChatListScreen(
 @Composable
 fun ChatItem(
     message: Message,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onMessageClick: () -> Unit = {}
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .height(62.dp)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = 16.dp, vertical = 12.dp)
+            .clickable { onMessageClick() },
         verticalAlignment = Alignment.CenterVertically
     ) {
         /* 이미지 대신 임시로 추가 */

@@ -2,6 +2,7 @@ package com.mashup.presentation.chat.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
@@ -23,6 +24,7 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun ChatScreen(
     navigateToSendSignal: () -> Unit = {},
+    navigateToChatDetail: () -> Unit = {}
 ) {
     Scaffold(
         modifier = Modifier,
@@ -48,8 +50,9 @@ fun ChatScreen(
         }
     ) { paddingValues ->
         ChatContent(
-            isConnected = false,
+            isConnected = true,
             navigateToSendSignal = { navigateToSendSignal() },
+            navigateToChatDetail = { navigateToChatDetail() },
             modifier = Modifier.padding(paddingValues)
         )
     }
@@ -59,6 +62,7 @@ fun ChatScreen(
 fun ChatContent(
     isConnected: Boolean,
     navigateToSendSignal: () -> Unit,
+    navigateToChatDetail: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (!isConnected) {
