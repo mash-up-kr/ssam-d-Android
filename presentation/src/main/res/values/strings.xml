@@ -86,5 +86,6 @@
     <string name="chat_empty_first_description">아직 연결된 사람이 없습니다.</string>
     <string name="chat_empty_second_description">먼저 시그널을 보내보세요.</string>
     <string name="toolbar_chat">채팅</string>
+    <string name="content_description_chat_item_frequency">시그널 아이콘입니다.</string>
     <string name="content_description_snackbar_icon">스낵바 아이콘입니다.</string>
 </resources>
