@@ -1,15 +1,16 @@
 package com.mashup.presentation.chat.compose
 
-import android.view.RoundedCorner
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,18 +29,68 @@ import com.mashup.presentation.ui.theme.*
  * @author jaesung
  * @created 2023/06/27
  */
-@Composable
-fun ChatListScreen() {
 
+@Stable
+data class Message(
+    val userName: String,
+    val matchedCount: Int,
+    val date: String,
+    val recentMessage: String,
+    val isNewMessage: Boolean
+)
+
+private val messageList: List<Message> = listOf(
+    Message(
+        userName = "슈퍼 니카1",
+        matchedCount = 10,
+        date = "5월 30일",
+        recentMessage = "키링 MAU 1000만 가즈아-!!",
+        isNewMessage = true
+    ),
+    Message(
+        userName = "슈퍼 니카1",
+        matchedCount = 10,
+        date = "5월 30일",
+        recentMessage = "키링 MAU 1000만 가즈아-!!",
+        isNewMessage = true
+    ),
+    Message(
+        userName = "슈퍼 니카1",
+        matchedCount = 10,
+        date = "5월 30일",
+        recentMessage = "키링 MAU 1000만 가즈아-!!",
+        isNewMessage = false
+    ),
+    Message(
+        userName = "슈퍼 니카1",
+        matchedCount = 10,
+        date = "5월 30일",
+        recentMessage = "키링 MAU 1000만 가즈아-!!",
+        isNewMessage = true
+    ),
+    Message(
+        userName = "슈퍼 니카1",
+        matchedCount = 10,
+        date = "5월 30일",
+        recentMessage = "키링 MAU 1000만 가즈아-!!",
+        isNewMessage = false
+    ),
+)
+
+@Composable
+fun ChatListScreen(
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(modifier = modifier) {
+        items(messageList) { message ->
+            ChatItem(message)
+        }
+    }
 }
 
 @Composable
 fun ChatItem(
-    userName: String = "슈퍼 니카 1",
-    matchedCount: Int = 10,
-    date: String = "5월 30일",
-    recentMessage: String = "다음 전체회의 내용이 어떤거였죠?",
-    isNewMessage: Boolean = true,
+    message: Message,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -60,15 +111,15 @@ fun ChatItem(
             modifier = Modifier.padding(start = 8.dp)
         ) {
             ChatItemMessageInfoContent(
-                date = date,
-                userName = userName,
-                matchedCount = matchedCount,
+                date = message.date,
+                userName = message.userName,
+                matchedCount = message.matchedCount,
                 modifier = Modifier.fillMaxWidth()
             )
 
             ChatItemMessageContent(
-                recentMessage = recentMessage,
-                isNewMessage = isNewMessage,
+                recentMessage = message.recentMessage,
+                isNewMessage = message.isNewMessage,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 2.dp)
@@ -185,12 +236,10 @@ private fun SignalChipPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-private fun CartItemPreview() {
+private fun CardItemPreview() {
     SsamDTheme {
-        Surface(color = Black) {
-            ChatItem()
-        }
+        ChatListScreen()
     }
 }
