@@ -61,9 +61,16 @@ val Body2 = TextStyle(
     lineHeight = 22.sp
 )
 
-val Caption = TextStyle(
+val Caption1 = TextStyle(
     fontFamily = FontFamily.Default,
     fontWeight = FontWeight.Normal,
     fontSize = 12.sp,
+    lineHeight = 18.sp
+)
+
+val Caption2 = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.Normal,
+    fontSize = 10.sp,
     lineHeight = 18.sp
 )
