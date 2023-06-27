@@ -6,16 +6,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import com.mashup.domain.usecase.LoginParam
+import com.mashup.domain.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -61,6 +66,7 @@ class LoginViewModel @Inject constructor(
             } else if (token != null) {
                 Timber.i("카카오 계정으로 로그인 성공 ${token.accessToken}")
                 addPage()
+                login(socialId = token.accessToken)
             }
         }
 
@@ -75,4 +81,26 @@ class LoginViewModel @Inject constructor(
     private fun addPage() = currentPage++
 
     fun backPage() = currentPage--
+
+    private fun getUserInfo() {
+        UserApiClient.instance.me { user, error ->
+            if (error != null) {
+                Timber.e("사용자 정보 요청 실패", error)
+            } else if (user != null) {
+                Timber.i("사용자 정보 요청 성공" + ", 회원번호: ${user.id}" + ", 이메일: ${user.kakaoAccount?.email}")
+            }
+        }
+    }
+
+    private fun login(email: String? = "", socialId: String, deviceToken: String? = "") {
+        viewModelScope.launch {
+            val param = LoginParam(email = email, socialId = socialId, deviceToken = deviceToken)
+            val result = loginUseCase.execute(param)
+            result.onSuccess {
+                Timber.i("login success: $it")
+            }.onFailure {
+                Timber.i("login failure")
+            }
+        }
+    }
 }
