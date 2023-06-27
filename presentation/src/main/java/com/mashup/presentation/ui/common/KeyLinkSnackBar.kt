@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.theme.BlackAlpha50
-import com.mashup.presentation.ui.theme.Caption
+import com.mashup.presentation.ui.theme.Caption2
 import com.mashup.presentation.ui.theme.Mint
 import com.mashup.presentation.ui.theme.White
 
@@ -61,7 +61,7 @@ fun KeyLinkSnackBarContent(
 
             Text(
                 text = snackBarMessage,
-                style = Caption,
+                style = Caption2,
                 color = White,
                 modifier = Modifier.padding(start = 8.dp)
             )
