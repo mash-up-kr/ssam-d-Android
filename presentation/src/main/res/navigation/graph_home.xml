@@ -9,5 +9,14 @@
         android:id="@+id/homeFragment"
         android:name="com.mashup.presentation.home.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_subscribeKeyword"
+            app:destination="@id/subscribeKeywordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/subscribeKeywordFragment"
+        android:name="com.mashup.presentation.home.SubscribeKeywordFragment"
+        android:label="SubscribeKeywordFragment"
+        tools:layout="@layout/fragment_subscribe_keyword"/>
 </navigation>
