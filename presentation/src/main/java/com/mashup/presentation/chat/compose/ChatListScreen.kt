@@ -39,43 +39,15 @@ data class Message(
     val isNewMessage: Boolean
 )
 
-private val messageList: List<Message> = listOf(
+private val messageList = List(100) {
     Message(
         userName = "슈퍼 니카1",
         matchedCount = 10,
         date = "5월 30일",
         recentMessage = "키링 MAU 1000만 가즈아-!!",
         isNewMessage = true
-    ),
-    Message(
-        userName = "슈퍼 니카1",
-        matchedCount = 10,
-        date = "5월 30일",
-        recentMessage = "키링 MAU 1000만 가즈아-!!",
-        isNewMessage = true
-    ),
-    Message(
-        userName = "슈퍼 니카1",
-        matchedCount = 10,
-        date = "5월 30일",
-        recentMessage = "키링 MAU 1000만 가즈아-!!",
-        isNewMessage = false
-    ),
-    Message(
-        userName = "슈퍼 니카1",
-        matchedCount = 10,
-        date = "5월 30일",
-        recentMessage = "키링 MAU 1000만 가즈아-!!",
-        isNewMessage = true
-    ),
-    Message(
-        userName = "슈퍼 니카1",
-        matchedCount = 10,
-        date = "5월 30일",
-        recentMessage = "키링 MAU 1000만 가즈아-!!",
-        isNewMessage = false
-    ),
-)
+    )
+}
 
 @Composable
 fun ChatListScreen(
