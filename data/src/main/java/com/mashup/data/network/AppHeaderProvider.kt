@@ -21,7 +21,7 @@ class AppHeaderProvider @Inject constructor(
     }
 
     override fun saveToken(token: String?) {
-        TODO("Not yet implemented")
+        preferences.edit().putString(JWT, token).apply()
     }
 
     companion object {
