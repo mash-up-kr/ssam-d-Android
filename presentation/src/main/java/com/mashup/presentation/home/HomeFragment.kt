@@ -5,7 +5,6 @@ import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
 import com.mashup.presentation.databinding.FragmentHomeBinding
 import com.mashup.presentation.home.adapter.SignalAdapter
-import com.mashup.presentation.home.model.SignalUiModel
 
 /**
  * Ssam_D_Android
@@ -28,6 +27,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             )
         )
     }
-        }
-    }
+
 }
