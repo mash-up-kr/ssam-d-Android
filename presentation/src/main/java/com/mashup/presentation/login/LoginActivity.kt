@@ -21,6 +21,7 @@ class LoginActivity : AppCompatActivity() {
             LoginScreen(
                 loginToOnBoarding = {
                     startActivity(Intent(this, OnBoardingActivity::class.java))
+                    finish()
                 },
                 handleOnBackPressed = { handleOnBackPressed() }
             )
