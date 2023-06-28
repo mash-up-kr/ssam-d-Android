@@ -66,7 +66,7 @@ class LoginViewModel @Inject constructor(
             } else if (token != null) {
                 Timber.i("카카오 계정으로 로그인 성공 ${token.accessToken}")
                 addPage()
-                login(socialId = token.accessToken)
+                login(email = "",socialId = "1234", deviceToken = token.accessToken)
             }
         }
 
@@ -92,15 +92,15 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun login(email: String? = "", socialId: String, deviceToken: String? = "") {
+    private fun login(email: String?, socialId: String, deviceToken: String? = "") {
         viewModelScope.launch {
             val param = LoginParam(email = email, socialId = socialId, deviceToken = deviceToken)
-            val result = loginUseCase.execute(param)
-            result.onSuccess {
-                Timber.i("login success: $it")
-            }.onFailure {
+            loginUseCase.execute(param)
+               .onSuccess {
+                Timber.i("login success")
+               }.onFailure {
                 Timber.i("login failure")
-            }
+               }
         }
     }
 }

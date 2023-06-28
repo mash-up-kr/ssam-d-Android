@@ -1,5 +1,6 @@
 package com.mashup.data.repository
 
+import com.mashup.data.network.AppHeaderProvider
 import com.mashup.data.source.remote.datasource.RemoteLoginDataSource
 import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody
 import com.mashup.domain.repository.LoginRepository
@@ -7,10 +8,11 @@ import com.mashup.domain.usecase.LoginParam
 import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor(
-    private val remoteLoginDataSource: RemoteLoginDataSource
+    private val remoteLoginDataSource: RemoteLoginDataSource,
+    private val appHeaderProvider: AppHeaderProvider
 ): LoginRepository {
 
-    override suspend fun login(param: LoginParam): String {
+    override suspend fun login(param: LoginParam) {
         val loginRequestBody = with(param) {
             LoginRequestBody(
                 email = email,
@@ -18,6 +20,11 @@ class LoginRepositoryImpl @Inject constructor(
                 deviceToken = deviceToken
             )
         }
-        return remoteLoginDataSource.login(loginRequestBody).accessToken
+
+        val token = runCatching {
+            remoteLoginDataSource.login(loginRequestBody).data
+        }.getOrNull()?.accessToken ?: ""
+
+        appHeaderProvider.saveToken(token)
     }
 }
