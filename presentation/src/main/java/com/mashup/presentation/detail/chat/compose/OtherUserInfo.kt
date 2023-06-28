@@ -1,7 +1,10 @@
 package com.mashup.presentation.detail.chat.compose
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +25,8 @@ import com.mashup.presentation.ui.theme.White
 
 @Composable
 fun OtherUserInfo(
+    othersNickName: String,
+    othersProfileImage: String = "",
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -38,7 +43,7 @@ fun OtherUserInfo(
         )
 
         Text(
-            text = "슈퍼 니카2",
+            text = othersNickName,
             style = Title2,
             color = White,
             modifier = Modifier.padding(top = 8.dp)
@@ -50,6 +55,8 @@ fun OtherUserInfo(
 @Composable
 private fun OtherUserInfoPreview() {
     SsamDTheme {
-        OtherUserInfo()
+        OtherUserInfo(
+            othersNickName = "아무개"
+        )
     }
 }

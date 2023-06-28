@@ -26,6 +26,10 @@ fun ChatDetailScreen(
     modifier: Modifier = Modifier,
     navigateUp: () -> Unit = {}
 ) {
+    /**
+     * val viewModel: ~ by hiltViewModel()
+     * collectAsState~
+     */
     Scaffold(
         modifier = modifier,
         backgroundColor = Black,
@@ -43,34 +47,41 @@ fun ChatDetailScreen(
             )
         }
     ) { paddingValues ->
-        ChatDetailContent(modifier = Modifier.padding(paddingValues))
+        ChatDetailContent(
+            modifier = Modifier.padding(paddingValues),
+            chatDetailState = ProvideChatDetailState,
+        )
     }
 }
 
 @Composable
 fun ChatDetailContent(
+    chatDetailState: ChatDetailState,
     modifier: Modifier = Modifier
 ) {
-    val keywords = listOf("매쉬업", "일상", "디자인", "IT", "취준", "매쉬업", "일상", "디자인", "IT", "취준")
-
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         OtherUserInfo(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            othersNickName = chatDetailState.othersNickName,
+            othersProfileImage = chatDetailState.othersProfileImage
         )
 
         MatchedKeywords(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
-            matchedKeywords = keywords
+            matchedKeywords = chatDetailState.matchedKeywords
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Chat(modifier = Modifier.padding(horizontal = 20.dp))
+        Chat(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            chat = chatDetailState.chat
+        )
     }
 }
 
@@ -86,6 +97,8 @@ private fun ChatDetailScreenPreview() {
 @Composable
 private fun ChatDetailContentPreview() {
     SsamDTheme {
-        ChatDetailContent()
+        ChatDetailContent(
+            chatDetailState = ProvideChatDetailState
+        )
     }
 }
