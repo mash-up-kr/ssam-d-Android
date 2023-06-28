@@ -63,7 +63,7 @@ class LoginViewModel @Inject constructor(
             }
             token?.let {
                 Timber.i("카카오톡 로그인 성공 ${token.accessToken}")
-                sendKakaoUserInfo()
+                sendUserInfo()
             }
         }
     }
@@ -75,12 +75,12 @@ class LoginViewModel @Inject constructor(
             }
             token?.let {
                 Timber.i("카카오 계정 로그인 성공 ${token.accessToken}")
-                sendKakaoUserInfo()
+                sendUserInfo()
             }
         }
     }
 
-    private fun sendKakaoUserInfo() {
+    private fun sendUserInfo() {
         UserApiClient.instance.me { user, error ->
             error?.let {
                 Timber.e("사용자 정보 요청 실패", error)
