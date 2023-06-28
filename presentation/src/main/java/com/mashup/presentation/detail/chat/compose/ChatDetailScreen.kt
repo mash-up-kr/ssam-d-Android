@@ -2,11 +2,13 @@ package com.mashup.presentation.detail.chat.compose
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,15 +54,21 @@ fun ChatDetailScreen(
 fun ChatDetailContent(
     modifier: Modifier = Modifier
 ) {
+    val keywords = listOf("매쉬업", "일상", "디자인", "IT", "취준", "매쉬업", "일상", "디자인", "IT", "취준")
+
     Column(
         modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         OtherUserInfo(
-            modifier = Modifier.padding(top = 8.dp)
+            modifier = Modifier.fillMaxWidth()
         )
 
         MatchedKeywords(
             modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            matchedKeywords = keywords
         )
     }
 }
@@ -70,5 +78,13 @@ fun ChatDetailContent(
 private fun ChatDetailScreenPreview() {
     SsamDTheme {
         ChatDetailScreen()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ChatDetailContentPreview() {
+    SsamDTheme {
+        ChatDetailContent()
     }
 }
