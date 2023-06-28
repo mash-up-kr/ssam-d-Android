@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
@@ -30,6 +29,15 @@ class LoginViewModel @Inject constructor(
     var currentPage by mutableStateOf(0)
     var nickname by mutableStateOf("")
 
+    fun setNicknameAndAddPage(nickname: String) {
+        this.nickname = nickname
+        addPage()
+    }
+
+    private fun addPage() = currentPage++
+
+    fun backPage() = currentPage--
+
     fun handleKakaoLogin() {
         // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오 계정으로 로그인
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
@@ -41,8 +49,8 @@ class LoginViewModel @Inject constructor(
 
     private fun loginKakaoTalk() {
         UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
-            if (error != null) {
-                Timber.e("카카오톡으로 로그인 실패그인 실패", error)
+            error?.let {
+                Timber.e("카카오톡 로그인 실패", error)
 
                 // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
                 // 의도적인 로그인 취소로 보고 카카오 계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
@@ -52,42 +60,33 @@ class LoginViewModel @Inject constructor(
 
                 // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
                 loginKakaoAccount()
-            } else if (token != null) {
-                Timber.i("카카오톡으로 로그인 성공 ${token.accessToken}")
-                addPage()
+            }
+            token?.let {
+                Timber.i("카카오톡 로그인 성공 ${token.accessToken}")
+                sendKakaoUserInfo()
             }
         }
     }
 
     private fun loginKakaoAccount() {
-        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-            if (error != null) {
-                Timber.e("카카오 계정으로 로그인 실패", error)
-            } else if (token != null) {
-                Timber.i("카카오 계정으로 로그인 성공 ${token.accessToken}")
-                addPage()
-                login(email = "",socialId = "1234", deviceToken = token.accessToken)
+        UserApiClient.instance.loginWithKakaoAccount(context) { token, error ->
+            error?.let {
+                Timber.e("카카오 계정 로그인 실패", error)
+            }
+            token?.let {
+                Timber.i("카카오 계정 로그인 성공 ${token.accessToken}")
+                sendKakaoUserInfo()
             }
         }
-
-        UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
     }
 
-    fun setNicknameAndAddPage(nickname: String) {
-        this.nickname = nickname
-        addPage()
-    }
-
-    private fun addPage() = currentPage++
-
-    fun backPage() = currentPage--
-
-    private fun getUserInfo() {
+    private fun sendKakaoUserInfo() {
         UserApiClient.instance.me { user, error ->
-            if (error != null) {
+            error?.let {
                 Timber.e("사용자 정보 요청 실패", error)
-            } else if (user != null) {
-                Timber.i("사용자 정보 요청 성공" + ", 회원번호: ${user.id}" + ", 이메일: ${user.kakaoAccount?.email}")
+            }
+            user?.let {
+                login(user.kakaoAccount?.email, user.id.toString())
             }
         }
     }
@@ -97,9 +96,10 @@ class LoginViewModel @Inject constructor(
             val param = LoginParam(email = email, socialId = socialId, deviceToken = deviceToken)
             loginUseCase.execute(param)
                .onSuccess {
-                Timber.i("login success")
+                   Timber.i("드디어 로그인 성공~!")
+                   addPage()
                }.onFailure {
-                Timber.i("login failure")
+                    Timber.i("삐빅- 로그인 실패")
                }
         }
     }
