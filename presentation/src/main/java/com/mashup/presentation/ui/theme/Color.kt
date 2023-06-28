@@ -18,15 +18,27 @@ val Gray08 = Color(0XFFB1B1B4)
 val Gray09 = Color(0XFFC3C3C6)
 val Gray10 = Color(0XFFE4E4E5)
 
-val BlackAlpha20 = Color(0x330A0C10)
-val BlackAlpha50 = Color(0x800A0C10)
+val BlackAlpha20 = Color(0X330A0C10)
+val BlackAlpha50 = Color(0X800A0C10)
 
 // Main
-val Purple = Color(0xFF4D36DA)
-val Blurple = Color(0xFF5865F2)
-val Mint = Color(0xFF9CFFE1)
+val Purple = Color(0XFF4D36DA)
+val Blurple = Color(0XFF5865F2)
+val Mint = Color(0XFF9CFFE1)
+
+// Gradation
+val Brown = Color(0XFF663629)
+val Orange = Color(0XFFFF6543)
+val Green01 = Color(0XFF508448)
+val GreenYellow = Color(0XFF9EBB6E)
+val Pink01 = Color(0XFFFF5BAC)
+val Pink02 = Color(0XFFFF77BA)
+val Green02 = Color(0XFF288160)
+val Green03 = Color(0XFF16B67B)
+val Purple01 = Color(0XFF7E4FCB)
+val Purple02 = Color(0XFF707AEF)
 
 // Sub
-val Red = Color(0xFFFF5050)
-val Amber = Color(0xFFFCBF50)
-val Green = Color(0xFF36C07E)
+val Red = Color(0XFFFF5050)
+val Amber = Color(0XFFFCBF50)
+val Green = Color(0XFF36C07E)
