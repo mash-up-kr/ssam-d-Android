@@ -88,7 +88,7 @@ fun SubscribeKeywordContent(
                 .verticalScroll(scrollState)
         ) {
             keywords.forEachIndexed { i, keyword ->
-                KeywordBorderChip(
+                KeywordBorderActionChip(
                     text = keyword,
                     index = i,
                     onKeywordDelete = onKeywordDelete

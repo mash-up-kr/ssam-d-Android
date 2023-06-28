@@ -26,7 +26,7 @@ import com.mashup.presentation.ui.theme.*
  * @created 2023/06/22
  */
 @Composable
-fun KeywordChip(
+fun KeywordActionChip(
     text: String,
     index: Int,
     onKeywordDelete: (Int) -> Unit
@@ -66,7 +66,7 @@ fun KeywordChip(
 }
 
 @Composable
-fun KeywordBorderChip(
+fun KeywordBorderActionChip(
     text: String,
     index: Int,
     onKeywordDelete: (Int) -> Unit
@@ -121,12 +121,12 @@ fun ChipPreview() {
                 .fillMaxWidth()
                 .padding(10.dp)
         ) {
-            KeywordChip(
+            KeywordActionChip(
                 text = "키워드",
                 index = 0,
                 onKeywordDelete = {}
             )
-            KeywordBorderChip(
+            KeywordBorderActionChip(
                 text = "하이볼",
                 index = 0,
                 onKeywordDelete = {}
