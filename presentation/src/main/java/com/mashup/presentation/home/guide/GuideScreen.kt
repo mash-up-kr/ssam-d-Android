@@ -3,10 +3,11 @@ package com.mashup.presentation.home.guide
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.R
+import com.mashup.presentation.home.guide.model.Alien
 import com.mashup.presentation.ui.common.KeyLinkButton
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.*
@@ -102,29 +104,39 @@ fun PlanetGuide() {
 
 @Composable
 fun Aliens() {
-    Column {
-        AlienInfo()
+    val aliens = Alien.values().toList()
+    Column(
+        verticalArrangement = Arrangement.spacedBy(60.dp)
+    ) {
+        for (alien in aliens) {
+            AlienInfo(alien)
+        }
     }
 }
 
 @Composable
-fun AlienInfo() {
+fun AlienInfo(alien: Alien) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.img_avatar), contentDescription = "외계 생명체"
+            modifier = Modifier.size(64.dp),
+            painter = painterResource(id = alien.alienImageSrc),
+            contentDescription = "외계 생명체"
         )
+        Spacer(modifier = Modifier.height(9.dp))
         Text(
-            text = "코아리안", style = Body1, color = Gray10
+            text = alien.alienName,
+            style = Body1,
+            color = Gray10
         )
         Spacer(modifier = Modifier.height(16.dp))
-        AlienCard()
+        AlienCard(alien)
     }
 }
 
 @Composable
-fun AlienCard() {
+fun AlienCard(alien: Alien) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -135,18 +147,20 @@ fun AlienCard() {
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp),
+            modifier = Modifier
+                .padding(vertical = 12.dp, horizontal = 16.dp)
+                .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Text(
-                text = "자연과 식물 세계를 관리합니다. \n평화와 조화를 추구하며, 종족 간의 교류와 협력을 강조합니다.",
+                text = alien.description,
                 style = Body2,
                 color = White,
                 textAlign = TextAlign.Center
             )
 
             Text(
-                text = "키워드: 루미스",
+                text = "키워드: ${alien.keyword}",
                 style = Caption,
                 color = Gray10,
                 modifier = Modifier
