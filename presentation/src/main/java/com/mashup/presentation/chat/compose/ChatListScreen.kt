@@ -10,7 +10,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,6 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.R
+import com.mashup.presentation.chat.model.Message
 import com.mashup.presentation.ui.theme.*
 
 /**
@@ -29,15 +29,6 @@ import com.mashup.presentation.ui.theme.*
  * @author jaesung
  * @created 2023/06/27
  */
-
-@Stable
-data class Message(
-    val userName: String,
-    val matchedCount: Int,
-    val date: String,
-    val recentMessage: String,
-    val isNewMessage: Boolean
-)
 
 private val messageList = List(100) {
     Message(
