@@ -31,7 +31,6 @@
             app:layout_constraintEnd_toStartOf="@id/btn_right"
             app:layout_constraintStart_toEndOf="@id/btn_back"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginStart="20dp"
             tools:text="테스트" />
 
         <androidx.appcompat.widget.AppCompatImageButton
