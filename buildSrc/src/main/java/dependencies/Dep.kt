@@ -162,4 +162,9 @@ object Dep {
         const val lottie = "com.airbnb.android:lottie:$lottieVersion"
         const val lottieCompose = "com.airbnb.android:lottie-compose:$lottieVersion"
     }
+
+    object BlurView {
+        private const val version = "2.0.3"
+        const val blur = "com.github.Dimezis:BlurView:version-$version"
+    }
 }
