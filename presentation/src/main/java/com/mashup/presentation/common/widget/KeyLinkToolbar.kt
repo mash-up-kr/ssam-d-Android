@@ -4,9 +4,11 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.mashup.presentation.databinding.ViewKeyLinkToolbarBinding
 
@@ -45,8 +47,16 @@ class KeyLinkToolbar @JvmOverloads constructor(
         binding.tvTitle.setText(resId)
     }
 
+    fun setTitleColor(@ColorRes colorId: Int) {
+        binding.tvTitle.setTextColor(ContextCompat.getColor(context, colorId))
+    }
+
     fun setTitleGravity(gravity: Int = Gravity.START) {
         binding.tvTitle.gravity = gravity
+    }
+
+    fun setLeftButtonVisibility(visibility: Int) {
+        binding.btnBack.visibility = visibility
     }
 
     companion object {
@@ -65,6 +75,18 @@ class KeyLinkToolbar @JvmOverloads constructor(
         @BindingAdapter("key_link_right_drawable")
         fun KeyLinkToolbar.setKeyLinkRightDrawable(@DrawableRes drawableId: Int) {
             setRightButtonDrawable(drawableId)
+        }
+
+        @JvmStatic
+        @BindingAdapter("key_link_title_color")
+        fun KeyLinkToolbar.setKeyLinkTitleColor(@ColorRes colorId: Int) {
+            setTitleColor(colorId)
+        }
+
+        @JvmStatic
+        @BindingAdapter("key_link_back_btn_visibility")
+        fun KeyLinkToolbar.setKeyLinkBackButtonVisibility(visibility: Int) {
+            setLeftButtonVisibility(visibility)
         }
     }
 }
