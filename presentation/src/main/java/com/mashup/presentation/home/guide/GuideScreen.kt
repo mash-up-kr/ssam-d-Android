@@ -92,3 +92,26 @@ fun AlienCard() {
         }
     }
 }
+
+@Composable
+fun PlanetGuideFooter() {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(81.dp)
+    ) {
+        Text(text = "“원하는 종족과 얘기하려면 시그널에 키워드를 추가해서 보내보세요. 같은 종족이라면 통하는 시그널이 있을 거예요.”",
+            style = Title1,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .graphicsLayer(alpha = 0.99f)
+                .drawWithCache {
+                    val brush = Brush.horizontalGradient(listOf(Purple, Mint))
+                    onDrawWithContent {
+                        drawContent()
+                        drawRect(brush, blendMode = BlendMode.SrcAtop)
+                    }
+                })
+        KeyLinkButton(modifier = Modifier.fillMaxWidth(), text = "시그널 보내기")
+    }
+}
