@@ -3,8 +3,6 @@ package com.mashup.presentation.home.guide
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -20,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +36,7 @@ fun PlanetGuideScreen(
         Image(
             modifier = modifier.fillMaxSize(),
             painter = painterResource(id = R.drawable.img_home_guide),
-            contentDescription = "홈 가이드 백그라운드",
+            contentDescription = stringResource(id = R.string.home_guide_background_content_description),
             contentScale = ContentScale.Crop
         )
         Column(
@@ -73,13 +72,13 @@ fun PlanetGuide() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "행성 Zylix-6",
+            text = stringResource(id = R.string.home_guide_planet),
             style = Heading1,
             color = White
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "곧 다른 행성 이동 가능한 기능이 출시 예정입니다. \n거기는 어떤 종족들이 살고 있을까요?",
+            text = stringResource(id = R.string.home_guide_new_feature_coming_soon),
 
             modifier = Modifier
                 .graphicsLayer(alpha = 0.99f)
@@ -94,7 +93,7 @@ fun PlanetGuide() {
         )
         Spacer(modifier = Modifier.height(40.dp))
         Text(
-            text = "Zylix-6의 종족들은 상호 간의 연결성과 유대감을 중요시합니다. 그들은 공동체 의식을 갖고 있으며, 협력과 상호작용을 통해 문화적인 발전과 지식의 공유를 추구합니다. 이를 통해 행성 전체의 번영을 이루는데 기여합니다.",
+            text = stringResource(id = R.string.home_guide_current_planet_description),
             style = Body1,
             color = Gray07,
             textAlign = TextAlign.Center
@@ -122,7 +121,7 @@ fun AlienInfo(alien: Alien) {
         Image(
             modifier = Modifier.size(64.dp),
             painter = painterResource(id = alien.alienImageSrc),
-            contentDescription = "외계 생명체"
+            contentDescription = stringResource(id = R.string.home_guide_alien_content_description)
         )
         Spacer(modifier = Modifier.height(9.dp))
         Text(
@@ -180,7 +179,7 @@ fun PlanetGuideFooter() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(81.dp)
     ) {
-        Text(text = "“원하는 종족과 얘기하려면 시그널에 키워드를 추가해서 보내보세요. 같은 종족이라면 통하는 시그널이 있을 거예요.”",
+        Text(text = stringResource(id = R.string.home_guide_footer_description),
             style = Title1,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -192,7 +191,10 @@ fun PlanetGuideFooter() {
                         drawRect(brush, blendMode = BlendMode.SrcAtop)
                     }
                 })
-        KeyLinkButton(modifier = Modifier.fillMaxWidth(), text = "시그널 보내기")
+        KeyLinkButton(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(id = R.string.button_send_signal)
+        )
     }
 }
 
