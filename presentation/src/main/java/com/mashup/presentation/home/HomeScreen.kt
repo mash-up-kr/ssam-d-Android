@@ -28,6 +28,7 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun HomeScreen(
     navigateToSubscribeKeyword: () -> Unit = {},
+    navigateToGuide: () -> Unit = {},
 ) {
     Box {
         Image(
@@ -41,7 +42,7 @@ fun HomeScreen(
             painter = painterResource(R.drawable.img_blueplanet),
             contentDescription = stringResource(R.string.login_description_blueplanet)
         )
-        EmptyContent()
+        EmptyContent(onClickGuide = { navigateToGuide() })
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -121,18 +122,22 @@ private fun HomeKeywordInfoContainer(
 }
 
 @Composable
-private fun EmptyContent() {
+private fun EmptyContent(
+    onClickGuide: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
-        EmptySignal()
+        EmptySignal(onClickGuide)
     }
 }
 
 @Composable
-private fun EmptySignal() {
+private fun EmptySignal(
+    onClickGuide: () -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(25.dp),
@@ -145,7 +150,7 @@ private fun EmptySignal() {
             textAlign = TextAlign.Center
         )
         KeyLinkRoundButton(text = stringResource(id = R.string.home_planet_guide_button)) {
-            // TODO: navigate to 가이드
+            onClickGuide.invoke()
         }
     }
 }
