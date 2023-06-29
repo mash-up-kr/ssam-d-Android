@@ -4,6 +4,7 @@ object Dep {
     object AndroidX {
         const val appCompat = "androidx.appcompat:appcompat:1.6.1"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.4"
+        const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
         object Activity {
             const val ktx = "androidx.activity:activity-ktx:1.2.3"

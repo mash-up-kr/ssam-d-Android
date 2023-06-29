@@ -82,9 +82,15 @@
     <string name="button_send_signal">시그널 보내기</string>
     <string name="signal_complete_subtitle">연결되면 [채팅]에 대화방이 만들어져요.</string>
     <string name="home_item_avatar_content_description">아바타</string>
+    <string name="content_description_empty_chat">연결된 채팅이 없음을 나타내는 이미지입니다.</string>
+    <string name="chat_empty_first_description">아직 연결된 사람이 없습니다.</string>
+    <string name="chat_empty_second_description">먼저 시그널을 보내보세요.</string>
+    <string name="toolbar_chat">채팅</string>
+    <string name="content_description_chat_item_frequency">시그널 아이콘입니다.</string>
     <string name="subscribe_keyword_title">구독중인 키워드</string>
     <string name="subscribe_keyword_subtitle">키워드를 확인하고 시그널을 받아보세요</string>
     <string name="button_save">저장하기</string>
     <string name="content_description_snackbar_icon">스낵바 아이콘입니다.</string>
     <string name="text_field_hint">예) 매쉬업</string>
+    <string name="signal_matched_count">%s개 일치</string>
 </resources>
