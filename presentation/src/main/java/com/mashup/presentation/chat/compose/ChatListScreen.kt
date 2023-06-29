@@ -187,7 +187,7 @@ fun SignalChip(
         )
 
         Text(
-            text = "${matchedCount}개 일치",
+            text = stringResource(R.string.signal_matched_count, matchedCount),
             style = Caption2.copy(fontWeight = FontWeight.Bold),
             color = Gray09,
             modifier = Modifier
