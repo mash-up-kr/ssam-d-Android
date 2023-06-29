@@ -20,6 +20,7 @@ val Gray10 = Color(0XFFE4E4E5)
 
 val BlackAlpha20 = Color(0x330A0C10)
 val BlackAlpha50 = Color(0x800A0C10)
+val BlackAlpha60 = Color(0x990A0C10)
 
 // Main
 val Purple = Color(0xFF4D36DA)
