@@ -30,7 +30,8 @@ import com.mashup.presentation.ui.theme.*
 
 @Composable
 fun PlanetGuideScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onBackPressed: () -> Unit = {}
 ) {
     Scaffold {
         Image(
@@ -47,7 +48,7 @@ fun PlanetGuideScreen(
             KeyLinkToolbar(
                 backgroundColor = Color.Transparent
             ) {
-                // TODO: 뒤로가기
+                onBackPressed()
             }
             Column(
                 modifier = modifier

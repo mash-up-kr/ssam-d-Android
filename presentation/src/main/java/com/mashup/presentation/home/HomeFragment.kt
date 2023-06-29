@@ -16,7 +16,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     override fun initViews() {
         binding.composeView.setThemeContent {
             HomeScreen(
-                navigateToSubscribeKeyword = { navigate(R.id.action_home_to_subscribeKeyword)}
+                navigateToSubscribeKeyword = { navigate(R.id.action_home_to_subscribeKeyword)},
+                navigateToGuide = {navigate(R.id.action_homeFragment_to_guideFragment)}
             )
         }
     }
