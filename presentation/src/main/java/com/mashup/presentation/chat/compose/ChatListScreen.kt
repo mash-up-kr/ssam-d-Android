@@ -64,7 +64,7 @@ fun ChatItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(62.dp)
+            .wrapContentWidth()
             .padding(horizontal = 16.dp, vertical = 12.dp)
             .clickable { onMessageClick() },
         verticalAlignment = Alignment.CenterVertically
