@@ -207,7 +207,7 @@ private fun SignalCardUserInfo(signal: SignalUiModel) {
         )
         Text(
             text = signal.getDisplayedTime(),
-            style = Caption,
+            style = Caption1,
             color = Gray06
         )
     }
