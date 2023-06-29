@@ -39,4 +39,21 @@ data class SignalUiModel(
             }
         }
     }
+
+    fun getKeywordSummeryList(): List<String> {
+        return mutableListOf<String>().apply {
+            if (keywords.size > MAX_KEYWORD_COUNT) {
+                addAll(keywords.subList(0, MAX_KEYWORD_COUNT))
+                add(
+                    "+${keywords.size.minus(MAX_KEYWORD_COUNT)}"
+                )
+            } else {
+                addAll(keywords)
+            }
+        }
+    }
+
+    companion object {
+        private const val MAX_KEYWORD_COUNT = 3
+    }
 }
