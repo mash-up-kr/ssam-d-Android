@@ -13,17 +13,25 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.RoundRect
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.R
+import com.mashup.presentation.common.extension.pxToDp
 import com.mashup.presentation.home.model.SignalUiModel
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.theme.*
+import java.util.concurrent.TimeUnit
 
 @Composable
 fun HomeScreen(
@@ -184,7 +192,14 @@ private fun SignalCard(signal: SignalUiModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(shape = RoundedCornerShape(12.dp), color = BlackAlpha20)
+            .drawColoredShadow(
+                color = Color.Blue,
+                offsetX = 4.pxToDp().dp,
+                offsetY = 6.pxToDp().dp,
+                borderRadius = 28.pxToDp().dp,
+                shadowRadius = 20.pxToDp().dp
+            )
+            .background(shape = RoundedCornerShape(12.dp), color = Black.copy(alpha = 0.6f))
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -273,4 +288,45 @@ private fun SignalCardKeywordsChip(keyword: String) {
 @Composable
 fun PreviewHomeScreen() {
     HomeScreen()
+}
+fun Modifier.drawColoredShadow(
+    color: Color,
+    alpha: Float = 0.2f,
+    borderRadius: Dp = 0.dp,
+    shadowRadius: Dp = 20.dp,
+    offsetY: Dp = 0.dp,
+    offsetX: Dp = 0.dp
+) = this.drawBehind {
+    val transparentColor = color.copy(alpha = 0.0f).toArgb()
+    val shadowColor = color.copy(alpha = alpha).toArgb()
+    this.drawIntoCanvas {
+        val innerRect = RoundRect(
+            0f, 0f, this.size.width - 2f, this.size.height - 2f,
+            CornerRadius(borderRadius.toPx(), borderRadius.toPx())
+        )
+
+        val outerRect = RoundRect(
+            offsetX.toPx(),
+            offsetY.toPx(),
+            (this.size.width + offsetX.toPx()),
+            (this.size.height + offsetY.toPx()),
+            CornerRadius(borderRadius.toPx(), borderRadius.toPx())
+        )
+        val outerPath = Path().apply { addRoundRect(outerRect) }
+        val innerPath = Path().apply { addRoundRect(innerRect) }
+
+        val resultPath = Path().apply {
+            op(outerPath, innerPath, PathOperation.Difference)
+        }
+        val paint = Paint()
+        val frameworkPaint = paint.asFrameworkPaint()
+        frameworkPaint.color = transparentColor
+        frameworkPaint.setShadowLayer(
+            shadowRadius.toPx(),
+            offsetX.toPx(),
+            offsetY.toPx(),
+            shadowColor
+        )
+        it.drawPath(resultPath, paint)
+    }
 }
