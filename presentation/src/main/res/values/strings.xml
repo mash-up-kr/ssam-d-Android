@@ -101,4 +101,5 @@
     <string name="home_guide_current_planet_description">Zylix-6의 종족들은 상호 간의 연결성과 유대감을 중요시합니다. 그들은 공동체 의식을 갖고 있으며, 협력과 상호작용을 통해 문화적인 발전과 지식의 공유를 추구합니다. 이를 통해 행성 전체의 번영을 이루는데 기여합니다.</string>
     <string name="home_guide_alien_content_description">외계 생명체</string>
     <string name="home_guide_footer_description">“원하는 종족과 얘기하려면 시그널에 키워드를 추가해서 보내보세요. 같은 종족이라면 통하는 시그널이 있을 거예요.”</string>
+    <string name="home_guide_alien_card_keyword">키워드: %s</string>
 </resources>
