@@ -3,10 +3,7 @@ package com.mashup.presentation.ui.common
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -86,12 +83,53 @@ fun KeyLinkChatBottomSheetItem(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun KeyLinkKeywordBottomSheet(
+    modifier: Modifier = Modifier,
+    matchedKeywords: List<String> = listOf(),
+) {
+    Column(modifier = modifier.padding(horizontal = 16.dp, vertical = 16.dp)) {
+        Text(
+            text = stringResource(R.string.bottom_sheet_matched_keywords),
+            style = Title1,
+            color = White,
+            modifier = Modifier
+        )
+
+        FlowRow(
+            modifier = Modifier.padding(top = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            matchedKeywords.forEach { keyword ->
+                KeywordChip(
+                    keyword = keyword,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true, backgroundColor = 0XFFFFFFFF)
 @Composable
-fun BottomSheetPreview() {
+fun KeyLinkChatBottomSheetPreview() {
     SsamDTheme {
         Surface(color = Gray02) {
             KeyLinkChatBottomSheet()
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0XFFFFFFFF)
+@Composable
+fun KeyLinkKeywordBottomSheetPreview() {
+    val matchedKeywords = listOf("매쉬업", "일상", "디자인", "IT", "취준", "매쉬업", "일상", "디자인", "IT", "취준")
+    SsamDTheme {
+        Surface(color = Gray02) {
+            KeyLinkKeywordBottomSheet(
+                matchedKeywords = matchedKeywords
+            )
         }
     }
 }
