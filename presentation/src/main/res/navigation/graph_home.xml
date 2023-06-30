@@ -13,10 +13,17 @@
         <action
             android:id="@+id/action_home_to_subscribeKeyword"
             app:destination="@id/subscribeKeywordFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_guideFragment"
+            app:destination="@id/guideFragment" />
     </fragment>
     <fragment
         android:id="@+id/subscribeKeywordFragment"
         android:name="com.mashup.presentation.home.SubscribeKeywordFragment"
         android:label="SubscribeKeywordFragment"
         tools:layout="@layout/fragment_subscribe_keyword"/>
+    <fragment
+        android:id="@+id/guideFragment"
+        android:name="com.mashup.presentation.home.guide.GuideFragment"
+        android:label="GuideFragment" />
 </navigation>
