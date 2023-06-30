@@ -1,7 +1,7 @@
 package com.mashup.data.repository
 
 import android.util.Log
-import com.mashup.data.network.AppHeaderProvider
+import com.mashup.data.source.local.datasource.LocalLoginDataSource
 import com.mashup.data.source.remote.datasource.RemoteLoginDataSource
 import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody
 import com.mashup.domain.repository.LoginRepository
@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor(
     private val remoteLoginDataSource: RemoteLoginDataSource,
-    private val appHeaderProvider: AppHeaderProvider
+    private val localLoginDataSource: LocalLoginDataSource
 ): LoginRepository {
 
     override suspend fun login(param: LoginParam): Boolean {
@@ -26,7 +26,8 @@ class LoginRepositoryImpl @Inject constructor(
             remoteLoginDataSource.login(loginRequestBody).data
         }.getOrNull()?.accessToken ?: ""
 
-        appHeaderProvider.saveToken(token)
+        localLoginDataSource.saveToken(token)
+
         return token.isNotEmpty()
     }
 }
