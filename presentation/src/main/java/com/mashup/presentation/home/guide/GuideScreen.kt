@@ -161,7 +161,7 @@ fun AlienCard(alien: Alien) {
 
             Text(
                 text = stringResource(id = R.string.home_guide_alien_card_keyword, alien.keyword),
-                style = Caption,
+                style = Caption1,
                 color = Gray10,
                 modifier = Modifier
                     .background(
