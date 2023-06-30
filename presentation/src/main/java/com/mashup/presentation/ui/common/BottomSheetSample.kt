@@ -1,13 +1,11 @@
 package com.mashup.presentation.ui.common
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.mashup.presentation.ui.theme.*
 import kotlinx.coroutines.launch
 
@@ -28,11 +26,8 @@ fun KeyLinkBottomSheetSample() {
         skipHalfExpanded = false
     )
 
-    ModalBottomSheetLayout(
-        sheetState = modalSheetState,
-        sheetShape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
-        sheetBackgroundColor = Gray02,
-        sheetContent = {
+    KeyLinkBottomSheetLayout(
+        bottomSheetContent = {
             KeyLinkKeywordBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -40,6 +35,7 @@ fun KeyLinkBottomSheetSample() {
                 matchedKeywords = listOf("매쉬업", "일상", "디자인", "IT", "취준", "매쉬업", "일상", "디자인", "IT", "취준")
             )
         },
+        modalSheetState = modalSheetState
     ) {
         Scaffold {
             Box(

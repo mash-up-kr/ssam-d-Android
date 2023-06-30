@@ -14,16 +14,10 @@ import com.mashup.presentation.ui.theme.Gray02
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun KeyLinkBottomSheetLayout(
+    modalSheetState: ModalBottomSheetState,
     bottomSheetContent: @Composable () -> Unit,
     scaffoldLayout: @Composable () -> Unit
 ) {
-    val modalSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        animationSpec = SwipeableDefaults.AnimationSpec,
-        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
-        skipHalfExpanded = false
-    )
-
     ModalBottomSheetLayout(
         sheetState = modalSheetState,
         sheetShape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
