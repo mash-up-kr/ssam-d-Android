@@ -29,7 +29,7 @@ import com.mashup.presentation.ui.theme.*
  */
 @Composable
 fun Chat(
-    chat: List<MessageState>,
+    chat: List<MessageUiModel>,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
@@ -129,7 +129,7 @@ fun Message(
 @Preview(showBackground = true, name = "기본")
 @Composable
 private fun MessagePreview() {
-    val myMessage = MessageState(
+    val myMessage = MessageUiModel(
         message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
         userName = "나",
         date = "2023년 6월 28일",
@@ -151,7 +151,7 @@ private fun MessagePreview() {
 @Preview(showBackground = true, name = "민트색")
 @Composable
 private fun MessagePreview3() {
-    val othersMessage = MessageState(
+    val othersMessage = MessageUiModel(
         message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
         userName = "슈퍼니카",
         date = "2023년 6월 28일",

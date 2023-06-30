@@ -56,7 +56,7 @@ fun ChatDetailScreen(
 
 @Composable
 fun ChatDetailContent(
-    chatDetailState: ChatDetailState,
+    chatDetailState: ChatDetailUiModel,
     modifier: Modifier = Modifier
 ) {
     Column(

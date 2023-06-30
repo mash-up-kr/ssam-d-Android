@@ -8,15 +8,14 @@ import com.mashup.presentation.ui.theme.*
  * @author jaesung
  * @created 2023/06/29
  */
-
-data class ChatDetailState(
+data class ChatDetailUiModel(
     val othersProfileImage: String,
     val othersNickName: String,
     val matchedKeywords: List<String>,
-    val chat: List<MessageState>
+    val chat: List<MessageUiModel>
 )
 
-data class MessageState(
+data class MessageUiModel(
     val message: String,
     val userName: String,
     val date: String,
@@ -39,75 +38,75 @@ enum class MessageBackgroundColor(
     }
 }
 
-val ProvideChatDetailState = ChatDetailState(
+val ProvideChatDetailState = ChatDetailUiModel(
     othersProfileImage = "https://github-production-user-asset-6210df.s3.amazonaws.com/51078673/249568892-2120a1d4-58c3-4fbd-a8d7-f1e01571a0e6.png",
     othersNickName = "슈퍼니카",
     matchedKeywords = listOf("매쉬업", "일상", "디자인", "IT", "취준", "매쉬업", "일상", "디자인", "IT", "취준"),
     chat = listOf(
-        MessageState(
+        MessageUiModel(
             message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
             userName = "나",
             date = "2023년 6월 28일",
             isMine = true,
             backgroundColor = null
         ),
-        MessageState(
+        MessageUiModel(
             message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
             userName = "나",
             date = "2023년 6월 28일",
             isMine = true,
             backgroundColor = null
         ),
-        MessageState(
+        MessageUiModel(
             message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
             userName = "슈퍼니카",
             date = "2023년 6월 28일",
             isMine = false,
             backgroundColor = MessageBackgroundColor.ORANGE
         ),
-        MessageState(
+        MessageUiModel(
             message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
             userName = "슈퍼니카",
             date = "2023년 6월 28일",
             isMine = false,
             backgroundColor = MessageBackgroundColor.MINT
         ),
-        MessageState(
+        MessageUiModel(
             message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
             userName = "나",
             date = "2023년 6월 28일",
             isMine = true,
             backgroundColor = null
         ),
-        MessageState(
+        MessageUiModel(
             message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
             userName = "슈퍼니카",
             date = "2023년 6월 28일",
             isMine = false,
             backgroundColor = MessageBackgroundColor.GREEN
         ),
-        MessageState(
+        MessageUiModel(
             message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
             userName = "나",
             date = "2023년 6월 28일",
             isMine = true,
             backgroundColor = null
         ),
-        MessageState(
+        MessageUiModel(
             message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
             userName = "나",
             date = "2023년 6월 28일",
             isMine = true,
             backgroundColor = null
         ),
-        MessageState(
+        MessageUiModel(
             message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
             userName = "슈퍼니카",
             date = "2023년 6월 28일",
             isMine = false,
             backgroundColor = MessageBackgroundColor.PURPLE
         ),
-        MessageState(
+        MessageUiModel(
             message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
             userName = "슈퍼니카",
             date = "2023년 6월 28일",
