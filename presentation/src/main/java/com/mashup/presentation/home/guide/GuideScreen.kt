@@ -46,10 +46,9 @@ fun PlanetGuideScreen(
                 .padding(it)
         ) {
             KeyLinkToolbar(
-                backgroundColor = Color.Transparent
-            ) {
-                onBackPressed()
-            }
+                backgroundColor = Color.Transparent,
+                onClickBack = { onBackPressed() }
+            )
             Column(
                 modifier = modifier
                     .padding(horizontal = 20.dp, vertical = 12.dp)

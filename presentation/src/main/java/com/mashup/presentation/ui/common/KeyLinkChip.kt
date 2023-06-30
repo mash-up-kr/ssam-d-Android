@@ -14,6 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,8 +29,36 @@ import com.mashup.presentation.ui.theme.*
  * @author jaesung
  * @created 2023/06/22
  */
+
 @Composable
 fun KeywordChip(
+    keyword: String
+) {
+    Box(
+        modifier = Modifier
+            .background(
+                color = Gray01,
+                shape = RoundedCornerShape(10.dp)
+            )
+            .padding(horizontal = 8.dp, vertical = 4.dp)
+    ) {
+        Text(
+            text = "#$keyword",
+            style = TextStyle(
+                fontFamily = FontFamily.Default,
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Normal,
+                lineHeight = 18.sp
+            ),
+            color = Gray10,
+            textAlign = TextAlign.Center
+        )
+
+    }
+}
+
+@Composable
+fun KeywordActionChip(
     text: String,
     index: Int,
     onKeywordDelete: (Int) -> Unit
@@ -66,7 +98,7 @@ fun KeywordChip(
 }
 
 @Composable
-fun KeywordBorderChip(
+fun KeywordBorderActionChip(
     text: String,
     index: Int,
     onKeywordDelete: (Int) -> Unit
@@ -122,11 +154,14 @@ fun ChipPreview() {
                 .padding(10.dp)
         ) {
             KeywordChip(
+                keyword = "매쉬업"
+            )
+            KeywordActionChip(
                 text = "키워드",
                 index = 0,
                 onKeywordDelete = {}
             )
-            KeywordBorderChip(
+            KeywordBorderActionChip(
                 text = "하이볼",
                 index = 0,
                 onKeywordDelete = {}

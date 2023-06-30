@@ -16,8 +16,9 @@ import com.mashup.presentation.ui.theme.White
 @Composable
 fun KeyLinkToolbar(
     title: @Composable () -> Unit = {},
+    menuAction: @Composable () -> Unit = {},
+    onClickBack: () -> Unit = {},
     backgroundColor: Color = Black,
-    onClickBack: () -> Unit
 ) {
     TopAppBar(
         title = title,
@@ -30,6 +31,9 @@ fun KeyLinkToolbar(
                     contentDescription = "백 버튼"
                 )
             }
+        },
+        actions = {
+            menuAction()
         },
         modifier = Modifier.height(52.dp),
         elevation = 0.dp
