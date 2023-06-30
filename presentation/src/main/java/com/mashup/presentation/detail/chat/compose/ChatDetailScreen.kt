@@ -79,7 +79,7 @@ fun ChatDetailContent(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Chat(
+        ChatContent(
             modifier = Modifier.padding(horizontal = 20.dp),
             chat = chatDetailState.chat
         )

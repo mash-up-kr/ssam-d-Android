@@ -30,7 +30,7 @@ import com.mashup.presentation.ui.theme.*
  * @created 2023/06/28
  */
 @Composable
-fun Chat(
+fun ChatContent(
     chat: List<MessageUiModel>,
     modifier: Modifier = Modifier,
 ) {
@@ -41,7 +41,7 @@ fun Chat(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(chat) { message ->
-            Message(
+            MessageContent(
                 isMine = message.isMine,
                 message = message.message,
                 userName = message.userName,
@@ -59,7 +59,7 @@ fun Chat(
  * 지정된 비율에 따라 width와 height값을 표현할 수 있음
  */
 @Composable
-fun Message(
+fun MessageContent(
     isMine: Boolean,
     message: String,
     userName: String,
@@ -143,7 +143,7 @@ private fun DefaultMessagePreview() {
     )
 
     SsamDTheme {
-        Message(
+        MessageContent(
             isMine = myMessage.isMine,
             message = myMessage.message,
             userName = myMessage.userName,
@@ -165,7 +165,7 @@ private fun MintMessagePreview() {
     )
 
     SsamDTheme {
-        Message(
+        MessageContent(
             isMine = othersMessage.isMine,
             message = othersMessage.message,
             userName = othersMessage.userName,
