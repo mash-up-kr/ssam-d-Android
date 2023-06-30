@@ -3,11 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_chat"
-    app:startDestination="@id/reelsFragment">
-
+    app:startDestination="@id/chatFragment">
     <fragment
-        android:id="@+id/reelsFragment"
-        android:name="com.mashup.presentation.reels.ReelsFragment"
-        android:label="ReelsFragment"
-        tools:layout="@layout/fragment_reels" />
+        android:id="@+id/chatFragment"
+        android:name="com.mashup.presentation.chat.ChatFragment"
+        android:label="ChatFragment"
+        tools:layout="@layout/fragment_chat">
+        <action
+            android:id="@+id/action_chat_to_send_signal"
+            app:destination="@id/navigation_signal" />
+    </fragment>
+    <include app:graph="@navigation/graph_signal" />
 </navigation>

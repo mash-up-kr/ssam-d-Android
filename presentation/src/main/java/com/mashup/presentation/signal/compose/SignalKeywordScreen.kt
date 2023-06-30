@@ -144,7 +144,7 @@ fun SignalKeyword(
             KeyLinkOnBoardingTextField(
                 value = keyword,
                 onValueChange = { keyword = it },
-                hint = "예) 매쉬업",
+                hint = stringResource(R.string.text_field_hint),
                 fontSize = 14.sp,
                 onClickDone = {
                     onKeywordAdd(keyword)

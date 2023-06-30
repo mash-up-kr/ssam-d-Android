@@ -2,6 +2,7 @@ package com.mashup.presentation.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -25,7 +26,10 @@ import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.theme.*
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navigateToSubscribeKeyword: () -> Unit = {},
+    navigateToGuide: () -> Unit = {},
+) {
     Box {
         Image(
             modifier = Modifier.fillMaxSize(),
@@ -38,12 +42,14 @@ fun HomeScreen() {
             painter = painterResource(R.drawable.img_blueplanet),
             contentDescription = stringResource(R.string.login_description_blueplanet)
         )
-        EmptyContent()
+        EmptyContent(onClickGuide = { navigateToGuide() })
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
             HomeScreenToolBar()
-            HomeKeywordInfoContainer()
+            HomeKeywordInfoContainer(
+                onClick = { navigateToSubscribeKeyword() }
+            )
         }
     }
 }
@@ -78,11 +84,14 @@ private fun HomeScreenToolBar() {
 }
 
 @Composable
-private fun HomeKeywordInfoContainer() {
+private fun HomeKeywordInfoContainer(
+    onClick: () -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(color = Gray01)
+            .clickable { onClick() }
     ) {
         Row(
             modifier = Modifier
@@ -96,7 +105,7 @@ private fun HomeKeywordInfoContainer() {
                 painter = painterResource(id = R.drawable.ic_signal_32),
                 contentDescription = stringResource(id = R.string.home_signal_icon_content_description),
                 modifier = Modifier.size(24.dp),
-                contentScale = ContentScale.Inside
+                contentScale = ContentScale.Inside,
             )
             Text(
                 text = stringResource(id = R.string.home_subscribe_keywords, 4),
@@ -113,18 +122,22 @@ private fun HomeKeywordInfoContainer() {
 }
 
 @Composable
-private fun EmptyContent() {
+private fun EmptyContent(
+    onClickGuide: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
-        EmptySignal()
+        EmptySignal(onClickGuide)
     }
 }
 
 @Composable
-private fun EmptySignal() {
+private fun EmptySignal(
+    onClickGuide: () -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(25.dp),
@@ -137,7 +150,7 @@ private fun EmptySignal() {
             textAlign = TextAlign.Center
         )
         KeyLinkRoundButton(text = stringResource(id = R.string.home_planet_guide_button)) {
-            // TODO: navigate to 가이드
+            onClickGuide.invoke()
         }
     }
 }
@@ -199,7 +212,7 @@ private fun SignalCardUserInfo(signal: SignalUiModel) {
         )
         Text(
             text = signal.getDisplayedTime(),
-            style = Caption,
+            style = Caption1,
             color = Gray06
         )
     }
