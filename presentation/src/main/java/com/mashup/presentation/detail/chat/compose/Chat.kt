@@ -128,9 +128,9 @@ fun Message(
 }
 
 
-@Preview(showBackground = true, name = "기본")
+@Preview(showBackground = true)
 @Composable
-private fun MessagePreview() {
+private fun DefaultMessagePreview() {
     val myMessage = MessageUiModel(
         message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
         userName = "나",
@@ -150,9 +150,9 @@ private fun MessagePreview() {
     }
 }
 
-@Preview(showBackground = true, name = "민트색")
+@Preview(showBackground = true)
 @Composable
-private fun MessagePreview3() {
+private fun MintMessagePreview() {
     val othersMessage = MessageUiModel(
         message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
         userName = "슈퍼니카",
