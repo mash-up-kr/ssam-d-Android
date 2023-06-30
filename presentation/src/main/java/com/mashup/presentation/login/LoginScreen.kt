@@ -46,7 +46,7 @@ fun LoginScreen(
     BackHandler(enabled = true) {
         when (loginViewModel.currentPage) {
             0 -> handleOnBackPressed()
-            else -> loginViewModel.backPage()
+            else -> loginViewModel.backToPrevPage()
         }
     }
 

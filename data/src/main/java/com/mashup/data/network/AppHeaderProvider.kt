@@ -2,13 +2,14 @@ package com.mashup.data.network
 
 import android.content.Context
 import android.content.SharedPreferences
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 /**
  * Header와 관련된 로직을 관리합니다.
  */
 class AppHeaderProvider @Inject constructor(
-    private val context: Context
+    @ApplicationContext private val context: Context
 ) : HttpHeaderProvider {
     private val preferences: SharedPreferences =
         context.getSharedPreferences(LOGIN_PREFERENCE, Context.MODE_PRIVATE)
@@ -18,7 +19,7 @@ class AppHeaderProvider @Inject constructor(
     }
 
     override fun saveToken(token: String?) {
-        TODO("Not yet implemented")
+        preferences.edit().putString(JWT, token).apply()
     }
 
     companion object {
