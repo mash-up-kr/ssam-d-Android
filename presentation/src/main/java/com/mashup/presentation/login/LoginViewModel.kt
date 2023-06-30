@@ -31,12 +31,12 @@ class LoginViewModel @Inject constructor(
 
     fun setNicknameAndAddPage(nickname: String) {
         this.nickname = nickname
-        addPage()
+        goToNextPage()
     }
 
-    private fun addPage() = currentPage++
+    private fun goToNextPage() = currentPage++
 
-    fun backPage() = currentPage--
+    fun backToPrevPage() = currentPage--
 
     fun handleKakaoLogin() {
         // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오 계정으로 로그인
@@ -98,7 +98,7 @@ class LoginViewModel @Inject constructor(
                .onSuccess { result ->
                    if (result) {
                        Timber.i("드디어 로그인 성공~!")
-                       addPage()
+                       goToNextPage()
                    }
                }.onFailure {
                     Timber.i("삐빅- 로그인 실패")
