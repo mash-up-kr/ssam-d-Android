@@ -18,8 +18,10 @@ val Gray08 = Color(0XFFB1B1B4)
 val Gray09 = Color(0XFFC3C3C6)
 val Gray10 = Color(0XFFE4E4E5)
 
-val BlackAlpha20 = Color(0X330A0C10)
-val BlackAlpha50 = Color(0X800A0C10)
+
+val BlackAlpha20 = Color(0x330A0C10)
+val BlackAlpha50 = Color(0x800A0C10)
+val BlackAlpha60 = Color(0x990A0C10)
 
 // Main
 val Purple = Color(0XFF4D36DA)
