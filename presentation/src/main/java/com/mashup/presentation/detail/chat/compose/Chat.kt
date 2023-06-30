@@ -53,6 +53,11 @@ fun Chat(
     }
 }
 
+/**
+ * aspectRatio
+ * XML의 ConstraintLayout에서 사용하던 layout_constraintDimensinoRatio와 유사한 Modifier
+ * 지정된 비율에 따라 width와 height값을 표현할 수 있음
+ */
 @Composable
 fun Message(
     isMine: Boolean,
@@ -63,9 +68,7 @@ fun Message(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier
-            .width(156.dp)
-            .aspectRatio(39f / 52f),
+        modifier = modifier.aspectRatio(ratio = 39f / 52f), // 디자인에 나와있는 비율 적용
         shape = RoundedCornerShape(20.dp),
         border = if (isMine) BorderStroke(width = 1.dp, color = Gray03) else null,
         elevation = 10.dp
