@@ -11,6 +11,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.R
+import com.mashup.presentation.detail.chat.model.ChatDetailUiModel
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.Black
 import com.mashup.presentation.ui.theme.SsamDTheme

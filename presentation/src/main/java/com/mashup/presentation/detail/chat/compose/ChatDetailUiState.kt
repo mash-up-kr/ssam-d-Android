@@ -1,43 +1,18 @@
 package com.mashup.presentation.detail.chat.compose
 
-import androidx.compose.ui.graphics.Color
-import com.mashup.presentation.ui.theme.*
+import com.mashup.presentation.detail.chat.model.ChatDetailUiModel
+import com.mashup.presentation.detail.chat.model.MessageBackgroundColor
+import com.mashup.presentation.detail.chat.model.MessageUiModel
 
 /**
  * Ssam_D_Android
  * @author jaesung
  * @created 2023/06/29
  */
-data class ChatDetailUiModel(
-    val othersProfileImage: String,
-    val othersNickName: String,
-    val matchedKeywords: List<String>,
-    val chat: List<MessageUiModel>
-)
-
-data class MessageUiModel(
-    val message: String,
-    val userName: String,
-    val date: String,
-    val isMine: Boolean,
-    val backgroundColor: MessageBackgroundColor? = null
-)
-
-enum class MessageBackgroundColor(
-    private val startColor: Color,
-    private val endColor: Color,
-) {
-    PURPLE(Purple01, Purple02),
-    ORANGE(Brown, Orange),
-    MINT(Green02, Green03),
-    PINK(Pink01, Pink02),
-    GREEN(Green01, GreenYellow);
-
-    fun getGradientColors(): List<Color> {
-        return listOf(startColor, endColor)
-    }
-}
-
+/**
+ * API 연결 시 UiState (Success / Failed / Loading ..) 추가해야 합니당
+ * 임시로 만들어놓은 파일
+ */
 val ProvideChatDetailState = ChatDetailUiModel(
     othersProfileImage = "https://github-production-user-asset-6210df.s3.amazonaws.com/51078673/249568892-2120a1d4-58c3-4fbd-a8d7-f1e01571a0e6.png",
     othersNickName = "슈퍼니카",
