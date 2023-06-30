@@ -5,10 +5,10 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class BaseResponse<T>(
-    @Json(name = "data")
+    @field:Json(name = "data")
     val data: T?,
-    @Json(name = "message")
+    @field:Json(name = "message")
     val message: String,
-    @Json(name = "statusCode")
+    @field:Json(name = "statusCode")
     val statusCode: Int?
 )
