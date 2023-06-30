@@ -23,6 +23,8 @@ val BlackAlpha20 = Color(0x330A0C10)
 val BlackAlpha50 = Color(0x800A0C10)
 val BlackAlpha60 = Color(0x990A0C10)
 
+val SignalShadowColor = Color(0xFF1F1656)
+
 // Main
 val Purple = Color(0XFF4D36DA)
 val Blurple = Color(0XFF5865F2)
