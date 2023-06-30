@@ -1,6 +1,5 @@
 package com.mashup.data.repository
 
-import android.util.Log
 import com.mashup.data.source.local.datasource.LocalLoginDataSource
 import com.mashup.data.source.remote.datasource.RemoteLoginDataSource
 import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody

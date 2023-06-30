@@ -2,8 +2,6 @@ package com.mashup.data.network
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.mashup.data.di.NetworkModule
-import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
