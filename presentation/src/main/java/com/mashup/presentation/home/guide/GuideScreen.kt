@@ -160,7 +160,7 @@ fun AlienCard(alien: Alien) {
             )
 
             Text(
-                text = "키워드: ${alien.keyword}",
+                text = stringResource(id = R.string.home_guide_alien_card_keyword, alien.keyword),
                 style = Caption,
                 color = Gray10,
                 modifier = Modifier
