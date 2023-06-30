@@ -134,7 +134,7 @@ fun KeywordScreen(
             modifier = Modifier.verticalScroll(scrollState)
         ) {
             keywords.forEachIndexed { i, keyword ->
-                KeywordChip(
+                KeywordActionChip(
                     text = keyword,
                     index = i,
                     onKeywordDelete = onKeywordDelete
