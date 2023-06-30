@@ -28,6 +28,7 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun HomeScreen(
     navigateToSubscribeKeyword: () -> Unit = {},
+    navigateToGuide: () -> Unit = {}
 ) {
     val signals = emptyList<SignalUiModel>()
 
@@ -60,7 +61,7 @@ fun HomeScreen(
                 onClick = { navigateToSubscribeKeyword() }
             )
             if (signals.isEmpty()) {
-                EmptyContent()
+                EmptyContent(navigateToGuide = { navigateToGuide() })
             } else {
                 SignalCardList(signals)
             }
@@ -136,18 +137,18 @@ private fun HomeKeywordInfoContainer(
 }
 
 @Composable
-private fun EmptyContent() {
+private fun EmptyContent(navigateToGuide: () -> Unit = {}) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
-        EmptySignal()
+        EmptySignal(navigateToGuide)
     }
 }
 
 @Composable
-private fun EmptySignal() {
+private fun EmptySignal(navigateToGuide: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(25.dp),
@@ -160,7 +161,7 @@ private fun EmptySignal() {
             textAlign = TextAlign.Center
         )
         KeyLinkRoundButton(text = stringResource(id = R.string.home_planet_guide_button)) {
-            // TODO: navigate to 가이드
+            navigateToGuide()
         }
     }
 }
