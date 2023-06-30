@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
@@ -15,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,8 +28,9 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun HomeScreen(
     navigateToSubscribeKeyword: () -> Unit = {},
-    navigateToGuide: () -> Unit = {},
 ) {
+    val signals = emptyList<SignalUiModel>()
+
     Box {
         Image(
             modifier = Modifier.fillMaxSize(),
@@ -37,12 +38,20 @@ fun HomeScreen(
             contentDescription = stringResource(R.string.login_description_space),
             contentScale = ContentScale.Crop
         )
-        Image(
-            modifier = Modifier.align(Alignment.BottomCenter),
-            painter = painterResource(R.drawable.img_blueplanet),
-            contentDescription = stringResource(R.string.login_description_blueplanet)
-        )
-        EmptyContent(onClickGuide = { navigateToGuide() })
+        if (signals.isEmpty()) {
+            Image(
+                modifier = Modifier.align(Alignment.BottomCenter),
+                painter = painterResource(R.drawable.img_planet_home_empty),
+                contentDescription = stringResource(R.string.home_planet_background_empty)
+            )
+        } else {
+            Image(
+                modifier = Modifier.align(Alignment.BottomCenter),
+                painter = painterResource(R.drawable.img_planet_home_default),
+                contentDescription = stringResource(R.string.home_planet_background_default)
+            )
+        }
+
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -50,6 +59,11 @@ fun HomeScreen(
             HomeKeywordInfoContainer(
                 onClick = { navigateToSubscribeKeyword() }
             )
+            if (signals.isEmpty()) {
+                EmptyContent()
+            } else {
+                SignalCardList(signals)
+            }
         }
     }
 }
@@ -122,22 +136,18 @@ private fun HomeKeywordInfoContainer(
 }
 
 @Composable
-private fun EmptyContent(
-    onClickGuide: () -> Unit
-) {
+private fun EmptyContent() {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
-        EmptySignal(onClickGuide)
+        EmptySignal()
     }
 }
 
 @Composable
-private fun EmptySignal(
-    onClickGuide: () -> Unit
-) {
+private fun EmptySignal() {
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(25.dp),
@@ -150,21 +160,20 @@ private fun EmptySignal(
             textAlign = TextAlign.Center
         )
         KeyLinkRoundButton(text = stringResource(id = R.string.home_planet_guide_button)) {
-            onClickGuide.invoke()
+            // TODO: navigate to 가이드
         }
     }
 }
 
 @Composable
-private fun SignalCardList() {
-    val signals = emptyList<SignalUiModel>()
+private fun SignalCardList(signals: List<SignalUiModel>) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
         horizontalAlignment = Alignment.Start,
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp)
     ) {
-        items(signals.size) {
-            SignalCard(signals[it])
+        items(signals) { signal ->
+            SignalCard(signal)
         }
     }
 }

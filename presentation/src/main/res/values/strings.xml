@@ -96,6 +96,8 @@
     <string name="bottom_sheet_disconnect">시그널 끊기</string>
     <string name="bottom_sheet_declare">신고하기</string>
     <string name="bottom_sheet_matched_keywords">연결된 키워드</string>
+    <string name="home_planet_background_empty">시그널이 없는 빈 화면 우주 배경입니다.</string>
+    <string name="home_planet_background_default">시그널이 있는 우주 배경입니다.</string>
 
     // 홈 가이드
     <string name="home_guide_planet">행성 Zylix-6</string>
