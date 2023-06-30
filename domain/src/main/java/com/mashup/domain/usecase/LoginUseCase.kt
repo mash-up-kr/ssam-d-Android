@@ -5,9 +5,9 @@ import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(
     private val loginRepository: LoginRepository
-) : BaseUseCase<LoginParam, Result<Unit>>() {
+) : BaseUseCase<LoginParam, Result<Boolean>>() {
 
-    override suspend fun invoke(param: LoginParam): Result<Unit> {
+    override suspend fun invoke(param: LoginParam): Result<Boolean> {
         return runCatching {
             loginRepository.login(param)
         }

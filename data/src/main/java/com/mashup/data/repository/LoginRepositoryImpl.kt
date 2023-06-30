@@ -1,5 +1,6 @@
 package com.mashup.data.repository
 
+import android.util.Log
 import com.mashup.data.network.AppHeaderProvider
 import com.mashup.data.source.remote.datasource.RemoteLoginDataSource
 import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody
@@ -12,7 +13,7 @@ class LoginRepositoryImpl @Inject constructor(
     private val appHeaderProvider: AppHeaderProvider
 ): LoginRepository {
 
-    override suspend fun login(param: LoginParam) {
+    override suspend fun login(param: LoginParam): Boolean {
         val loginRequestBody = with(param) {
             LoginRequestBody(
                 email = email,
@@ -26,5 +27,6 @@ class LoginRepositoryImpl @Inject constructor(
         }.getOrNull()?.accessToken ?: ""
 
         appHeaderProvider.saveToken(token)
+        return token.isNotEmpty()
     }
 }

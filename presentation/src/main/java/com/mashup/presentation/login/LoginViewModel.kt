@@ -95,9 +95,11 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             val param = LoginParam(email = email, socialId = socialId, deviceToken = deviceToken)
             loginUseCase.execute(param)
-               .onSuccess {
-                   Timber.i("드디어 로그인 성공~!")
-                   addPage()
+               .onSuccess { result ->
+                   if (result) {
+                       Timber.i("드디어 로그인 성공~!")
+                       addPage()
+                   }
                }.onFailure {
                     Timber.i("삐빅- 로그인 실패")
                }
