@@ -57,6 +57,7 @@ dependencies {
     // moshi
     implementation Dep.SquareUp.Moshi.moshi
     implementation Dep.SquareUp.Moshi.moshiAdapter
+    kapt Dep.SquareUp.Moshi.moshiCodegen
 
     // hilt
     implementation Dep.Dagger.Hilt.hilt

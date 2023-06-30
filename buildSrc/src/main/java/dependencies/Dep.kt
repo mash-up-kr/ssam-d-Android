@@ -89,6 +89,7 @@ object Dep {
             private const val version = "1.14.0"
             const val moshi = "com.squareup.moshi:moshi-kotlin:$version"
             const val moshiAdapter = "com.squareup.moshi:moshi-adapters:$version"
+            const val moshiCodegen = "com.squareup.moshi:moshi-kotlin-codegen:$version"
         }
 
         object LeakCanary {
