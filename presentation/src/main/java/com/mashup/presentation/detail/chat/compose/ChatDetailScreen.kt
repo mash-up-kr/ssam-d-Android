@@ -25,8 +25,8 @@ import com.mashup.presentation.ui.theme.White
 @Composable
 fun ChatDetailScreen(
     modifier: Modifier = Modifier,
-    navigateUp: () -> Unit = {},
-    navigateToMessageDetail: () -> Unit = {}
+    onUpButtonClick: () -> Unit = {},
+    onNavigateToMessageDetail: () -> Unit = {}
 ) {
     /**
      * val viewModel: ~ by hiltViewModel()
@@ -37,9 +37,9 @@ fun ChatDetailScreen(
         backgroundColor = Black,
         topBar = {
             KeyLinkToolbar(
-                onClickBack = { navigateUp() },
+                onClickBack = { onUpButtonClick() },
                 menuAction = {
-                    IconButton(onClick = { navigateUp() }) {
+                    IconButton(onClick = { /* */ }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_more_horizontal_24),
                             contentDescription = null,
@@ -53,7 +53,7 @@ fun ChatDetailScreen(
         ChatDetailContent(
             modifier = Modifier.padding(paddingValues),
             chatDetailState = ProvideChatDetailState,
-            onChatItemClick = { navigateToMessageDetail() }
+            onChatItemClick = { onNavigateToMessageDetail() }
         )
     }
 }

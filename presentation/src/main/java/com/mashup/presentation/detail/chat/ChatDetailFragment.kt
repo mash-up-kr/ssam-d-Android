@@ -17,8 +17,8 @@ class ChatDetailFragment : BaseFragment<FragmentChatDetailBinding>(R.layout.frag
     override fun initViews() {
         binding.composeView.setThemeContent {
             ChatDetailScreen(
-                navigateUp = { navigateUp() },
-                navigateToMessageDetail = { navigate(R.id.action_chatDetail_to_messageDetail) }
+                onUpButtonClick = { navigateUp() },
+                onNavigateToMessageDetail = { navigate(R.id.action_chatDetail_to_messageDetail) }
             )
         }
     }
