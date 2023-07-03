@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.R
+import com.mashup.presentation.common.extension.drawColoredShadow
 import com.mashup.presentation.common.extension.pxToDp
 import com.mashup.presentation.home.model.SignalUiModel
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
@@ -288,45 +289,4 @@ private fun SignalCardKeywordsChip(keyword: String) {
 @Composable
 fun PreviewHomeScreen() {
     HomeScreen()
-}
-fun Modifier.drawColoredShadow(
-    color: Color,
-    alpha: Float = 0.2f,
-    borderRadius: Dp = 0.dp,
-    shadowRadius: Dp = 20.dp,
-    offsetY: Dp = 0.dp,
-    offsetX: Dp = 0.dp
-) = this.drawBehind {
-    val transparentColor = color.copy(alpha = 0.0f).toArgb()
-    val shadowColor = color.copy(alpha = alpha).toArgb()
-    this.drawIntoCanvas {
-        val innerRect = RoundRect(
-            0f, 0f, this.size.width - 2f, this.size.height - 2f,
-            CornerRadius(borderRadius.toPx(), borderRadius.toPx())
-        )
-
-        val outerRect = RoundRect(
-            offsetX.toPx(),
-            offsetY.toPx(),
-            (this.size.width + offsetX.toPx()),
-            (this.size.height + offsetY.toPx()),
-            CornerRadius(borderRadius.toPx(), borderRadius.toPx())
-        )
-        val outerPath = Path().apply { addRoundRect(outerRect) }
-        val innerPath = Path().apply { addRoundRect(innerRect) }
-
-        val resultPath = Path().apply {
-            op(outerPath, innerPath, PathOperation.Difference)
-        }
-        val paint = Paint()
-        val frameworkPaint = paint.asFrameworkPaint()
-        frameworkPaint.color = transparentColor
-        frameworkPaint.setShadowLayer(
-            shadowRadius.toPx(),
-            offsetX.toPx(),
-            offsetY.toPx(),
-            shadowColor
-        )
-        it.drawPath(resultPath, paint)
-    }
 }
