@@ -2,11 +2,10 @@ package com.mashup.presentation.detail.message.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -15,6 +14,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.R
+import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.common.KeywordChip
 import com.mashup.presentation.ui.theme.*
@@ -38,6 +38,7 @@ fun MessageDetailScreen(
                 onClickBack = {},
                 menuAction = {
                     Icon(
+                        modifier = Modifier.padding(end = 20.dp),
                         painter = painterResource(id = R.drawable.ic_declare_24),
                         tint = White,
                         contentDescription = stringResource(R.string.content_description_report)
@@ -45,7 +46,7 @@ fun MessageDetailScreen(
                 }
 
             )
-        }
+        },
     ) { paddingValues ->
         val contentPadding = PaddingValues(
             top = paddingValues.calculateTopPadding() + 16.dp,
@@ -54,20 +55,53 @@ fun MessageDetailScreen(
         )
 
         Column(
-            modifier = Modifier.padding(contentPadding)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(contentPadding),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            MessageInfo(modifier = Modifier, othersName = "연날리기", date = "2023년 5월 30일")
-
-            MessageDetailContent(modifier = Modifier.padding(top = 16.dp))
-
-            MatchedKeywordContent(
-                modifier = Modifier.padding(top = 52.dp),
+            MessageDetailContainer(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f),
+                othersName = "연날리기",
+                date = "2023년 5월 30일",
+                message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
                 matchedKeywords = matchedKeywords
+            )
+
+            KeyLinkRoundButton(
+                modifier = Modifier.padding(top = 48.dp, bottom = 42.dp),
+                text = stringResource(R.string.button_send_reply),
             )
         }
     }
-
 }
+
+@Composable
+fun MessageDetailContainer(
+    othersName: String,
+    date: String,
+    message: String,
+    matchedKeywords: List<String>,
+    modifier: Modifier = Modifier
+) {
+    val scrollState = rememberScrollState()
+    Column(modifier = modifier.verticalScroll(scrollState)) {
+        MessageInfo(modifier = Modifier, othersName = othersName, date = date)
+
+        MessageDetailContent(
+            modifier = Modifier.padding(top = 16.dp),
+            message = message
+        )
+
+        MatchedKeywordContainer(
+            modifier = Modifier.padding(top = 52.dp),
+            matchedKeywords = matchedKeywords
+        )
+    }
+}
+
 
 @Composable
 fun MessageInfo(
@@ -112,18 +146,19 @@ fun MessageInfo(
 
 @Composable
 fun MessageDetailContent(
+    message: String,
     modifier: Modifier = Modifier,
 ) {
     Text(
         modifier = modifier,
-        text = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠? 이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였",
+        text = message,
         style = Body1,
         color = Gray10
     )
 }
 
 @Composable
-fun MatchedKeywordContent(
+fun MatchedKeywordContainer(
     matchedKeywords: List<String>,
     modifier: Modifier = Modifier
 ) {
@@ -131,7 +166,7 @@ fun MatchedKeywordContent(
         modifier = modifier,
         matchedKeywords = matchedKeywords.size
     )
-    MatchedKeywords(matchedKeywords = matchedKeywords)
+    MatchedKeywordsContent(matchedKeywords = matchedKeywords)
 }
 
 @Composable
@@ -164,7 +199,7 @@ fun MatchedKeywordHeader(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun MatchedKeywords(
+fun MatchedKeywordsContent(
     matchedKeywords: List<String>,
     modifier: Modifier = Modifier,
 ) {
@@ -205,7 +240,7 @@ private fun MatchedKeywordContentPreview() {
     val matchedKeywords = listOf("매쉬업", "일상", "디자인", "IT", "취준", "일상", "디자인", "IT", "취준")
     SsamDTheme {
         Surface(color = Black) {
-            MatchedKeywordContent(matchedKeywords)
+            MatchedKeywordContainer(matchedKeywords)
         }
     }
 }
