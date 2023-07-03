@@ -2,6 +2,7 @@ package com.mashup.presentation.detail.chat.compose
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -32,7 +33,8 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun ChatContent(
     chat: List<MessageUiModel>,
-    modifier: Modifier = Modifier,
+    onChatItemClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -42,12 +44,13 @@ fun ChatContent(
     ) {
         items(chat) { message ->
             MessageContent(
+                modifier = Modifier,
                 isMine = message.isMine,
                 message = message.message,
                 userName = message.userName,
                 date = message.date,
-                modifier = Modifier,
-                backgroundColor = message.backgroundColor
+                backgroundColor = message.backgroundColor,
+                onChatItemClick = { onChatItemClick() }
             )
         }
     }
@@ -65,10 +68,15 @@ fun MessageContent(
     userName: String,
     date: String,
     backgroundColor: MessageBackgroundColor?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onChatItemClick: () -> Unit = {},
 ) {
     Card(
-        modifier = modifier.aspectRatio(ratio = 39f / 52f), // 디자인에 나와있는 비율 적용
+        modifier = modifier
+            .aspectRatio(ratio = 39f / 52f)  // 디자인에 나와있는 비율 적용
+            .clickable {
+                onChatItemClick()
+            },
         shape = RoundedCornerShape(20.dp),
         border = if (isMine) BorderStroke(width = 1.dp, color = Gray03) else null,
         elevation = 10.dp
