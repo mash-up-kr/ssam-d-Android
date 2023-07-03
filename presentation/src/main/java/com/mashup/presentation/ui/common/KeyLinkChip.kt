@@ -32,8 +32,8 @@ import com.mashup.presentation.ui.theme.*
 
 @Composable
 fun KeywordChip(
-    modifier: Modifier = Modifier,
-    keyword: String
+    keyword: String,
+    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
