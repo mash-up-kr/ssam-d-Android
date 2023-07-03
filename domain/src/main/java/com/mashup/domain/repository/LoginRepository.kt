@@ -4,4 +4,5 @@ import com.mashup.domain.usecase.LoginParam
 
 interface LoginRepository {
     suspend fun login(param: LoginParam): Boolean
+    suspend fun patchNickname(nickname: String)
 }
