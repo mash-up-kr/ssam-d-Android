@@ -30,7 +30,7 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun MessageDetailScreen(
     modifier: Modifier = Modifier,
-    onNavigateUpClick: () -> Unit = {},
+    onUpButtonClick: () -> Unit = {},
     onMenuClick: () -> Unit = {},
     onSendReplyClick: () -> Unit = {}
 ) {
@@ -42,7 +42,7 @@ fun MessageDetailScreen(
         topBar = {
             KeyLinkToolbar(
                 onClickBack = {
-                    onNavigateUpClick()
+                    onUpButtonClick()
                 },
                 menuAction = {
                     Icon(

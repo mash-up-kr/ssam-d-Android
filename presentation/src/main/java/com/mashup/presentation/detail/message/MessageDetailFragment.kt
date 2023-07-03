@@ -18,7 +18,7 @@ class MessageDetailFragment :
     override fun initViews() {
         binding.composeView.setThemeContent {
             MessageDetailScreen(
-                onNavigateUpClick = { navigateUp() },
+                onUpButtonClick = { navigateUp() },
                 onMenuClick = { /* 신고하기 */ },
                 onSendReplyClick = { /* 답장하기 */ }
             )
