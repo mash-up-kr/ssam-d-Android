@@ -12,6 +12,21 @@
         <action
             android:id="@+id/action_chat_to_send_signal"
             app:destination="@id/navigation_signal" />
+        <action
+            android:id="@+id/action_chat_to_chatDetail"
+            app:destination="@id/chatDetailFragment" />
     </fragment>
     <include app:graph="@navigation/graph_signal" />
+    <fragment
+        android:id="@+id/chatDetailFragment"
+        android:name="com.mashup.presentation.detail.chat.ChatDetailFragment"
+        android:label="ChatDetailFragment" >
+        <action
+            android:id="@+id/action_chatDetail_to_messageDetail"
+            app:destination="@id/messageDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/messageDetailFragment"
+        android:name="com.mashup.presentation.detail.message.MessageDetailFragment"
+        android:label="MessageDetailFragment" />
 </navigation>

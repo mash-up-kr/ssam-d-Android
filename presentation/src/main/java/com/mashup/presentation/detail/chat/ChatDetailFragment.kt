@@ -2,6 +2,7 @@ package com.mashup.presentation.detail.chat
 
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
+import com.mashup.presentation.common.extension.navigate
 import com.mashup.presentation.common.extension.navigateUp
 import com.mashup.presentation.common.extension.setThemeContent
 import com.mashup.presentation.databinding.FragmentChatDetailBinding
@@ -16,7 +17,8 @@ class ChatDetailFragment : BaseFragment<FragmentChatDetailBinding>(R.layout.frag
     override fun initViews() {
         binding.composeView.setThemeContent {
             ChatDetailScreen(
-                navigateUp = { navigateUp() }
+                navigateUp = { navigateUp() },
+                navigateToMessageDetail = { navigate(R.id.action_chatDetail_to_messageDetail) }
             )
         }
     }

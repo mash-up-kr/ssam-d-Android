@@ -25,7 +25,8 @@ import com.mashup.presentation.ui.theme.White
 @Composable
 fun ChatDetailScreen(
     modifier: Modifier = Modifier,
-    navigateUp: () -> Unit = {}
+    navigateUp: () -> Unit = {},
+    navigateToMessageDetail: () -> Unit = {}
 ) {
     /**
      * val viewModel: ~ by hiltViewModel()
@@ -36,6 +37,7 @@ fun ChatDetailScreen(
         backgroundColor = Black,
         topBar = {
             KeyLinkToolbar(
+                onClickBack = { navigateUp() },
                 menuAction = {
                     IconButton(onClick = { navigateUp() }) {
                         Icon(
@@ -51,6 +53,7 @@ fun ChatDetailScreen(
         ChatDetailContent(
             modifier = Modifier.padding(paddingValues),
             chatDetailState = ProvideChatDetailState,
+            onChatItemClick = { navigateToMessageDetail() }
         )
     }
 }
@@ -58,6 +61,7 @@ fun ChatDetailScreen(
 @Composable
 fun ChatDetailContent(
     chatDetailState: ChatDetailUiModel,
+    onChatItemClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -81,7 +85,8 @@ fun ChatDetailContent(
 
         ChatContent(
             modifier = Modifier.padding(horizontal = 20.dp),
-            chat = chatDetailState.chat
+            chat = chatDetailState.chat,
+            onChatItemClick = { onChatItemClick() }
         )
     }
 }
@@ -99,7 +104,8 @@ private fun ChatDetailScreenPreview() {
 private fun ChatDetailContentPreview() {
     SsamDTheme {
         ChatDetailContent(
-            chatDetailState = ProvideChatDetailState
+            chatDetailState = ProvideChatDetailState,
+            onChatItemClick = {}
         )
     }
 }
