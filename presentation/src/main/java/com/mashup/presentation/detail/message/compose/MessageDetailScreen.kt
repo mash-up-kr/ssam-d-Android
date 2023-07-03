@@ -1,6 +1,7 @@
 package com.mashup.presentation.detail.message.compose
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -26,7 +27,10 @@ import com.mashup.presentation.ui.theme.*
  */
 @Composable
 fun MessageDetailScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onNavigateUpClick: () -> Unit = {},
+    onMenuClick: () -> Unit = {},
+    onSendReplyClick: () -> Unit = {}
 ) {
     val matchedKeywords = listOf("매쉬업", "일상", "디자인", "IT", "취준", "일상", "디자인", "IT", "취준")
 
@@ -35,10 +39,16 @@ fun MessageDetailScreen(
         backgroundColor = Black,
         topBar = {
             KeyLinkToolbar(
-                onClickBack = {},
+                onClickBack = {
+                    onNavigateUpClick()
+                },
                 menuAction = {
                     Icon(
-                        modifier = Modifier.padding(end = 20.dp),
+                        modifier = Modifier
+                            .padding(end = 20.dp)
+                            .clickable {
+                                onMenuClick()
+                            },
                         painter = painterResource(id = R.drawable.ic_declare_24),
                         tint = White,
                         contentDescription = stringResource(R.string.content_description_report)
@@ -73,6 +83,9 @@ fun MessageDetailScreen(
             KeyLinkRoundButton(
                 modifier = Modifier.padding(top = 48.dp, bottom = 42.dp),
                 text = stringResource(R.string.button_send_reply),
+                onClick = {
+                    onSendReplyClick()
+                }
             )
         }
     }
@@ -205,12 +218,12 @@ fun MatchedKeywordsContent(
 ) {
     FlowRow(
         modifier = Modifier.padding(top = 20.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         matchedKeywords.forEach { keyword ->
             KeywordChip(
-                keyword = keyword,
-                modifier = Modifier.padding(top = 4.dp)
+                modifier = Modifier.padding(top = 8.dp),
+                keyword = keyword
             )
         }
     }
