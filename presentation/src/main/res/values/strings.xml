@@ -116,7 +116,6 @@
         <item>다른 채팅앱으로 유도하는 글이에요</item>
         <item>종교 / 포교 목적의 게시글 같아요</item>
     </string-array>
-    <string name="content_description_report">신고하기 버튼입니다.</string>
     <string name="report_title">신고하는 이유를 선택해주세요.</string>
   
     <string name="content_description_report">신고하기 아이콘입니다.</string>
