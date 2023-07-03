@@ -32,10 +32,11 @@ import com.mashup.presentation.ui.theme.*
 
 @Composable
 fun KeywordChip(
+    modifier: Modifier = Modifier,
     keyword: String
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .background(
                 color = Gray01,
                 shape = RoundedCornerShape(10.dp)

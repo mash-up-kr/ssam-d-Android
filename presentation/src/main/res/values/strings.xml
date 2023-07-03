@@ -102,4 +102,7 @@
     <string name="home_guide_alien_content_description">외계 생명체</string>
     <string name="home_guide_footer_description">“원하는 종족과 얘기하려면 시그널에 키워드를 추가해서 보내보세요. 같은 종족이라면 통하는 시그널이 있을 거예요.”</string>
     <string name="home_guide_alien_card_keyword">키워드: %s</string>
+
+    <string name="content_description_report">신고하기 아이콘입니다.</string>
+    <string name="message_detail_matched_signal_count">%s개 키워드 일치</string>
 </resources>
