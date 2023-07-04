@@ -17,4 +17,11 @@ sealed class KeyLinkNavigationRoute(val route: String) {
         object SignalKeywordRoute : KeyLinkNavigationRoute(signalKeywordRoute)
         object SignalCompleteRoute : KeyLinkNavigationRoute(signalCompleteRoute)
     }
+
+    object ChatGraph : KeyLinkNavigationRoute(chatGraphPattern) {
+        object ChatRoute : KeyLinkNavigationRoute(chatRoute)
+        object ChatDetailRoute : KeyLinkNavigationRoute(chatDetailRoute)
+        object MessageDetailRoute : KeyLinkNavigationRoute(messageDetailRoute)
+        object ReportRoute : KeyLinkNavigationRoute(reportRoute)
+    }
 }
