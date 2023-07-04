@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.mashup.presentation.KeyLinkAppState
 import com.mashup.presentation.feature.home.navigation.homeGraph
+import com.mashup.presentation.feature.signal.navigation.signalGraph
 
 /**
  * Ssam_D_Android
@@ -25,5 +26,6 @@ fun KeyLinkNavHost(
         modifier = modifier
     ) {
         homeGraph()
+        signalGraph()
     }
 }
