@@ -91,6 +91,7 @@ dependencies {
     implementation Dep.Compose.preview
     implementation Dep.Compose.material
     implementation Dep.AndroidX.Activity.compose
+    implementation Dep.Compose.Navigation.navigationCompose
     androidTestImplementation Dep.Compose.Test.ui
     debugImplementation Dep.Compose.Debug.uiTooling
     debugImplementation Dep.Compose.Debug.uiTestManifest
