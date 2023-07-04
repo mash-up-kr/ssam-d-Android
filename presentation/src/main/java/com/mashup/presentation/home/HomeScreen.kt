@@ -44,6 +44,9 @@ fun HomeScreen(
     val signals = emptyList<SignalUiModel>()
     val scrollState = rememberLazyListState()
     val isScrollingUp = scrollState.isScrollingUp()
+    val isAtTop = !scrollState.canScrollBackward
+    val topBarBackgroundColor by animateColorAsState(if (isAtTop) Color.Transparent else Gray01)
+
 
     Box {
         Image(
@@ -69,10 +72,11 @@ fun HomeScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            HomeScreenToolBar()
+            HomeScreenToolBar(topBarBackgroundColor)
             HomeKeywordInfoContainer(
                 onClick = { navigateToSubscribeKeyword() },
-                visible = isScrollingUp
+                visible = isScrollingUp,
+                topBarBackgroundColor = topBarBackgroundColor
             )
             if (signals.isEmpty()) {
                 EmptyContent(navigateToGuide = { navigateToGuide() })
@@ -84,12 +88,13 @@ fun HomeScreen(
 }
 
 @Composable
-private fun HomeScreenToolBar() {
+private fun HomeScreenToolBar(topBarBackgroundColor: Color) {
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .height(52.dp)
-            .background(color = Gray01)
+            .background(color = topBarBackgroundColor)
             .padding(start = 20.dp, end = 20.dp, top = 12.dp, bottom = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -115,7 +120,8 @@ private fun HomeScreenToolBar() {
 @Composable
 private fun HomeKeywordInfoContainer(
     onClick: () -> Unit,
-    visible: Boolean
+    visible: Boolean,
+    topBarBackgroundColor: Color
 ) {
     AnimatedVisibility(
         visible = visible,
@@ -125,7 +131,7 @@ private fun HomeKeywordInfoContainer(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = Gray01)
+                .background(color = topBarBackgroundColor)
                 .clickable { onClick() }
         ) {
             Row(
@@ -148,11 +154,6 @@ private fun HomeKeywordInfoContainer(
                     color = White
                 )
             }
-            Divider(
-                color = Gray02,
-                thickness = 1.dp,
-                modifier = Modifier.fillMaxWidth()
-            )
         }
     }
 }
@@ -193,8 +194,7 @@ private fun SignalCardList(signals: List<SignalUiModel>, scrollState: LazyListSt
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
         horizontalAlignment = Alignment.Start,
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
-        state = scrollState,
-
+        state = scrollState
     ) {
         items(signals) { signal ->
             SignalCard(signal)
