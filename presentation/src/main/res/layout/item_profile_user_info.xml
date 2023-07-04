@@ -7,7 +7,7 @@
 
         <variable
             name="userInfo"
-            type="com.mashup.presentation.mypage.profile.ProfileViewType.UserInfo" />
+            type="com.mashup.presentation.feature.mypage.profile.ProfileViewType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

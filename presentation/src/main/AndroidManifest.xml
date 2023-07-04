@@ -3,16 +3,16 @@
 
     <application>
         <activity
-            android:name=".home.HomeActivity"
+            android:name=".feature.home.HomeActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".onboarding.OnBoardingActivity"
+            android:name=".feature.onboarding.OnBoardingActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".feature.login.LoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
