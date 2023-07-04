@@ -1,16 +1,18 @@
 package com.mashup.presentation.home
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
@@ -40,6 +42,8 @@ fun HomeScreen(
     navigateToGuide: () -> Unit = {}
 ) {
     val signals = emptyList<SignalUiModel>()
+    val scrollState = rememberLazyListState()
+    val isScrollingUp = scrollState.isScrollingUp()
 
     Box {
         Image(
@@ -67,12 +71,13 @@ fun HomeScreen(
         ) {
             HomeScreenToolBar()
             HomeKeywordInfoContainer(
-                onClick = { navigateToSubscribeKeyword() }
+                onClick = { navigateToSubscribeKeyword() },
+                visible = isScrollingUp
             )
             if (signals.isEmpty()) {
                 EmptyContent(navigateToGuide = { navigateToGuide() })
             } else {
-                SignalCardList(signals)
+                SignalCardList(signals, scrollState)
             }
         }
     }
@@ -94,7 +99,7 @@ private fun HomeScreenToolBar() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(id = R.string.home_my_planet, "Æ X-03"),
+                text = stringResource(id = R.string.home_my_planet),
                 style = Heading4,
                 color = White
             )
@@ -110,38 +115,45 @@ private fun HomeScreenToolBar() {
 @Composable
 private fun HomeKeywordInfoContainer(
     onClick: () -> Unit,
+    visible: Boolean
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = Gray01)
-            .clickable { onClick() }
+    AnimatedVisibility(
+        visible = visible,
+        enter = expandVertically(),
+        exit = shrinkVertically()
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(44.dp)
-                .padding(start = 20.dp, top = 12.dp, end = 20.dp, bottom = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.Start),
-            verticalAlignment = Alignment.CenterVertically,
+                .background(color = Gray01)
+                .clickable { onClick() }
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_signal_32),
-                contentDescription = stringResource(id = R.string.home_signal_icon_content_description),
-                modifier = Modifier.size(24.dp),
-                contentScale = ContentScale.Inside,
-            )
-            Text(
-                text = stringResource(id = R.string.home_subscribe_keywords, 4),
-                style = Body2,
-                color = White
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(44.dp)
+                    .padding(start = 20.dp, top = 12.dp, end = 20.dp, bottom = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.Start),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_signal_32),
+                    contentDescription = stringResource(id = R.string.home_signal_icon_content_description),
+                    modifier = Modifier.size(24.dp),
+                    contentScale = ContentScale.Inside,
+                )
+                Text(
+                    text = stringResource(id = R.string.home_subscribe_keywords, 4),
+                    style = Body2,
+                    color = White
+                )
+            }
+            Divider(
+                color = Gray02,
+                thickness = 1.dp,
+                modifier = Modifier.fillMaxWidth()
             )
         }
-        Divider(
-            color = Gray02,
-            thickness = 1.dp,
-            modifier = Modifier.fillMaxWidth()
-        )
     }
 }
 
@@ -176,16 +188,37 @@ private fun EmptySignal(navigateToGuide: () -> Unit) {
 }
 
 @Composable
-private fun SignalCardList(signals: List<SignalUiModel>) {
+private fun SignalCardList(signals: List<SignalUiModel>, scrollState: LazyListState) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
         horizontalAlignment = Alignment.Start,
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp)
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
+        state = scrollState,
+
     ) {
         items(signals) { signal ->
             SignalCard(signal)
         }
     }
+}
+
+@Composable
+private fun LazyListState.isScrollingUp(): Boolean {
+    var previousIndex by remember(this) { mutableStateOf(firstVisibleItemIndex) }
+    var previousScrollOffset by remember(this) { mutableStateOf(firstVisibleItemScrollOffset) }
+
+    return remember(this) {
+        derivedStateOf {
+            if (previousIndex != firstVisibleItemIndex) {
+                previousIndex > firstVisibleItemIndex
+            } else {
+                previousScrollOffset >= firstVisibleItemScrollOffset
+            }.also {
+                previousIndex = firstVisibleItemIndex
+                previousScrollOffset = firstVisibleItemScrollOffset
+            }
+        }
+    }.value
 }
 
 @Composable
