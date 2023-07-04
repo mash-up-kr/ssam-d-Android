@@ -1,8 +1,6 @@
 package com.mashup.presentation.home
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.*
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -143,7 +140,7 @@ private fun HomeKeywordInfoContainer(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_signal_32),
+                    painter = painterResource(id = R.drawable.ic_tag_mint),
                     contentDescription = stringResource(id = R.string.home_signal_icon_content_description),
                     modifier = Modifier.size(24.dp),
                     contentScale = ContentScale.Inside,
@@ -152,6 +149,12 @@ private fun HomeKeywordInfoContainer(
                     text = stringResource(id = R.string.home_subscribe_keywords, 4),
                     style = Body2,
                     color = White
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.ic_chevron_right_24),
+                    contentDescription = stringResource(id = R.string.home_signal_icon_content_description),
+                    modifier = Modifier.size(16.dp),
+                    contentScale = ContentScale.Inside,
                 )
             }
         }
