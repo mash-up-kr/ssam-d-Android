@@ -7,7 +7,7 @@
 
         <variable
             name="content"
-            type="com.mashup.presentation.mypage.profile.ProfileViewType.NotificationContent" />
+            type="com.mashup.presentation.feature.mypage.profile.ProfileViewType" />
 
     </data>
 

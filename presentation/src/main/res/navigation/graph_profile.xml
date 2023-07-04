@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.mashup.presentation.mypage.profile.ProfileFragment"
+        android:name="com.mashup.presentation.feature.mypage.profile.ProfileFragment"
         android:label="ProfileFragment">
         <action
             android:id="@+id/action_profile_to_termsOfService"
@@ -23,18 +23,18 @@
     </fragment>
     <fragment
         android:id="@+id/termsOfServiceFragment"
-        android:name="com.mashup.presentation.mypage.TermsOfServiceFragment"
+        android:name="com.mashup.presentation.feature.mypage.TermsOfServiceFragment"
         android:label="TosFragment" />
     <fragment
         android:id="@+id/privacyPolicyFragment"
-        android:name="com.mashup.presentation.mypage.PrivacyPolicyFragment"
+        android:name="com.mashup.presentation.feature.mypage.PrivacyPolicyFragment"
         android:label="PrivacyPolicyFragment" />
     <fragment
         android:id="@+id/openSourceFragment"
-        android:name="com.mashup.presentation.mypage.OpenSourceFragment"
+        android:name="com.mashup.presentation.feature.mypage.OpenSourceFragment"
         android:label="OpenSourceFragment" />
     <fragment
         android:id="@+id/sendSignalListFragment"
-        android:name="com.mashup.presentation.mypage.SendSignalListFragment"
+        android:name="com.mashup.presentation.feature.mypage.SendSignalListFragment"
         android:label="SendSignalListFragment" />
 </navigation>

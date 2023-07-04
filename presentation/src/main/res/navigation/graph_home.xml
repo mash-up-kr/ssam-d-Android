@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.mashup.presentation.home.HomeFragment"
+        android:name="com.mashup.presentation.feature.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -19,11 +19,11 @@
     </fragment>
     <fragment
         android:id="@+id/subscribeKeywordFragment"
-        android:name="com.mashup.presentation.home.SubscribeKeywordFragment"
+        android:name="com.mashup.presentation.feature.home.SubscribeKeywordFragment"
         android:label="SubscribeKeywordFragment"
         tools:layout="@layout/fragment_subscribe_keyword"/>
     <fragment
         android:id="@+id/guideFragment"
-        android:name="com.mashup.presentation.home.guide.GuideFragment"
+        android:name="com.mashup.presentation.feature.home.guide.GuideFragment"
         android:label="GuideFragment" />
 </navigation>

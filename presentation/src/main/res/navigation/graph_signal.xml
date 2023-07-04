@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signalContentFragment"
-        android:name="com.mashup.presentation.signal.SignalContentFragment"
+        android:name="com.mashup.presentation.feature.signal.SignalContentFragment"
         android:label="SignalContentFragment"
         tools:layout="@layout/fragment_signal_content">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/signalKeywordFragment"
-        android:name="com.mashup.presentation.signal.SignalKeywordFragment"
+        android:name="com.mashup.presentation.feature.signal.SignalKeywordFragment"
         android:label="SignalKeywordFragment"
         tools:layout="@layout/fragment_signal_keyword">
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/signalCompleteFragment"
-        android:name="com.mashup.presentation.signal.SignalCompleteFragment"
+        android:name="com.mashup.presentation.feature.signal.SignalCompleteFragment"
         android:label="SignalCompleteFragment"
         tools:layout="@layout/fragment_signal_complete">
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <activity
         android:id="@+id/homeActivity"
-        android:name="com.mashup.presentation.home.HomeActivity"
+        android:name="com.mashup.presentation.feature.home.HomeActivity"
         android:label="HomeActivity" />
 
 </navigation>

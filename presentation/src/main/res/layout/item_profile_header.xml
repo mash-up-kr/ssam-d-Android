@@ -7,7 +7,7 @@
 
         <variable
             name="header"
-            type="com.mashup.presentation.mypage.profile.ProfileViewType.Header" />
+            type="com.mashup.presentation.feature.mypage.profile.ProfileViewType" />
 
     </data>
 
