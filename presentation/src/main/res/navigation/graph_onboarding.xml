@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/onBoardingFragment"
-        android:name="com.mashup.presentation.onboarding.OnBoardingFragment"
+        android:name="com.mashup.presentation.feature.onboarding.OnBoardingFragment"
         android:label="OnBoardingFragment"
         tools:layout="@layout/fragment_on_boarding">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/notificationPermissionGuideFragment"
-        android:name="com.mashup.presentation.onboarding.NotificationPermissionGuideFragment"
+        android:name="com.mashup.presentation.feature.onboarding.NotificationPermissionGuideFragment"
         android:label="NotificationPermissionGuideFragment"
         tools:layout="@layout/fragment_notification_permission_guide" />
 </navigation>
