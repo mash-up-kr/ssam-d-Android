@@ -44,7 +44,6 @@ class KeyLinkAppState(
     val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
 
-    val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().toList()
 
     @Composable
     fun isBottomBarVisible(): Boolean {
