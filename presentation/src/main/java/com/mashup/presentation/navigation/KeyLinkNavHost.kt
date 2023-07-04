@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.mashup.presentation.KeyLinkAppState
+import com.mashup.presentation.feature.chat.navigation.chatGraph
 import com.mashup.presentation.feature.home.navigation.homeGraph
 import com.mashup.presentation.feature.signal.navigation.signalGraph
 
@@ -27,5 +28,8 @@ fun KeyLinkNavHost(
     ) {
         homeGraph()
         signalGraph()
+        chatGraph() {
+
+        }
     }
 }
