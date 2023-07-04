@@ -1,11 +1,13 @@
-package com.mashup.presentation
+package com.mashup.presentation.navigation
+
+import com.mashup.presentation.R
 
 /**
  * Ssam_D_Android
  * @author jaesung
  * @created 2023/07/04
  */
-enum class TopLevelDestinations(
+enum class TopLevelDestination(
     val selectedIconId: Int?,
     val unselectedIconId: Int?,
     val iconTextId: Int,
