@@ -12,6 +12,7 @@ import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import com.mashup.domain.usecase.LoginParam
 import com.mashup.domain.usecase.LoginUseCase
+import com.mashup.domain.usecase.PatchNicknameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -20,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
+    private val patchNicknameUseCase: PatchNicknameUseCase,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -28,11 +30,6 @@ class LoginViewModel @Inject constructor(
 
     var currentPage by mutableStateOf(0)
     var nickname by mutableStateOf("")
-
-    fun setNicknameAndAddPage(nickname: String) {
-        this.nickname = nickname
-        goToNextPage()
-    }
 
     private fun goToNextPage() = currentPage++
 
@@ -103,6 +100,19 @@ class LoginViewModel @Inject constructor(
                }.onFailure {
                     Timber.i("삐빅- 로그인 실패")
                }
+        }
+    }
+
+    fun patchNickname(nickname: String) {
+        viewModelScope.launch {
+            patchNicknameUseCase.execute(nickname)
+                .onSuccess {
+                    Timber.i("닉네임 세팅 성공~!")
+                    this@LoginViewModel.nickname = nickname
+                    goToNextPage()
+                }.onFailure {
+                    Timber.e("삐빅- 닉네임 세팅 실패 WHY? " + it.message)
+                }
         }
     }
 }

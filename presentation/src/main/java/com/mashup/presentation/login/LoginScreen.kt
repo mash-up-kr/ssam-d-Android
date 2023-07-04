@@ -66,7 +66,7 @@ fun LoginScreen(
             )
             1 -> NicknameScreen(
                 onNextButtonClicked = { nickname ->
-                    loginViewModel.setNicknameAndAddPage(nickname)
+                    loginViewModel.patchNickname(nickname)
                 },
             )
             2 -> LoginCompletionScreen (
