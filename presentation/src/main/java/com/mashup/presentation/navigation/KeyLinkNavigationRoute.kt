@@ -8,7 +8,7 @@ package com.mashup.presentation.navigation
 sealed class KeyLinkNavigationRoute(val route: String) {
     object HomeGraph : KeyLinkNavigationRoute(homeGraphPattern) {
         object HomeRoute : KeyLinkNavigationRoute(homeRoute)
-        object EditKeywordRoute : KeyLinkNavigationRoute(editKeywordRoute)
+        object SubscribeKeywordRoute : KeyLinkNavigationRoute(subscribeKeywordRoute)
         object GuideRoute : KeyLinkNavigationRoute(guideRoute)
         object ProfileRoute : KeyLinkNavigationRoute(profileRoute)
     }

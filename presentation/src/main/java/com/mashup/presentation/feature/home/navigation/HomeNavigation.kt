@@ -21,7 +21,7 @@ fun NavController.navigateToGuideRoute(navOptions: NavOptions? = null) {
 
 fun NavController.navigateToEditKeywordRoute(navOptions: NavOptions? = null) {
     navigate(
-        route = KeyLinkNavigationRoute.HomeGraph.EditKeywordRoute.route,
+        route = KeyLinkNavigationRoute.HomeGraph.SubscribeKeywordRoute.route,
         navOptions = navOptions
     )
 }
@@ -44,8 +44,8 @@ fun NavGraphBuilder.homeGraph() {
         composable(route = KeyLinkNavigationRoute.HomeGraph.GuideRoute.route) {
             // GuideRoute
         }
-        composable(route = KeyLinkNavigationRoute.HomeGraph.EditKeywordRoute.route) {
-            // KeywordRoute
+        composable(route = KeyLinkNavigationRoute.HomeGraph.SubscribeKeywordRoute.route) {
+            // SubscribeKeywordRoute
         }
         composable(route = KeyLinkNavigationRoute.HomeGraph.ProfileRoute.route) {
             // ProfileRoute
