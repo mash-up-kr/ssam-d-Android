@@ -11,7 +11,7 @@ import retrofit2.http.Query
  * @created 2023/07/05
  */
 interface KeywordService {
-    @GET(ApiPattern.Keywords.recommend)
+    @GET(ApiPattern.Keywords.RECOMMEND)
     suspend fun getRecommendKeyword(
         @Query("content") content: String
     ): BaseResponse<KeywordRecommendResponse>
