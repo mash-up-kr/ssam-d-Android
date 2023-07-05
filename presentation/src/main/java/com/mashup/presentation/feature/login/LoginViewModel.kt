@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mashup.domain.usecase.CheckNicknameDuplicationUseCase
 import com.mashup.domain.usecase.LoginParam
 import com.mashup.domain.usecase.LoginUseCase
 import com.mashup.domain.usecase.PatchNicknameUseCase
@@ -16,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
+    private val checkNicknameDuplicationUseCase: CheckNicknameDuplicationUseCase,
     private val patchNicknameUseCase: PatchNicknameUseCase
 ): ViewModel() {
 
