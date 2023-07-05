@@ -9,7 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.mashup.presentation.navigation.TopLevelDestinations
+import com.mashup.presentation.navigation.TopLevelDestination
 
 /**
  * Ssam_D_Android
@@ -54,7 +54,7 @@ class KeyLinkAppState(
      * Home, Chat Route로 다시 돌아와야 하는 경우 호출하는 메서드
      * singleTop으로 동작 및 backstack 유지
      */
-    fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestinations) {
+    fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelNavOptions = navOptions {
             popUpTo(id = navController.graph.findStartDestination().id) {
                 saveState = true
@@ -63,7 +63,7 @@ class KeyLinkAppState(
             restoreState = true
         }
         when (topLevelDestination) {
-            TopLevelDestinations.HOME -> {}
+            TopLevelDestination.HOME -> {}
             else -> {}
         }
     }
