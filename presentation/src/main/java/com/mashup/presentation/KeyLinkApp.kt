@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.mashup.presentation.navigation.KeyLinkNavHost
+import com.mashup.presentation.navigation.TopLevelDestination
+import com.mashup.presentation.ui.common.KeyLinkNavigationBar
 import com.mashup.presentation.ui.common.KeyLinkSnackBar
 import com.mashup.presentation.ui.theme.Black
 
@@ -26,7 +28,7 @@ fun KeyLinkApp(
     Scaffold(
         bottomBar = {
             if (appState.isBottomBarVisible()) {
-                KeyLinkBottomNavigationBar()
+//                KeyLinkNavigationBar()
             }
         },
         backgroundColor = Black,
@@ -45,9 +47,4 @@ fun KeyLinkApp(
             }
         )
     }
-}
-
-@Composable
-fun KeyLinkBottomNavigationBar() {
-
 }
