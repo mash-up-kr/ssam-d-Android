@@ -73,8 +73,8 @@
 
     // 홈
     <string name="home_my_planet">내 행성: Zylix-6</string>
-    <string name="home_my_page_icon_content_description">내 행성: %s</string>
-    <string name="home_planet_guide">당신은 %s행성에 떨어졌습니다.\n지금 가이드를 확인해주세요</string>
+    <string name="home_my_page_icon_content_description">내 행성: Zylix-6</string>
+    <string name="home_planet_guide">당신은 Zylix-6 행성에 떨어졌습니다.\n지금 가이드를 확인해주세요</string>
     <string name="home_planet_guide_button">가이드 보기</string>
     <string name="home_signal_icon_content_description">시그널 아이콘</string>
     <string name="home_subscribe_keywords">%d개 키워드 구독중</string>
@@ -93,6 +93,11 @@
     <string name="content_description_snackbar_icon">스낵바 아이콘입니다.</string>
     <string name="text_field_hint">예) 매쉬업</string>
     <string name="signal_matched_count">%s개 일치</string>
+    <string name="bottom_sheet_disconnect">시그널 끊기</string>
+    <string name="bottom_sheet_declare">신고하기</string>
+    <string name="bottom_sheet_matched_keywords">연결된 키워드</string>
+    <string name="home_planet_background_empty">시그널이 없는 빈 화면 우주 배경입니다.</string>
+    <string name="home_planet_background_default">시그널이 있는 우주 배경입니다.</string>
 
     // 홈 가이드
     <string name="home_guide_planet">행성 Zylix-6</string>
@@ -102,4 +107,18 @@
     <string name="home_guide_alien_content_description">외계 생명체</string>
     <string name="home_guide_footer_description">“원하는 종족과 얘기하려면 시그널에 키워드를 추가해서 보내보세요. 같은 종족이라면 통하는 시그널이 있을 거예요.”</string>
     <string name="home_guide_alien_card_keyword">키워드: %s</string>
+
+    <!-- 신고 -->
+    <string-array name="report">
+        <item>부적절한 글이에요</item>
+        <item>광고 / 홍보 글이에요</item>
+        <item>중독 / 도배성 게시글이에요</item>
+        <item>다른 채팅앱으로 유도하는 글이에요</item>
+        <item>종교 / 포교 목적의 게시글 같아요</item>
+    </string-array>
+    <string name="report_title">신고하는 이유를 선택해주세요.</string>
+  
+    <string name="content_description_report">신고하기 아이콘입니다.</string>
+    <string name="message_detail_matched_signal_count">%s개 키워드 일치</string>
+    <string name="button_send_reply">답장 보내기</string>
 </resources>

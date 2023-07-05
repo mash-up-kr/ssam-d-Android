@@ -13,9 +13,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.geometry.RoundRect
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.ui.theme.*
@@ -55,5 +60,53 @@ internal fun Modifier.shimmerEffect(delay: Int = 0): Modifier = composed {
         ),
     ).onGloballyPositioned {  // 반환된 size를 remember시키기 위해 필요
         size = it.size
+    }
+}
+
+/**
+ * innerRect: 안쪽 사각형(drop shadow가 그려질 대상)
+ * outerRect: 바깥쪽 사각형(drop shadow)
+ * 두 사각형을 op(PathOperation.Difference)를 통해 차이가 있는 곳만 그립니다.
+ * 즉, 안쪽 사각형을 벗어나는 곳만 drop shadow인 outerRect을 그려줍니다.
+ */
+internal fun Modifier.drawColoredShadow(
+    color: Color,
+    alpha: Float = 0.2f,
+    borderRadius: Dp = 0.dp,
+    shadowRadius: Dp = 20.dp,
+    offsetY: Dp = 0.dp,
+    offsetX: Dp = 0.dp
+) = this.drawBehind {
+    val transparentColor = color.copy(alpha = 0.0f).toArgb()
+    val shadowColor = color.copy(alpha = alpha).toArgb()
+    this.drawIntoCanvas {
+        val innerRect = RoundRect(
+            0f, 0f, this.size.width - 2f, this.size.height - 2f,
+            CornerRadius(borderRadius.toPx(), borderRadius.toPx())
+        )
+
+        val outerRect = RoundRect(
+            offsetX.toPx(),
+            offsetY.toPx(),
+            (this.size.width + offsetX.toPx()),
+            (this.size.height + offsetY.toPx()),
+            CornerRadius(borderRadius.toPx(), borderRadius.toPx())
+        )
+        val outerPath = Path().apply { addRoundRect(outerRect) }
+        val innerPath = Path().apply { addRoundRect(innerRect) }
+
+        val resultPath = Path().apply {
+            op(outerPath, innerPath, PathOperation.Difference)
+        }
+        val paint = Paint()
+        val frameworkPaint = paint.asFrameworkPaint()
+        frameworkPaint.color = transparentColor
+        frameworkPaint.setShadowLayer(
+            shadowRadius.toPx(),
+            offsetX.toPx(),
+            offsetY.toPx(),
+            shadowColor
+        )
+        it.drawPath(resultPath, paint)
     }
 }
