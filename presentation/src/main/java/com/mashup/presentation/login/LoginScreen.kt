@@ -34,6 +34,7 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun LoginScreen(
     loginViewModel: LoginViewModel = viewModel(),
+    loginButtonClicked: () -> Unit,
     loginToOnBoarding: () -> Unit,
     handleOnBackPressed: () -> Unit
 ) {
@@ -62,7 +63,7 @@ fun LoginScreen(
     ) { page ->
         when (page) {
             0 -> LoginContentScreen (
-                onLoginButtonClicked = loginViewModel::handleKakaoLogin
+                onLoginButtonClicked = loginButtonClicked
             )
             1 -> NicknameScreen(
                 onNextButtonClicked = { nickname ->
