@@ -1,5 +1,6 @@
 package com.mashup.data.di
 
+import com.mashup.data.source.remote.service.KeywordService
 import com.mashup.data.source.remote.service.LoginService
 import com.mashup.data.source.remote.service.OnboardingService
 import dagger.Module
@@ -22,4 +23,9 @@ class ServiceModule {
     @Singleton
     fun provideOnboardingService(retrofit: Retrofit): OnboardingService =
         retrofit.create(OnboardingService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideKeywordService(retrofit: Retrofit): KeywordService =
+        retrofit.create(KeywordService::class.java)
 }
