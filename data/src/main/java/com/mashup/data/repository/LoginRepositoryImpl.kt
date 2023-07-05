@@ -29,4 +29,8 @@ class LoginRepositoryImpl @Inject constructor(
 
         return token.isNotEmpty()
     }
+
+    override suspend fun patchNickname(nickname: String) {
+        remoteLoginDataSource.patchNickname(nickname)
+    }
 }

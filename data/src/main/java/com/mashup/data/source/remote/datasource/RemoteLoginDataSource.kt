@@ -13,4 +13,8 @@ class RemoteLoginDataSource @Inject constructor(
     suspend fun login(loginRequestBody: LoginRequestBody): BaseResponse<LoginResponseBody> {
         return loginService.login(loginRequestBody)
     }
+
+    suspend fun patchNickname(nickname: String) {
+        loginService.patchNickname(nickname)
+    }
 }
