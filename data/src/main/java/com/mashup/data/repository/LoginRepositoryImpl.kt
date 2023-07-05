@@ -30,6 +30,10 @@ class LoginRepositoryImpl @Inject constructor(
         return token.isNotEmpty()
     }
 
+    override suspend fun getNicknameDuplication(nickname: String) {
+        remoteLoginDataSource.getNicknameDuplicate(nickname)
+    }
+
     override suspend fun patchNickname(nickname: String) {
         remoteLoginDataSource.patchNickname(nickname)
     }
