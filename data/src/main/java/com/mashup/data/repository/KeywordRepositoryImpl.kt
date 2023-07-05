@@ -13,7 +13,8 @@ class KeywordRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteKeywordDataSource
 ) : KeywordRepository {
     override suspend fun getRecommendKeywords(content: String): List<String> {
-        val response = remoteDataSource.getRecommendKeyword(content)
-        return response.data?.keywords ?: emptyList()
+        return runCatching {
+            remoteDataSource.getRecommendKeyword(content).keywords
+        }.getOrThrow()
     }
 }

@@ -14,7 +14,8 @@ class RemoteKeywordDataSource @Inject constructor(
     private val keywordService: KeywordService
 ) {
 
-    suspend fun getRecommendKeyword(content: String): BaseResponse<KeywordRecommendResponse> {
-        return keywordService.getRecommendKeyword(content)
+    suspend fun getRecommendKeyword(content: String): KeywordRecommendResponse {
+        val response = keywordService.getRecommendKeyword(content)
+        return response.data ?: throw Exception(response.message)
     }
 }
