@@ -3,10 +3,12 @@ package com.mashup.presentation.feature.onboarding
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -15,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.*
+import com.mashup.presentation.ui.theme.Black
 import com.mashup.presentation.ui.theme.Gray07
 import com.mashup.presentation.ui.theme.SsamDTheme
 
@@ -43,10 +46,14 @@ fun OnBoardingScreen(
         showGoFirstDialog = true
     }
 
-    Column(modifier = modifier.fillMaxSize()) {
-        KeyLinkToolbar(
-            onClickBack = { showGoFirstDialog = true }
-        )
+    Scaffold(
+        topBar = {
+            KeyLinkToolbar(
+                onClickBack = { showGoFirstDialog = true }
+            )
+        },
+        backgroundColor = Black
+    ) {
         when (uiState) {
             OnBoardingViewModel.UiState.Loading -> Unit  // TODO: 로딩 프로그레스 바 돌리기
             OnBoardingViewModel.UiState.SaveSuccess -> {
@@ -71,6 +78,7 @@ fun OnBoardingScreen(
             onDismissRequest = {},
             onPositiveClick = {
                 // TODO: 로그인페이지로 네비게이션
+                showGoFirstDialog = false
             },
             onNegativeClick = { showGoFirstDialog = false }
         )
