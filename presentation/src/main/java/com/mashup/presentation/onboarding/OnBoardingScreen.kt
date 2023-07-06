@@ -15,12 +15,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.Gray02
 import com.mashup.presentation.ui.theme.Gray07
 import com.mashup.presentation.ui.theme.SsamDTheme
 import com.mashup.presentation.ui.theme.White
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -28,20 +33,48 @@ fun OnBoardingScreen(
     modifier: Modifier = Modifier,
     navigateToNotificationPermission: () -> Unit
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val viewModel: OnBoardingViewModel = viewModel()
+
     Column(modifier = modifier.fillMaxSize()) {
         KeyLinkToolbar(
             onClickBack = {}
         )
-        OnBoardingContent(modifier, navigateToNotificationPermission)
+        OnBoardingContent(
+            modifier,
+            keywords = viewModel.keywords,
+            addKeyword = viewModel::addKeyword,
+            removeKeyword = viewModel::removeKeyword,
+            saveKeywords = viewModel::saveKeywords,
+            navigateToNotificationPermission = navigateToNotificationPermission,
+            coroutineScope = coroutineScope
+        )
+    }
+
+    LaunchedEffect(key1 = viewModel.uiEvent) {
+        coroutineScope.launch {
+            viewModel.uiEvent.collectLatest {
+                when (it) {
+                    is OnBoardingViewModel.UiEvent.SuccessSave -> {
+                        navigateToNotificationPermission()
+                    }
+                    else -> {}
+                }
+            }
+        }
     }
 }
 
 @Composable
 fun OnBoardingContent(
     modifier: Modifier,
-    navigateToNotificationPermission: () -> Unit
+    keywords: MutableList<String>,
+    addKeyword: (String) -> Unit,
+    removeKeyword: (Int) -> Unit,
+    saveKeywords: suspend (List<String>) -> Unit,
+    navigateToNotificationPermission: () -> Unit,
+    coroutineScope: CoroutineScope
 ) {
-    val keywords = remember { mutableStateListOf<String>() }
 
     Column(
         modifier = modifier
@@ -53,12 +86,8 @@ fun OnBoardingContent(
                 .fillMaxSize()
                 .weight(1f),
             keywords = keywords,
-            onKeywordAdd = {
-                keywords.add(it)
-            },
-            onKeywordDelete = {
-                keywords.removeAt(it)
-            }
+            onKeywordAdd = addKeyword,
+            onKeywordDelete = removeKeyword
         )
         KeyLinkButton(
             modifier = modifier
@@ -66,12 +95,11 @@ fun OnBoardingContent(
                 .padding(vertical = 12.dp),
             text = stringResource(id = R.string.onboarding_keywords_complete),
             onClick = {
-                /**
-                 * 일단 navigate 되게 만들어놨고, onboarding api 연결하는걸로 수정 예정
-                 */
-                navigateToNotificationPermission()
+                coroutineScope.launch {
+                    saveKeywords(keywords)
+                }
             },
-            enable = keywords.size > 0
+            enable = keywords.isNotEmpty()
         )
     }
 }
@@ -161,6 +189,8 @@ fun KeywordScreen(
 @Composable
 fun PreviewOnBoardingScreen() {
     SsamDTheme {
-        OnBoardingScreen(modifier = Modifier) {}
+        OnBoardingScreen(
+            modifier = Modifier,
+            navigateToNotificationPermission = {})
     }
 }
