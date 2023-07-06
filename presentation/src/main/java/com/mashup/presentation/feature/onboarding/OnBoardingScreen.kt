@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.onboarding
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -25,10 +26,15 @@ fun OnBoardingScreen(
     viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    var showGoFirstDialog by remember { mutableStateOf(false) }
+
+    BackHandler(true) {
+        showGoFirstDialog = true
+    }
 
     Column(modifier = modifier.fillMaxSize()) {
         KeyLinkToolbar(
-            onClickBack = {}
+            onClickBack = { showGoFirstDialog = true }
         )
         when (uiState) {
             OnBoardingViewModel.UiState.Loading -> Unit  // TODO: 로딩 프로그레스 바 돌리기
@@ -48,6 +54,15 @@ fun OnBoardingScreen(
                 // TODO: show error Snackbar
             }
         }
+    }
+    if (showGoFirstDialog) {
+        KeyLinkGoFirstDialog(
+            onDismissRequest = {},
+            onPositiveClick = {
+                // TODO: 로그인페이지로 네비게이션
+            },
+            onNegativeClick = { showGoFirstDialog = false }
+        )
     }
 }
 
