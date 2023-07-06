@@ -38,6 +38,8 @@ fun LoginScreen(
     loginToOnBoarding: () -> Unit,
     handleOnBackPressed: () -> Unit
 ) {
+    val nicknameState by loginViewModel.nicknameState.collectAsState()
+
     val pagerState = rememberPagerState(0)
 
     LaunchedEffect(loginViewModel.currentPage) {
@@ -69,6 +71,10 @@ fun LoginScreen(
                 onNextButtonClicked = { nickname ->
                     loginViewModel.patchNickname(nickname)
                 },
+                checkNicknameDuplication = { nickname ->
+                    loginViewModel.getNicknameDuplication(nickname)
+                },
+                validationState = nicknameState,
             )
             2 -> LoginCompletionScreen (
                 onStartButtonClicked = loginToOnBoarding,
@@ -138,7 +144,9 @@ private fun LoginContainer(modifier: Modifier = Modifier, content: @Composable C
 @Composable
 private fun LoginTitle(modifier: Modifier) {
     Column(
-        modifier = modifier.fillMaxWidth().padding(horizontal = 20.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -194,10 +202,12 @@ private fun LoginGuideText(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun NicknameScreen(onNextButtonClicked: (String) -> Unit){
+fun NicknameScreen(
+    onNextButtonClicked: (String) -> Unit,
+    checkNicknameDuplication: (String) -> Unit,
+    validationState: ValidationState
+){
     var nickname by remember { mutableStateOf("") }
-    var validation by remember { mutableStateOf(ValidationState.EMPTY) }
-    val expectedText = "올바른 닉네임"
     val focusManager = LocalFocusManager.current
 
     Box {
@@ -213,7 +223,9 @@ fun NicknameScreen(onNextButtonClicked: (String) -> Unit){
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 KeyLinkMintText(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 32.dp),
                     text = stringResource(R.string.login_nickname),
                     textStyle = Heading3,
                     textAlign = TextAlign.Left
@@ -223,25 +235,26 @@ fun NicknameScreen(onNextButtonClicked: (String) -> Unit){
                     value = nickname,
                     onValueChange = { value ->
                         nickname = value
-                        checkValidation(nickname, expectedText) { validationState ->
-                            validation = validationState
-                        }
+                        checkNicknameDuplication(value)
                     },
                     hint = stringResource(R.string.login_nickname_hint),
                     maxLength = 10,
                     fontSize = 32.sp,
-                    validationState = validation
+                    validationState = validationState
                 )
             }
 
             KeyLinkButton(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp).imePadding(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 12.dp)
+                    .imePadding(),
                 text = stringResource(R.string.login_next_btn),
                 onClick = {
                     focusManager.clearFocus()
                     onNextButtonClicked(nickname)
                 },
-                enable = validation == ValidationState.SUCCESS
+                enable = validationState == ValidationState.SUCCESS
             )
         }
     }
