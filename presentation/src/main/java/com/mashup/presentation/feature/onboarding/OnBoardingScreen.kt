@@ -20,6 +20,17 @@ import com.mashup.presentation.ui.theme.SsamDTheme
 
 
 @Composable
+fun OnBoardingRoute(
+    modifier: Modifier = Modifier,
+    navigateToNotificationPermission: () -> Unit
+) {
+    OnBoardingScreen(
+        modifier = modifier,
+        navigateToNotificationPermission = navigateToNotificationPermission
+    )
+}
+
+@Composable
 fun OnBoardingScreen(
     modifier: Modifier = Modifier,
     navigateToNotificationPermission: () -> Unit,
