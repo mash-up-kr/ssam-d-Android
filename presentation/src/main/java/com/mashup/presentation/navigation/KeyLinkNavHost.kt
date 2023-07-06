@@ -17,8 +17,8 @@ import com.mashup.presentation.feature.signal.navigation.signalGraph
 fun KeyLinkNavHost(
     appState: KeyLinkAppState,
     onShowSnackbar: suspend (String, String?) -> Boolean,
-    startDestination: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    startDestination: String = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route
 ) {
     val navController = appState.navController
     NavHost(
@@ -26,7 +26,7 @@ fun KeyLinkNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        homeGraph()
+        homeGraph(navController = navController)
         signalGraph()
         chatGraph() {
 
