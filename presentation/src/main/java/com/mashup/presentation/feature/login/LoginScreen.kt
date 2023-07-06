@@ -29,6 +29,10 @@ import com.airbnb.lottie.compose.*
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -39,6 +43,7 @@ fun LoginScreen(
     handleOnBackPressed: () -> Unit
 ) {
     val nicknameState by loginViewModel.nicknameState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
 
     val pagerState = rememberPagerState(0)
 
@@ -75,6 +80,7 @@ fun LoginScreen(
                     loginViewModel.getNicknameDuplication(nickname)
                 },
                 validationState = nicknameState,
+                coroutineScope = coroutineScope
             )
             2 -> LoginCompletionScreen (
                 onStartButtonClicked = loginToOnBoarding,
@@ -201,14 +207,27 @@ private fun LoginGuideText(modifier: Modifier = Modifier) {
     )
 }
 
+@OptIn(FlowPreview::class)
 @Composable
 fun NicknameScreen(
     onNextButtonClicked: (String) -> Unit,
     checkNicknameDuplication: (String) -> Unit,
-    validationState: ValidationState
+    validationState: ValidationState,
+    coroutineScope: CoroutineScope
 ){
-    var nickname by remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
+
+    val nicknameFlow = remember { MutableStateFlow("") }
+    val nickname = nicknameFlow.collectAsState().value
+    
+    LaunchedEffect(nicknameFlow) {
+        nicknameFlow
+            .debounce(300)
+            .onEach { nickname ->
+                checkNicknameDuplication(nickname)
+            }
+            .launchIn(this)
+    }
 
     Box {
         LoginBackground()
@@ -234,8 +253,9 @@ fun NicknameScreen(
                 KeyLinkBoxTextField(
                     value = nickname,
                     onValueChange = { value ->
-                        nickname = value
-                        checkNicknameDuplication(value)
+                        coroutineScope.launch {
+                            nicknameFlow.emit(value)
+                        }
                     },
                     hint = stringResource(R.string.login_nickname_hint),
                     maxLength = 10,
