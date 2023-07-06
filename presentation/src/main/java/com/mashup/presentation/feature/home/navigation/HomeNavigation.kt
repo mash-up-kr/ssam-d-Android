@@ -33,7 +33,9 @@ fun NavController.navigateToProfileRoute(navOptions: NavOptions? = null) {
     )
 }
 
-fun NavGraphBuilder.homeGraph() {
+fun NavGraphBuilder.homeGraph(
+    navController: NavController
+) {
     navigation(
         route = KeyLinkNavigationRoute.HomeGraph.route,
         startDestination = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route

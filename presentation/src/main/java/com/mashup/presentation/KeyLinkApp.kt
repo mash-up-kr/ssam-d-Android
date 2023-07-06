@@ -9,8 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.mashup.presentation.navigation.KeyLinkNavHost
-import com.mashup.presentation.navigation.TopLevelDestination
-import com.mashup.presentation.ui.common.KeyLinkNavigationBar
+import com.mashup.presentation.ui.common.KeyLinkBottomBar
 import com.mashup.presentation.ui.common.KeyLinkSnackBar
 import com.mashup.presentation.ui.theme.Black
 
@@ -28,7 +27,12 @@ fun KeyLinkApp(
     Scaffold(
         bottomBar = {
             if (appState.isBottomBarVisible()) {
-//                KeyLinkNavigationBar()
+                KeyLinkBottomBar(
+                    destinations = appState.topLevelDestinations,
+                    onNavigateToDestination = appState::navigateToTopLevelDestination,
+                    currentDestination = appState.currentDestination,
+                    modifier = Modifier
+                )
             }
         },
         backgroundColor = Black,
@@ -36,7 +40,6 @@ fun KeyLinkApp(
     ) { innerPadding ->
         KeyLinkNavHost(
             appState = appState,
-            startDestination = "",
             modifier = Modifier.padding(innerPadding),
             onShowSnackbar = { message, action ->
                 snackbarHostState.showSnackbar(
@@ -48,3 +51,4 @@ fun KeyLinkApp(
         )
     }
 }
+
