@@ -16,7 +16,7 @@ class TokenInterceptor @Inject constructor(
         val jwt = appHeaderProvider.getToken()
         if (jwt.isNotEmpty()) {
             Log.d("TokenInterceptor", jwt)
-            requestBuilder.header("Authorization", "Bearer $jwt")
+            requestBuilder.header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg4NTY0NDQ2LCJleHAiOjE2OTcyMDQ0NDZ9.-qw4gfZ-fmQjyK6U7FT492UjUSQGCZkfTMn1k3dj8wA")
         } else {
             Log.d("TokenInterceptor", "Token is empty")
         }
