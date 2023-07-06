@@ -1,5 +1,7 @@
 package com.mashup.domain.repository
 
+import kotlinx.coroutines.flow.Flow
+
 /**
  * Ssam_D_Android
  * @author jaesung
@@ -7,6 +9,6 @@ package com.mashup.domain.repository
  */
 interface KeywordRepository {
 
-    suspend fun getRecommendKeywords(content: String) : List<String>
+    suspend fun getRecommendKeywords(content: String) : Flow<List<String>>
 
 }
