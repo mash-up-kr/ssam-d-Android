@@ -9,7 +9,10 @@ import com.mashup.domain.usecase.CheckNicknameDuplicationUseCase
 import com.mashup.domain.usecase.LoginParam
 import com.mashup.domain.usecase.LoginUseCase
 import com.mashup.domain.usecase.PatchNicknameUseCase
+import com.mashup.presentation.ui.common.ValidationState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -23,6 +26,9 @@ class LoginViewModel @Inject constructor(
 
     var currentPage by mutableStateOf(0)
     var nickname by mutableStateOf("")
+
+    private val _nicknameState: MutableStateFlow<ValidationState> = MutableStateFlow(ValidationState.EMPTY)
+    val nicknameState: StateFlow<ValidationState> = _nicknameState
 
     private fun goToNextPage() = currentPage++
 
@@ -40,6 +46,25 @@ class LoginViewModel @Inject constructor(
                }.onFailure {
                     Timber.i("삐빅- 로그인 실패")
                }
+        }
+    }
+
+    fun getNicknameDuplication(nickname: String) {
+        if (nickname.isEmpty()) {
+            _nicknameState.value = ValidationState.EMPTY
+            return
+        }
+        viewModelScope.launch {
+            checkNicknameDuplicationUseCase.execute(nickname)
+                .onSuccess {
+                    Timber.i("중복된 닉네임 없음ㅋ")
+                    _nicknameState.value = ValidationState.SUCCESS
+                }.onFailure {
+                    it.message?.let { message ->
+                        Timber.e(message)
+                    }
+                    _nicknameState.value = ValidationState.FAILED
+                }
         }
     }
 
