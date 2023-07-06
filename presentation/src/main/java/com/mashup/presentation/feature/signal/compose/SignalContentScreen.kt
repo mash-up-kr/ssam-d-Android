@@ -47,6 +47,7 @@ fun SignalContentRoute(
         onNextClick = onNextClick
     )
 }
+
 @Composable
 fun SignalContentScreen(
     modifier: Modifier = Modifier,
@@ -90,7 +91,7 @@ fun SignalContent(
     onNextClick: () -> Unit,
     onLengthOver: () -> Unit,
 ) {
-    var text by rememberSaveable { mutableStateOf("") }
+    var signalContent by rememberSaveable { mutableStateOf("") }
     val scrollState = rememberScrollState()
 
     Column(
@@ -102,10 +103,10 @@ fun SignalContent(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(1f),
-            value = text,
+            value = signalContent,
             onValueChange = {
                 if (it.length >= 300) onLengthOver.invoke()
-                text = it
+                signalContent = it
             },
             hint = stringResource(id = R.string.hint_signal_content),
             hintAlign = TextAlign.Start,
@@ -120,7 +121,7 @@ fun SignalContent(
                 .padding(bottom = 48.dp),
             text = stringResource(id = R.string.next),
             onClick = onNextClick,
-            enable = text.isNotEmpty()
+            enable = signalContent.isNotEmpty()
         )
     }
 }

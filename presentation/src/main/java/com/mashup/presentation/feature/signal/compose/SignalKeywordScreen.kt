@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.signal.SignalViewModel
 import com.mashup.presentation.ui.common.*
@@ -33,6 +34,12 @@ fun SignalKeywordRoute(
     modifier: Modifier = Modifier,
     viewModel: SignalViewModel = hiltViewModel()
 ) {
+    val signalContent by viewModel.signalContent.collectAsStateWithLifecycle()
+    val keywordsUiState by viewModel.keywordsState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        signalViewModel.getRecommendKeywords(signalContent)
+    }
 
     SignalKeywordScreen(
         modifier = modifier,
@@ -43,18 +50,55 @@ fun SignalKeywordRoute(
 
 }
 
+
+@Composable
+fun SignalKeywordRoute(
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    signalViewModel: SignalViewModel = hiltViewModel()
+) {
+
+    SignalKeywordScreen(
+        modifier = modifier,
+        navigateUp = {},
+        navigateToComplete = {},
+        keywordUiState = keywordsUiState
+    )
+
+}
+
 @Composable
 fun SignalKeywordScreen(
     isLoading: Boolean,
     onDialogBackClick: () -> Unit,
     onSendClick: () -> Unit,
     modifier: Modifier = Modifier,
+    navigateUp: () -> Unit,
+    navigateToComplete: () -> Unit,
+    keywordUiState: KeywordUiState = KeywordUiState.Loading
 ) {
     val keywords = remember { mutableStateListOf<String>() }
+    var isLoading by remember { mutableStateOf(true) }
     var showGoBackDialog by remember { mutableStateOf(false) }
 
     BackHandler(true) {
         showGoBackDialog = true
+    }
+
+    when (keywordUiState) {
+        is KeywordUiState.Loading -> { isLoading = true }
+        is KeywordUiState.Success -> {
+            isLoading = false
+
+            if (keywordUiState.isEmpty()) {
+
+            } else {
+                keywordUiState.keywords.forEach { keyword ->
+                    keywords.add(keyword)
+                }
+            }
+        }
+        is KeywordUiState.Error -> {}
     }
 
     Column(modifier = modifier.fillMaxSize()) {
