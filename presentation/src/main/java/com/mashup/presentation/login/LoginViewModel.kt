@@ -11,8 +11,7 @@ import com.mashup.domain.usecase.LoginUseCase
 import com.mashup.domain.usecase.PatchNicknameUseCase
 import com.mashup.presentation.ui.common.ValidationState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -28,7 +27,7 @@ class LoginViewModel @Inject constructor(
     var nickname by mutableStateOf("")
 
     private val _nicknameState: MutableStateFlow<ValidationState> = MutableStateFlow(ValidationState.EMPTY)
-    val nicknameState: StateFlow<ValidationState> = _nicknameState
+    val nicknameState = _nicknameState.asStateFlow()
 
     private fun goToNextPage() = currentPage++
 
@@ -60,9 +59,7 @@ class LoginViewModel @Inject constructor(
                     Timber.i("중복된 닉네임 없음ㅋ")
                     _nicknameState.value = ValidationState.SUCCESS
                 }.onFailure {
-                    it.message?.let { message ->
-                        Timber.e(message)
-                    }
+                    Timber.e(it.message)
                     _nicknameState.value = ValidationState.FAILED
                 }
         }
