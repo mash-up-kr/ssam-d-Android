@@ -3,8 +3,8 @@
     <string name="empty_text" />
 
     <string name="navigation_home">홈</string>
-    <string name="navigation_signal">시그널 보내기</string>
-    <string name="navigation_chat">채팅</string>
+    <string name="navigation_signal">보내기</string>
+    <string name="navigation_chat">연결됨</string>
     <string name="input_maximum_10">최대 10자 입력</string>
     <string name="close">닫기</string>
     <string name="look_around">둘러보기</string>
