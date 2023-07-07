@@ -40,7 +40,13 @@ class NotificationPermissionGuideFragment :
 
     override fun initViews() {
         binding.composeView.setThemeContent {
-            NotificationPermissionScreen(Modifier)
+            NotificationPermissionScreen(
+                modifier = Modifier,
+                navigateToHome = {
+                    // TODO: home navigation
+                },
+                requestNotificationPermission = ::requestNotificationPermission
+            )
         }
     }
 

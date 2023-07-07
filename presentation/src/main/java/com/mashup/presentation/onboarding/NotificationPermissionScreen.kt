@@ -1,6 +1,7 @@
 package com.mashup.presentation.onboarding
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -19,28 +20,36 @@ import com.mashup.presentation.ui.theme.*
 
 @Composable
 fun NotificationPermissionRoute(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navigateToHome: () -> Unit = {},
+    requestNotificationPermission: () -> Unit = {}
 ) {
     NotificationPermissionScreen(modifier = modifier)
 }
 
 @Composable
 fun NotificationPermissionScreen(
-    modifier: Modifier
+    modifier: Modifier,
+    navigateToHome: () -> Unit = {},
+    requestNotificationPermission: () -> Unit = {}
 ) {
     Scaffold(
         backgroundColor = Black,
         modifier = modifier.fillMaxSize()
     ) {
         NotificationPermissionContent(
-            modifier = modifier.padding(it)
+            modifier = modifier.padding(it),
+            navigateToHome = navigateToHome,
+            requestNotificationPermission = requestNotificationPermission
         )
     }
 }
 
 @Composable
 fun NotificationPermissionContent(
-    modifier: Modifier
+    modifier: Modifier,
+    navigateToHome: () -> Unit,
+    requestNotificationPermission: () -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -50,7 +59,10 @@ fun NotificationPermissionContent(
         NotificationPermissionTitle(modifier = modifier)
         Spacer(modifier = modifier.height(48.dp))
         NotificationPermissionGuideImage(modifier = modifier.weight(1f))
-        NotificationPermissionGuideBottomButtons()
+        NotificationPermissionGuideBottomButtons(
+            navigateToHome = navigateToHome,
+            requestNotificationPermission = requestNotificationPermission
+        )
     }
 }
 
@@ -92,7 +104,10 @@ fun NotificationPermissionGuideImage(
 }
 
 @Composable
-fun NotificationPermissionGuideBottomButtons() {
+fun NotificationPermissionGuideBottomButtons(
+    navigateToHome: () -> Unit,
+    requestNotificationPermission: () -> Unit
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -102,12 +117,17 @@ fun NotificationPermissionGuideBottomButtons() {
     ) {
         KeyLinkButton(
             text = stringResource(id = R.string.get_notification),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            onClick = requestNotificationPermission
+
         )
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 4.dp, bottom = 2.dp),
+                .padding(top = 4.dp, bottom = 2.dp)
+                .clickable {
+                    navigateToHome()
+                },
             text = stringResource(id = R.string.notification_disallow),
             style = Body1,
             color = Gray06,
