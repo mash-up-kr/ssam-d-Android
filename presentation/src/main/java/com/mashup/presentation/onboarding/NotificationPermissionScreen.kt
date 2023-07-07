@@ -86,7 +86,7 @@ fun NotificationPermissionGuideImage(
     ) {
         Image(
             painter = painterResource(id = R.drawable.img_notificationsenabled),
-            contentDescription = "알림 수신 동의 화면 이미지"
+            contentDescription = stringResource(id = R.string.notification_img_content_description)
         )
     }
 }
