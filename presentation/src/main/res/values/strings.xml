@@ -34,6 +34,7 @@
     <string name="login_completion_btn">키워드 만들기</string>
     <string name="notification_disallow">나중에 하기</string>
     <string name="notification_subtitle">삐리삐리 삐리리...</string>
+    <string name="notification_signal">내 행성으로 온 시그널을\n 놓치지 않고 받아볼까요?</string>
     <string name="notification_content">혁신앱키링에게 온 시그널</string>
     <string name="notification_description">#인기앱 외 2개 키워드 일치!</string>
     <string name="send_complete">보내기 완료!</string>
