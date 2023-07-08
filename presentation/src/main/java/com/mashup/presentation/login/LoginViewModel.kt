@@ -5,10 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mashup.domain.usecase.CheckNicknameDuplicationUseCase
-import com.mashup.domain.usecase.LoginParam
-import com.mashup.domain.usecase.LoginUseCase
-import com.mashup.domain.usecase.PatchNicknameUseCase
+import com.mashup.domain.usecase.*
 import com.mashup.presentation.ui.common.ValidationState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -59,8 +56,13 @@ class LoginViewModel @Inject constructor(
                     Timber.i("중복된 닉네임 없음ㅋ")
                     _nicknameState.value = ValidationState.SUCCESS
                 }.onFailure {
-                    Timber.e(it.message)
-                    _nicknameState.value = ValidationState.FAILED
+                    when (it) {
+                        is ConflictException -> {
+                            Timber.e("중복된 닉네임당")
+                            _nicknameState.value = ValidationState.FAILED
+                        }
+                        else -> Timber.e("삐빅- 에러 발생 WHY? " + it.message)
+                    }
                 }
         }
     }
