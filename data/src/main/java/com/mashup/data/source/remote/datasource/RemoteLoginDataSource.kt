@@ -14,7 +14,7 @@ class RemoteLoginDataSource @Inject constructor(
         return loginService.login(loginRequestBody)
     }
 
-    suspend fun getNicknameDuplicate(nickname: String) {
+    suspend fun getNicknameDuplication(nickname: String) {
         loginService.getNicknameDuplication(nickname)
     }
 
