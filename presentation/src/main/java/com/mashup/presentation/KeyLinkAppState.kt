@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 import com.mashup.presentation.navigation.TopLevelDestination
 
 /**
@@ -45,10 +46,11 @@ class KeyLinkAppState(
 
     @Composable
     fun isBottomBarVisible(): Boolean {
-        return true
-//        return when(currentDestination?.route) {
-//
-//        }
+        return when(currentDestination?.route) {
+            KeyLinkNavigationRoute.HomeGraph.HomeRoute.route,
+            KeyLinkNavigationRoute.ChatGraph.ChatRoute.route -> true
+            else -> false
+        }
     }
 
     /**
