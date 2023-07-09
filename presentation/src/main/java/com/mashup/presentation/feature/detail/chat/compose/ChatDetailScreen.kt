@@ -10,7 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
+import com.mashup.presentation.feature.chat.ChatViewModel
 import com.mashup.presentation.feature.detail.chat.model.ChatDetailUiModel
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.Black
@@ -23,21 +25,32 @@ import com.mashup.presentation.ui.theme.White
  * @created 2023/06/28
  */
 @Composable
-fun ChatDetailScreen(
+fun ChatDetailRoute(
+    onBackClick: () -> Unit,
+    onMessageClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onUpButtonClick: () -> Unit = {},
-    onNavigateToMessageDetail: () -> Unit = {}
+    viewModel: ChatViewModel = hiltViewModel()
 ) {
-    /**
-     * val viewModel: ~ by hiltViewModel()
-     * collectAsState~
-     */
+
+    ChatDetailScreen(
+        modifier = modifier,
+        onBackClick = onBackClick,
+        onMessageClick = onMessageClick,
+    )
+}
+
+@Composable
+fun ChatDetailScreen(
+    onBackClick: () -> Unit,
+    onMessageClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Scaffold(
         modifier = modifier,
         backgroundColor = Black,
         topBar = {
             KeyLinkToolbar(
-                onClickBack = { onUpButtonClick() },
+                onClickBack = onBackClick,
                 menuAction = {
                     IconButton(onClick = { /* */ }) {
                         Icon(
@@ -53,7 +66,7 @@ fun ChatDetailScreen(
         ChatDetailContent(
             modifier = Modifier.padding(paddingValues),
             chatDetailState = ProvideChatDetailState,
-            onChatItemClick = { onNavigateToMessageDetail() }
+            onChatItemClick = onMessageClick
         )
     }
 }
@@ -95,7 +108,7 @@ fun ChatDetailContent(
 @Composable
 private fun ChatDetailScreenPreview() {
     SsamDTheme {
-        ChatDetailScreen()
+        ChatDetailScreen(onBackClick = {}, onMessageClick = {})
     }
 }
 

@@ -5,6 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.mashup.presentation.KeyLinkAppState
 import com.mashup.presentation.feature.chat.navigation.chatGraph
+import com.mashup.presentation.feature.detail.chat.navigation.navigateToChatDetail
+import com.mashup.presentation.feature.detail.message.navigation.navigateToMessageDetail
 import com.mashup.presentation.feature.home.navigation.homeGraph
 import com.mashup.presentation.feature.home.navigation.navigateToGuideRoute
 import com.mashup.presentation.feature.home.navigation.navigateToSubscribeKeywordRoute
@@ -38,8 +40,9 @@ fun KeyLinkNavHost(
             onBackClick = navController::navigateUp,
         )
         chatGraph(
-            onChatClick = {},
-            onMessageClick = {}
+            onBackClick = navController::navigateUp,
+            onChatClick = navController::navigateToChatDetail,
+            onMessageClick = navController::navigateToMessageDetail
         )
     }
 }
