@@ -5,6 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import com.mashup.presentation.feature.home.HomeRoute
+import com.mashup.presentation.feature.home.guide.GuideRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 
 /**
@@ -34,14 +36,19 @@ fun NavController.navigateToProfileRoute(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.homeGraph(
-    navController: NavController
+    onSubscribeKeywordClick: () -> Unit,
+    onGuideClick: () -> Unit,
+    onClickBack: () -> Unit,
 ) {
     navigation(
         route = KeyLinkNavigationRoute.HomeGraph.route,
         startDestination = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route
     ) {
         composable(route = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route) {
-            // HomeRoute
+            HomeRoute(
+                onSubscribeKeywordClick = onSubscribeKeywordClick,
+                onGuideClick = onGuideClick,
+            )
         }
         composable(route = KeyLinkNavigationRoute.HomeGraph.GuideRoute.route) {
             // GuideRoute

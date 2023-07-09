@@ -22,6 +22,7 @@ object Dep {
             const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
             const val savedState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$version"
             const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
+            const val runtimeCompose = "androidx.lifecycle:lifecycle-runtime-compose:$version"
             const val process = "androidx.lifecycle:lifecycle-process:$version"
             const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
             const val compiler = "androidx.lifecycle:lifecycle-compiler:$version"
@@ -43,6 +44,11 @@ object Dep {
         object Core {
             const val core = "androidx.core:core-ktx:1.7.0"
         }
+
+        object Hilt {
+            const val hiltNavigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
+        }
+
     }
 
     object Google {

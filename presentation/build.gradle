@@ -56,10 +56,12 @@ dependencies {
     // lifecycle
     implementation Dep.AndroidX.Lifecycle.viewModel
     implementation Dep.AndroidX.Lifecycle.savedState
+    implementation Dep.AndroidX.Lifecycle.runtimeCompose
     kapt Dep.AndroidX.Lifecycle.compiler
 
     // ViewModel utilities for Compose
-    implementation Dep.AndroidX.Lifecycle.Compose.viewModel
+    implementation Dep.AndroidX.Lifecycle.Compose.viewModel  // 추후 제거 필요
+    implementation Dep.AndroidX.Hilt.hiltNavigation
 
     // glide
     implementation Dep.Glide.glide

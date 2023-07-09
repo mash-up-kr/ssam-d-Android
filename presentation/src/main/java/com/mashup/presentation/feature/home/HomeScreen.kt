@@ -12,31 +12,41 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.*
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.RoundRect
-import androidx.compose.ui.graphics.*
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.drawColoredShadow
 import com.mashup.presentation.common.extension.pxToDp
 import com.mashup.presentation.feature.home.model.SignalUiModel
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.theme.*
-import java.util.concurrent.TimeUnit
+
+@Composable
+fun HomeRoute(
+    onSubscribeKeywordClick: () -> Unit,
+    onGuideClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    homeViewModel: HomeViewModel = hiltViewModel()
+) {
+    HomeScreen(
+        navigateToSubscribeKeyword = onSubscribeKeywordClick,
+        navigateToGuide = onGuideClick,
+        modifier = modifier,
+    )
+}
 
 @Composable
 fun HomeScreen(
-    navigateToSubscribeKeyword: () -> Unit = {},
-    navigateToGuide: () -> Unit = {}
+    navigateToSubscribeKeyword: () -> Unit,
+    navigateToGuide: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val signals = emptyList<SignalUiModel>()
     val scrollState = rememberLazyListState()
@@ -324,5 +334,8 @@ private fun SignalCardKeywordsChip(keyword: String) {
 @Preview
 @Composable
 fun PreviewHomeScreen() {
-    HomeScreen()
+    HomeScreen(
+        navigateToSubscribeKeyword = {},
+        navigateToGuide = {}
+    )
 }
