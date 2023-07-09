@@ -10,7 +10,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
+import com.mashup.presentation.feature.subscribe.SubscribeViewModel
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.*
 
@@ -20,16 +22,30 @@ import com.mashup.presentation.ui.theme.*
  * @created 2023/06/25
  */
 @Composable
+fun SubscribeRoute(
+    onClickBack: () -> Unit,
+    onSaveButtonClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: SubscribeViewModel = hiltViewModel()
+) {
+
+    SubscribeKeywordScreen(
+        modifier = modifier,
+        onClickBack = onClickBack,
+        onSaveButtonClick = onSaveButtonClick
+    )
+}
+@Composable
 fun SubscribeKeywordScreen(
     modifier: Modifier = Modifier,
-    navigateUp: () -> Unit = {},
-    navigateToHome: () -> Unit = {}
+    onClickBack: () -> Unit = {},
+    onSaveButtonClick: () -> Unit = {}
 ) {
     val keywords = remember { mutableStateListOf<String>() }
 
     Column(modifier = Modifier.fillMaxSize()) {
         KeyLinkToolbar(
-            onClickBack = { navigateUp() }
+            onClickBack = onClickBack
         )
         SubscribeKeywordContent(
             modifier = Modifier.weight(1f),
@@ -47,7 +63,7 @@ fun SubscribeKeywordScreen(
                 .fillMaxWidth()
                 .padding(bottom = 12.dp, start = 20.dp, end = 20.dp),
             enable = !keywords.isEmpty(),
-            onClick = { navigateToHome() }
+            onClick = onSaveButtonClick
         )
     }
 }
