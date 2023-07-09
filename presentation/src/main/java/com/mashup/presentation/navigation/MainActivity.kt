@@ -1,22 +1,9 @@
-package com.mashup.presentation.feature.home
+package com.mashup.presentation.navigation
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.mashup.presentation.KeyLinkApp
-import com.mashup.presentation.R
-import com.mashup.presentation.common.base.BaseActivity
-import com.mashup.presentation.common.extension.addBadge
-import com.mashup.presentation.common.extension.removeBadge
 import com.mashup.presentation.common.extension.setThemeContent
-import com.mashup.presentation.databinding.ActivityHomeBinding
-import com.mashup.presentation.ui.theme.SsamDTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -25,6 +12,17 @@ import dagger.hilt.android.AndroidEntryPoint
  * @created 2023/06/03
  */
 @AndroidEntryPoint
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setThemeContent {
+            KeyLinkApp()
+        }
+    }
+}
+
+
 //class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
 //    private val navHostFragment by lazy {
 //        supportFragmentManager.findFragmentById(binding.fcvHome.id) as NavHostFragment
@@ -64,12 +62,3 @@ import dagger.hilt.android.AndroidEntryPoint
 //        navigationItemView.addView(signalItemView)
 //    }
 //}
-class HomeActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setThemeContent {
-            KeyLinkApp()
-        }
-    }
-}
