@@ -23,7 +23,7 @@ import com.mashup.presentation.ui.theme.*
  */
 @Composable
 fun SubscribeRoute(
-    onClickBack: () -> Unit,
+    onBackClick: () -> Unit,
     onSaveButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SubscribeViewModel = hiltViewModel()
@@ -31,21 +31,21 @@ fun SubscribeRoute(
 
     SubscribeKeywordScreen(
         modifier = modifier,
-        onClickBack = onClickBack,
+        onBackClick = onBackClick,
         onSaveButtonClick = onSaveButtonClick
     )
 }
 @Composable
 fun SubscribeKeywordScreen(
     modifier: Modifier = Modifier,
-    onClickBack: () -> Unit = {},
+    onBackClick: () -> Unit = {},
     onSaveButtonClick: () -> Unit = {}
 ) {
     val keywords = remember { mutableStateListOf<String>() }
 
     Column(modifier = Modifier.fillMaxSize()) {
         KeyLinkToolbar(
-            onClickBack = onClickBack
+            onClickBack = onBackClick
         )
         SubscribeKeywordContent(
             modifier = Modifier.weight(1f),
