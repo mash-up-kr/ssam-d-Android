@@ -6,6 +6,8 @@ import androidx.navigation.compose.NavHost
 import com.mashup.presentation.KeyLinkAppState
 import com.mashup.presentation.feature.chat.navigation.chatGraph
 import com.mashup.presentation.feature.home.navigation.homeGraph
+import com.mashup.presentation.feature.home.navigation.navigateToGuideRoute
+import com.mashup.presentation.feature.home.navigation.navigateToSubscribeKeywordRoute
 import com.mashup.presentation.feature.signal.navigation.signalGraph
 
 /**
@@ -18,7 +20,7 @@ fun KeyLinkNavHost(
     appState: KeyLinkAppState,
     onShowSnackbar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
-    startDestination: String = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route
+    startDestination: String = KeyLinkNavigationRoute.HomeGraph.route
 ) {
     val navController = appState.navController
     NavHost(
@@ -26,7 +28,11 @@ fun KeyLinkNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        homeGraph(navController = navController)
+        homeGraph(
+            onSubscribeKeywordClick = navController::navigateToSubscribeKeywordRoute,
+            onGuideClick = navController::navigateToGuideRoute,
+            onClickBack = navController::navigateUp
+        )
         signalGraph()
         chatGraph() {
 
