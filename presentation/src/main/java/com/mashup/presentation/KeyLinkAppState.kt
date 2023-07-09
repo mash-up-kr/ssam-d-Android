@@ -9,6 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.mashup.presentation.feature.home.navigation.navigateToHome
+import com.mashup.presentation.feature.signal.navigation.navigateToSignal
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 import com.mashup.presentation.navigation.TopLevelDestination
 
@@ -46,7 +48,7 @@ class KeyLinkAppState(
 
     @Composable
     fun isBottomBarVisible(): Boolean {
-        return when(currentDestination?.route) {
+        return when (currentDestination?.route) {
             KeyLinkNavigationRoute.HomeGraph.HomeRoute.route,
             KeyLinkNavigationRoute.ChatGraph.ChatRoute.route -> true
             else -> false
@@ -66,7 +68,8 @@ class KeyLinkAppState(
             restoreState = true
         }
         when (topLevelDestination) {
-            TopLevelDestination.HOME -> {}
+            TopLevelDestination.HOME -> navController.navigateToHome(topLevelNavOptions)
+            TopLevelDestination.SIGNAL -> navController.navigateToSignal(topLevelNavOptions)
             else -> {}
         }
     }
