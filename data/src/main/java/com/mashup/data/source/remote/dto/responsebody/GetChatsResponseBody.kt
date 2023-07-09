@@ -4,7 +4,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class GetChatsResponseBody(
-    val id: Int,
+    val id: Long,
     val keywords: List<String>,
     val matchingUserName: String,
     val matchingUserProfileImage: String,
@@ -14,8 +14,8 @@ data class GetChatsResponseBody(
 
 @JsonClass(generateAdapter = true)
 data class ChatResponseBody(
-    val id: Int,
+    val id: Long,
     val content: String,
     val senderName: String,
-    val createdAt: Int
+    val createdAt: Long
 )
