@@ -5,11 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,10 +14,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
+import com.mashup.presentation.feature.chat.ChatViewModel
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.common.KeyLinkToolbar
-import com.mashup.presentation.ui.theme.*
+import com.mashup.presentation.ui.theme.Black
+import com.mashup.presentation.ui.theme.SsamDTheme
+import com.mashup.presentation.ui.theme.White
 
 /**
  * Ssam_D_Android
@@ -28,11 +29,28 @@ import com.mashup.presentation.ui.theme.*
  * @created 2023/07/03
  */
 @Composable
-fun MessageDetailScreen(
+fun MessageDetailRoute(
+    onBackClick: () -> Unit,
+    onReportIconClick: () -> Unit,
+    onReplyButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onUpButtonClick: () -> Unit = {},
-    onMenuClick: () -> Unit = {},
-    onSendReplyClick: () -> Unit = {}
+    viewModel: ChatViewModel = hiltViewModel()
+) {
+
+    MessageDetailScreen(
+        modifier = modifier,
+        onBackClick = onBackClick,
+        onReportIconClick = onReportIconClick,
+        onReplyButtonClick = onReplyButtonClick,
+    )
+}
+
+@Composable
+fun MessageDetailScreen(
+    onBackClick: () -> Unit,
+    onReportIconClick: () -> Unit,
+    onReplyButtonClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val matchedKeywords = listOf("매쉬업", "일상", "디자인", "IT", "취준", "일상", "디자인", "IT", "취준")
 
@@ -41,15 +59,13 @@ fun MessageDetailScreen(
         backgroundColor = Black,
         topBar = {
             KeyLinkToolbar(
-                onClickBack = {
-                    onUpButtonClick()
-                },
+                onClickBack = onBackClick,
                 menuAction = {
                     Icon(
                         modifier = Modifier
                             .padding(end = 20.dp)
                             .clickable {
-                                onMenuClick()
+                                onReportIconClick()
                             },
                         painter = painterResource(id = R.drawable.ic_declare_24),
                         tint = White,
@@ -85,9 +101,7 @@ fun MessageDetailScreen(
             KeyLinkRoundButton(
                 modifier = Modifier.padding(top = 48.dp, bottom = 42.dp),
                 text = stringResource(R.string.button_send_reply),
-                onClick = {
-                    onSendReplyClick()
-                }
+                onClick = onReplyButtonClick
             )
         }
     }
@@ -97,6 +111,10 @@ fun MessageDetailScreen(
 @Composable
 private fun MessageScreenPreview() {
     SsamDTheme {
-        MessageDetailScreen()
+        MessageDetailScreen(
+            onBackClick = {},
+            onReportIconClick = {},
+            onReplyButtonClick = {},
+        )
     }
 }
