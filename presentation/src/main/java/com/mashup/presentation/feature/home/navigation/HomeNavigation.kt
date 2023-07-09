@@ -15,6 +15,12 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
  * @author jaesung
  * @created 2023/07/04
  */
+fun NavController.navigateToHome(navOptions: NavOptions? = null) {
+    navigate(
+        route = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route,
+        navOptions = navOptions
+    )
+}
 fun NavController.navigateToGuideRoute(navOptions: NavOptions? = null) {
     navigate(
         route = KeyLinkNavigationRoute.HomeGraph.GuideRoute.route,

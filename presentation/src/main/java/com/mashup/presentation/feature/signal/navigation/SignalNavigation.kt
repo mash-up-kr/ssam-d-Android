@@ -13,6 +13,12 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
  * @author jaesung
  * @created 2023/07/04
  */
+fun NavController.navigateToSignal(navOptions: NavOptions? = null) {
+    navigate(
+        route = KeyLinkNavigationRoute.SignalGraph.SignalContentRoute.route,
+        navOptions = navOptions
+    )
+}
 fun NavController.navigateToSignalKeyword(navOptions: NavOptions? = null) {
     navigate(
         route = KeyLinkNavigationRoute.SignalGraph.SignalKeywordRoute.route,
