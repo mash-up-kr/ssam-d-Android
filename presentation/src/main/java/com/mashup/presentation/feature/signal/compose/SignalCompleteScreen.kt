@@ -28,9 +28,19 @@ import com.mashup.presentation.ui.theme.SsamDTheme
  * @created 2023/06/24
  */
 @Composable
+fun SignalCompleteRoute(
+    onCloseClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    SignalCompleteScreen(
+        modifier = modifier,
+        onCloseClick = onCloseClick
+    )
+}
+@Composable
 fun SignalCompleteScreen(
+    onCloseClick: () -> Unit,
     modifier: Modifier = Modifier,
-    finishActivity: () -> Unit = {},
 ) {
     val lottieComposition by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.lottie_signal_success)
@@ -41,7 +51,7 @@ fun SignalCompleteScreen(
     )
 
     BackHandler(true) {
-        finishActivity()
+        onCloseClick()
     }
 
     Column(modifier = modifier.fillMaxSize()) {
@@ -59,7 +69,7 @@ fun SignalCompleteScreen(
             backgroundColor = Gray02,
             contentColor = Gray06,
             enable = true,
-            onClick = { finishActivity() }
+            onClick = onCloseClick
         )
     }
 }
@@ -107,6 +117,8 @@ private fun SignalCompleteContent(
 @Composable
 fun SignalCompleteScreenPreview() {
     SsamDTheme {
-        SignalCompleteScreen()
+        SignalCompleteScreen(
+            onCloseClick = {}
+        )
     }
 }

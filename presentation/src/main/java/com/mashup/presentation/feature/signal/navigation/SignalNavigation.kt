@@ -1,10 +1,9 @@
 package com.mashup.presentation.feature.signal.navigation
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
+import androidx.navigation.*
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
+import com.mashup.presentation.feature.home.navigation.navigateToHome
+import com.mashup.presentation.feature.signal.compose.SignalCompleteRoute
 import com.mashup.presentation.feature.signal.compose.SignalContentRoute
 import com.mashup.presentation.feature.signal.compose.SignalKeywordRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
@@ -20,6 +19,7 @@ fun NavController.navigateToSignal(navOptions: NavOptions? = null) {
         navOptions = navOptions
     )
 }
+
 fun NavController.navigateToSignalKeyword(navOptions: NavOptions? = null) {
     navigate(
         route = KeyLinkNavigationRoute.SignalGraph.SignalKeywordRoute.route,
@@ -57,7 +57,15 @@ fun NavGraphBuilder.signalGraph(
         }
 
         composable(route = KeyLinkNavigationRoute.SignalGraph.SignalCompleteRoute.route) {
-            // SignalCompleteRoute
+            SignalCompleteRoute(
+                onCloseClick = {
+                    navController.navigateToHome(
+                        navOptions {
+                            launchSingleTop = true
+                        }
+                    )
+                }
+            )
         }
     }
 }
