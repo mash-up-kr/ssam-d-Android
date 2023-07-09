@@ -16,7 +16,6 @@
             android:id="@+id/action_chat_to_chatDetail"
             app:destination="@id/chatDetailFragment" />
     </fragment>
-    <include app:graph="@navigation/graph_signal" />
     <fragment
         android:id="@+id/chatDetailFragment"
         android:name="com.mashup.presentation.feature.detail.chat.ChatDetailFragment"

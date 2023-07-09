@@ -13,7 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
+import com.mashup.presentation.feature.chat.ChatViewModel
 import com.mashup.presentation.ui.theme.*
 
 /**
@@ -22,12 +24,27 @@ import com.mashup.presentation.ui.theme.*
  * @created 2023/06/27
  */
 @Composable
+fun ChatRoute(
+    onEmptyScreenButtonClick: () -> Unit,
+    onChatClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: ChatViewModel = hiltViewModel()
+) {
+    ChatScreen(
+        modifier = modifier,
+        onEmptyScreenButtonClick = onEmptyScreenButtonClick,
+        onChatClick = onChatClick
+    )
+}
+
+@Composable
 fun ChatScreen(
-    navigateToSendSignal: () -> Unit = {},
-    navigateToChatDetail: () -> Unit = {}
+    onEmptyScreenButtonClick: () -> Unit,
+    onChatClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Scaffold(
-        modifier = Modifier,
+        modifier = modifier,
         backgroundColor = Black,
         topBar = {
             Column {
@@ -51,8 +68,8 @@ fun ChatScreen(
     ) { paddingValues ->
         ChatContent(
             isConnected = true,
-            navigateToSendSignal = { navigateToSendSignal() },
-            navigateToChatDetail = { navigateToChatDetail() },
+            onEmptyScreenButtonClick = onEmptyScreenButtonClick,
+            onChatClick = onChatClick,
             modifier = Modifier.padding(paddingValues)
         )
     }
@@ -61,18 +78,18 @@ fun ChatScreen(
 @Composable
 fun ChatContent(
     isConnected: Boolean,
-    navigateToSendSignal: () -> Unit,
-    navigateToChatDetail: () -> Unit,
+    onEmptyScreenButtonClick: () -> Unit,
+    onChatClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (!isConnected) {
         EmptyChatScreen(
-            onButtonClick = { navigateToSendSignal() },
+            onButtonClick = onEmptyScreenButtonClick,
             modifier = modifier.fillMaxSize(),
         )
     } else {
         ChatListScreen(
-            onMessageClick = { navigateToChatDetail() },
+            onMessageClick = onChatClick,
             modifier = modifier
                 .fillMaxSize()
                 .padding(top = 8.dp)
@@ -84,7 +101,10 @@ fun ChatContent(
 @Composable
 private fun ChatScreenPreview() {
     SsamDTheme(darkTheme = true) {
-        ChatScreen()
+        ChatScreen(
+            onEmptyScreenButtonClick = {},
+            onChatClick = {}
+        )
     }
 }
 

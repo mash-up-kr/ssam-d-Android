@@ -1,8 +1,11 @@
 package com.mashup.presentation.feature.chat.navigation
 
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.mashup.presentation.feature.chat.compose.ChatRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 
 /**
@@ -10,15 +13,27 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
  * @author jaesung
  * @created 2023/07/04
  */
+fun NavController.navigateToChat(navOptions: NavOptions? = null) {
+    navigate(
+        route = KeyLinkNavigationRoute.ChatGraph.ChatRoute.route,
+        navOptions = navOptions
+    )
+}
+
 fun NavGraphBuilder.chatGraph(
-    nestedGraphs: NavGraphBuilder.() -> Unit,
+    nestedGraphs: NavGraphBuilder.() -> Unit = {},
+    onChatClick: () -> Unit,
+    onMessageClick: () -> Unit
 ) {
     navigation(
         route = KeyLinkNavigationRoute.ChatGraph.route,
         startDestination = KeyLinkNavigationRoute.ChatGraph.ChatRoute.route
     ) {
-        composable(route = KeyLinkNavigationRoute.ChatGraph.ChatRoute.route,) {
-            // ChatRoute
+        composable(route = KeyLinkNavigationRoute.ChatGraph.ChatRoute.route) {
+            ChatRoute(
+                onEmptyScreenButtonClick = {},
+                onChatClick = onChatClick
+            )
         }
 
         composable(route = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route) {

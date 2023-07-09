@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.mashup.presentation.feature.chat.navigation.navigateToChat
 import com.mashup.presentation.feature.home.navigation.navigateToHome
 import com.mashup.presentation.feature.signal.navigation.navigateToSignal
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
@@ -70,7 +71,7 @@ class KeyLinkAppState(
         when (topLevelDestination) {
             TopLevelDestination.HOME -> navController.navigateToHome(topLevelNavOptions)
             TopLevelDestination.SIGNAL -> navController.navigateToSignal(topLevelNavOptions)
-            else -> {}
+            TopLevelDestination.CHAT -> navController.navigateToChat(topLevelNavOptions)
         }
     }
 }

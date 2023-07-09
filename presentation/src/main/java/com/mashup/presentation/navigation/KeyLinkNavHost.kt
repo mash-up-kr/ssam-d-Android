@@ -37,8 +37,9 @@ fun KeyLinkNavHost(
             navController = navController,
             onBackClick = navController::navigateUp,
         )
-        chatGraph() {
-
-        }
+        chatGraph(
+            onChatClick = {},
+            onMessageClick = {}
+        )
     }
 }
