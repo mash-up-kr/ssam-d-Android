@@ -1,4 +1,4 @@
-package com.mashup.presentation.feature.home.guide
+package com.mashup.presentation.feature.guide
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,7 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.R
-import com.mashup.presentation.feature.home.guide.model.Alien
+import com.mashup.presentation.feature.guide.model.Alien
 import com.mashup.presentation.ui.common.KeyLinkButton
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.*
