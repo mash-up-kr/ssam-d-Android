@@ -8,6 +8,7 @@ import androidx.navigation.navigation
 import com.mashup.presentation.feature.chat.compose.ChatRoute
 import com.mashup.presentation.feature.detail.chat.compose.ChatDetailRoute
 import com.mashup.presentation.feature.detail.message.compose.MessageDetailRoute
+import com.mashup.presentation.feature.report.ReportRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 
 /**
@@ -18,13 +19,6 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 fun NavController.navigateToChat(navOptions: NavOptions? = null) {
     navigate(
         route = KeyLinkNavigationRoute.ChatGraph.ChatRoute.route,
-        navOptions = navOptions
-    )
-}
-
-fun NavController.navigateToReport(navOptions: NavOptions? = null) {
-    navigate(
-        route = KeyLinkNavigationRoute.ChatGraph.ReportRoute.route,
         navOptions = navOptions
     )
 }
@@ -64,7 +58,9 @@ fun NavGraphBuilder.chatGraph(
         }
 
         composable(route = KeyLinkNavigationRoute.ChatGraph.ReportRoute.route) {
-            // ReportRoute
+            ReportRoute(
+                onBackClick = onBackClick
+            )
         }
         nestedGraphs()  // 채팅 없을 경우 SignalGraph 연결
     }

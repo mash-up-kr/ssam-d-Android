@@ -5,12 +5,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.mashup.presentation.KeyLinkAppState
 import com.mashup.presentation.feature.chat.navigation.chatGraph
-import com.mashup.presentation.feature.chat.navigation.navigateToReport
 import com.mashup.presentation.feature.detail.chat.navigation.navigateToChatDetail
 import com.mashup.presentation.feature.detail.message.navigation.navigateToMessageDetail
 import com.mashup.presentation.feature.home.navigation.homeGraph
 import com.mashup.presentation.feature.home.navigation.navigateToGuideRoute
 import com.mashup.presentation.feature.home.navigation.navigateToSubscribeKeywordRoute
+import com.mashup.presentation.feature.report.navigation.navigateToReport
 import com.mashup.presentation.feature.signal.navigation.signalGraph
 
 /**
