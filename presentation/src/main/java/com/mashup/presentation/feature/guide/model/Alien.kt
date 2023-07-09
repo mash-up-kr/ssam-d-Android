@@ -1,4 +1,4 @@
-package com.mashup.presentation.feature.home.guide.model
+package com.mashup.presentation.feature.guide.model
 
 import androidx.annotation.DrawableRes
 import com.mashup.presentation.R
