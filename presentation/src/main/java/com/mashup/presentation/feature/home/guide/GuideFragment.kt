@@ -9,8 +9,8 @@ import com.mashup.presentation.databinding.FragmentGuideBinding
 class GuideFragment : BaseFragment<FragmentGuideBinding>(R.layout.fragment_guide) {
     override fun initViews() {
         binding.composeView.setThemeContent {
-            PlanetGuideScreen(
-                onBackPressed = { navigateUp() }
+            GuideScreen(
+                onClickBack = { navigateUp() }
             )
         }
     }
