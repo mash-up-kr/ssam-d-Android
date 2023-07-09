@@ -1,5 +1,7 @@
 package com.mashup.data.source.remote.dto.responsebody
 
+import com.mashup.domain.model.Chat
+import com.mashup.domain.model.ChatDetail
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
@@ -10,7 +12,18 @@ data class GetChatsResponseBody(
     val matchingUserProfileImage: String,
     val chatColor: String,
     val chat: ChatResponseBody
-)
+) {
+    fun toDomainModel(): ChatDetail {
+        return ChatDetail(
+            id = id,
+            keywords = keywords,
+            matchingUserName = matchingUserName,
+            matchingUserProfileImage = matchingUserProfileImage,
+            chatColor = chatColor,
+            chat = chat.toDomainModel()
+        )
+    }
+}
 
 @JsonClass(generateAdapter = true)
 data class ChatResponseBody(
@@ -18,4 +31,13 @@ data class ChatResponseBody(
     val content: String,
     val senderName: String,
     val createdAt: Long
-)
+) {
+    fun toDomainModel(): Chat {
+        return Chat(
+            id = id,
+            content = content,
+            senderName = senderName,
+            createdAt = createdAt
+        )
+    }
+}
