@@ -1,5 +1,7 @@
 package com.mashup.presentation.feature.detail.chat.model
 
+import com.mashup.domain.model.ChatDetail
+
 /**
  * Ssam_D_Android
  * @author jaesung
@@ -25,4 +27,13 @@ data class ChatDetailUiModel(
             }
         }
     }
+}
+
+fun ChatDetail.toUiModel(): ChatDetailUiModel {
+    return ChatDetailUiModel(
+        othersProfileImage = matchingUserProfileImage,
+        othersNickName = matchingUserName,
+        matchedKeywords = keywords,
+        chat = chat.map { it.toUiModel(chatColor, matchingUserName) }
+    )
 }

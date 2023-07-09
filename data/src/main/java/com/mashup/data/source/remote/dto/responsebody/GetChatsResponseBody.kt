@@ -11,7 +11,7 @@ data class GetChatsResponseBody(
     val matchingUserName: String,
     val matchingUserProfileImage: String,
     val chatColor: String,
-    val chat: ChatResponseBody
+    val chat: List<ChatResponseBody>
 ) {
     fun toDomainModel(): ChatDetail {
         return ChatDetail(
@@ -20,7 +20,7 @@ data class GetChatsResponseBody(
             matchingUserName = matchingUserName,
             matchingUserProfileImage = matchingUserProfileImage,
             chatColor = chatColor,
-            chat = chat.toDomainModel()
+            chat = chat.map { it.toDomainModel() }
         )
     }
 }

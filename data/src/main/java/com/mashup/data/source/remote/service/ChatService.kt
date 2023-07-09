@@ -10,7 +10,7 @@ interface ChatService {
 
     @GET("rooms/{id}/chats")
     suspend fun getChats(
-        @Path("id") id: Int
+        @Path("id") id: Long
     ): BaseResponse<GetChatsResponseBody>
 
     @GET("rooms/{roomId}/chats/{chatId}")

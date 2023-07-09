@@ -6,7 +6,7 @@ data class ChatDetail(
     val matchingUserName: String,
     val matchingUserProfileImage: String,
     val chatColor: String,
-    val chat: Chat
+    val chat: List<Chat>
 )
 
 data class Chat(
