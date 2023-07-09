@@ -24,6 +24,7 @@ object Dep {
             const val process = "androidx.lifecycle:lifecycle-process:$version"
             const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
             const val compiler = "androidx.lifecycle:lifecycle-compiler:$version"
+            const val compose = "androidx.lifecycle:lifecycle-runtime-compose:$version"
 
             object Compose {
                 const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:$version"
@@ -68,6 +69,11 @@ object Dep {
             const val gradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
             const val hilt = "com.google.dagger:hilt-android:$version"
             const val compiler = "com.google.dagger:hilt-android-compiler:$version"
+
+            object Compose {
+                const val version = "1.0.0"
+                const val navigation = "androidx.hilt:hilt-navigation-compose:$version"
+            }
         }
     }
 
