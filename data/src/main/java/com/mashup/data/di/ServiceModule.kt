@@ -1,5 +1,6 @@
 package com.mashup.data.di
 
+import com.mashup.data.source.remote.service.ChatService
 import com.mashup.data.source.remote.service.LoginService
 import com.mashup.data.source.remote.service.OnboardingService
 import dagger.Module
@@ -7,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -22,4 +24,9 @@ class ServiceModule {
     @Singleton
     fun provideOnboardingService(retrofit: Retrofit): OnboardingService =
         retrofit.create(OnboardingService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideChatService(retrofit: Retrofit): ChatService =
+        retrofit.create(ChatService::class.java)
 }

@@ -1,7 +1,9 @@
 package com.mashup.data.di
 
+import com.mashup.data.repository.ChatRepositoryImpl
 import com.mashup.data.repository.LoginRepositoryImpl
 import com.mashup.data.repository.OnboardingRepositoryImpl
+import com.mashup.domain.repository.ChatRepository
 import com.mashup.domain.repository.LoginRepository
 import com.mashup.domain.repository.OnboardingRepository
 import dagger.Binds
@@ -21,4 +23,8 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun bindOnboardingRepository(onboardingRepository: OnboardingRepositoryImpl): OnboardingRepository
+
+    @Binds
+    @Singleton
+    fun bindChatRepository(chatRepository: ChatRepositoryImpl): ChatRepository
 }
