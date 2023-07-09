@@ -6,9 +6,9 @@ import javax.inject.Inject
 
 class GetChatsUseCase @Inject constructor(
     private val chatRepository: ChatRepository
-): BaseUseCase<Int, Result<ChatDetail>>() {
+): BaseUseCase<Long, Result<ChatDetail>>() {
 
-    override suspend fun invoke(param: Int): Result<ChatDetail> {
+    override suspend fun invoke(param: Long): Result<ChatDetail> {
         return runCatching {
             chatRepository.getChatRooms(param)
         }
