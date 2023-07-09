@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.mashup.presentation.feature.home.HomeRoute
 import com.mashup.presentation.feature.guide.GuideRoute
-import com.mashup.presentation.feature.home.SubscribeRoute
+import com.mashup.presentation.feature.subscribe.SubscribeRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 
 /**

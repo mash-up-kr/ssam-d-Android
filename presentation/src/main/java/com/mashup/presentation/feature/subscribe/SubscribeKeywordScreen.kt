@@ -1,4 +1,4 @@
-package com.mashup.presentation.feature.home
+package com.mashup.presentation.feature.subscribe
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
-import com.mashup.presentation.feature.subscribe.SubscribeViewModel
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.*
 
