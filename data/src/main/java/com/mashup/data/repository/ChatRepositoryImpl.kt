@@ -9,9 +9,14 @@ import javax.inject.Inject
 
 class ChatRepositoryImpl @Inject constructor(
     private val remoteChatDataSource: RemoteChatDataSource
-): ChatRepository {
-    override fun getChatDetail(roomId: Long, chatId: Long): Flow<ChatDetail>  = flow{
-        val result =  runCatching {
+) : ChatRepository {
+
+    override suspend fun getChatRooms() {
+        remoteChatDataSource.getChatRooms()
+    }
+
+    override fun getChatDetail(roomId: Long, chatId: Long): Flow<ChatDetail> = flow{
+        val result = runCatching {
             remoteChatDataSource.getChatDetail(roomId, chatId).toDomainModel()
         }.getOrThrow()
         emit(result)
