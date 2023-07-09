@@ -21,6 +21,7 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
         navOptions = navOptions
     )
 }
+
 fun NavController.navigateToGuideRoute(navOptions: NavOptions? = null) {
     navigate(
         route = KeyLinkNavigationRoute.HomeGraph.GuideRoute.route,
