@@ -90,14 +90,12 @@ fun ChatDetailContent(
         MatchedKeywords(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp),
-            matchedKeywords = chatDetailState.matchedKeywords
+                .padding(horizontal = 20.dp, vertical = 16.dp),
+            matchedKeywords = chatDetailState.getMatchedKeywordSummery()
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
-
         ChatContent(
-            modifier = Modifier.padding(horizontal = 20.dp),
+            modifier = Modifier.padding(horizontal = 20.dp, vertical=8.dp),
             chat = chatDetailState.chat,
             onChatItemClick = { onChatItemClick() }
         )
