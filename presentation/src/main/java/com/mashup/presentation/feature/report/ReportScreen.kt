@@ -26,14 +26,28 @@ import com.mashup.presentation.ui.theme.*
  * @created 2023/07/01
  */
 @Composable
+fun ReportRoute(
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    ReportScreen(
+        modifier = modifier,
+        onBackClick = onBackClick
+    )
+}
+
+@Composable
 fun ReportScreen(
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
         modifier = modifier,
         backgroundColor = Black,
         topBar = {
-            KeyLinkToolbar()
+            KeyLinkToolbar(
+                onClickBack = onBackClick
+            )
         }
     ) { paddingValues ->
         Column(
@@ -112,6 +126,6 @@ fun ReportHeader(
 @Composable
 private fun ReportScreenPreview() {
     SsamDTheme {
-        ReportScreen()
+        ReportScreen(onBackClick = {})
     }
 }
