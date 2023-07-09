@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -28,8 +29,10 @@ class ChatViewModel @Inject constructor(
         viewModelScope.launch {
             getChatsUseCase.execute(id)
                 .onSuccess { chatDetail ->
+                    Timber.i("채팅 상세 get 성공~!")
                     _chatDetailUiState.emit(ChatDetailUiState.Success(chatDetail.toUiModel()))
                 }.onFailure {
+                    Timber.e("채팅 상세 get 실패.")
                     _chatDetailUiState.emit(ChatDetailUiState.Failure(it.message))
                 }
         }
