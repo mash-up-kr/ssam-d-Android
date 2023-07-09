@@ -29,9 +29,20 @@ import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.*
 
 @Composable
-fun PlanetGuideScreen(
+fun GuideRoute(
     modifier: Modifier = Modifier,
-    onBackPressed: () -> Unit = {}
+    onClickBack: () -> Unit
+) {
+    GuideScreen(
+        modifier = modifier,
+        onClickBack = onClickBack
+    )
+}
+
+@Composable
+fun GuideScreen(
+    modifier: Modifier = Modifier,
+    onClickBack: () -> Unit = {}
 ) {
     Scaffold {
         Image(
@@ -47,7 +58,7 @@ fun PlanetGuideScreen(
         ) {
             KeyLinkToolbar(
                 backgroundColor = Color.Transparent,
-                onClickBack = { onBackPressed() }
+                onClickBack = onClickBack
             )
             Column(
                 modifier = modifier
@@ -200,6 +211,6 @@ fun PlanetGuideFooter() {
 
 @Preview
 @Composable
-fun PreviewGuideScreen() {
-    PlanetGuideScreen()
+fun GuideScreenPreview() {
+    GuideScreen()
 }
