@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.mashup.presentation.feature.home.HomeRoute
 import com.mashup.presentation.feature.guide.GuideRoute
+import com.mashup.presentation.feature.home.SubscribeRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 
 /**
@@ -56,7 +57,10 @@ fun NavGraphBuilder.homeGraph(
             )
         }
         composable(route = KeyLinkNavigationRoute.HomeGraph.SubscribeKeywordRoute.route) {
-
+            SubscribeRoute(
+                onClickBack = onClickBack,
+                onSaveButtonClick = onClickBack
+            )
         }
         composable(route = KeyLinkNavigationRoute.HomeGraph.ProfileRoute.route) {
             // ProfileRoute
