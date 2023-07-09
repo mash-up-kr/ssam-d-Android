@@ -13,6 +13,19 @@ import com.mashup.presentation.feature.detail.chat.model.MessageUiModel
  * API 연결 시 UiState (Success / Failed / Loading ..) 추가해야 합니당
  * 임시로 만들어놓은 파일
  */
+
+sealed class ChatDetailUiState {
+    object Loading : ChatDetailUiState()
+
+    data class Success(
+        val chatDetailUiModel: ChatDetailUiModel
+    ) : ChatDetailUiState()
+
+    data class Failure(
+        val message: String?
+    ) : ChatDetailUiState()
+}
+
 val ProvideChatDetailState = ChatDetailUiModel(
     othersProfileImage = "https://github-production-user-asset-6210df.s3.amazonaws.com/51078673/249568892-2120a1d4-58c3-4fbd-a8d7-f1e01571a0e6.png",
     othersNickName = "슈퍼니카",

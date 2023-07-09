@@ -3,7 +3,11 @@ package com.mashup.presentation.feature.chat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.domain.usecase.GetChatsUseCase
+import com.mashup.presentation.detail.chat.compose.ChatDetailUiState
+import com.mashup.presentation.detail.chat.model.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,11 +21,17 @@ class ChatViewModel @Inject constructor(
     private val getChatsUseCase: GetChatsUseCase
 ): ViewModel() {
 
-    fun getChats(id: Int) {
+    private val _chatDetailUiState: MutableStateFlow<ChatDetailUiState> = MutableStateFlow(ChatDetailUiState.Loading)
+    val chatDetailUiState = _chatDetailUiState.asStateFlow()
+
+    fun getChats(id: Long) {
         viewModelScope.launch {
             getChatsUseCase.execute(id)
-                .onSuccess {  }
-                .onFailure {  }
+                .onSuccess { chatDetail ->
+                    _chatDetailUiState.emit(ChatDetailUiState.Success(chatDetail.toUiModel()))
+                }.onFailure {
+                    _chatDetailUiState.emit(ChatDetailUiState.Failure(it.message))
+                }
         }
     }
 }

@@ -8,7 +8,7 @@ class RemoteChatDataSource @Inject constructor(
     private val chatService: ChatService
 ){
 
-    suspend fun getChats(id: Int): GetChatsResponseBody {
+    suspend fun getChats(id: Long): GetChatsResponseBody {
         val response = chatService.getChats(id)
         return response.data ?: throw Exception(response.message)
     }
