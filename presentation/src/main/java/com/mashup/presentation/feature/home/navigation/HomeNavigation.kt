@@ -47,10 +47,11 @@ fun NavGraphBuilder.homeGraph(
     onSubscribeKeywordClick: () -> Unit,
     onGuideClick: () -> Unit,
     onBackClick: () -> Unit,
+    nestedGraphs: NavGraphBuilder.() -> Unit,
 ) {
     navigation(
         route = KeyLinkNavigationRoute.HomeGraph.route,
-        startDestination = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route
+        startDestination = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route,
     ) {
         composable(route = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route) {
             HomeRoute(
@@ -72,6 +73,7 @@ fun NavGraphBuilder.homeGraph(
         composable(route = KeyLinkNavigationRoute.HomeGraph.ProfileRoute.route) {
             // ProfileRoute
         }
+        nestedGraphs()
     }
 
 }
