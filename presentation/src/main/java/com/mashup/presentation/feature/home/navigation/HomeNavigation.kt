@@ -21,35 +21,16 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
         navOptions = navOptions
     )
 }
-fun NavController.navigateToGuideRoute(navOptions: NavOptions? = null) {
-    navigate(
-        route = KeyLinkNavigationRoute.HomeGraph.GuideRoute.route,
-        navOptions = navOptions
-    )
-}
-
-fun NavController.navigateToSubscribeKeywordRoute(navOptions: NavOptions? = null) {
-    navigate(
-        route = KeyLinkNavigationRoute.HomeGraph.SubscribeKeywordRoute.route,
-        navOptions = navOptions
-    )
-}
-
-fun NavController.navigateToProfileRoute(navOptions: NavOptions? = null) {
-    navigate(
-        route = KeyLinkNavigationRoute.HomeGraph.ProfileRoute.route,
-        navOptions = navOptions
-    )
-}
 
 fun NavGraphBuilder.homeGraph(
     onSubscribeKeywordClick: () -> Unit,
     onGuideClick: () -> Unit,
     onBackClick: () -> Unit,
+    nestedGraphs: NavGraphBuilder.() -> Unit,
 ) {
     navigation(
         route = KeyLinkNavigationRoute.HomeGraph.route,
-        startDestination = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route
+        startDestination = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route,
     ) {
         composable(route = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route) {
             HomeRoute(
@@ -71,6 +52,7 @@ fun NavGraphBuilder.homeGraph(
         composable(route = KeyLinkNavigationRoute.HomeGraph.ProfileRoute.route) {
             // ProfileRoute
         }
+        nestedGraphs()
     }
 
 }
