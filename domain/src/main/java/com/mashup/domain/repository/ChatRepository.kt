@@ -2,5 +2,5 @@ package com.mashup.domain.repository
 
 interface ChatRepository {
 
-    suspend fun getChatRooms()
+    suspend fun getChatRooms(id: Int)
 }

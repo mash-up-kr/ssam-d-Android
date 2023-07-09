@@ -3,13 +3,13 @@ package com.mashup.domain.usecase
 import com.mashup.domain.repository.ChatRepository
 import javax.inject.Inject
 
-class GetChatRoomsUseCase @Inject constructor(
+class GetChatsUseCase @Inject constructor(
     private val chatRepository: ChatRepository
-): BaseUseCase<Unit, Result<Unit>>() {
+): BaseUseCase<Int, Result<Unit>>() {
 
-    override suspend fun invoke(param: Unit): Result<Unit> {
+    override suspend fun invoke(param: Int): Result<Unit> {
         return runCatching {
-            chatRepository.getChatRooms()
+            chatRepository.getChatRooms(param)
         }
     }
 }
