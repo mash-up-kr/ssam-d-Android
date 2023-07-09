@@ -15,6 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.*
@@ -31,31 +33,41 @@ import kotlinx.coroutines.launch
 @Composable
 fun OnBoardingScreen(
     modifier: Modifier = Modifier,
-    navigateToNotificationPermission: () -> Unit
+    navigateToNotificationPermission: () -> Unit,
+    viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val viewModel: OnBoardingViewModel = viewModel()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(modifier = modifier.fillMaxSize()) {
         KeyLinkToolbar(
             onClickBack = {}
         )
-        OnBoardingContent(
-            modifier,
-            keywords = viewModel.keywords,
-            addKeyword = viewModel::addKeyword,
-            removeKeyword = viewModel::removeKeyword,
-            saveKeywords = viewModel::saveKeywords,
-            navigateToNotificationPermission = navigateToNotificationPermission,
-            coroutineScope = coroutineScope
-        )
+        when (uiState) {
+            OnBoardingViewModel.UiState.Loading -> Unit  // TODO: 로딩 프로그레스 바 돌리기
+            OnBoardingViewModel.UiState.SaveSuccess -> {
+                navigateToNotificationPermission()
+            }
+            is OnBoardingViewModel.UiState.Editing -> {
+                OnBoardingContent(
+                    modifier,
+                    keywords = (uiState as OnBoardingViewModel.UiState.Editing).keywords,
+                    addKeyword = viewModel::addKeyword,
+                    removeKeyword = viewModel::removeKeyword,
+                    saveKeywords = viewModel::saveKeywords,
+                )
+            }
+            is OnBoardingViewModel.UiState.SaveFailed -> {
+                // TODO: show error Snackbar
+            }
+        }
     }
 
-    LaunchedEffect(key1 = viewModel.uiEvent) {
+    LaunchedEffect(key1 = uiState) {
         coroutineScope.launch {
-            viewModel.uiEvent.collectLatest {
+            viewModel.uiState.collectLatest {
                 when (it) {
-                    is OnBoardingViewModel.UiEvent.SuccessSave -> {
+                    is OnBoardingViewModel.UiState.SaveSuccess -> {
                         navigateToNotificationPermission()
                     }
                     else -> {}
@@ -68,12 +80,10 @@ fun OnBoardingScreen(
 @Composable
 fun OnBoardingContent(
     modifier: Modifier,
-    keywords: MutableList<String>,
+    keywords: List<String>,
     addKeyword: (String) -> Unit,
     removeKeyword: (Int) -> Unit,
-    saveKeywords: suspend (List<String>) -> Unit,
-    navigateToNotificationPermission: () -> Unit,
-    coroutineScope: CoroutineScope
+    saveKeywords: (List<String>) -> Unit,
 ) {
 
     Column(
@@ -95,9 +105,7 @@ fun OnBoardingContent(
                 .padding(vertical = 12.dp),
             text = stringResource(id = R.string.onboarding_keywords_complete),
             onClick = {
-                coroutineScope.launch {
-                    saveKeywords(keywords)
-                }
+                saveKeywords(keywords)
             },
             enable = keywords.isNotEmpty()
         )
@@ -134,7 +142,7 @@ fun NicknameScreen() {
 @Composable
 fun KeywordScreen(
     modifier: Modifier,
-    keywords: MutableList<String>,
+    keywords: List<String>,
     onKeywordAdd: (String) -> Unit,
     onKeywordDelete: (Int) -> Unit
 ) {
