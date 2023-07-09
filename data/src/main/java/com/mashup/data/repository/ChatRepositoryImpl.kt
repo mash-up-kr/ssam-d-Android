@@ -12,7 +12,7 @@ class ChatRepositoryImpl @Inject constructor(
 ) : ChatRepository {
 
     override suspend fun getChatRooms(id: Int) {
-        remoteChatDataSource.getChats(id)
+        return remoteChatDataSource.getChats(id).toDomainModel()
     }
 
     override fun getChatDetail(roomId: Long, chatId: Long): Flow<ChatDetail> = flow{
