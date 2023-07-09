@@ -31,18 +31,18 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun GuideRoute(
     modifier: Modifier = Modifier,
-    onClickBack: () -> Unit
+    onBackClick: () -> Unit
 ) {
     GuideScreen(
         modifier = modifier,
-        onClickBack = onClickBack
+        onBackClick = onBackClick
     )
 }
 
 @Composable
 fun GuideScreen(
     modifier: Modifier = Modifier,
-    onClickBack: () -> Unit = {}
+    onBackClick: () -> Unit = {}
 ) {
     Scaffold {
         Image(
@@ -58,7 +58,7 @@ fun GuideScreen(
         ) {
             KeyLinkToolbar(
                 backgroundColor = Color.Transparent,
-                onClickBack = onClickBack
+                onClickBack = onBackClick
             )
             Column(
                 modifier = modifier
