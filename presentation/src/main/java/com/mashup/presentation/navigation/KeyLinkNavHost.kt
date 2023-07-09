@@ -31,7 +31,7 @@ fun KeyLinkNavHost(
         homeGraph(
             onSubscribeKeywordClick = navController::navigateToSubscribeKeywordRoute,
             onGuideClick = navController::navigateToGuideRoute,
-            onClickBack = navController::navigateUp
+            onBackClick = navController::navigateUp
         )
         signalGraph()
         chatGraph() {

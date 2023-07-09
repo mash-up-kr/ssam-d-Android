@@ -39,7 +39,7 @@ fun NavController.navigateToProfileRoute(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.homeGraph(
     onSubscribeKeywordClick: () -> Unit,
     onGuideClick: () -> Unit,
-    onClickBack: () -> Unit,
+    onBackClick: () -> Unit,
 ) {
     navigation(
         route = KeyLinkNavigationRoute.HomeGraph.route,
@@ -53,13 +53,13 @@ fun NavGraphBuilder.homeGraph(
         }
         composable(route = KeyLinkNavigationRoute.HomeGraph.GuideRoute.route) {
             GuideRoute(
-                onClickBack = onClickBack
+                onBackClick = onBackClick
             )
         }
         composable(route = KeyLinkNavigationRoute.HomeGraph.SubscribeKeywordRoute.route) {
             SubscribeRoute(
-                onClickBack = onClickBack,
-                onSaveButtonClick = onClickBack
+                onBackClick = onBackClick,
+                onSaveButtonClick = onBackClick
             )
         }
         composable(route = KeyLinkNavigationRoute.HomeGraph.ProfileRoute.route) {
