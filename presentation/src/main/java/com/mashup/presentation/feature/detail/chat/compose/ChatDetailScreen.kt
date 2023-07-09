@@ -6,6 +6,8 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -26,6 +28,7 @@ import kotlinx.coroutines.launch
  * @author jaesung
  * @created 2023/06/28
  */
+
 @Composable
 fun ChatDetailRoute(
     onBackClick: () -> Unit,
@@ -34,22 +37,29 @@ fun ChatDetailRoute(
     modifier: Modifier = Modifier,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
-
-    ChatDetailScreen(
-        modifier = modifier,
-        onBackClick = onBackClick,
-        onMessageClick = onMessageClick,
-        onReportClick = onReportClick
-    )
+    when (val chatDetailUiState = viewModel.chatDetailUiState.collectAsState().value) {
+        is ChatDetailUiState.Loading -> {}
+        is ChatDetailUiState.Success -> {
+            ChatDetailScreen(
+                modifier = modifier,
+                onBackClick = onBackClick,
+                onMessageClick = onMessageClick,
+                onReportClick = onReportClick,
+                chatDetailUiState = chatDetailUiState
+            )
+        }
+        is ChatDetailUiState.Failure -> {}
+    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ChatDetailScreen(
+    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onMessageClick: () -> Unit,
     onReportClick: () -> Unit,
-    modifier: Modifier = Modifier
+    chatDetailUiState: ChatDetailUiState.Success
 ) {
     val coroutineScope = rememberCoroutineScope()
     var currentBottomSheetType by remember { mutableStateOf(BottomSheetType.MORE) }
@@ -129,7 +139,7 @@ fun ChatDetailScreen(
         ) { paddingValues ->
             ChatDetailContent(
                 modifier = Modifier.padding(paddingValues),
-                chatDetailState = ProvideChatDetailState,
+                chatDetailState = chatDetailUiState.chatDetailUiModel,
                 onChatItemClick = onMessageClick,
                 keywordBottomSheetState = keywordBottomSheetState,
                 onChangeBottomSheetType = { currentBottomSheetType = it },
@@ -202,7 +212,7 @@ fun ChatDetailContent(
 @Composable
 private fun ChatDetailScreenPreview() {
     SsamDTheme {
-        ChatDetailScreen(onBackClick = {}, onMessageClick = {}, onReportClick = {})
+        // ChatDetailScreen(onBackClick = {}, onMessageClick = {}, onReportClick = {})
     }
 }
 

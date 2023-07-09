@@ -9,10 +9,6 @@ import com.mashup.presentation.feature.detail.chat.model.MessageUiModel
  * @author jaesung
  * @created 2023/06/29
  */
-/**
- * API 연결 시 UiState (Success / Failed / Loading ..) 추가해야 합니당
- * 임시로 만들어놓은 파일
- */
 
 sealed class ChatDetailUiState {
     object Loading : ChatDetailUiState()
