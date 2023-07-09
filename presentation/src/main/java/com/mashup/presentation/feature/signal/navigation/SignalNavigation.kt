@@ -6,6 +6,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.mashup.presentation.feature.signal.compose.SignalContentRoute
+import com.mashup.presentation.feature.signal.compose.SignalKeywordRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 
 /**
@@ -49,7 +50,10 @@ fun NavGraphBuilder.signalGraph(
         }
 
         composable(route = KeyLinkNavigationRoute.SignalGraph.SignalKeywordRoute.route) {
-            // SignalKeywordRoute
+            SignalKeywordRoute(
+                onBackClick = onBackClick,
+                onSendClick = navController::navigateToSignalComplete
+            )
         }
 
         composable(route = KeyLinkNavigationRoute.SignalGraph.SignalCompleteRoute.route) {

@@ -13,7 +13,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
+import com.mashup.presentation.feature.signal.SignalViewModel
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.Gray06
 import com.mashup.presentation.ui.theme.SsamDTheme
@@ -25,11 +27,28 @@ import com.mashup.presentation.ui.theme.White
  * @created 2023/06/21
  */
 @Composable
+fun SignalKeywordRoute(
+    onBackClick: () -> Unit,
+    onSendClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: SignalViewModel = hiltViewModel()
+) {
+
+    SignalKeywordScreen(
+        modifier = modifier,
+        isLoading = false,
+        onDialogBackClick = onBackClick,
+        onSendClick = onSendClick
+    )
+
+}
+
+@Composable
 fun SignalKeywordScreen(
     isLoading: Boolean,
+    onDialogBackClick: () -> Unit,
+    onSendClick: () -> Unit,
     modifier: Modifier = Modifier,
-    navigateUp: () -> Unit = {},
-    navigateToComplete: () -> Unit = {}
 ) {
     val keywords = remember { mutableStateListOf<String>() }
     var showGoBackDialog by remember { mutableStateOf(false) }
@@ -67,14 +86,14 @@ fun SignalKeywordScreen(
                 .padding(bottom = 48.dp, start = 20.dp, end = 20.dp),
             text = stringResource(R.string.button_send_signal),
             enable = !(isLoading || keywords.isEmpty()),
-            onClick = { navigateToComplete() }
+            onClick = onSendClick
         )
     }
 
     if (showGoBackDialog) {
         KeyLinkGoBackDialog(
             onDismissRequest = { },
-            onGoBackClick = { navigateUp() },
+            onGoBackClick = onDialogBackClick,
             onCloseClick = { showGoBackDialog = false }
         )
     }
@@ -160,7 +179,11 @@ fun SignalKeyword(
 @Composable
 fun SignalKeywordLoadingScreenPreview() {
     SsamDTheme {
-        SignalKeywordScreen(isLoading = true)
+        SignalKeywordScreen(
+            isLoading = true,
+            onDialogBackClick = {},
+            onSendClick = {},
+        )
     }
 }
 
@@ -168,6 +191,10 @@ fun SignalKeywordLoadingScreenPreview() {
 @Composable
 fun SignalKeywordScreenPreview() {
     SsamDTheme {
-        SignalKeywordScreen(isLoading = false)
+        SignalKeywordScreen(
+            isLoading = false,
+            onDialogBackClick = {},
+            onSendClick = {},
+        )
     }
 }

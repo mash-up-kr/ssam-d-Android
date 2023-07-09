@@ -8,7 +8,6 @@ import com.mashup.presentation.feature.chat.navigation.chatGraph
 import com.mashup.presentation.feature.home.navigation.homeGraph
 import com.mashup.presentation.feature.home.navigation.navigateToGuideRoute
 import com.mashup.presentation.feature.home.navigation.navigateToSubscribeKeywordRoute
-import com.mashup.presentation.feature.signal.navigation.navigateToSignalKeyword
 import com.mashup.presentation.feature.signal.navigation.signalGraph
 
 /**
