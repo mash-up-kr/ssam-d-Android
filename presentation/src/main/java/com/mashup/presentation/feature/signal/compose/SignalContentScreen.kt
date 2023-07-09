@@ -19,7 +19,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
+import com.mashup.presentation.feature.signal.SignalViewModel
 import com.mashup.presentation.ui.common.KeyLinkButton
 import com.mashup.presentation.ui.common.KeyLinkContentLengthDialog
 import com.mashup.presentation.ui.common.KeyLinkTextField
@@ -33,10 +35,23 @@ import com.mashup.presentation.ui.theme.White
  * @created 2023/06/20
  */
 @Composable
+fun SignalContentRoute(
+    onBackClick: () -> Unit,
+    onNextClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: SignalViewModel = hiltViewModel()
+) {
+    SignalContentScreen(
+        modifier = modifier,
+        onBackClick = onBackClick,
+        onNextClick = onNextClick
+    )
+}
+@Composable
 fun SignalContentScreen(
     modifier: Modifier = Modifier,
-    navigateToSignalKeyword: () -> Unit = {},
-    navigateUp: () -> Unit = {}
+    onNextClick: () -> Unit = {},
+    onBackClick: () -> Unit = {}
 ) {
     var dialogState by rememberSaveable { mutableStateOf(false) }
 
@@ -52,11 +67,11 @@ fun SignalContentScreen(
                     )
                 )
             },
-            onClickBack = navigateUp
+            onClickBack = onBackClick
         )
         SignalContent(
             modifier = modifier,
-            onNavigate = navigateToSignalKeyword,
+            onNextClick = onNextClick,
             onLengthOver = { dialogState = true }
         )
 
@@ -72,7 +87,7 @@ fun SignalContentScreen(
 @Composable
 fun SignalContent(
     modifier: Modifier = Modifier,
-    onNavigate: () -> Unit,
+    onNextClick: () -> Unit,
     onLengthOver: () -> Unit,
 ) {
     var text by rememberSaveable { mutableStateOf("") }
@@ -104,7 +119,7 @@ fun SignalContent(
                 .padding(vertical = 12.dp, horizontal = 20.dp)
                 .padding(bottom = 48.dp),
             text = stringResource(id = R.string.next),
-            onClick = { onNavigate() },
+            onClick = onNextClick,
             enable = text.isNotEmpty()
         )
     }
