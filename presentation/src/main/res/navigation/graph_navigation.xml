@@ -5,6 +5,5 @@
     app:startDestination="@id/navigation_home">
 
     <include app:graph="@navigation/graph_home" />
-    <include app:graph="@navigation/graph_signal" />
     <include app:graph="@navigation/graph_chat" />
 </navigation>
