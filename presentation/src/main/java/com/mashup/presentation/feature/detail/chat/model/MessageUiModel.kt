@@ -33,11 +33,19 @@ enum class MessageBackgroundColor(
 }
 
 fun Chat.toUiModel(chatColor: String, matchingUserName: String): MessageUiModel {
+    val isMine = matchingUserName != senderName
     return MessageUiModel(
         message = content,
         userName = senderName,
         date = createdAt.toString(),
-        isMine = matchingUserName != senderName,
-        backgroundColor = null
+        isMine = isMine,
+        backgroundColor = if (!isMine) getStringToEnumColor(chatColor) else null
     )
+}
+
+private fun getStringToEnumColor(color: String): MessageBackgroundColor? {
+    MessageBackgroundColor.values().forEach {
+        if (MessageBackgroundColor.valueOf(color) == it) return it
+    }
+    return null
 }
