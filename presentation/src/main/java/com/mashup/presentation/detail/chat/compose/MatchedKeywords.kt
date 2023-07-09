@@ -24,8 +24,8 @@ fun MatchedKeywords(
     modifier: Modifier = Modifier,
 ) {
     LazyRow(
-        modifier = modifier.padding(bottom = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally)
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Start
     ) {
         items(matchedKeywords) { keyword ->
             KeywordChip(keyword = keyword)
