@@ -61,6 +61,9 @@ fun NavGraphBuilder.signalGraph(
                 onCloseClick = {
                     navController.navigateToHome(
                         navOptions {
+                            popUpTo(KeyLinkNavigationRoute.SignalGraph.SignalContentRoute.route) {
+                                inclusive = true
+                            }
                             launchSingleTop = true
                         }
                     )
