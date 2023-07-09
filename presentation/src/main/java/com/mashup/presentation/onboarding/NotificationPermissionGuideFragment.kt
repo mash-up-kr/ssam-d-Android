@@ -15,6 +15,7 @@ import com.mashup.presentation.common.extension.makeSnackBar
 import com.mashup.presentation.databinding.FragmentNotificationPermissionGuideBinding
 import com.mashup.presentation.ui.common.KeyLinkMintText
 import com.mashup.presentation.common.extension.setThemeContent
+import com.mashup.presentation.databinding.FragmentNotificationPermissionGuideComposeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -24,8 +25,8 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class NotificationPermissionGuideFragment :
-    BaseFragment<FragmentNotificationPermissionGuideBinding>(
-        R.layout.fragment_notification_permission_guide
+    BaseFragment<FragmentNotificationPermissionGuideComposeBinding>(
+        R.layout.fragment_notification_permission_guide_compose
     ) {
 
     private val requestNotificationPermissionLauncher =
@@ -38,16 +39,31 @@ class NotificationPermissionGuideFragment :
         }
 
     override fun initViews() {
-        binding.cpvTitle.setThemeContent {
-            KeyLinkMintText(
-                text = "내 행성으로 온 시그널을\n놓치지 않고 받아볼까요?",
-                modifier = Modifier
+        binding.composeView.setThemeContent {
+            NotificationPermissionScreen(
+                modifier = Modifier,
+                navigateToHome = {
+                    // TODO: home navigation
+                },
+                requestNotificationPermission = ::requestNotificationPermission
             )
         }
+    }
 
-        binding.btnAllow.setOnClickListener {
-            requestNotificationPermission()
-        }
+    /**
+     * 만약 xml살릴거라면 주석을 지우고 composeView 세팅을 없애세요.
+     */
+    private fun ifUseXml() {
+//        binding.cpvTitle.setThemeContent {
+//            KeyLinkMintText(
+//                text = "내 행성으로 온 시그널을\n놓치지 않고 받아볼까요?",
+//                modifier = Modifier
+//            )
+//        }
+//
+//        binding.btnAllow.setOnClickListener {
+//            requestNotificationPermission()
+//        }
     }
 
     private fun requestNotificationPermission() {
