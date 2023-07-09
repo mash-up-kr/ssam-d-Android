@@ -21,7 +21,7 @@ fun NavController.navigateToGuideRoute(navOptions: NavOptions? = null) {
     )
 }
 
-fun NavController.navigateToEditKeywordRoute(navOptions: NavOptions? = null) {
+fun NavController.navigateToSubscribeKeywordRoute(navOptions: NavOptions? = null) {
     navigate(
         route = KeyLinkNavigationRoute.HomeGraph.SubscribeKeywordRoute.route,
         navOptions = navOptions
@@ -51,7 +51,9 @@ fun NavGraphBuilder.homeGraph(
             )
         }
         composable(route = KeyLinkNavigationRoute.HomeGraph.GuideRoute.route) {
-            // GuideRoute
+            GuideRoute(
+                onClickBack = onClickBack
+            )
         }
         composable(route = KeyLinkNavigationRoute.HomeGraph.SubscribeKeywordRoute.route) {
             // SubscribeKeywordRoute
