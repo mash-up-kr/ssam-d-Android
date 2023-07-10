@@ -12,10 +12,9 @@ import androidx.core.content.ContextCompat
 import com.mashup.presentation.R
 import com.mashup.presentation.common.base.BaseFragment
 import com.mashup.presentation.common.extension.makeSnackBar
-import com.mashup.presentation.databinding.FragmentNotificationPermissionGuideBinding
-import com.mashup.presentation.ui.common.KeyLinkMintText
 import com.mashup.presentation.common.extension.setThemeContent
 import com.mashup.presentation.databinding.FragmentNotificationPermissionGuideComposeBinding
+import com.mashup.presentation.onboarding.NotificationPermissionScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
