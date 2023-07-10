@@ -1,11 +1,8 @@
 package com.mashup.presentation.feature.guide
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -27,22 +24,26 @@ import com.mashup.presentation.feature.guide.model.Alien
 import com.mashup.presentation.ui.common.KeyLinkButton
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.*
+import timber.log.Timber
 
 @Composable
 fun GuideRoute(
+    onBackClick: () -> Unit,
+    onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit
 ) {
     GuideScreen(
         modifier = modifier,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onButtonClick = onButtonClick
     )
 }
 
 @Composable
 fun GuideScreen(
+    onBackClick: () -> Unit,
+    onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit = {}
 ) {
     Scaffold {
         Image(
@@ -70,7 +71,9 @@ fun GuideScreen(
                 Spacer(modifier = Modifier.height(72.dp))
                 Aliens()
                 Spacer(modifier = Modifier.height(48.dp))
-                PlanetGuideFooter()
+                PlanetGuideFooter(
+                    onButtonClick = onButtonClick
+                )
             }
         }
 
@@ -184,7 +187,9 @@ fun AlienCard(alien: Alien) {
 }
 
 @Composable
-fun PlanetGuideFooter() {
+fun PlanetGuideFooter(
+    onButtonClick: () -> Unit,
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -204,6 +209,7 @@ fun PlanetGuideFooter() {
                 })
         KeyLinkButton(
             modifier = Modifier.fillMaxWidth(),
+            onClick = onButtonClick,
             text = stringResource(id = R.string.button_send_signal)
         )
     }
@@ -212,5 +218,5 @@ fun PlanetGuideFooter() {
 @Preview
 @Composable
 fun GuideScreenPreview() {
-    GuideScreen()
+    GuideScreen(onBackClick = {}, onButtonClick = {})
 }

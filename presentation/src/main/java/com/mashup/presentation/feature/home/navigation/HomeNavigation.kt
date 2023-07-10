@@ -7,8 +7,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.mashup.presentation.feature.home.HomeRoute
 import com.mashup.presentation.feature.guide.GuideRoute
+import com.mashup.presentation.feature.signal.navigation.navigateToSignal
 import com.mashup.presentation.feature.subscribe.SubscribeRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
+import timber.log.Timber
 
 /**
  * Ssam_D_Android
@@ -17,7 +19,7 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
  */
 fun NavController.navigateToHome(navOptions: NavOptions? = null) {
     navigate(
-        route = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route,
+        route = KeyLinkNavigationRoute.HomeGraph.route,
         navOptions = navOptions
     )
 }
@@ -44,6 +46,7 @@ fun NavController.navigateToProfileRoute(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.homeGraph(
+    navController: NavController,
     onSubscribeKeywordClick: () -> Unit,
     onGuideClick: () -> Unit,
     onBackClick: () -> Unit,
@@ -61,7 +64,8 @@ fun NavGraphBuilder.homeGraph(
         }
         composable(route = KeyLinkNavigationRoute.HomeGraph.GuideRoute.route) {
             GuideRoute(
-                onBackClick = onBackClick
+                onBackClick = onBackClick,
+                onButtonClick = navController::navigateToSignal
             )
         }
         composable(route = KeyLinkNavigationRoute.HomeGraph.SubscribeKeywordRoute.route) {

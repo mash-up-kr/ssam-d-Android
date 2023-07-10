@@ -15,7 +15,7 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
  */
 fun NavController.navigateToSignal(navOptions: NavOptions? = null) {
     navigate(
-        route = KeyLinkNavigationRoute.SignalGraph.SignalContentRoute.route,
+        route = KeyLinkNavigationRoute.SignalGraph.route,
         navOptions = navOptions
     )
 }
