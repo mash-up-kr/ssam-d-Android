@@ -18,7 +18,7 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
  */
 fun NavController.navigateToChat(navOptions: NavOptions? = null) {
     navigate(
-        route = KeyLinkNavigationRoute.ChatGraph.ChatRoute.route,
+        route = KeyLinkNavigationRoute.ChatGraph.route,
         navOptions = navOptions
     )
 }

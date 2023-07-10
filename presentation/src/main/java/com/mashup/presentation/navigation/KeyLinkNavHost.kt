@@ -32,9 +32,16 @@ fun KeyLinkNavHost(
         modifier = modifier
     ) {
         homeGraph(
+            navController = navController,
             onSubscribeKeywordClick = navController::navigateToSubscribeKeywordRoute,
             onGuideClick = navController::navigateToGuideRoute,
-            onBackClick = navController::navigateUp
+            onBackClick = navController::navigateUp,
+            nestedGraphs = {
+                signalGraph(
+                    navController = navController,
+                    onBackClick = navController::navigateUp
+                )
+            }
         )
         signalGraph(
             navController = navController,
