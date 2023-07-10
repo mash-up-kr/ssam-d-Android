@@ -24,27 +24,6 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
     )
 }
 
-fun NavController.navigateToGuideRoute(navOptions: NavOptions? = null) {
-    navigate(
-        route = KeyLinkNavigationRoute.HomeGraph.GuideRoute.route,
-        navOptions = navOptions
-    )
-}
-
-fun NavController.navigateToSubscribeKeywordRoute(navOptions: NavOptions? = null) {
-    navigate(
-        route = KeyLinkNavigationRoute.HomeGraph.SubscribeKeywordRoute.route,
-        navOptions = navOptions
-    )
-}
-
-fun NavController.navigateToProfileRoute(navOptions: NavOptions? = null) {
-    navigate(
-        route = KeyLinkNavigationRoute.HomeGraph.ProfileRoute.route,
-        navOptions = navOptions
-    )
-}
-
 fun NavGraphBuilder.homeGraph(
     navController: NavController,
     onSubscribeKeywordClick: () -> Unit,
