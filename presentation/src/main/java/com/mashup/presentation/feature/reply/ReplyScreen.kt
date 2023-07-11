@@ -86,7 +86,7 @@ private fun ReplyScreen(
             KeyLinkToolbar(
                 title = {
                     Text(
-                        text = "시그널 답장",
+                        text = stringResource(R.string.toolbar_reply),
                         style = Body2,
                         color = White
                     )
