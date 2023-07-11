@@ -141,7 +141,7 @@ fun ReplyContent(
                 .weight(1f),
             value = reply,
             onValueChange = { reply ->
-                if (reply.length >= 300) onLengthOver()
+                if (reply.length >= MAX_LENGTH) onLengthOver()
                 else onReplyTextChange(reply)
             },
             hint = stringResource(id = R.string.hint_signal_content),
@@ -161,6 +161,8 @@ fun ReplyContent(
         )
     }
 }
+
+private const val MAX_LENGTH = 300
 
 @Preview
 @Composable
