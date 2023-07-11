@@ -1,8 +1,10 @@
 package com.mashup.presentation.feature.profile.compose
 
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -10,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.feature.profile.ProfileViewModel
@@ -83,7 +86,12 @@ fun ProfileContent(
     LazyColumn(
         modifier = modifier
     ) {
-        items(optionsList) { viewType ->
+        itemsIndexed(optionsList) { index, viewType ->
+            when (index) {
+                2, 4 -> { Spacer(modifier = Modifier.height(20.dp)) }
+                8 -> { Spacer(modifier = Modifier.height(52.dp)) }
+            }
+
             when (viewType) {
                 is ProfileViewType.UserInfo -> {
                     UserInfoContent(
@@ -121,6 +129,9 @@ fun ProfileContent(
                     )
                 }
             }
+        }
+        item {
+            Spacer(modifier = Modifier.height(260.dp))
         }
     }
 }
