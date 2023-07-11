@@ -7,7 +7,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.mashup.presentation.feature.guide.GuideRoute
 import com.mashup.presentation.feature.home.HomeRoute
-import com.mashup.presentation.feature.profile.compose.ProfileRoute
 import com.mashup.presentation.feature.profile.navigation.navigateToProfile
 import com.mashup.presentation.feature.signal.navigation.navigateToSignal
 import com.mashup.presentation.feature.subscribe.SubscribeRoute
@@ -30,7 +29,8 @@ fun NavGraphBuilder.homeGraph(
     onSubscribeKeywordClick: () -> Unit,
     onGuideClick: () -> Unit,
     onBackClick: () -> Unit,
-    nestedGraphs: NavGraphBuilder.() -> Unit,
+    nestedSignalGraph: NavGraphBuilder.() -> Unit,
+    nestedProfileGraph: NavGraphBuilder.() -> Unit
 ) {
     navigation(
         route = KeyLinkNavigationRoute.HomeGraph.route,
@@ -55,12 +55,7 @@ fun NavGraphBuilder.homeGraph(
                 onSaveButtonClick = onBackClick
             )
         }
-        composable(route = KeyLinkNavigationRoute.HomeGraph.ProfileRoute.route) {
-            ProfileRoute(
-                onBackClick = onBackClick
-            )
-        }
-        nestedGraphs()
+        nestedSignalGraph()
+        nestedProfileGraph()
     }
-
 }
