@@ -1,6 +1,9 @@
 package com.mashup.presentation.feature.profile
 
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
+import com.mashup.presentation.ui.theme.White
 
 /**
  * Ssam_D_Android
@@ -9,42 +12,43 @@ import androidx.compose.ui.graphics.Color
  */
 
 interface BaseViewType {
-    val id: String
+    val id: Int
     val description: String
 }
 
+@Immutable
 sealed class ProfileViewType {
     data class UserInfo(
-        override val id: String,
-        override val description: String,
+        val id: Int,
+        val userImageUrl: String,
         val userName: String,
         val userEmail: String
-    ) : ProfileViewType(), BaseViewType
+    ) : ProfileViewType()
 
     data class Header(
-        override val id: String,
+        override val id: Int,
         override val description: String,
     ) : ProfileViewType(), BaseViewType
 
     data class NavigationContent(
-        override val id: String,
+        override val id: Int,
         override val description: String,
-        val color: Color
+        val color: Color = White
     ) : ProfileViewType(), BaseViewType
 
     data class NotificationContent(
-        override val id: String,
+        override val id: Int,
         override val description: String,
     ) : ProfileViewType(), BaseViewType
 
     data class AppVersionContent(
-        override val id: String,
+        override val id: Int,
         override val description: String,
         val appVersion: String
     ) : ProfileViewType(), BaseViewType
 
     data class LogoutContent(
-        override val id: String,
+        override val id: Int,
         override val description: String,
     ) : ProfileViewType(), BaseViewType
 }
