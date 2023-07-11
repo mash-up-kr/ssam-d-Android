@@ -4,7 +4,8 @@ object Dep {
     object AndroidX {
         const val appCompat = "androidx.appcompat:appcompat:1.6.1"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.4"
-        const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+        const val constraintLayoutCompose =
+            "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
         object Activity {
             const val ktx = "androidx.activity:activity-ktx:1.2.3"
@@ -21,6 +22,7 @@ object Dep {
             const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
             const val savedState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$version"
             const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
+            const val runtimeCompose = "androidx.lifecycle:lifecycle-runtime-compose:$version"
             const val process = "androidx.lifecycle:lifecycle-process:$version"
             const val livedata = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
             const val compiler = "androidx.lifecycle:lifecycle-compiler:$version"
@@ -43,6 +45,11 @@ object Dep {
         object Core {
             const val core = "androidx.core:core-ktx:1.7.0"
         }
+
+        object Hilt {
+            const val hiltNavigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
+        }
+
     }
 
     object Google {
@@ -123,7 +130,8 @@ object Dep {
         private const val version = "4.13.2"
         const val glide = "com.github.bumptech.glide:glide:$version"
         const val compiler = "com.github.bumptech.glide:compiler:$version"
-        const val recyclerviewIntegration = "com.github.bumptech.glide:recyclerview-integration:$version"
+        const val recyclerviewIntegration =
+            "com.github.bumptech.glide:recyclerview-integration:$version"
         const val okHttpIntegration = "com.github.bumptech.glide:okhttp3-integration:$version"
     }
 
@@ -153,6 +161,12 @@ object Dep {
         object Debug {
             const val uiTooling = "androidx.compose.ui:ui-tooling:$version"
             const val uiTestManifest = "androidx.compose.ui:ui-test-manifest:$version"
+        }
+
+        object Navigation {
+            private const val navigationVersion = "2.6.0"
+            const val navigationCompose =
+                "androidx.navigation:navigation-compose:$navigationVersion"
         }
     }
 
