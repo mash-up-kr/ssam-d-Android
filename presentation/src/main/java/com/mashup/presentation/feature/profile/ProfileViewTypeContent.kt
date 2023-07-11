@@ -1,8 +1,10 @@
 package com.mashup.presentation.feature.profile
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -82,6 +84,45 @@ fun UserInfoContent(
     }
 }
 
+@Composable
+fun NavigationContent(
+    description: String,
+    onNavigateClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .background(color = Gray02)
+            .padding(horizontal = 20.dp, vertical = 16.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                modifier = Modifier.weight(9f),
+                text = description,
+                style = Body1,
+                color = White
+            )
+
+            Icon(
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable { onNavigateClick() },
+                painter = painterResource(id = R.drawable.ic_chevron_right_24),
+                contentDescription = "",
+                tint = White
+            )
+        }
+
+        Divider(
+            modifier = Modifier.offset(y = 16.dp),
+            thickness = 1.dp, color = Gray03
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun UserInfoContentPreview() {
@@ -97,14 +138,17 @@ fun UserInfoContentPreview() {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun NavigationContentPreview() {
-//    SsamDTheme {
-//        NavigationContent()
-//    }
-//}
-//
+@Preview(showBackground = true, backgroundColor = 0xFF000000)
+@Composable
+fun NavigationContentPreview() {
+    SsamDTheme {
+        NavigationContent(
+            description = "이용약관",
+            onNavigateClick = {}
+        )
+    }
+}
+
 //@Preview(showBackground = true)
 //@Composable
 //fun HeaderPreview() {
