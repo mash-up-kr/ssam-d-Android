@@ -5,12 +5,13 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.mashup.presentation.feature.home.HomeRoute
 import com.mashup.presentation.feature.guide.GuideRoute
+import com.mashup.presentation.feature.home.HomeRoute
+import com.mashup.presentation.feature.profile.compose.ProfileRoute
+import com.mashup.presentation.feature.profile.navigation.navigateToProfile
 import com.mashup.presentation.feature.signal.navigation.navigateToSignal
 import com.mashup.presentation.feature.subscribe.SubscribeRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
-import timber.log.Timber
 
 /**
  * Ssam_D_Android
@@ -39,6 +40,7 @@ fun NavGraphBuilder.homeGraph(
             HomeRoute(
                 onSubscribeKeywordClick = onSubscribeKeywordClick,
                 onGuideClick = onGuideClick,
+                onProfileClick = navController::navigateToProfile
             )
         }
         composable(route = KeyLinkNavigationRoute.HomeGraph.GuideRoute.route) {
@@ -54,7 +56,9 @@ fun NavGraphBuilder.homeGraph(
             )
         }
         composable(route = KeyLinkNavigationRoute.HomeGraph.ProfileRoute.route) {
-            // ProfileRoute
+            ProfileRoute(
+                onBackClick = onBackClick
+            )
         }
         nestedGraphs()
     }

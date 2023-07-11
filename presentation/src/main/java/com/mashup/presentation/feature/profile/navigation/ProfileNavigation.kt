@@ -9,7 +9,7 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
  * @author jaesung
  * @created 2023/07/10
  */
-fun NavController.navigateToProfileRoute(navOptions: NavOptions? = null) {
+fun NavController.navigateToProfile(navOptions: NavOptions? = null) {
     navigate(
         route = KeyLinkNavigationRoute.HomeGraph.ProfileRoute.route,
         navOptions = navOptions

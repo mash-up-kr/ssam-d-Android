@@ -34,13 +34,15 @@ import com.mashup.presentation.ui.theme.*
 fun HomeRoute(
     onSubscribeKeywordClick: () -> Unit,
     onGuideClick: () -> Unit,
+    onProfileClick: () -> Unit,
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
     HomeScreen(
         navigateToSubscribeKeyword = onSubscribeKeywordClick,
         navigateToGuide = onGuideClick,
-        modifier = modifier,
+        onProfileClick = onProfileClick,
+        modifier = modifier
     )
 }
 
@@ -48,6 +50,7 @@ fun HomeRoute(
 fun HomeScreen(
     navigateToSubscribeKeyword: () -> Unit,
     navigateToGuide: () -> Unit,
+    onProfileClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val signals = emptyList<SignalUiModel>()
@@ -81,7 +84,10 @@ fun HomeScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            HomeScreenToolBar(topBarBackgroundColor)
+            HomeScreenToolBar(
+                topBarBackgroundColor = topBarBackgroundColor,
+                onProfileClick = onProfileClick
+            )
             HomeKeywordInfoContainer(
                 onClick = { navigateToSubscribeKeyword() },
                 visible = isScrollingUp,
@@ -97,8 +103,10 @@ fun HomeScreen(
 }
 
 @Composable
-private fun HomeScreenToolBar(topBarBackgroundColor: Color) {
-
+private fun HomeScreenToolBar(
+    topBarBackgroundColor: Color,
+    onProfileClick: () -> Unit,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -119,6 +127,9 @@ private fun HomeScreenToolBar(topBarBackgroundColor: Color) {
             )
         }
         Image(
+            modifier = Modifier.clickable {
+                onProfileClick()
+            },
             painter = painterResource(id = R.drawable.ic_profile_fill),
             contentDescription = stringResource(id = R.string.home_my_page_icon_content_description),
             contentScale = ContentScale.None
@@ -338,6 +349,7 @@ private fun SignalCardKeywordsChip(keyword: String) {
 fun PreviewHomeScreen() {
     HomeScreen(
         navigateToSubscribeKeyword = {},
-        navigateToGuide = {}
+        navigateToGuide = {},
+        onProfileClick = {}
     )
 }

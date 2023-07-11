@@ -24,6 +24,7 @@ import com.mashup.presentation.ui.theme.Black
  */
 @Composable
 fun ProfileRoute(
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
@@ -38,7 +39,8 @@ fun ProfileRoute(
             isChecked = it
             viewModel.toggleNotificationSwitch(it)
         },
-        onEditClick = {}
+        onEditClick = {},
+        onBackClick = onBackClick
     )
 }
 
@@ -47,13 +49,18 @@ private fun ProfileScreen(
     isChecked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     onEditClick: () -> Unit,
+    onBackClick: () -> Unit,
     optionsList: List<ProfileViewType>,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
         backgroundColor = Black,
-        topBar = { KeyLinkToolbar() }
+        topBar = {
+            KeyLinkToolbar(
+                onClickBack = onBackClick
+            )
+        }
     ) { innerPaddingValues ->
         ProfileContent(
             modifier = Modifier.padding(innerPaddingValues),
