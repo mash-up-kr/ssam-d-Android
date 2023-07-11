@@ -6,22 +6,22 @@ package com.mashup.presentation.navigation
  * @created 2023/07/04
  */
 sealed class KeyLinkNavigationRoute(val route: String) {
-    object HomeGraph : KeyLinkNavigationRoute(homeGraphPattern) {
-        object HomeRoute : KeyLinkNavigationRoute(homeRoute)
-        object SubscribeKeywordRoute : KeyLinkNavigationRoute(subscribeKeywordRoute)
-        object GuideRoute : KeyLinkNavigationRoute(guideRoute)
-        object ProfileRoute : KeyLinkNavigationRoute(profileRoute)
+    object HomeGraph : KeyLinkNavigationRoute(HOME_GRAPH_PATTERN) {
+        object HomeRoute : KeyLinkNavigationRoute(HOME_ROUTE)
+        object SubscribeKeywordRoute : KeyLinkNavigationRoute(SUBSCRIBE_KEYWORD_PATTERN)
+        object GuideRoute : KeyLinkNavigationRoute(GUIDE_ROUTE)
+        object ProfileRoute : KeyLinkNavigationRoute(PROFILE_ROUTE)
     }
-    object SignalGraph : KeyLinkNavigationRoute(signalGraphPattern) {
-        object SignalContentRoute : KeyLinkNavigationRoute(signalContentRoute)
-        object SignalKeywordRoute : KeyLinkNavigationRoute(signalKeywordRoute)
-        object SignalCompleteRoute : KeyLinkNavigationRoute(signalCompleteRoute)
+    object SignalGraph : KeyLinkNavigationRoute(SIGNAL_GRAPH_PATTERN) {
+        object SignalContentRoute : KeyLinkNavigationRoute(SIGNAL_CONTENT_ROUTE)
+        object SignalKeywordRoute : KeyLinkNavigationRoute(SIGNAL_KEYWORD_ROUTE)
+        object SignalCompleteRoute : KeyLinkNavigationRoute(SIGNAL_COMPLETE_ROUTE)
     }
 
-    object ChatGraph : KeyLinkNavigationRoute(chatGraphPattern) {
-        object ChatRoute : KeyLinkNavigationRoute(chatRoute)
-        object ChatDetailRoute : KeyLinkNavigationRoute(chatDetailRoute)
-        object MessageDetailRoute : KeyLinkNavigationRoute(messageDetailRoute)
-        object ReportRoute : KeyLinkNavigationRoute(reportRoute)
+    object ChatGraph : KeyLinkNavigationRoute(CHAT_GRAPH_PATTERN) {
+        object ChatRoute : KeyLinkNavigationRoute(CHAT_ROUTE)
+        object ChatDetailRoute : KeyLinkNavigationRoute(CHAT_DETAIL_ROUTE)
+        object MessageDetailRoute : KeyLinkNavigationRoute(MESSAGE_DETAIL_ROUTE)
+        object ReportRoute : KeyLinkNavigationRoute(REPORT_ROUTE)
     }
 }
