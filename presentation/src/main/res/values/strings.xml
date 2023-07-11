@@ -123,4 +123,5 @@
     <string name="content_description_report">신고하기 아이콘입니다.</string>
     <string name="message_detail_matched_signal_count">%s개 키워드 일치</string>
     <string name="button_send_reply">답장 보내기</string>
+    <string name="toolbar_reply">시그널 답장</string>
 </resources>
