@@ -123,6 +123,25 @@ fun NavigationContent(
     }
 }
 
+@Composable
+fun Header(
+    description: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(Black)
+            .padding(horizontal = 20.dp, vertical = 12.dp),
+    ) {
+        Text(
+            text = description,
+            style = Body2,
+            color = Gray06
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun UserInfoContentPreview() {
@@ -149,14 +168,16 @@ fun NavigationContentPreview() {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun HeaderPreview() {
-//    SsamDTheme {
-//        Header()
-//    }
-//}
-//
+@Preview(showBackground = true)
+@Composable
+fun HeaderPreview() {
+    SsamDTheme {
+        Header(
+            description = "환경설정"
+        )
+    }
+}
+
 //@Preview(showBackground = true)
 //@Composable
 //fun NotificationContentPreview() {
