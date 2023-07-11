@@ -1,4 +1,4 @@
-package com.mashup.presentation.feature.profile
+package com.mashup.presentation.feature.profile.compose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

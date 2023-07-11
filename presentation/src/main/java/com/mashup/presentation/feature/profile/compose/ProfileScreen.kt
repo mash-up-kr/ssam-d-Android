@@ -1,4 +1,4 @@
-package com.mashup.presentation.feature.profile
+package com.mashup.presentation.feature.profile.compose
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,6 +12,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mashup.presentation.feature.profile.ProfileViewModel
+import com.mashup.presentation.feature.profile.ProfileViewType
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.Black
 

@@ -1,4 +1,4 @@
-package com.mashup.presentation.feature.mypage.navigation
+package com.mashup.presentation.feature.profile.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
