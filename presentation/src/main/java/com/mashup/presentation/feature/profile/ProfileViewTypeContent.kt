@@ -216,6 +216,34 @@ fun AppVersionContent(
     }
 }
 
+@Composable
+fun LogoutContent(
+    description: String,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .background(color = Gray02)
+            .padding(horizontal = 20.dp, vertical = 16.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                modifier = Modifier.weight(1f),
+                text = description,
+                style = Body1,
+                color = Red
+            )
+        }
+
+        Divider(
+            modifier = Modifier.offset(y = 16.dp),
+            thickness = 1.dp, color = Gray03
+        )
+    }
+}
 @Preview(showBackground = true)
 @Composable
 fun UserInfoContentPreview() {
@@ -276,10 +304,12 @@ fun AppVersionContentPreview() {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun LogoutContentPreview() {
-//    SsamDTheme {
-//        LogoutContent()
-//    }
-//}
+@Preview(showBackground = true)
+@Composable
+fun LogoutContentPreview() {
+    SsamDTheme {
+        LogoutContent(
+            description = "로그아웃"
+        )
+    }
+}
