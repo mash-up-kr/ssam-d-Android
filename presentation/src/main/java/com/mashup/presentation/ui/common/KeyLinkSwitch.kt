@@ -29,11 +29,10 @@ private val thumbPadding = 2.dp
 
 /**
  * [KeyLinkSwitch]
- *
+ * M2 및 M3에서 제공하는 Switch를 확인해보니 디자인에 맞게 커스텀할 수 없어서 Custom으로 만들었습니다.
  * animatePosition : Thumb를 이동시키기 위해 주어진 trackWidth, thumbRadius, thumbPadding으로 position을 계산하여 State로 반환합니다. </p>
  *
  * trackBackgroundColor, thumbBackgroundColor : isChecked 여부에 따라 달라지는 Color값들을 State로 반환합니다.
- *
  */
 @Composable
 fun KeyLinkSwitch(

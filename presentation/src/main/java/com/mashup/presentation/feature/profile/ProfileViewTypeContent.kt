@@ -8,7 +8,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.R
+import com.mashup.presentation.ui.common.KeyLinkSwitch
 import com.mashup.presentation.ui.theme.*
 
 
@@ -142,6 +143,43 @@ fun Header(
     }
 }
 
+@Composable
+fun NotificationContent(
+    isChecked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    description: String,
+    modifier: Modifier = Modifier
+) {
+
+    Column(
+        modifier = modifier
+            .background(color = Gray02)
+            .padding(horizontal = 20.dp, vertical = 16.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                modifier = Modifier.weight(1f),
+                text = description,
+                style = Body1,
+                color = White
+            )
+
+            KeyLinkSwitch(
+                isChecked = isChecked,
+                onCheckedChange = onCheckedChange
+            )
+        }
+
+        Divider(
+            modifier = Modifier.offset(y = 16.dp),
+            thickness = 1.dp, color = Gray03
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun UserInfoContentPreview() {
@@ -178,14 +216,19 @@ fun HeaderPreview() {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun NotificationContentPreview() {
-//    SsamDTheme {
-//        NotificationContent()
-//    }
-//}
-//
+@Preview(showBackground = true)
+@Composable
+fun NotificationContentPreview() {
+    var isChecked by remember { mutableStateOf(false) }
+    SsamDTheme {
+        NotificationContent(
+            isChecked = isChecked,
+            onCheckedChange = { isChecked = it },
+            description = "알림 소식 받기",
+        )
+    }
+}
+
 //@Preview(showBackground = true)
 //@Composable
 //fun AppVersionContentPreview() {
