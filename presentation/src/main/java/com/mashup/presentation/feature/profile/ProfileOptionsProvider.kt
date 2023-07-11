@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import com.mashup.presentation.R
+import com.mashup.presentation.common.extension.getAppVersion
 import com.mashup.presentation.ui.theme.Mint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
@@ -76,7 +77,7 @@ class ProfileOptionsProvider @Inject constructor(
                 ProfileViewType.AppVersionContent(
                     id = 8,
                     description = context.getString(R.string.app_version),
-                    appVersion = getVersionName(),
+                    appVersion = context.getAppVersion(),
                 )
             )
             add(
@@ -87,17 +88,5 @@ class ProfileOptionsProvider @Inject constructor(
             )
         }
         return options.toList()
-    }
-
-    private fun getVersionName(): String {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            context.applicationContext.packageManager.getPackageInfo(
-                context.packageName, PackageManager.PackageInfoFlags.of(0L)
-            ).versionName
-        } else {
-            context.applicationContext.packageManager.getPackageInfo(
-                context.packageName, 0
-            ).versionName
-        }
     }
 }
