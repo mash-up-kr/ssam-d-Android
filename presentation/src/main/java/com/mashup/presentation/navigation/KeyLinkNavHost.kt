@@ -9,6 +9,7 @@ import com.mashup.presentation.feature.detail.chat.navigation.navigateToChatDeta
 import com.mashup.presentation.feature.detail.message.navigation.navigateToMessageDetail
 import com.mashup.presentation.feature.guide.navigation.navigateToGuideRoute
 import com.mashup.presentation.feature.home.navigation.homeGraph
+import com.mashup.presentation.feature.profile.navigation.navigateToNavigationRoute
 import com.mashup.presentation.feature.profile.navigation.profileGraph
 import com.mashup.presentation.feature.report.navigation.navigateToReport
 import com.mashup.presentation.feature.signal.navigation.signalGraph
@@ -45,7 +46,10 @@ fun KeyLinkNavHost(
             },
             nestedProfileGraph = {
                 profileGraph(
-                    onBackClick = navController::navigateUp
+                    onBackClick = navController::navigateUp,
+                    onNavigateClick = { route ->
+                        navController.navigateToNavigationRoute(route)
+                    }
                 )
             }
         )

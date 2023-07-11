@@ -88,7 +88,8 @@ fun UserInfoContent(
 @Composable
 fun NavigationContent(
     description: String,
-    onNavigateClick: () -> Unit,
+    route: String,
+    onNavigateClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -110,7 +111,7 @@ fun NavigationContent(
             Icon(
                 modifier = Modifier
                     .weight(1f)
-                    .clickable { onNavigateClick() },
+                    .clickable { onNavigateClick(route) },
                 painter = painterResource(id = R.drawable.ic_chevron_right_24),
                 contentDescription = "",
                 tint = White
@@ -265,7 +266,8 @@ fun NavigationContentPreview() {
     SsamDTheme {
         NavigationContent(
             description = "이용약관",
-            onNavigateClick = {}
+            onNavigateClick = {},
+            route = ""
         )
     }
 }

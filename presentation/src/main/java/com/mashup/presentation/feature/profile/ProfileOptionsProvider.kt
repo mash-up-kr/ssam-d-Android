@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.getAppVersion
+import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 import com.mashup.presentation.ui.theme.Mint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
@@ -34,6 +35,7 @@ class ProfileOptionsProvider @Inject constructor(
                 ProfileViewType.NavigationContent(
                     id = 1,
                     description = context.getString(R.string.profile_sent_signal),
+                    route = KeyLinkNavigationRoute.ProfileGraph.SendSignalRoute.route,
                     color = Mint
                 )
             )
@@ -58,19 +60,22 @@ class ProfileOptionsProvider @Inject constructor(
             add(
                 ProfileViewType.NavigationContent(
                     id = 5,
-                    description = context.getString(R.string.tos)
+                    description = context.getString(R.string.tos),
+                    route = KeyLinkNavigationRoute.ProfileGraph.TermsOfServiceRoute.route
                 )
             )
             add(
                 ProfileViewType.NavigationContent(
                     id = 6,
                     description = context.getString(R.string.privacy_policy),
+                    route = KeyLinkNavigationRoute.ProfileGraph.PrivacyPolicyRoute.route
                 )
             )
             add(
                 ProfileViewType.NavigationContent(
                     id = 7,
                     description = context.getString(R.string.open_source),
+                    route = KeyLinkNavigationRoute.ProfileGraph.OpenSourceRoute.route
                 )
             )
             add(

@@ -28,6 +28,7 @@ import com.mashup.presentation.ui.theme.Black
 @Composable
 fun ProfileRoute(
     onBackClick: () -> Unit,
+    onNavigateClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
@@ -43,7 +44,8 @@ fun ProfileRoute(
             viewModel.toggleNotificationSwitch(it)
         },
         onEditClick = {},
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onNavigateClick = onNavigateClick
     )
 }
 
@@ -53,6 +55,7 @@ private fun ProfileScreen(
     onCheckedChange: (Boolean) -> Unit,
     onEditClick: () -> Unit,
     onBackClick: () -> Unit,
+    onNavigateClick: (String) -> Unit,
     optionsList: List<ProfileViewType>,
     modifier: Modifier = Modifier,
 ) {
@@ -70,7 +73,8 @@ private fun ProfileScreen(
             optionsList = optionsList,
             isChecked = isChecked,
             onCheckedChange = onCheckedChange,
-            onEditClick = onEditClick
+            onEditClick = onEditClick,
+            onNavigateClick = onNavigateClick
         )
     }
 }
@@ -80,6 +84,7 @@ fun ProfileContent(
     isChecked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     onEditClick: () -> Unit,
+    onNavigateClick: (String) -> Unit,
     optionsList: List<ProfileViewType>,
     modifier: Modifier = Modifier,
 ) {
@@ -118,7 +123,8 @@ fun ProfileContent(
                 is ProfileViewType.NavigationContent -> {
                     NavigationContent(
                         description = viewType.description,
-                        onNavigateClick = {}
+                        route = viewType.route,
+                        onNavigateClick = onNavigateClick
                     )
                 }
                 is ProfileViewType.NotificationContent -> {
