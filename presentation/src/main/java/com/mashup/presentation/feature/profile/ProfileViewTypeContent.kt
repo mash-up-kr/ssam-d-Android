@@ -180,6 +180,42 @@ fun NotificationContent(
     }
 }
 
+@Composable
+fun AppVersionContent(
+    description: String,
+    appVersion: String,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .background(color = Gray02)
+            .padding(horizontal = 20.dp, vertical = 16.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                modifier = Modifier.weight(1f),
+                text = description,
+                style = Body1,
+                color = White
+            )
+
+            Text(
+                text = appVersion,
+                style = Body1,
+                color = Gray09
+            )
+        }
+
+        Divider(
+            modifier = Modifier.offset(y = 16.dp),
+            thickness = 1.dp, color = Gray03
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun UserInfoContentPreview() {
@@ -229,14 +265,17 @@ fun NotificationContentPreview() {
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun AppVersionContentPreview() {
-//    SsamDTheme {
-//        AppVersionContent()
-//    }
-//}
-//
+@Preview(showBackground = true)
+@Composable
+fun AppVersionContentPreview() {
+    SsamDTheme {
+        AppVersionContent(
+            description = "버전",
+            appVersion = "1.0.0"
+        )
+    }
+}
+
 //@Preview(showBackground = true)
 //@Composable
 //fun LogoutContentPreview() {
