@@ -45,7 +45,8 @@ fun NavGraphBuilder.chatGraph(
         composable(route = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route) {
             ChatDetailRoute(
                 onBackClick = onBackClick,
-                onMessageClick = onMessageClick
+                onMessageClick = onMessageClick,
+                onReportClick = onReportIconClick
             )
         }
 
