@@ -44,7 +44,7 @@ fun KeywordChip(
             .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
         Text(
-            text = "#$keyword",
+            text = keyword,
             style = TextStyle(
                 fontFamily = FontFamily.Default,
                 fontSize = 10.sp,
