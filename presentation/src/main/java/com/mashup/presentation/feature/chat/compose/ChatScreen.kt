@@ -33,14 +33,17 @@ fun ChatRoute(
     ChatScreen(
         modifier = modifier,
         onEmptyScreenButtonClick = onEmptyScreenButtonClick,
-        onChatClick = onChatClick
+        onChatClick =  { id ->
+            viewModel.getChats(id)
+            onChatClick()
+        }
     )
 }
 
 @Composable
 fun ChatScreen(
     onEmptyScreenButtonClick: () -> Unit,
-    onChatClick: () -> Unit,
+    onChatClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -79,7 +82,7 @@ fun ChatScreen(
 fun ChatContent(
     isConnected: Boolean,
     onEmptyScreenButtonClick: () -> Unit,
-    onChatClick: () -> Unit,
+    onChatClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (!isConnected) {
