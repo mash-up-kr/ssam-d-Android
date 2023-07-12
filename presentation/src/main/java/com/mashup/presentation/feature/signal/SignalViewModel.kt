@@ -1,13 +1,14 @@
 package com.mashup.presentation.feature.signal
 
-import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import androidx.lifecycle.SavedStateHandle
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.domain.usecase.GetRecommendKeywordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,31 +20,27 @@ import javax.inject.Inject
 @HiltViewModel
 class SignalViewModel @Inject constructor(
     private val getRecommendKeywordUseCase: GetRecommendKeywordUseCase,
-    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-
-    val signalContent = savedStateHandle.getStateFlow(SIGNAL_CONTENT, "")
-
     private val _keywordsState: MutableStateFlow<KeywordUiState> = MutableStateFlow(KeywordUiState.Loading)
     val keywordsState: StateFlow<KeywordUiState> = _keywordsState.asStateFlow()
 
-
-    fun getRecommendKeywords(content: String) {
+    fun getRecommendKeywords() {
         viewModelScope.launch {
-            getRecommendKeywordUseCase.execute(content).catch {
+            getRecommendKeywordUseCase.execute("안녕하세요 우히히").catch {
+//                Log.e("TAG","$it")
                 _keywordsState.value = KeywordUiState.Error(it)
             }.collect {
+//                Log.e("TAG","Success")
+//                Log.e("TAG", "$it")
                 _keywordsState.value = KeywordUiState.Success(it)
             }
         }
     }
 
     fun setSignalContent(content: String) {
-        savedStateHandle[SIGNAL_CONTENT] = content
+        Log.e("TAG", "content : $content")
     }
 }
-
-const val SIGNAL_CONTENT = "signal_content"
 
 sealed interface KeywordUiState {
     data class Success(val keywords: List<String> = emptyList()) : KeywordUiState {
