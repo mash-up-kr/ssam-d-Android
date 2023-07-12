@@ -106,12 +106,7 @@ fun MessageContent(
                     modifier = Modifier.weight(8f),
                     text = message,
                     overflow = TextOverflow.Ellipsis,
-                    style = TextStyle(
-                        fontFamily = FontFamily.Default,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 13.sp,
-                        lineHeight = 20.8.sp
-                    ),
+                    style = Body3,
                     color = White
                 )
 
@@ -127,12 +122,7 @@ fun MessageContent(
                         .weight(1f)
                         .padding(top = 4.dp),
                     text = date,
-                    style = TextStyle(
-                        fontFamily = FontFamily.Default,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 10.sp,
-                        lineHeight = 18.sp
-                    ),
+                    style = Caption2,
                     color = if (isMine) Gray06 else White
                 )
             }
