@@ -24,7 +24,6 @@ import com.mashup.presentation.ui.theme.SsamDTheme
  * @created 2023/06/28
  */
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MatchedKeywords(
     matchedKeywords: List<String>,
@@ -37,16 +36,12 @@ fun MatchedKeywords(
         enter = expandVertically(),
         exit = shrinkVertically()
     ) {
-        CompositionLocalProvider(
-            LocalOverscrollConfiguration provides null
+        LazyRow(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.Start
         ) {
-            LazyRow(
-                modifier = modifier,
-                horizontalArrangement = Arrangement.Start
-            ) {
-                items(matchedKeywords) { keyword ->
-                    KeywordChip(keyword = keyword)
-                }
+            items(matchedKeywords) { keyword ->
+                KeywordChip(keyword = keyword)
             }
         }
     }
