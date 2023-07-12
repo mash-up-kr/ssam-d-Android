@@ -2,6 +2,8 @@ package com.mashup.presentation.detail.chat.compose
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -47,6 +49,12 @@ fun ChatDetailScreen(
         confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
         skipHalfExpanded = false
     )
+    val scrollState = rememberLazyGridState()
+    val isMatchedKeywordVisible by remember {
+        derivedStateOf {
+            mutableStateOf( scrollState.firstVisibleItemScrollOffset == 0 )
+        }
+    }
     /**
      * val viewModel: ~ by hiltViewModel()
      * collectAsState~
@@ -109,6 +117,8 @@ fun ChatDetailScreen(
                 onChatItemClick = { onNavigateToMessageDetail() },
                 keywordBottomSheetState = keywordBottomSheetState,
                 onChangeBottomSheetType = { currentBottomSheetType = it },
+                isMatchedKeywordVisible = isMatchedKeywordVisible.value,
+                scrollState = scrollState,
                 coroutineScope = coroutineScope
             )
         }
@@ -123,6 +133,8 @@ fun ChatDetailContent(
     modifier: Modifier = Modifier,
     keywordBottomSheetState: ModalBottomSheetState,
     onChangeBottomSheetType: (BottomSheetType) -> Unit,
+    isMatchedKeywordVisible: Boolean,
+    scrollState: LazyGridState,
     coroutineScope: CoroutineScope
 ) {
     Column(
@@ -146,13 +158,15 @@ fun ChatDetailContent(
                         else keywordBottomSheetState.show()
                     }
                 },
-            matchedKeywords = chatDetailState.getMatchedKeywordSummery()
+            matchedKeywords = chatDetailState.getMatchedKeywordSummery(),
+            visible = isMatchedKeywordVisible
         )
 
         ChatContent(
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
             chat = chatDetailState.chat,
-            onChatItemClick = { onChatItemClick() }
+            onChatItemClick = { onChatItemClick() },
+            scrollState = scrollState
         )
     }
 }
@@ -175,7 +189,9 @@ private fun ChatDetailContentPreview() {
             onChatItemClick = {},
             keywordBottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden),
             coroutineScope = rememberCoroutineScope(),
-            onChangeBottomSheetType = {}
+            onChangeBottomSheetType = {},
+            isMatchedKeywordVisible = true,
+            scrollState = rememberLazyGridState()
         )
     }
 }

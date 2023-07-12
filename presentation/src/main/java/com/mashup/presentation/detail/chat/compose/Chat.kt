@@ -1,10 +1,13 @@
 package com.mashup.presentation.detail.chat.compose
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,13 +38,15 @@ import com.mashup.presentation.ui.theme.*
 fun ChatContent(
     chat: List<MessageUiModel>,
     onChatItemClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    scrollState: LazyGridState
 ) {
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(count = 2),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        state = scrollState
     ) {
         items(chat) { message ->
             MessageContent(
