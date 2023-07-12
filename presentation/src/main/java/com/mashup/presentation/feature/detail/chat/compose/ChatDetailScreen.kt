@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 fun ChatDetailRoute(
     onBackClick: () -> Unit,
     onMessageClick: () -> Unit,
+    onReportClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
@@ -41,6 +42,7 @@ fun ChatDetailRoute(
         modifier = modifier,
         onBackClick = onBackClick,
         onMessageClick = onMessageClick,
+        onReportClick = onReportClick
     )
 }
 
@@ -49,6 +51,7 @@ fun ChatDetailRoute(
 fun ChatDetailScreen(
     onBackClick: () -> Unit,
     onMessageClick: () -> Unit,
+    onReportClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -88,7 +91,7 @@ fun ChatDetailScreen(
                         // TODO: 연결끊기 api
                     },
                     onReportUser = {
-                        // TODO: 신고하기 페이지 연결
+                        onReportClick()
                     }
                 )
             }
@@ -126,7 +129,7 @@ fun ChatDetailScreen(
             ChatDetailContent(
                 modifier = Modifier.padding(paddingValues),
                 chatDetailState = ProvideChatDetailState,
-                onChatItemClick = { },
+                onChatItemClick = onMessageClick,
                 keywordBottomSheetState = keywordBottomSheetState,
                 onChangeBottomSheetType = { currentBottomSheetType = it },
                 isMatchedKeywordVisible = isScrollingUp,
@@ -188,7 +191,7 @@ fun ChatDetailContent(
 @Composable
 private fun ChatDetailScreenPreview() {
     SsamDTheme {
-        ChatDetailScreen(onBackClick = {}, onMessageClick = {})
+        ChatDetailScreen(onBackClick = {}, onMessageClick = {}, onReportClick = {})
     }
 }
 
