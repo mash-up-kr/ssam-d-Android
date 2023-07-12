@@ -38,7 +38,7 @@ fun MatchedKeywords(
     ) {
         LazyRow(
             modifier = modifier,
-            horizontalArrangement = Arrangement.Start
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             items(matchedKeywords) { keyword ->
                 KeywordChip(keyword = keyword)
