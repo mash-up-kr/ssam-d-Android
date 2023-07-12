@@ -3,8 +3,8 @@ package com.mashup.presentation.feature.chat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.domain.usecase.GetChatsUseCase
-import com.mashup.presentation.detail.chat.compose.ChatDetailUiState
-import com.mashup.presentation.detail.chat.model.toUiModel
+import com.mashup.presentation.feature.detail.chat.compose.ChatDetailUiState
+import com.mashup.presentation.feature.detail.chat.model.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
