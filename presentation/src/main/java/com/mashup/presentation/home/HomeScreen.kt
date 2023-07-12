@@ -13,16 +13,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.*
-import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.R
@@ -31,7 +27,6 @@ import com.mashup.presentation.common.extension.pxToDp
 import com.mashup.presentation.home.model.SignalUiModel
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.theme.*
-import java.util.concurrent.TimeUnit
 
 @Composable
 fun HomeScreen(
@@ -40,7 +35,11 @@ fun HomeScreen(
 ) {
     val signals = emptyList<SignalUiModel>()
     val scrollState = rememberLazyListState()
-    val isScrollingUp = scrollState.isScrollingUp()
+    val isKeywordInfoContainerVisible by remember {
+        derivedStateOf {
+            mutableStateOf( scrollState.firstVisibleItemScrollOffset == 0 )
+        }
+    }
     val isAtTop = !scrollState.canScrollBackward
     val topBarBackgroundColor by animateColorAsState(if (isAtTop) Color.Transparent else Gray01)
 
@@ -72,7 +71,7 @@ fun HomeScreen(
             HomeScreenToolBar(topBarBackgroundColor)
             HomeKeywordInfoContainer(
                 onClick = { navigateToSubscribeKeyword() },
-                visible = isScrollingUp,
+                visible = isKeywordInfoContainerVisible.value,
                 topBarBackgroundColor = topBarBackgroundColor
             )
             if (signals.isEmpty()) {
@@ -203,25 +202,6 @@ private fun SignalCardList(signals: List<SignalUiModel>, scrollState: LazyListSt
             SignalCard(signal)
         }
     }
-}
-
-@Composable
-private fun LazyListState.isScrollingUp(): Boolean {
-    var previousIndex by remember(this) { mutableStateOf(firstVisibleItemIndex) }
-    var previousScrollOffset by remember(this) { mutableStateOf(firstVisibleItemScrollOffset) }
-
-    return remember(this) {
-        derivedStateOf {
-            if (previousIndex != firstVisibleItemIndex) {
-                previousIndex > firstVisibleItemIndex
-            } else {
-                previousScrollOffset >= firstVisibleItemScrollOffset
-            }.also {
-                previousIndex = firstVisibleItemIndex
-                previousScrollOffset = firstVisibleItemScrollOffset
-            }
-        }
-    }.value
 }
 
 @Composable
