@@ -28,13 +28,13 @@ fun OtherUserInfo(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.padding(horizontal = 20.dp),
+        modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
             modifier = Modifier
-                .size(48.dp)
+                .size(36.dp)
                 .background(
                     color = Red,
                     shape = CircleShape

@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.drawColoredShadow
+import com.mashup.presentation.common.extension.isScrollingUp
 import com.mashup.presentation.common.extension.pxToDp
 import com.mashup.presentation.home.model.SignalUiModel
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
@@ -35,11 +36,7 @@ fun HomeScreen(
 ) {
     val signals = emptyList<SignalUiModel>()
     val scrollState = rememberLazyListState()
-    val isKeywordInfoContainerVisible by remember {
-        derivedStateOf {
-            mutableStateOf( scrollState.firstVisibleItemScrollOffset == 0 )
-        }
-    }
+    val isScrollingUp = scrollState.isScrollingUp()
     val isAtTop = !scrollState.canScrollBackward
     val topBarBackgroundColor by animateColorAsState(if (isAtTop) Color.Transparent else Gray01)
 
@@ -71,7 +68,7 @@ fun HomeScreen(
             HomeScreenToolBar(topBarBackgroundColor)
             HomeKeywordInfoContainer(
                 onClick = { navigateToSubscribeKeyword() },
-                visible = isKeywordInfoContainerVisible.value,
+                visible = isScrollingUp,
                 topBarBackgroundColor = topBarBackgroundColor
             )
             if (signals.isEmpty()) {
