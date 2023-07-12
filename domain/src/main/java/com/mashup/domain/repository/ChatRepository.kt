@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ChatRepository {
 
-    suspend fun getChatRooms(id: Int)
+    suspend fun getChatRooms(id: Long)
 
     fun getChatDetail(
         roomId: Long,

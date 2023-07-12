@@ -11,7 +11,7 @@ class ChatRepositoryImpl @Inject constructor(
     private val remoteChatDataSource: RemoteChatDataSource
 ) : ChatRepository {
 
-    override suspend fun getChatRooms(id: Int) {
+    override suspend fun getChatRooms(id: Long) {
         return remoteChatDataSource.getChats(id).toDomainModel()
     }
 
