@@ -41,18 +41,27 @@ fun SignalContentRoute(
     modifier: Modifier = Modifier,
     viewModel: SignalViewModel = hiltViewModel()
 ) {
+    var signalContent by rememberSaveable { mutableStateOf("") }
+
     SignalContentScreen(
         modifier = modifier,
+        signalContent = signalContent,
         onBackClick = onBackClick,
-        onNextClick = onNextClick
+        onNextClick = {
+            viewModel.setSignalContent(signalContent)
+            onNextClick()
+        },
+        onSignalChange = { signalContent = it }
     )
 }
 
 @Composable
 fun SignalContentScreen(
-    modifier: Modifier = Modifier,
-    onNextClick: () -> Unit = {},
-    onBackClick: () -> Unit = {}
+    signalContent: String,
+    onNextClick: () -> Unit,
+    onBackClick: () -> Unit,
+    onSignalChange: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var dialogState by rememberSaveable { mutableStateOf(false) }
 
@@ -72,13 +81,15 @@ fun SignalContentScreen(
         )
         SignalContent(
             modifier = modifier,
+            signalContent = signalContent,
             onNextClick = onNextClick,
-            onLengthOver = { dialogState = true }
+            onLengthOver = { dialogState = true },
+            onSignalChange = onSignalChange
         )
 
         if (dialogState) {
             KeyLinkContentLengthDialog(
-                onDismissRequest = { /* @TODO */},
+                onDismissRequest = { /* @TODO */ },
                 onButtonClick = { dialogState = false }
             )
         }
@@ -87,11 +98,13 @@ fun SignalContentScreen(
 
 @Composable
 fun SignalContent(
-    modifier: Modifier = Modifier,
+    signalContent: String,
     onNextClick: () -> Unit,
     onLengthOver: () -> Unit,
+    onSignalChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    var signalContent by rememberSaveable { mutableStateOf("") }
+
     val scrollState = rememberScrollState()
 
     Column(
@@ -104,9 +117,9 @@ fun SignalContent(
                 .fillMaxSize()
                 .weight(1f),
             value = signalContent,
-            onValueChange = {
-                if (it.length >= 300) onLengthOver.invoke()
-                signalContent = it
+            onValueChange = { text ->
+                if (text.length >= 300) onLengthOver()
+                else onSignalChange(text)
             },
             hint = stringResource(id = R.string.hint_signal_content),
             hintAlign = TextAlign.Start,
@@ -129,7 +142,13 @@ fun SignalContent(
 @Preview(showBackground = true)
 @Composable
 private fun SignalContentScreenPreview() {
+    var text by rememberSaveable { mutableStateOf("") }
     SsamDTheme {
-        SignalContentScreen()
+        SignalContentScreen(
+            signalContent = text,
+            onNextClick = {},
+            onBackClick = {},
+            onSignalChange = { text = it }
+        )
     }
 }
