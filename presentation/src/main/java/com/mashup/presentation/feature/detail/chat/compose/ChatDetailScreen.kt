@@ -7,13 +7,13 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.chat.ChatViewModel
 import com.mashup.presentation.feature.detail.chat.model.ChatDetailUiModel
@@ -37,7 +37,7 @@ fun ChatDetailRoute(
     modifier: Modifier = Modifier,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
-    when (val chatDetailUiState = viewModel.chatDetailUiState.collectAsState().value) {
+    when (val state = viewModel.chatDetailUiState.collectAsStateWithLifecycle().value) {
         is ChatDetailUiState.Loading -> {}
         is ChatDetailUiState.Success -> {
             ChatDetailScreen(
@@ -45,7 +45,7 @@ fun ChatDetailRoute(
                 onBackClick = onBackClick,
                 onMessageClick = onMessageClick,
                 onReportClick = onReportClick,
-                chatDetailUiState = chatDetailUiState
+                chatDetailUiState = state
             )
         }
         is ChatDetailUiState.Failure -> {}
