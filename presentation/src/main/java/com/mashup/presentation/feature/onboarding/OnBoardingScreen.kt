@@ -56,7 +56,9 @@ fun OnBoardingScreen(
         backgroundColor = Black
     ) {
         when (uiState) {
-            OnBoardingViewModel.UiState.Loading -> Unit  // TODO: 로딩 프로그레스 바 돌리기
+            OnBoardingViewModel.UiState.Loading -> {
+                KeyLinkLoading()
+            }
             OnBoardingViewModel.UiState.SaveSuccess -> {
                 navigateToNotificationPermission()
             }
