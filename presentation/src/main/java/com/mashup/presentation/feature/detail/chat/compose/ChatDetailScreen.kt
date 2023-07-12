@@ -15,13 +15,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.chat.ChatViewModel
 import com.mashup.presentation.feature.detail.chat.model.ChatDetailUiModel
+import com.mashup.presentation.common.extension.isScrollingUp
 import com.mashup.presentation.ui.common.KeyLinkBottomSheetLayout
 import com.mashup.presentation.ui.common.KeyLinkChatBottomSheet
 import com.mashup.presentation.ui.common.KeyLinkKeywordBottomSheet
 import com.mashup.presentation.ui.common.KeyLinkToolbar
-import com.mashup.presentation.ui.theme.Black
-import com.mashup.presentation.ui.theme.SsamDTheme
-import com.mashup.presentation.ui.theme.White
+import com.mashup.presentation.ui.theme.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -67,11 +66,7 @@ fun ChatDetailScreen(
         skipHalfExpanded = false
     )
     val scrollState = rememberLazyGridState()
-    val isMatchedKeywordVisible by remember {
-        derivedStateOf {
-            mutableStateOf( scrollState.firstVisibleItemScrollOffset == 0 )
-        }
-    }
+    val isScrollingUp = scrollState.isScrollingUp()
     /**
      * val viewModel: ~ by hiltViewModel()
      * collectAsState~
@@ -134,7 +129,7 @@ fun ChatDetailScreen(
                 onChatItemClick = { },
                 keywordBottomSheetState = keywordBottomSheetState,
                 onChangeBottomSheetType = { currentBottomSheetType = it },
-                isMatchedKeywordVisible = isMatchedKeywordVisible.value,
+                isMatchedKeywordVisible = isScrollingUp,
                 scrollState = scrollState,
                 coroutineScope = coroutineScope
             )
@@ -159,15 +154,16 @@ fun ChatDetailContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         OtherUserInfo(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp, bottom = 16.dp),
             othersNickName = chatDetailState.othersNickName,
             othersProfileImage = chatDetailState.othersProfileImage
         )
-
         MatchedKeywords(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 16.dp)
+                .padding(start = 20.dp, end = 20.dp, bottom = 16.dp)
                 .clickable {
                     onChangeBottomSheetType(BottomSheetType.KEYWORD)
                     coroutineScope.launch {
@@ -178,9 +174,9 @@ fun ChatDetailContent(
             matchedKeywords = chatDetailState.getMatchedKeywordSummery(),
             visible = isMatchedKeywordVisible
         )
-
+        Divider(color = Gray01)
         ChatContent(
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
+            modifier = Modifier,
             chat = chatDetailState.chat,
             onChatItemClick = { onChatItemClick() },
             scrollState = scrollState
