@@ -23,11 +23,13 @@ import com.mashup.presentation.ui.theme.SsamDTheme
 @Composable
 fun OnBoardingRoute(
     modifier: Modifier = Modifier,
-    navigateToNotificationPermission: () -> Unit
+    navigateToNotificationPermission: () -> Unit,
+    finishActivity: () -> Unit
 ) {
     OnBoardingScreen(
         modifier = modifier,
-        navigateToNotificationPermission = navigateToNotificationPermission
+        navigateToNotificationPermission = navigateToNotificationPermission,
+        finishActivity = finishActivity
     )
 }
 
@@ -35,6 +37,7 @@ fun OnBoardingRoute(
 fun OnBoardingScreen(
     modifier: Modifier = Modifier,
     navigateToNotificationPermission: () -> Unit,
+    finishActivity: () -> Unit,
     viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -59,7 +62,7 @@ fun OnBoardingScreen(
             }
             is OnBoardingViewModel.UiState.Editing -> {
                 OnBoardingContent(
-                    modifier,
+                    modifier.padding(it),
                     keywords = (uiState as OnBoardingViewModel.UiState.Editing).keywords,
                     addKeyword = viewModel::addKeyword,
                     removeKeyword = viewModel::removeKeyword,
@@ -75,7 +78,7 @@ fun OnBoardingScreen(
         KeyLinkGoFirstDialog(
             onDismissRequest = {},
             onPositiveClick = {
-                // TODO: 로그인페이지로 네비게이션
+                finishActivity()
                 showGoFirstDialog = false
             },
             onNegativeClick = { showGoFirstDialog = false }
@@ -179,6 +182,8 @@ fun PreviewOnBoardingScreen() {
     SsamDTheme {
         OnBoardingScreen(
             modifier = Modifier,
-            navigateToNotificationPermission = {})
+            navigateToNotificationPermission = {},
+            finishActivity = {}
+        )
     }
 }
