@@ -1,14 +1,13 @@
 package com.mashup.presentation.feature.signal
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.domain.usecase.GetRecommendKeywordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,20 +20,32 @@ import javax.inject.Inject
 class SignalViewModel @Inject constructor(
     private val getRecommendKeywordUseCase: GetRecommendKeywordUseCase,
 ) : ViewModel() {
-    private val _keywordsState: MutableStateFlow<KeywordUiState> = MutableStateFlow(KeywordUiState.Loading)
-    val keywordsState: StateFlow<KeywordUiState> = _keywordsState.asStateFlow()
+    private val _uiStateFlow: MutableStateFlow<KeywordUiState> =
+        MutableStateFlow(KeywordUiState.Loading)
+    val uiStateFlow: StateFlow<KeywordUiState> = _uiStateFlow.asStateFlow()
+
+    val keywordListState = mutableStateListOf<String>()
 
     fun getRecommendKeywords() {
         viewModelScope.launch {
+            delay(1000L)
             getRecommendKeywordUseCase.execute("안녕하세요 우히히").catch {
-//                Log.e("TAG","$it")
-                _keywordsState.value = KeywordUiState.Error(it)
-            }.collect {
-//                Log.e("TAG","Success")
-//                Log.e("TAG", "$it")
-                _keywordsState.value = KeywordUiState.Success(it)
+                _uiStateFlow.value = KeywordUiState.Error(it)
+            }.collect { keywords ->
+                _uiStateFlow.value = KeywordUiState.Success
+                keywordListState.apply {
+                    keywords.forEach { add(it) }
+                }
             }
         }
+    }
+
+    fun addKeyword(keyword: String) {
+        keywordListState.add(keyword)
+    }
+
+    fun deleteKeyword(index: Int) {
+        keywordListState.removeAt(index)
     }
 
     fun setSignalContent(content: String) {
@@ -43,9 +54,7 @@ class SignalViewModel @Inject constructor(
 }
 
 sealed interface KeywordUiState {
-    data class Success(val keywords: List<String> = emptyList()) : KeywordUiState {
-        fun isEmpty(): Boolean = keywords.isEmpty()
-    }
+    object Success : KeywordUiState
     data class Error(val throwable: Throwable) : KeywordUiState
     object Loading : KeywordUiState
 }
