@@ -34,28 +34,54 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun LoginScreen(
+fun LoginRoute(
     loginViewModel: LoginViewModel = viewModel(),
     loginButtonClicked: () -> Unit,
     loginToOnBoarding: () -> Unit,
     handleOnBackPressed: () -> Unit
 ) {
     val nicknameState by loginViewModel.nicknameState.collectAsState()
-    val coroutineScope = rememberCoroutineScope()
-
-    val pagerState = rememberPagerState(0)
-
-    LaunchedEffect(loginViewModel.currentPage) {
-        pagerState.animateScrollToPage(loginViewModel.currentPage)
-    }
 
     BackHandler(enabled = true) {
         when (loginViewModel.currentPage) {
             0 -> handleOnBackPressed()
             else -> loginViewModel.backToPrevPage()
         }
+    }
+
+    LoginScreen(
+        currentPage = loginViewModel.currentPage,
+        nickname = loginViewModel.nickname,
+        nicknameState = nicknameState,
+        loginButtonClicked = loginButtonClicked,
+        loginToOnBoarding = loginToOnBoarding,
+        patchNickname = { nickname ->
+            loginViewModel.patchNickname(nickname)
+        },
+        getNicknameDuplication = { nickname ->
+            loginViewModel.getNicknameDuplication(nickname)
+        }
+    )
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun LoginScreen(
+    currentPage: Int,
+    nickname: String,
+    nicknameState: ValidationState,
+    loginButtonClicked: () -> Unit,
+    loginToOnBoarding: () -> Unit,
+    patchNickname: (String) -> Unit,
+    getNicknameDuplication: (String) -> Unit
+) {
+    val coroutineScope = rememberCoroutineScope()
+
+    val pagerState = rememberPagerState(0)
+
+    LaunchedEffect(currentPage) {
+        pagerState.animateScrollToPage(currentPage)
     }
 
     HorizontalPager(
@@ -74,17 +100,17 @@ fun LoginScreen(
             )
             1 -> NicknameScreen(
                 onNextButtonClicked = { nickname ->
-                    loginViewModel.patchNickname(nickname)
+                    patchNickname(nickname)
                 },
                 checkNicknameDuplication = { nickname ->
-                    loginViewModel.getNicknameDuplication(nickname)
+                    getNicknameDuplication(nickname)
                 },
                 validationState = nicknameState,
                 coroutineScope = coroutineScope
             )
             2 -> LoginCompletionScreen (
                 onStartButtonClicked = loginToOnBoarding,
-                nickname = loginViewModel.nickname
+                nickname = nickname
             )
         }
     }
