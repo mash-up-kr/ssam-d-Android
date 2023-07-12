@@ -11,6 +11,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.chat.ChatViewModel
 import com.mashup.presentation.feature.detail.chat.model.ChatDetailUiModel
@@ -24,6 +25,7 @@ import com.mashup.presentation.ui.theme.White
  * @author jaesung
  * @created 2023/06/28
  */
+
 @Composable
 fun ChatDetailRoute(
     onBackClick: () -> Unit,
@@ -31,19 +33,26 @@ fun ChatDetailRoute(
     modifier: Modifier = Modifier,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
-
-    ChatDetailScreen(
-        modifier = modifier,
-        onBackClick = onBackClick,
-        onMessageClick = onMessageClick,
-    )
+    when (val state = viewModel.chatDetailUiState.collectAsStateWithLifecycle().value) {
+        is ChatDetailUiState.Loading -> {}
+        is ChatDetailUiState.Success -> {
+            ChatDetailScreen(
+                modifier = modifier,
+                onBackClick = onBackClick,
+                onMessageClick = onMessageClick,
+                chatDetailUiState = state
+            )
+        }
+        is ChatDetailUiState.Failure -> {}
+    }
 }
 
 @Composable
 fun ChatDetailScreen(
+    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onMessageClick: () -> Unit,
-    modifier: Modifier = Modifier
+    chatDetailUiState: ChatDetailUiState.Success
 ) {
     Scaffold(
         modifier = modifier,
@@ -65,7 +74,7 @@ fun ChatDetailScreen(
     ) { paddingValues ->
         ChatDetailContent(
             modifier = Modifier.padding(paddingValues),
-            chatDetailState = ProvideChatDetailState,
+            chatDetailState = chatDetailUiState.chatDetailUiModel,
             onChatItemClick = onMessageClick
         )
     }
@@ -108,7 +117,7 @@ fun ChatDetailContent(
 @Composable
 private fun ChatDetailScreenPreview() {
     SsamDTheme {
-        ChatDetailScreen(onBackClick = {}, onMessageClick = {})
+        // ChatDetailScreen(onBackClick = {}, onMessageClick = {})
     }
 }
 
