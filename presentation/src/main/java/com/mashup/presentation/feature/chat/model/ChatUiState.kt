@@ -10,6 +10,7 @@ import androidx.compose.runtime.Stable
 
 @Stable
 data class Message(
+    val id: Long,
     val userName: String,
     val matchedCount: Int,
     val date: String,
