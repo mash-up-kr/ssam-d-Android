@@ -15,6 +15,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.graphics.*
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -52,7 +54,11 @@ fun HomeScreen(
 ) {
     val signals = emptyList<SignalUiModel>()
     val scrollState = rememberLazyListState()
-    val isScrollingUp = scrollState.isScrollingUp()
+    val isKeywordInfoContainerVisible by remember {
+        derivedStateOf {
+            mutableStateOf( scrollState.firstVisibleItemScrollOffset == 0 )
+        }
+    }
     val isAtTop = !scrollState.canScrollBackward
     val topBarBackgroundColor by animateColorAsState(if (isAtTop) Color.Transparent else Gray01)
 
@@ -84,7 +90,7 @@ fun HomeScreen(
             HomeScreenToolBar(topBarBackgroundColor)
             HomeKeywordInfoContainer(
                 onClick = { navigateToSubscribeKeyword() },
-                visible = isScrollingUp,
+                visible = isKeywordInfoContainerVisible.value,
                 topBarBackgroundColor = topBarBackgroundColor
             )
             if (signals.isEmpty()) {
@@ -215,25 +221,6 @@ private fun SignalCardList(signals: List<SignalUiModel>, scrollState: LazyListSt
             SignalCard(signal)
         }
     }
-}
-
-@Composable
-private fun LazyListState.isScrollingUp(): Boolean {
-    var previousIndex by remember(this) { mutableStateOf(firstVisibleItemIndex) }
-    var previousScrollOffset by remember(this) { mutableStateOf(firstVisibleItemScrollOffset) }
-
-    return remember(this) {
-        derivedStateOf {
-            if (previousIndex != firstVisibleItemIndex) {
-                previousIndex > firstVisibleItemIndex
-            } else {
-                previousScrollOffset >= firstVisibleItemScrollOffset
-            }.also {
-                previousIndex = firstVisibleItemIndex
-                previousScrollOffset = firstVisibleItemScrollOffset
-            }
-        }
-    }.value
 }
 
 @Composable
