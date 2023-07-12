@@ -46,7 +46,8 @@ fun ChatContent(
         columns = GridCells.Fixed(count = 2),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        state = scrollState
+        state = scrollState,
+        contentPadding = PaddingValues(vertical = 8.dp, horizontal = 20.dp)
     ) {
         items(chat) { message ->
             MessageContent(
