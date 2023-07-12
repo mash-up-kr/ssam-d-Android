@@ -24,7 +24,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.airbnb.lottie.compose.*
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.*
@@ -36,12 +37,12 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun LoginRoute(
-    loginViewModel: LoginViewModel = viewModel(),
+    loginViewModel: LoginViewModel = hiltViewModel(),
     loginButtonClicked: () -> Unit,
     loginToOnBoarding: () -> Unit,
     handleOnBackPressed: () -> Unit
 ) {
-    val nicknameState by loginViewModel.nicknameState.collectAsState()
+    val nicknameState by loginViewModel.nicknameState.collectAsStateWithLifecycle()
 
     BackHandler(enabled = true) {
         when (loginViewModel.currentPage) {
