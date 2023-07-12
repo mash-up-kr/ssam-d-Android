@@ -10,7 +10,7 @@ class GetChatsUseCase @Inject constructor(
 
     override suspend fun invoke(param: Long): Result<ChatDetail> {
         return runCatching {
-            chatRepository.getChatRooms(param)
+            chatRepository.getChats(param)
         }
     }
 }

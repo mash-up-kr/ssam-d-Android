@@ -9,7 +9,7 @@ class ChatRepositoryImpl @Inject constructor(
     private val remoteChatDataSource: RemoteChatDataSource
 ): ChatRepository {
 
-    override suspend fun getChatRooms(id: Long): ChatDetail {
+    override suspend fun getChats(id: Long): ChatDetail {
         return remoteChatDataSource.getChats(id).toDomainModel()
     }
 }

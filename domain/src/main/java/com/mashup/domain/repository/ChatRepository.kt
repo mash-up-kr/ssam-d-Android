@@ -4,5 +4,5 @@ import com.mashup.domain.model.ChatDetail
 
 interface ChatRepository {
 
-    suspend fun getChatRooms(id: Long): ChatDetail
+    suspend fun getChats(id: Long): ChatDetail
 }
