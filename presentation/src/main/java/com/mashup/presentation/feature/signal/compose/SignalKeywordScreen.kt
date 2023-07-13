@@ -34,6 +34,7 @@ import okhttp3.internal.toImmutableList
  */
 @Composable
 fun SignalKeywordRoute(
+    content: String,
     onBackClick: () -> Unit,
     onSendClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -43,7 +44,7 @@ fun SignalKeywordRoute(
     val keywords = viewModel.keywordListState.toImmutableList()
 
     LaunchedEffect(Unit) {
-        viewModel.getRecommendKeywords()
+        viewModel.getRecommendKeywords(content)
     }
 
     SignalKeywordScreen(

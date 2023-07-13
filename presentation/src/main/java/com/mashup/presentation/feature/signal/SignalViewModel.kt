@@ -26,10 +26,10 @@ class SignalViewModel @Inject constructor(
 
     val keywordListState = mutableStateListOf<String>()
 
-    fun getRecommendKeywords() {
+    fun getRecommendKeywords(content: String) {
         viewModelScope.launch {
             delay(1000L)
-            getRecommendKeywordUseCase.execute("안녕하세요 우히히").catch {
+            getRecommendKeywordUseCase.execute(content).catch {
                 _uiStateFlow.value = KeywordUiState.Error(it)
             }.collect { keywords ->
                 _uiStateFlow.value = KeywordUiState.Success

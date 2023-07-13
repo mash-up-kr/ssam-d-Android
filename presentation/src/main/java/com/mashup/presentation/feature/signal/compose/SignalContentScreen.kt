@@ -37,7 +37,7 @@ import com.mashup.presentation.ui.theme.White
 @Composable
 fun SignalContentRoute(
     onBackClick: () -> Unit,
-    onNextClick: () -> Unit,
+    onNextClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SignalViewModel = hiltViewModel()
 ) {
@@ -47,10 +47,7 @@ fun SignalContentRoute(
         modifier = modifier,
         signalContent = signalContent,
         onBackClick = onBackClick,
-        onNextClick = {
-            viewModel.setSignalContent(signalContent)
-            onNextClick()
-        },
+        onNextClick = { onNextClick(signalContent) },
         onSignalChange = { signalContent = it }
     )
 }
