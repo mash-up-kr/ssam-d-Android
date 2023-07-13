@@ -61,7 +61,8 @@ fun NavGraphBuilder.signalGraph(
             SignalKeywordRoute(
                 content = backStackEntry.arguments?.getString("content") ?: "",
                 onBackClick = onBackClick,
-                onSendClick = navController::navigateToSignalComplete
+                onSendSuccess = navController::navigateToSignalComplete,
+                onSendFailed = {}
             )
         }
 

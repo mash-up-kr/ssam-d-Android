@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.signal.KeywordUiState
+import com.mashup.presentation.feature.signal.SignalUiEvent
 import com.mashup.presentation.feature.signal.SignalViewModel
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.Black
@@ -36,15 +37,25 @@ import okhttp3.internal.toImmutableList
 fun SignalKeywordRoute(
     content: String,
     onBackClick: () -> Unit,
-    onSendClick: () -> Unit,
+    onSendSuccess: () -> Unit,
+    onSendFailed: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SignalViewModel = hiltViewModel()
 ) {
     val keywordsUiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
+    val sendSignalEvent by viewModel.eventFlow.collectAsStateWithLifecycle(SignalUiEvent.Nothing)
     val keywords = viewModel.keywordListState.toImmutableList()
 
     LaunchedEffect(Unit) {
         viewModel.getRecommendKeywords(content)
+    }
+
+    LaunchedEffect(sendSignalEvent) {
+        when (sendSignalEvent) {
+            SignalUiEvent.SendSignalSuccess -> onSendSuccess()
+            is SignalUiEvent.Error -> onSendFailed()
+            else -> {}
+        }
     }
 
     SignalKeywordScreen(
@@ -53,7 +64,7 @@ fun SignalKeywordRoute(
         onKeywordAdd = viewModel::addKeyword,
         onKeywordDelete = viewModel::deleteKeyword,
         onDialogBackClick = onBackClick,
-        onSendClick = onSendClick,
+        onSendClick = { viewModel.sendSignal(content) },
         keywordUiState = keywordsUiState,
     )
 }
