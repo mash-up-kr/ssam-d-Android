@@ -1,5 +1,6 @@
 package com.mashup.presentation.onboarding
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -33,6 +34,10 @@ fun NotificationPermissionScreen(
     navigateToHome: () -> Unit = {},
     requestNotificationPermission: () -> Unit = {}
 ) {
+    BackHandler(true) {
+        navigateToHome()
+    }
+
     Scaffold(
         backgroundColor = Black,
         modifier = modifier.fillMaxSize()
