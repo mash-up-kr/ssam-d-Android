@@ -13,5 +13,3 @@ class CheckNicknameDuplicationUseCase @Inject constructor(
         }
     }
 }
-
-class ConflictException(message: String) : Exception(message)

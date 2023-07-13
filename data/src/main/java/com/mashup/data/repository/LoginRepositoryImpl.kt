@@ -3,10 +3,9 @@ package com.mashup.data.repository
 import com.mashup.data.source.local.datasource.LocalLoginDataSource
 import com.mashup.data.source.remote.datasource.RemoteLoginDataSource
 import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody
+import com.mashup.data.util.suspendRunCatching
 import com.mashup.domain.repository.LoginRepository
-import com.mashup.domain.usecase.ConflictException
 import com.mashup.domain.usecase.LoginParam
-import retrofit2.HttpException
 import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor(
@@ -32,14 +31,9 @@ class LoginRepositoryImpl @Inject constructor(
         return token.isNotEmpty()
     }
 
-    override suspend fun getNicknameDuplication(nickname: String) {
-        try {
+    override suspend fun getNicknameDuplication(nickname: String): Result<Unit> {
+        return suspendRunCatching {
             remoteLoginDataSource.getNicknameDuplication(nickname)
-        } catch (e: HttpException) {
-            when (e.code()) {
-                409 -> throw ConflictException("ConflictException")
-                else -> throw Exception("Exception")
-            }
         }
     }
 
