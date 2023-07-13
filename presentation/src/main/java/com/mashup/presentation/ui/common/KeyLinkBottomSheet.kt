@@ -62,10 +62,7 @@ fun KeyLinkChatBottomSheetItem(
 ) {
     Row(
         modifier = modifier
-            .padding(vertical = 16.dp)
-            .clickable {
-                onAction()
-            },
+            .clickable { onAction() }.padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
