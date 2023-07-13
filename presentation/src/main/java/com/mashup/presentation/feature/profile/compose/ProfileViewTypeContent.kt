@@ -220,12 +220,14 @@ fun AppVersionContent(
 @Composable
 fun LogoutContent(
     description: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
             .background(color = Gray02)
             .padding(horizontal = 20.dp, vertical = 16.dp)
+            .clickable { onClick() }
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -311,7 +313,8 @@ fun AppVersionContentPreview() {
 fun LogoutContentPreview() {
     SsamDTheme {
         LogoutContent(
-            description = "로그아웃"
+            description = "로그아웃",
+            onClick = {}
         )
     }
 }

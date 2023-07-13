@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.feature.profile.ProfileViewModel
 import com.mashup.presentation.feature.profile.ProfileViewType
+import com.mashup.presentation.ui.common.KeyLinkLogoutDialog
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.Black
 
@@ -29,6 +30,7 @@ import com.mashup.presentation.ui.theme.Black
 fun ProfileRoute(
     onBackClick: () -> Unit,
     onNavigateClick: (String) -> Unit,
+    onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
@@ -45,7 +47,11 @@ fun ProfileRoute(
         },
         onEditClick = {},
         onBackClick = onBackClick,
-        onNavigateClick = onNavigateClick
+        onNavigateClick = onNavigateClick,
+        onLogoutClick = {
+            // viewModel.logoutUser
+            onLogoutClick()
+        }
     )
 }
 
@@ -56,6 +62,7 @@ private fun ProfileScreen(
     onEditClick: () -> Unit,
     onBackClick: () -> Unit,
     onNavigateClick: (String) -> Unit,
+    onLogoutClick: () -> Unit,
     optionsList: List<ProfileViewType>,
     modifier: Modifier = Modifier,
 ) {
@@ -74,7 +81,8 @@ private fun ProfileScreen(
             isChecked = isChecked,
             onCheckedChange = onCheckedChange,
             onEditClick = onEditClick,
-            onNavigateClick = onNavigateClick
+            onNavigateClick = onNavigateClick,
+            onLogoutClick = onLogoutClick
         )
     }
 }
@@ -85,16 +93,22 @@ fun ProfileContent(
     onCheckedChange: (Boolean) -> Unit,
     onEditClick: () -> Unit,
     onNavigateClick: (String) -> Unit,
+    onLogoutClick: () -> Unit,
     optionsList: List<ProfileViewType>,
     modifier: Modifier = Modifier,
 ) {
+    var showDialog by rememberSaveable { mutableStateOf(false) }
     LazyColumn(
         modifier = modifier
     ) {
         itemsIndexed(optionsList) { index, viewType ->
             when (index) {
-                2, 4 -> { Spacer(modifier = Modifier.height(20.dp)) }
-                8 -> { Spacer(modifier = Modifier.height(52.dp)) }
+                2, 4 -> {
+                    Spacer(modifier = Modifier.height(20.dp))
+                }
+                8 -> {
+                    Spacer(modifier = Modifier.height(52.dp))
+                }
             }
 
             when (viewType) {
@@ -118,7 +132,10 @@ fun ProfileContent(
                     )
                 }
                 is ProfileViewType.LogoutContent -> {
-                    LogoutContent(description = viewType.description)
+                    LogoutContent(
+                        description = viewType.description,
+                        onClick = { showDialog = true }
+                    )
                 }
                 is ProfileViewType.NavigationContent -> {
                     NavigationContent(
@@ -139,5 +156,13 @@ fun ProfileContent(
         item {
             Spacer(modifier = Modifier.height(260.dp))
         }
+    }
+
+    if (showDialog) {
+        KeyLinkLogoutDialog(
+            onDismissRequest = { showDialog = false },
+            onCloseClick = { showDialog = false },
+            onLogoutClick = onLogoutClick
+        )
     }
 }
