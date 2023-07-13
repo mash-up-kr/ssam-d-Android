@@ -1,6 +1,9 @@
 package com.mashup.presentation.common.extension
 
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
+import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Point
 import android.os.Build
@@ -63,6 +66,16 @@ internal fun Context.resizeDialogFragment(dialogFragment: DialogFragment) {
 
         val window = dialogFragment.dialog?.window
         window?.setLayout(width, 200.toPx())
+    }
+}
+
+fun Context.getAppVersion(): String {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        this.applicationContext.packageManager.getPackageInfo(
+            packageName, PackageManager.PackageInfoFlags.of(0L)
+        ).versionName
+    } else {
+        this.applicationContext.packageManager.getPackageInfo(packageName, 0).versionName
     }
 }
 
