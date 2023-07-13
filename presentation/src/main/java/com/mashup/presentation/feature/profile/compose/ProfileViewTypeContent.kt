@@ -3,6 +3,8 @@ package com.mashup.presentation.feature.profile.compose
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
@@ -12,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -227,7 +230,12 @@ fun LogoutContent(
         modifier = modifier
             .background(color = Gray02)
             .padding(horizontal = 20.dp, vertical = 16.dp)
-            .clickable { onClick() }
+            .clickable(
+                interactionSource = MutableInteractionSource(),
+                indication = null,
+                onClick = onClick,
+                role = Role.Button
+            )
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -247,6 +255,7 @@ fun LogoutContent(
         )
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun UserInfoContentPreview() {
