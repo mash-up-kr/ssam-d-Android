@@ -14,6 +14,7 @@ import com.mashup.presentation.common.base.BaseFragment
 import com.mashup.presentation.common.extension.makeSnackBar
 import com.mashup.presentation.common.extension.setThemeContent
 import com.mashup.presentation.databinding.FragmentNotificationPermissionGuideComposeBinding
+import com.mashup.presentation.navigation.MainActivity
 import com.mashup.presentation.onboarding.NotificationPermissionScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,6 +36,7 @@ class NotificationPermissionGuideFragment :
             } else {
                 Toast.makeText(requireActivity(), "권한 거부", Toast.LENGTH_SHORT).show()
             }
+            startActivity(Intent(context, MainActivity::class.java))
         }
 
     override fun initViews() {
@@ -42,27 +44,11 @@ class NotificationPermissionGuideFragment :
             NotificationPermissionScreen(
                 modifier = Modifier,
                 navigateToHome = {
-                    // TODO: home navigation
+                    startActivity(Intent(context, MainActivity::class.java))
                 },
                 requestNotificationPermission = ::requestNotificationPermission
             )
         }
-    }
-
-    /**
-     * 만약 xml살릴거라면 주석을 지우고 composeView 세팅을 없애세요.
-     */
-    private fun ifUseXml() {
-//        binding.cpvTitle.setThemeContent {
-//            KeyLinkMintText(
-//                text = "내 행성으로 온 시그널을\n놓치지 않고 받아볼까요?",
-//                modifier = Modifier
-//            )
-//        }
-//
-//        binding.btnAllow.setOnClickListener {
-//            requestNotificationPermission()
-//        }
     }
 
     private fun requestNotificationPermission() {
