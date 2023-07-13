@@ -54,7 +54,7 @@
     <string name="onboarding_keywords_complete">모두 입력했어요</string>
     <string name="onboarding_keywords_input">대화하고 싶은 키워드를 적어주세요</string>
     <string name="onboarding_keywords_input_description">입력한 키워드를 기반으로 매칭해드려요</string>
-    <string name="onboarding_keywords_chip_hint">입력한 키워드를 기반으로 매칭해드려요</string>
+    <string name="onboarding_keywords_chip_hint">예) 매쉬업, 운동</string>
     <string name="onboarding_delete_keyword_content_description">키워드 지우기</string>
 
     <!-- Dialog -->

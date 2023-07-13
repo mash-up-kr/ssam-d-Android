@@ -1,10 +1,13 @@
 package com.mashup.presentation.feature.detail.chat.compose
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,6 +22,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.feature.detail.chat.model.MessageBackgroundColor
@@ -34,13 +38,16 @@ import com.mashup.presentation.ui.theme.*
 fun ChatContent(
     chat: List<MessageUiModel>,
     onChatItemClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    scrollState: LazyGridState
 ) {
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Fixed(count = 2),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        state = scrollState,
+        contentPadding = PaddingValues(vertical = 8.dp, horizontal = 20.dp)
     ) {
         items(chat) { message ->
             MessageContent(
@@ -105,11 +112,7 @@ fun MessageContent(
                     modifier = Modifier.weight(8f),
                     text = message,
                     overflow = TextOverflow.Ellipsis,
-                    style = TextStyle(
-                        fontFamily = FontFamily.Default,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 13.sp,
-                    ),
+                    style = Body3,
                     color = White
                 )
 
@@ -125,12 +128,7 @@ fun MessageContent(
                         .weight(1f)
                         .padding(top = 4.dp),
                     text = date,
-                    style = TextStyle(
-                        fontFamily = FontFamily.Default,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 10.sp,
-                        lineHeight = 18.sp
-                    ),
+                    style = Caption2,
                     color = if (isMine) Gray06 else White
                 )
             }

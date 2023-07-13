@@ -1,10 +1,16 @@
 package com.mashup.presentation.feature.detail.chat.compose
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,13 +28,21 @@ import com.mashup.presentation.ui.theme.SsamDTheme
 fun MatchedKeywords(
     matchedKeywords: List<String>,
     modifier: Modifier = Modifier,
+    visible: Boolean,
 ) {
-    LazyRow(
-        modifier = modifier.padding(bottom = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally)
+
+    AnimatedVisibility(
+        visible = visible,
+        enter = expandVertically(),
+        exit = shrinkVertically()
     ) {
-        items(matchedKeywords) { keyword ->
-            KeywordChip(keyword = keyword)
+        LazyRow(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            items(matchedKeywords) { keyword ->
+                KeywordChip(keyword = keyword)
+            }
         }
     }
 }
@@ -38,6 +52,6 @@ fun MatchedKeywords(
 private fun MatchedKeywordsPreview() {
     val keywords = listOf("매쉬업", "일상", "디자인", "IT", "취준")
     SsamDTheme {
-        MatchedKeywords(matchedKeywords = keywords)
+        MatchedKeywords(matchedKeywords = keywords, visible = true)
     }
 }

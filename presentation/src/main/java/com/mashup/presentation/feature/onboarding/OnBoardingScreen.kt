@@ -1,10 +1,11 @@
 package com.mashup.presentation.feature.onboarding
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -14,30 +15,56 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.*
+import com.mashup.presentation.ui.theme.Black
 import com.mashup.presentation.ui.theme.Gray07
 import com.mashup.presentation.ui.theme.SsamDTheme
 
 
 @Composable
+fun OnBoardingRoute(
+    modifier: Modifier = Modifier,
+    navigateToNotificationPermission: () -> Unit,
+    finishActivity: () -> Unit
+) {
+    OnBoardingScreen(
+        modifier = modifier,
+        navigateToNotificationPermission = navigateToNotificationPermission,
+        finishActivity = finishActivity
+    )
+}
+
+@Composable
 fun OnBoardingScreen(
     modifier: Modifier = Modifier,
     navigateToNotificationPermission: () -> Unit,
+    finishActivity: () -> Unit,
     viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    var showGoFirstDialog by remember { mutableStateOf(false) }
 
-    Column(modifier = modifier.fillMaxSize()) {
-        KeyLinkToolbar(
-            onClickBack = {}
-        )
+    BackHandler(true) {
+        showGoFirstDialog = true
+    }
+
+    Scaffold(
+        topBar = {
+            KeyLinkToolbar(
+                onClickBack = { showGoFirstDialog = true }
+            )
+        },
+        backgroundColor = Black
+    ) {
         when (uiState) {
-            OnBoardingViewModel.UiState.Loading -> Unit  // TODO: 로딩 프로그레스 바 돌리기
+            OnBoardingViewModel.UiState.Loading -> {
+                KeyLinkLoading()
+            }
             OnBoardingViewModel.UiState.SaveSuccess -> {
                 navigateToNotificationPermission()
             }
             is OnBoardingViewModel.UiState.Editing -> {
                 OnBoardingContent(
-                    modifier,
+                    modifier.padding(it),
                     keywords = (uiState as OnBoardingViewModel.UiState.Editing).keywords,
                     addKeyword = viewModel::addKeyword,
                     removeKeyword = viewModel::removeKeyword,
@@ -48,6 +75,16 @@ fun OnBoardingScreen(
                 // TODO: show error Snackbar
             }
         }
+    }
+    if (showGoFirstDialog) {
+        KeyLinkGoFirstDialog(
+            onDismissRequest = {},
+            onPositiveClick = {
+                finishActivity()
+                showGoFirstDialog = false
+            },
+            onNegativeClick = { showGoFirstDialog = false }
+        )
     }
 }
 
@@ -82,32 +119,6 @@ fun OnBoardingContent(
                 saveKeywords(keywords)
             },
             enable = keywords.isNotEmpty()
-        )
-    }
-}
-
-
-@Composable
-fun NicknameScreen() {
-    var nickname by remember { mutableStateOf("") }
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        Spacer(modifier = Modifier.height(12.dp))
-        KeyLinkMintText(text = "사용할 닉네임을 입력해주세요")
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "10글자 이내", fontSize = 14.sp, color = Gray07)
-        Spacer(modifier = Modifier.height(56.dp))
-        KeyLinkOnBoardingTextField(
-            value = nickname,
-            onValueChange = { nickname = it },
-            hint = "닉네임 입력",
-            fontSize = 32.sp,
-            onClickDone = { /* 키보드 닫기 */ },
-            maxLength = 10
         )
     }
 }
@@ -173,6 +184,8 @@ fun PreviewOnBoardingScreen() {
     SsamDTheme {
         OnBoardingScreen(
             modifier = Modifier,
-            navigateToNotificationPermission = {})
+            navigateToNotificationPermission = {},
+            finishActivity = {}
+        )
     }
 }
