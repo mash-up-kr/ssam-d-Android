@@ -26,6 +26,7 @@ import com.mashup.presentation.ui.common.KeyLinkButton
 import com.mashup.presentation.ui.common.KeyLinkContentLengthDialog
 import com.mashup.presentation.ui.common.KeyLinkTextField
 import com.mashup.presentation.ui.common.KeyLinkToolbar
+import com.mashup.presentation.ui.theme.Body2
 import com.mashup.presentation.ui.theme.SsamDTheme
 import com.mashup.presentation.ui.theme.White
 
@@ -68,10 +69,8 @@ fun SignalContentScreen(
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.create_signal),
-                    style = TextStyle(
-                        color = White,
-                        fontSize = 14.sp
-                    )
+                    style = Body2,
+                    color = White
                 )
             },
             onClickBack = onBackClick
@@ -121,7 +120,7 @@ fun SignalContent(
             hint = stringResource(id = R.string.hint_signal_content),
             hintAlign = TextAlign.Start,
             onClickDone = { /*TODO*/ },
-            fontSize = 18.sp,
+            fontSize = 18.sp,  // typo + lineheight 확
             maxLength = 300
         )
         KeyLinkButton(
