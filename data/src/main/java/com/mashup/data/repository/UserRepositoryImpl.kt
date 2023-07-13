@@ -40,16 +40,16 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun patchAlarm(isAgree: Boolean) {
-        remoteLoginDataSource.patchAlarm(isAgree)
+        remoteUserDataSource.patchAlarm(isAgree)
     }
 
     override suspend fun getUser(id: Long): User {
-        remoteLoginDataSource.getUser(id).let {result ->
+        remoteUserDataSource.getUser(id).let {result ->
             return result.data?.toDomainModel() ?: throw Exception(result.message)
         }
     }
 
     override suspend fun deleteUser(id: Long) {
-        remoteLoginDataSource.deleteUser(id)
+        remoteUserDataSource.deleteUser(id)
     }
 }
