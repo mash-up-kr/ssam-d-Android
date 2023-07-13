@@ -100,18 +100,18 @@ fun LoginScreen(
                 onLoginButtonClicked = loginButtonClicked
             )
             1 -> NicknameScreen(
+                coroutineScope = coroutineScope,
+                validationState = nicknameState,
                 onNextButtonClicked = { nickname ->
                     patchNickname(nickname)
                 },
                 checkNicknameDuplication = { nickname ->
                     getNicknameDuplication(nickname)
-                },
-                validationState = nicknameState,
-                coroutineScope = coroutineScope
+                }
             )
             2 -> LoginCompletionScreen (
-                onStartButtonClicked = loginToOnBoarding,
-                nickname = nickname
+                nickname = nickname,
+                onStartButtonClicked = loginToOnBoarding
             )
         }
     }
@@ -237,10 +237,10 @@ private fun LoginGuideText(modifier: Modifier = Modifier) {
 @OptIn(FlowPreview::class)
 @Composable
 fun NicknameScreen(
-    onNextButtonClicked: (String) -> Unit,
-    checkNicknameDuplication: (String) -> Unit,
+    coroutineScope: CoroutineScope,
     validationState: ValidationState,
-    coroutineScope: CoroutineScope
+    onNextButtonClicked: (String) -> Unit,
+    checkNicknameDuplication: (String) -> Unit
 ){
     val focusManager = LocalFocusManager.current
 
@@ -308,7 +308,7 @@ fun NicknameScreen(
 }
 
 @Composable
-fun LoginCompletionScreen(onStartButtonClicked: () -> Unit, nickname: String) {
+fun LoginCompletionScreen(nickname: String, onStartButtonClicked: () -> Unit) {
     Box {
         LoginBackground()
 
