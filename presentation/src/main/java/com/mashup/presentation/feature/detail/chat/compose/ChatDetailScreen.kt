@@ -16,10 +16,7 @@ import com.mashup.presentation.R
 import com.mashup.presentation.feature.chat.ChatViewModel
 import com.mashup.presentation.feature.detail.chat.model.ChatDetailUiModel
 import com.mashup.presentation.common.extension.isScrollingUp
-import com.mashup.presentation.ui.common.KeyLinkBottomSheetLayout
-import com.mashup.presentation.ui.common.KeyLinkChatBottomSheet
-import com.mashup.presentation.ui.common.KeyLinkKeywordBottomSheet
-import com.mashup.presentation.ui.common.KeyLinkToolbar
+import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -70,6 +67,7 @@ fun ChatDetailScreen(
     )
     val scrollState = rememberLazyGridState()
     val isScrollingUp = scrollState.isScrollingUp()
+    var showDisconnectDialog by remember { mutableStateOf(false) }
     /**
      * val viewModel: ~ by hiltViewModel()
      * collectAsState~
@@ -88,8 +86,11 @@ fun ChatDetailScreen(
                         .fillMaxWidth()
                         .wrapContentWidth(),
                     onDisconnectSignal = {
-                        // TODO: 연결끊기 api
-                    },
+                        coroutineScope.launch {
+                            chatMoreMenuBottomSheetState.hide()
+                        }
+                        showDisconnectDialog = true
+                     },
                     onReportUser = {
                         onReportClick()
                     }
@@ -137,6 +138,16 @@ fun ChatDetailScreen(
                 coroutineScope = coroutineScope
             )
         }
+    }
+    if (showDisconnectDialog) {
+        KeyLinkDisconnectSignalDialog(
+            onDismissRequest = {},
+            onDisconnectClick = {
+                onBackClick()
+                showDisconnectDialog = false
+            },
+            onCloseClick = { showDisconnectDialog = false }
+        )
     }
 }
 
