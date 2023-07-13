@@ -12,7 +12,7 @@ object ApiPattern {
     }
 
     object Signal {
-        private const val PREFIX = "signal"
+        private const val PREFIX = "signal/"
         const val SEND_SIGNAL = PREFIX + "send"
     }
 }
