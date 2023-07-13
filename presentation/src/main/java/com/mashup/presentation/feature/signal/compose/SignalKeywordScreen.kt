@@ -91,20 +91,40 @@ fun SignalKeywordScreen(
 
         when (keywordUiState) {
             is KeywordUiState.Loading -> {
-                ShimmerScreen(
-                    modifier = Modifier.padding(innerPaddingValues)
-                )
+                Column(modifier = Modifier.padding(innerPaddingValues)) {
+                    ShimmerScreen(
+                        modifier = Modifier.weight(1f)
+                    )
+                    KeyLinkButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 48.dp),
+                        text = stringResource(R.string.button_send_signal),
+                        enable = false,
+                        onClick = onSendClick
+                    )
+                }
             }
             is KeywordUiState.Success -> {
-                SignalKeyword(
-                    modifier = Modifier.padding(innerPaddingValues),
-                    keywords = keywords,
-                    onKeywordAdd = { onKeywordAdd(it) },
-                    onKeywordDelete = { onKeywordDelete(it) },
-                    onKeywordChange = { keyword = it },
-                    onRefreshValue = { keyword = "" },
-                    keyword = keyword
-                )
+                Column(modifier = Modifier.padding(innerPaddingValues)) {
+                    SignalKeyword(
+                        modifier = Modifier.weight(1f),
+                        keywords = keywords,
+                        onKeywordAdd = { onKeywordAdd(it) },
+                        onKeywordDelete = { onKeywordDelete(it) },
+                        onKeywordChange = { keyword = it },
+                        onRefreshValue = { keyword = "" },
+                        keyword = keyword
+                    )
+                    KeyLinkButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 48.dp),
+                        text = stringResource(R.string.button_send_signal),
+                        enable = keywords.isNotEmpty(),
+                        onClick = onSendClick
+                    )
+                }
             }
             is KeywordUiState.Error -> {}
         }
@@ -136,7 +156,7 @@ fun SignalKeyword(
         scrollState.animateScrollTo(Int.MAX_VALUE)
     }
 
-    Column(modifier = modifier) {
+    Column(modifier = modifier.fillMaxSize()) {
         Text(
             text = stringResource(R.string.signal_keyword_title),
             style = TextStyle(
@@ -208,6 +228,7 @@ fun SignalKeywordScreenPreview() {
             keywords = listOf(),
             onKeywordAdd = {},
             onKeywordDelete = {},
+            keywordUiState = KeywordUiState.Success
         )
     }
 }
