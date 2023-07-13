@@ -7,7 +7,7 @@ interface LoginRepository {
     suspend fun login(param: LoginParam): Boolean
     suspend fun patchNickname(nickname: String)
 
-    suspend fun patchAlarm(isAgree: Boolean)
+    suspend fun saveAlarmState(isAgree: Boolean)
 
     suspend fun getUser(id: Long): User
 

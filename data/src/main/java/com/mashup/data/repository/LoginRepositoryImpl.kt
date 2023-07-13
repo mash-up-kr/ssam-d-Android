@@ -35,8 +35,8 @@ class LoginRepositoryImpl @Inject constructor(
         remoteLoginDataSource.patchNickname(nickname)
     }
 
-    override suspend fun patchAlarm(isAgree: Boolean) {
-        remoteLoginDataSource.patchAlarm(isAgree)
+    override suspend fun saveAlarmState(isAgree: Boolean) {
+        remoteLoginDataSource.saveAlarmState(isAgree)
     }
 
     override suspend fun getUser(id: Long): User {
