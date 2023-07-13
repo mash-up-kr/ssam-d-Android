@@ -1,5 +1,6 @@
 package com.mashup.domain.repository
 
+import com.mashup.domain.model.User
 import com.mashup.domain.usecase.LoginParam
 
 interface UserRepository {
@@ -8,4 +9,10 @@ interface UserRepository {
     suspend fun getNicknameDuplication(nickname: String): Result<Unit>
 
     suspend fun patchNickname(nickname: String)
+
+    suspend fun patchAlarm(isAgree: Boolean)
+
+    suspend fun getUser(id: Long): User
+
+    suspend fun deleteUser(id: Long)
 }
