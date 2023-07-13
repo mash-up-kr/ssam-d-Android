@@ -55,23 +55,12 @@ fun UserInfoContent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    modifier = Modifier.weight(9f),
+                    modifier = Modifier.fillMaxWidth(),
                     text = userName,
                     style = Heading4,
                     color = White,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
-                )
-
-                Icon(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clickable {
-                            onEditClick()
-                        },
-                    painter = painterResource(id = R.drawable.ic_pen_24),
-                    tint = White,
-                    contentDescription = ""
                 )
             }
 
