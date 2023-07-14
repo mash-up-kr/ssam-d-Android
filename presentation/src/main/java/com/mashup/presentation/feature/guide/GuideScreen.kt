@@ -1,8 +1,11 @@
 package com.mashup.presentation.feature.guide
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +27,6 @@ import com.mashup.presentation.feature.guide.model.Alien
 import com.mashup.presentation.ui.common.KeyLinkButton
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.*
-import timber.log.Timber
 
 @Composable
 fun GuideRoute(
@@ -174,7 +176,7 @@ fun AlienCard(alien: Alien) {
 
             Text(
                 text = stringResource(id = R.string.home_guide_alien_card_keyword, alien.keyword),
-                style = Caption1,
+                style = Caption2,
                 color = Gray10,
                 modifier = Modifier
                     .background(

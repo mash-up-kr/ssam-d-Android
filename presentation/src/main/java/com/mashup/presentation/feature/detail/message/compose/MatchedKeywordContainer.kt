@@ -78,7 +78,7 @@ fun MatchedKeywordsContent(
             KeywordChip(
                 modifier = Modifier.padding(top = 8.dp),
                 keyword = keyword,
-                style = Caption1
+                style = Caption2
             )
         }
     }

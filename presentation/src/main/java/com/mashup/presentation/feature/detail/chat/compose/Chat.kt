@@ -1,11 +1,9 @@
 package com.mashup.presentation.feature.detail.chat.compose
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -17,14 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mashup.presentation.feature.detail.chat.model.MessageBackgroundColor
 import com.mashup.presentation.feature.detail.chat.model.MessageUiModel
 import com.mashup.presentation.ui.theme.*
@@ -128,7 +121,7 @@ fun MessageContent(
                         .weight(1f)
                         .padding(top = 4.dp),
                     text = date,
-                    style = Caption2,
+                    style = Caption3,
                     color = if (isMine) Gray06 else White
                 )
             }
