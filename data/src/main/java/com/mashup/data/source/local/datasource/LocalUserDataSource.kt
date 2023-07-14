@@ -3,7 +3,7 @@ package com.mashup.data.source.local.datasource
 import com.mashup.data.network.AppHeaderProvider
 import javax.inject.Inject
 
-class LocalLoginDataSource @Inject constructor(
+class LocalUserDataSource @Inject constructor(
     private val appHeaderProvider: AppHeaderProvider
 ) {
 

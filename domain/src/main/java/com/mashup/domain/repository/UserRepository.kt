@@ -2,7 +2,7 @@ package com.mashup.domain.repository
 
 import com.mashup.domain.usecase.LoginParam
 
-interface LoginRepository {
+interface UserRepository {
     suspend fun login(param: LoginParam): Boolean
     suspend fun patchNickname(nickname: String)
 }

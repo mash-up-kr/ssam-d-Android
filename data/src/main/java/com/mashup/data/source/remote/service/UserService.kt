@@ -9,7 +9,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 
-interface LoginService {
+interface UserService {
 
     @POST("auth/login")
     suspend fun login(
