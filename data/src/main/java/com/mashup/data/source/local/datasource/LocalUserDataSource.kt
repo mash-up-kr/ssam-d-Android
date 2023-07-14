@@ -7,14 +7,13 @@ import com.mashup.data.network.AppHeaderProvider
 import javax.inject.Inject
 
 class LocalUserDataSource @Inject constructor(
-    private val appHeaderProvider: AppHeaderProvider,
     application: Application
 ) {
     private val preferences: SharedPreferences =
         application.getSharedPreferences(LOGIN_PREFERENCE, Context.MODE_PRIVATE)
 
     fun saveToken(token: String?) {
-        appHeaderProvider.saveToken(token)
+        preferences.edit().putString(JWT, token).apply()
     }
 
     fun getUserId(): Long {
@@ -35,6 +34,7 @@ class LocalUserDataSource @Inject constructor(
 
     companion object {
         private const val LOGIN_PREFERENCE = "LOGIN_PREFERENCE"
+
         private const val JWT = "JWT"
         private const val USER_ID = "USER_ID"
         private const val IS_LOGIN_COMPLETED = "IS_LOGIN_COMPLETED"
