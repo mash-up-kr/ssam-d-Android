@@ -128,7 +128,7 @@ private fun ChatItemMessageInfoContent(
 
         Text(
             text = date,
-            style = Caption2,
+            style = Caption3,
             color = Gray06,
             textAlign = TextAlign.End
         )
@@ -148,7 +148,7 @@ private fun ChatItemMessageContent(
     ) {
         Text(
             text = recentMessage,
-            style = Caption1,
+            style = Caption2,
             color = Gray06,
             modifier = Modifier.weight(1f)
         )
@@ -188,7 +188,7 @@ fun SignalChip(
 
         Text(
             text = stringResource(R.string.signal_matched_count, matchedCount),
-            style = Caption2.copy(fontWeight = FontWeight.Bold),
+            style = Caption3.copy(fontWeight = FontWeight.Bold),
             color = Gray09,
             modifier = Modifier
                 .wrapContentWidth()

@@ -51,7 +51,7 @@ fun MessageInfo(
             Text(
                 modifier = Modifier.padding(top = 4.dp),
                 text = date,
-                style = Caption1,
+                style = Caption2,
                 color = Gray06
             )
         }
