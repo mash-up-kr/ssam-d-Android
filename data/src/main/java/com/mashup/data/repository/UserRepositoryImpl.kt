@@ -1,17 +1,17 @@
 package com.mashup.data.repository
 
-import com.mashup.data.source.local.datasource.LocalLoginDataSource
-import com.mashup.data.source.remote.datasource.RemoteLoginDataSource
+import com.mashup.data.source.local.datasource.LocalUserDataSource
+import com.mashup.data.source.remote.datasource.RemoteUserDataSource
 import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody
 import com.mashup.data.util.suspendRunCatching
-import com.mashup.domain.repository.LoginRepository
+import com.mashup.domain.repository.UserRepository
 import com.mashup.domain.usecase.LoginParam
 import javax.inject.Inject
 
-class LoginRepositoryImpl @Inject constructor(
-    private val remoteLoginDataSource: RemoteLoginDataSource,
-    private val localLoginDataSource: LocalLoginDataSource
-): LoginRepository {
+class UserRepositoryImpl @Inject constructor(
+    private val remoteUserDataSource: RemoteUserDataSource,
+    private val localUserDataSource: LocalUserDataSource
+): UserRepository {
 
     override suspend fun login(param: LoginParam): Boolean {
         val loginRequestBody = with(param) {
@@ -23,21 +23,21 @@ class LoginRepositoryImpl @Inject constructor(
         }
 
         val token = runCatching {
-            remoteLoginDataSource.login(loginRequestBody).data
+            remoteUserDataSource.login(loginRequestBody).data
         }.getOrNull()?.accessToken ?: ""
 
-        localLoginDataSource.saveToken(token)
+        localUserDataSource.saveToken(token)
 
         return token.isNotEmpty()
     }
 
     override suspend fun getNicknameDuplication(nickname: String): Result<Unit> {
         return suspendRunCatching {
-            remoteLoginDataSource.getNicknameDuplication(nickname)
+            remoteUserDataSource.getNicknameDuplication(nickname)
         }
     }
 
     override suspend fun patchNickname(nickname: String) {
-        remoteLoginDataSource.patchNickname(nickname)
+        remoteUserDataSource.patchNickname(nickname)
     }
 }

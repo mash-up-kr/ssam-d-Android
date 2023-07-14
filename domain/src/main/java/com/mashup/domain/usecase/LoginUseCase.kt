@@ -1,15 +1,15 @@
 package com.mashup.domain.usecase
 
-import com.mashup.domain.repository.LoginRepository
+import com.mashup.domain.repository.UserRepository
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(
-    private val loginRepository: LoginRepository
+    private val userRepository: UserRepository
 ) : BaseUseCase<LoginParam, Result<Boolean>>() {
 
     override suspend fun invoke(param: LoginParam): Result<Boolean> {
         return runCatching {
-            loginRepository.login(param)
+            userRepository.login(param)
         }
     }
 }
