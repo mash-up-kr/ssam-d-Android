@@ -18,10 +18,6 @@ class AppHeaderProvider @Inject constructor(
         return preferences.getString(JWT, "") ?: ""
     }
 
-    override fun saveToken(token: String?) {
-        preferences.edit().putString(JWT, token).apply()
-    }
-
     companion object {
         private const val LOGIN_PREFERENCE = "LOGIN_PREFERENCE"
         private const val JWT = "JWT"
