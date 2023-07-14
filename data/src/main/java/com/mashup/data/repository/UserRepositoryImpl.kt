@@ -13,7 +13,7 @@ class UserRepositoryImpl @Inject constructor(
     private val localUserDataSource: LocalUserDataSource
 ): UserRepository {
 
-    override suspend fun login(param: LoginParam): Boolean {
+    override suspend fun login(param: LoginParam) {
         val loginRequestBody = with(param) {
             LoginRequestBody(
                 email = email,
@@ -22,13 +22,10 @@ class UserRepositoryImpl @Inject constructor(
             )
         }
 
-        val token = runCatching {
-            remoteUserDataSource.login(loginRequestBody).data
-        }.getOrNull()?.accessToken ?: ""
-
-        localUserDataSource.saveToken(token)
-
-        return token.isNotEmpty()
+        with(remoteUserDataSource.login(loginRequestBody)) {
+            localUserDataSource.saveToken(accessToken)
+            localUserDataSource.setUserId(userId)
+        }
     }
 
     override suspend fun getNicknameDuplication(nickname: String): Result<Unit> {
