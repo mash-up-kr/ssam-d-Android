@@ -11,7 +11,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class OnBoardingFragment : BaseFragment<FragmentOnBoardingBinding>(R.layout.fragment_on_boarding) {
     override fun initViews() {
         binding.composeView.setThemeContent {
-            OnBoardingScreen(navigateToNotificationPermission = ::navigateToNotification)
+            OnBoardingScreen(navigateToNotificationPermission = ::navigateToNotification,
+                finishActivity = { activity?.finish() })
         }
     }
 
