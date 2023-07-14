@@ -38,6 +38,7 @@ fun KeyLinkNavHost(
             onSubscribeKeywordClick = navController::navigateToSubscribeKeywordRoute,
             onGuideClick = navController::navigateToGuideRoute,
             onBackClick = navController::navigateUp,
+            onShowSnackbar = onShowSnackbar,
             nestedSignalGraph = {
                 signalGraph(
                     navController = navController,

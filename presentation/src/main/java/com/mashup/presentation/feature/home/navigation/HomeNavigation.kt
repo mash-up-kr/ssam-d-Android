@@ -26,6 +26,7 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.homeGraph(
     navController: NavController,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
     onSubscribeKeywordClick: () -> Unit,
     onGuideClick: () -> Unit,
     onBackClick: () -> Unit,
@@ -52,7 +53,8 @@ fun NavGraphBuilder.homeGraph(
         composable(route = KeyLinkNavigationRoute.HomeGraph.SubscribeKeywordRoute.route) {
             SubscribeRoute(
                 onBackClick = onBackClick,
-                onSaveButtonClick = onBackClick
+                onSaveButtonClick = onBackClick,
+                onShowSnackbar = onShowSnackbar
             )
         }
         nestedSignalGraph()

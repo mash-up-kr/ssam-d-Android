@@ -45,8 +45,8 @@ fun KeyLinkApp(
                 snackbarHostState.showSnackbar(
                     message = message,
                     actionLabel = action,
-                    duration = SnackbarDuration.Short
-                ) == SnackbarResult.ActionPerformed
+                    duration = SnackbarDuration.Long
+                ) == SnackbarResult.Dismissed
             }
         )
     }

@@ -1,6 +1,7 @@
 package com.mashup.presentation.ui.common
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -47,7 +48,8 @@ fun KeyLinkSnackBarContent(
         shape = RoundedCornerShape(36.dp),
         backgroundColor = BlackAlpha50,
         modifier = modifier
-            .wrapContentWidth()
+            .fillMaxWidth()
+            .padding(bottom = 12.dp)
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),

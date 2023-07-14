@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.*
+import kotlinx.coroutines.launch
 
 /**
  * Ssam_D_Android
@@ -26,29 +27,34 @@ fun SubscribeRoute(
     onBackClick: () -> Unit,
     onSaveButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onShowSnackbar: suspend (String, String?) -> Boolean,
     viewModel: SubscribeViewModel = hiltViewModel()
 ) {
 
     SubscribeKeywordScreen(
         modifier = modifier,
         onBackClick = onBackClick,
+        onShowSnackbar = onShowSnackbar,
         onSaveButtonClick = onSaveButtonClick
     )
 }
+
 @Composable
 fun SubscribeKeywordScreen(
+    onShowSnackbar: suspend (String, String?) -> Boolean,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
     onSaveButtonClick: () -> Unit = {}
 ) {
     val keywords = remember { mutableStateListOf<String>() }
     var showGoBackDialog by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
 
     BackHandler(true) {
         showGoBackDialog = true
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = modifier.fillMaxSize()) {
         KeyLinkToolbar(
             onClickBack = { showGoBackDialog = true }
         )
@@ -68,7 +74,12 @@ fun SubscribeKeywordScreen(
                 .fillMaxWidth()
                 .padding(bottom = 12.dp, start = 20.dp, end = 20.dp),
             enable = !keywords.isEmpty(),
-            onClick = onSaveButtonClick
+            onClick = {
+                coroutineScope.launch {
+                    onShowSnackbar("구독 키워드가 저장되었습니다.", null)
+                }
+                onSaveButtonClick()
+            }
         )
     }
     if (showGoBackDialog) {
@@ -145,6 +156,6 @@ fun SubscribeKeywordContent(
 @Composable
 private fun SubscribeKeywordScreenPreview() {
     SsamDTheme {
-        SubscribeKeywordScreen()
+        SubscribeKeywordScreen(onShowSnackbar = { _, _ -> false })
     }
 }
