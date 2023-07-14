@@ -13,10 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.KeywordChip
-import com.mashup.presentation.ui.theme.Black
-import com.mashup.presentation.ui.theme.Mint
-import com.mashup.presentation.ui.theme.SsamDTheme
-import com.mashup.presentation.ui.theme.Title2
+import com.mashup.presentation.ui.theme.*
 
 /**
  * Ssam_D_Android
@@ -33,7 +30,10 @@ fun MatchedKeywordContainer(
         modifier = modifier,
         matchedKeywords = matchedKeywords.size
     )
-    MatchedKeywordsContent(matchedKeywords = matchedKeywords)
+    MatchedKeywordsContent(
+        modifier = Modifier.padding(top = 20.dp),
+        matchedKeywords = matchedKeywords
+    )
 }
 
 @Composable
@@ -71,13 +71,14 @@ fun MatchedKeywordsContent(
     modifier: Modifier = Modifier,
 ) {
     FlowRow(
-        modifier = Modifier.padding(top = 20.dp),
+        modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         matchedKeywords.forEach { keyword ->
             KeywordChip(
                 modifier = Modifier.padding(top = 8.dp),
-                keyword = keyword
+                keyword = keyword,
+                style = Caption1
             )
         }
     }

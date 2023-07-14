@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.R
@@ -33,7 +34,8 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun KeywordChip(
     keyword: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    style: TextStyle = Caption2
 ) {
     Box(
         modifier = modifier
@@ -45,16 +47,10 @@ fun KeywordChip(
     ) {
         Text(
             text = keyword,
-            style = TextStyle(
-                fontFamily = FontFamily.Default,
-                fontSize = 10.sp,
-                fontWeight = FontWeight.Normal,
-                lineHeight = 18.sp
-            ),
+            style = style,
             color = Gray10,
             textAlign = TextAlign.Center
         )
-
     }
 }
 
