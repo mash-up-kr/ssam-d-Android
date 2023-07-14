@@ -3,6 +3,7 @@ package com.mashup.data.repository
 import com.mashup.data.source.local.datasource.LocalLoginDataSource
 import com.mashup.data.source.remote.datasource.RemoteLoginDataSource
 import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody
+import com.mashup.data.util.suspendRunCatching
 import com.mashup.domain.repository.LoginRepository
 import com.mashup.domain.usecase.LoginParam
 import javax.inject.Inject
@@ -28,6 +29,12 @@ class LoginRepositoryImpl @Inject constructor(
         localLoginDataSource.saveToken(token)
 
         return token.isNotEmpty()
+    }
+
+    override suspend fun getNicknameDuplication(nickname: String): Result<Unit> {
+        return suspendRunCatching {
+            remoteLoginDataSource.getNicknameDuplication(nickname)
+        }
     }
 
     override suspend fun patchNickname(nickname: String) {
