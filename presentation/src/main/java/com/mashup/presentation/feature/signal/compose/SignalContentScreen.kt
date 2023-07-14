@@ -26,6 +26,7 @@ import com.mashup.presentation.ui.common.KeyLinkButton
 import com.mashup.presentation.ui.common.KeyLinkContentLengthDialog
 import com.mashup.presentation.ui.common.KeyLinkTextField
 import com.mashup.presentation.ui.common.KeyLinkToolbar
+import com.mashup.presentation.ui.theme.Body2
 import com.mashup.presentation.ui.theme.SsamDTheme
 import com.mashup.presentation.ui.theme.White
 
@@ -37,21 +38,28 @@ import com.mashup.presentation.ui.theme.White
 @Composable
 fun SignalContentRoute(
     onBackClick: () -> Unit,
-    onNextClick: () -> Unit,
+    onNextClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SignalViewModel = hiltViewModel()
 ) {
+    var signalContent by rememberSaveable { mutableStateOf("") }
+
     SignalContentScreen(
         modifier = modifier,
+        signalContent = signalContent,
         onBackClick = onBackClick,
-        onNextClick = onNextClick
+        onNextClick = { onNextClick(signalContent) },
+        onSignalChange = { signalContent = it }
     )
 }
+
 @Composable
 fun SignalContentScreen(
-    modifier: Modifier = Modifier,
-    onNextClick: () -> Unit = {},
-    onBackClick: () -> Unit = {}
+    signalContent: String,
+    onNextClick: () -> Unit,
+    onBackClick: () -> Unit,
+    onSignalChange: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var dialogState by rememberSaveable { mutableStateOf(false) }
 
@@ -61,23 +69,23 @@ fun SignalContentScreen(
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.create_signal),
-                    style = TextStyle(
-                        color = White,
-                        fontSize = 14.sp
-                    )
+                    style = Body2,
+                    color = White
                 )
             },
             onClickBack = onBackClick
         )
         SignalContent(
             modifier = modifier,
+            signalContent = signalContent,
             onNextClick = onNextClick,
-            onLengthOver = { dialogState = true }
+            onLengthOver = { dialogState = true },
+            onSignalChange = onSignalChange
         )
 
         if (dialogState) {
             KeyLinkContentLengthDialog(
-                onDismissRequest = { /* @TODO */},
+                onDismissRequest = { /* @TODO */ },
                 onButtonClick = { dialogState = false }
             )
         }
@@ -86,11 +94,13 @@ fun SignalContentScreen(
 
 @Composable
 fun SignalContent(
-    modifier: Modifier = Modifier,
+    signalContent: String,
     onNextClick: () -> Unit,
     onLengthOver: () -> Unit,
+    onSignalChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    var text by rememberSaveable { mutableStateOf("") }
+
     val scrollState = rememberScrollState()
 
     Column(
@@ -102,15 +112,15 @@ fun SignalContent(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(1f),
-            value = text,
-            onValueChange = {
-                if (it.length >= 300) onLengthOver.invoke()
-                text = it
+            value = signalContent,
+            onValueChange = { text ->
+                if (text.length >= 300) onLengthOver()
+                else onSignalChange(text)
             },
             hint = stringResource(id = R.string.hint_signal_content),
             hintAlign = TextAlign.Start,
             onClickDone = { /*TODO*/ },
-            fontSize = 18.sp,
+            fontSize = 18.sp,  // typo + lineheight 확
             maxLength = 300
         )
         KeyLinkButton(
@@ -120,7 +130,7 @@ fun SignalContent(
                 .padding(bottom = 48.dp),
             text = stringResource(id = R.string.next),
             onClick = onNextClick,
-            enable = text.isNotEmpty()
+            enable = signalContent.isNotEmpty()
         )
     }
 }
@@ -128,7 +138,13 @@ fun SignalContent(
 @Preview(showBackground = true)
 @Composable
 private fun SignalContentScreenPreview() {
+    var text by rememberSaveable { mutableStateOf("") }
     SsamDTheme {
-        SignalContentScreen()
+        SignalContentScreen(
+            signalContent = text,
+            onNextClick = {},
+            onBackClick = {},
+            onSignalChange = { text = it }
+        )
     }
 }
