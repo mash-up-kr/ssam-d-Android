@@ -11,7 +11,7 @@ import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface LoginService {
+interface UserService {
 
     @POST("auth/login")
     suspend fun login(
