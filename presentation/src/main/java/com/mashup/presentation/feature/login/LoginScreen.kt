@@ -230,7 +230,7 @@ private fun LoginGuideText(modifier: Modifier = Modifier) {
         text = stringResource(R.string.login_privacy_policy),
         textAlign = TextAlign.Center,
         color = Gray06,
-        style = Caption1
+        style = Caption2
     )
 }
 
