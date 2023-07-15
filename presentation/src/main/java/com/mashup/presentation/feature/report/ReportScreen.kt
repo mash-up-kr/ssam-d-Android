@@ -25,12 +25,14 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun ReportRoute(
     onBackClick: () -> Unit,
+    onReportIconClick: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ReportScreen(
         modifier = modifier,
         onBackClick = onBackClick,
+        onReportIconClick = onReportIconClick,
         onShowSnackbar = onShowSnackbar
     )
 }
@@ -38,6 +40,7 @@ fun ReportRoute(
 @Composable
 fun ReportScreen(
     onBackClick: () -> Unit,
+    onReportIconClick: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -60,6 +63,7 @@ fun ReportScreen(
 
             ReportContent(
                 modifier = Modifier.padding(top = 28.dp),
+                onReportIconClick = onReportIconClick,
                 onShowSnackbar = onShowSnackbar
             )
         }
@@ -68,6 +72,7 @@ fun ReportScreen(
 
 @Composable
 fun ReportContent(
+    onReportIconClick: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -79,7 +84,8 @@ fun ReportContent(
         items(reportOptions) {
             ReportTypeContent(
                 reportType = it,
-                onShowSnackbar = onShowSnackbar
+                onReportIconClick = onReportIconClick,
+                onShowSnackbar = onShowSnackbar,
             )
         }
     }
@@ -88,6 +94,7 @@ fun ReportContent(
 @Composable
 fun ReportTypeContent(
     reportType: String,
+    onReportIconClick: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -107,6 +114,7 @@ fun ReportTypeContent(
             )
             Icon(
                 modifier = Modifier.clickable {
+                    onReportIconClick()
                     onShowSnackbar(snackbarMessage, SnackbarDuration.Short)
                 },
                 painter = painterResource(id = R.drawable.ic_chevron_right_24),
@@ -140,6 +148,7 @@ private fun ReportScreenPreview() {
     SsamDTheme {
         ReportScreen(
             onBackClick = {},
+            onReportIconClick = {},
             onShowSnackbar = { _, _ -> }
         )
     }

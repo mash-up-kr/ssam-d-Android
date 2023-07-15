@@ -3,10 +3,12 @@ package com.mashup.presentation.navigation
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.PopUpToBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
 import com.mashup.presentation.KeyLinkAppState
 import com.mashup.presentation.feature.chat.navigation.chatGraph
+import com.mashup.presentation.feature.chat.navigation.navigateToChat
 import com.mashup.presentation.feature.detail.chat.navigation.navigateToChatDetail
 import com.mashup.presentation.feature.detail.message.navigation.navigateToMessageDetail
 import com.mashup.presentation.feature.guide.navigation.navigateToGuideRoute
@@ -66,7 +68,17 @@ fun KeyLinkNavHost(
             onBackClick = navController::navigateUp,
             onChatClick = navController::navigateToChatDetail,
             onMessageClick = navController::navigateToMessageDetail,
-            onReportIconClick = navController::navigateToReport,
+            onReportMenuClick = navController::navigateToReport,
+            onReportIconClick = {
+                navController.navigateToChat(
+                    navOptions {
+                        popUpTo(
+                            route = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route,
+                            popUpToBuilder = { inclusive = true }
+                        )
+                    }
+                )
+            },
             onReplyButtonClick = navController::navigateToReplyRoute,
             onReplySendClick = {
                 navController.navigateToChatDetail(
