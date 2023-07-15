@@ -27,5 +27,6 @@ class OnBoardingFragment : BaseFragment<FragmentOnBoardingBinding>(R.layout.frag
 
     private fun navigateToHome() {
         startActivity(Intent(context, MainActivity::class.java))
+        activity?.finish()
     }
 }
