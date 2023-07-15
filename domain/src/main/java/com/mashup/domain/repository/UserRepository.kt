@@ -12,7 +12,7 @@ interface UserRepository {
 
     suspend fun patchAlarm(isAgree: Boolean)
 
-    suspend fun getUser(id: Long): User
+    suspend fun getUser(): User
 
-    suspend fun deleteUser(id: Long)
+    suspend fun deleteUser()
 }

@@ -43,13 +43,15 @@ class UserRepositoryImpl @Inject constructor(
         remoteUserDataSource.patchAlarm(isAgree)
     }
 
-    override suspend fun getUser(id: Long): User {
+    override suspend fun getUser(): User {
+        val id = localUserDataSource.getUserId()
         remoteUserDataSource.getUser(id).let {result ->
             return result.data?.toDomainModel() ?: throw Exception(result.message)
         }
     }
 
-    override suspend fun deleteUser(id: Long) {
+    override suspend fun deleteUser() {
+        val id = localUserDataSource.getUserId()
         remoteUserDataSource.deleteUser(id)
     }
 }
