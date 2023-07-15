@@ -71,15 +71,17 @@ fun HomeScreen(
         )
         if (signals.isEmpty()) {
             Image(
-                modifier = Modifier.align(Alignment.BottomCenter),
+                modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(),
                 painter = painterResource(R.drawable.img_planet_home_empty),
-                contentDescription = stringResource(R.string.home_planet_background_empty)
+                contentDescription = stringResource(R.string.home_planet_background_empty),
+                contentScale = ContentScale.Crop
             )
         } else {
             Image(
-                modifier = Modifier.align(Alignment.BottomCenter),
+                modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(),
                 painter = painterResource(R.drawable.img_planet_home_default),
-                contentDescription = stringResource(R.string.home_planet_background_default)
+                contentDescription = stringResource(R.string.home_planet_background_default),
+                contentScale = ContentScale.Crop
             )
         }
 
