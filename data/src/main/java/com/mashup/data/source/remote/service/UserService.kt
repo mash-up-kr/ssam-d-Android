@@ -1,6 +1,7 @@
 package com.mashup.data.source.remote.service
 
 import com.mashup.data.source.remote.dto.BaseResponse
+import com.mashup.data.source.remote.dto.requestbody.AlarmRequestBody
 import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody
 import com.mashup.data.source.remote.dto.responsebody.LoginResponseBody
 import com.mashup.data.source.remote.dto.responsebody.UserResponseBody
@@ -34,7 +35,7 @@ interface UserService {
 
     @PATCH("users/alarm")
     suspend fun patchAlarm(
-        @Field("agreeAlarm") agreeAlarm: Boolean
+        @Body agreeAlarm: AlarmRequestBody
     ): BaseResponse<Any>
 
     @GET("users/{id}")
