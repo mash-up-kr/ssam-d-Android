@@ -20,9 +20,9 @@ fun NavController.navigateToSignal(navOptions: NavOptions? = null) {
     )
 }
 
-fun NavController.navigateToSignalKeyword(navOptions: NavOptions? = null) {
+fun NavController.navigateToSignalKeyword(content: String, navOptions: NavOptions? = null) {
     navigate(
-        route = KeyLinkNavigationRoute.SignalGraph.SignalKeywordRoute.route,
+        route = "${KeyLinkNavigationRoute.SignalGraph.SignalKeywordRoute.route}/${content}",
         navOptions = navOptions
     )
 }
@@ -49,10 +49,20 @@ fun NavGraphBuilder.signalGraph(
             )
         }
 
-        composable(route = KeyLinkNavigationRoute.SignalGraph.SignalKeywordRoute.route) {
+        composable(
+            route = "${KeyLinkNavigationRoute.SignalGraph.SignalKeywordRoute.route}/{content}",
+            arguments = listOf(
+                navArgument("content") {
+                    type = NavType.StringType
+                    nullable = false
+                }
+            )
+        ) { backStackEntry ->
             SignalKeywordRoute(
+                content = backStackEntry.arguments?.getString("content") ?: "",
                 onBackClick = onBackClick,
-                onSendClick = navController::navigateToSignalComplete
+                onSendSuccess = navController::navigateToSignalComplete,
+                onSendFailed = {}
             )
         }
 

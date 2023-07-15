@@ -4,8 +4,10 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -14,12 +16,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
+import com.mashup.presentation.feature.signal.KeywordUiState
+import com.mashup.presentation.feature.signal.SignalUiEvent
 import com.mashup.presentation.feature.signal.SignalViewModel
 import com.mashup.presentation.ui.common.*
+import com.mashup.presentation.ui.theme.Black
 import com.mashup.presentation.ui.theme.Gray06
 import com.mashup.presentation.ui.theme.SsamDTheme
 import com.mashup.presentation.ui.theme.White
+import okhttp3.internal.toImmutableList
 
 /**
  * Ssam_D_Android
@@ -28,106 +35,140 @@ import com.mashup.presentation.ui.theme.White
  */
 @Composable
 fun SignalKeywordRoute(
+    content: String,
     onBackClick: () -> Unit,
-    onSendClick: () -> Unit,
+    onSendSuccess: () -> Unit,
+    onSendFailed: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SignalViewModel = hiltViewModel()
 ) {
+    val keywordsUiState by viewModel.uiStateFlow.collectAsStateWithLifecycle()
+    val sendSignalEvent by viewModel.eventFlow.collectAsStateWithLifecycle(SignalUiEvent.Nothing)
+    val keywords = viewModel.keywordListState.toImmutableList()
+
+    LaunchedEffect(Unit) {
+        viewModel.getRecommendKeywords(content)
+    }
+
+    LaunchedEffect(sendSignalEvent) {
+        when (sendSignalEvent) {
+            SignalUiEvent.SendSignalSuccess -> onSendSuccess()
+            is SignalUiEvent.Error -> onSendFailed()
+            else -> {}
+        }
+    }
 
     SignalKeywordScreen(
         modifier = modifier,
-        isLoading = false,
+        keywords = keywords,
+        onKeywordAdd = viewModel::addKeyword,
+        onKeywordDelete = viewModel::deleteKeyword,
         onDialogBackClick = onBackClick,
-        onSendClick = onSendClick
+        onSendClick = { viewModel.sendSignal(content) },
+        keywordUiState = keywordsUiState,
     )
-
 }
 
 @Composable
 fun SignalKeywordScreen(
-    isLoading: Boolean,
+    keywords: List<String>,
     onDialogBackClick: () -> Unit,
     onSendClick: () -> Unit,
+    onKeywordAdd: (String) -> Unit,
+    onKeywordDelete: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    keywordUiState: KeywordUiState = KeywordUiState.Loading
 ) {
-    val keywords = remember { mutableStateListOf<String>() }
+    var keyword by rememberSaveable { mutableStateOf("") }
     var showGoBackDialog by remember { mutableStateOf(false) }
 
     BackHandler(true) {
         showGoBackDialog = true
     }
 
-    Column(modifier = modifier.fillMaxSize()) {
-        KeyLinkToolbar(onClickBack = { showGoBackDialog = true })
-        KeywordScreen(
-            isLoading = isLoading,
-            modifier = Modifier
-                .padding(horizontal = 20.dp, vertical = 8.dp)
-                .weight(1f),
-            afterLoadingContent = {
-                SignalKeyword(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 20.dp, vertical = 8.dp)
-                        .weight(1f),
-                    keywords = keywords,
-                    onKeywordAdd = {
-                        keywords.add(it)
-                    },
-                    onKeywordDelete = {
-                        keywords.removeAt(it)
-                    },
-                )
+    Scaffold(
+        modifier = modifier,
+        backgroundColor = Black,
+        topBar = {
+            KeyLinkToolbar(
+                onClickBack = { showGoBackDialog = true }
+            )
+        }
+    ) { paddingValues ->
+        val innerPaddingValues = PaddingValues(
+            top = paddingValues.calculateTopPadding() + 8.dp,
+            start = 20.dp,
+            end = 20.dp
+        )
+
+        when (keywordUiState) {
+            is KeywordUiState.Loading -> {
+                Column(modifier = Modifier.padding(innerPaddingValues)) {
+                    ShimmerScreen(
+                        modifier = Modifier.weight(1f)
+                    )
+                    KeyLinkButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 48.dp),
+                        text = stringResource(R.string.button_send_signal),
+                        enable = false,
+                        onClick = onSendClick
+                    )
+                }
             }
-        )
-        KeyLinkButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 48.dp, start = 20.dp, end = 20.dp),
-            text = stringResource(R.string.button_send_signal),
-            enable = !(isLoading || keywords.isEmpty()),
-            onClick = onSendClick
-        )
-    }
+            is KeywordUiState.Success -> {
+                Column(modifier = Modifier.padding(innerPaddingValues)) {
+                    SignalKeyword(
+                        modifier = Modifier.weight(1f),
+                        keywords = keywords,
+                        onKeywordAdd = { onKeywordAdd(it) },
+                        onKeywordDelete = { onKeywordDelete(it) },
+                        onKeywordChange = { keyword = it },
+                        onRefreshValue = { keyword = "" },
+                        keyword = keyword
+                    )
+                    KeyLinkButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 48.dp),
+                        text = stringResource(R.string.button_send_signal),
+                        enable = keywords.isNotEmpty(),
+                        onClick = onSendClick
+                    )
+                }
+            }
+            is KeywordUiState.Error -> {}
+        }
 
-    if (showGoBackDialog) {
-        KeyLinkGoBackDialog(
-            onDismissRequest = { },
-            onGoBackClick = onDialogBackClick,
-            onCloseClick = { showGoBackDialog = false }
-        )
-    }
-}
-
-@Composable
-fun KeywordScreen(
-    isLoading: Boolean,
-    afterLoadingContent: @Composable () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    if (isLoading) {
-        ShimmerScreen(modifier = modifier)
-    } else {
-        afterLoadingContent()
+        if (showGoBackDialog) {
+            KeyLinkGoBackDialog(
+                onDismissRequest = { },
+                onGoBackClick = onDialogBackClick,
+                onCloseClick = { showGoBackDialog = false }
+            )
+        }
     }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SignalKeyword(
-    keywords: MutableList<String>,
+    keyword: String,
+    keywords: List<String>,
+    onKeywordChange: (String) -> Unit,
     onKeywordAdd: (String) -> Unit,
     onKeywordDelete: (Int) -> Unit,
+    onRefreshValue: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var keyword by remember { mutableStateOf("") }
     val scrollState = rememberScrollState()
 
     LaunchedEffect(keywords.size) {
         scrollState.animateScrollTo(Int.MAX_VALUE)
     }
 
-    Column(modifier = modifier) {
+    Column(modifier = modifier.fillMaxSize()) {
         Text(
             text = stringResource(R.string.signal_keyword_title),
             style = TextStyle(
@@ -162,12 +203,12 @@ fun SignalKeyword(
 
             KeyLinkOnBoardingTextField(
                 value = keyword,
-                onValueChange = { keyword = it },
+                onValueChange = onKeywordChange,
                 hint = stringResource(R.string.text_field_hint),
                 fontSize = 14.sp,
                 onClickDone = {
                     onKeywordAdd(keyword)
-                    keyword = ""
+                    onRefreshValue()
                 },
                 minLength = 1
             )
@@ -180,9 +221,11 @@ fun SignalKeyword(
 fun SignalKeywordLoadingScreenPreview() {
     SsamDTheme {
         SignalKeywordScreen(
-            isLoading = true,
             onDialogBackClick = {},
             onSendClick = {},
+            keywords = emptyList(),
+            onKeywordAdd = {},
+            onKeywordDelete = {},
         )
     }
 }
@@ -192,9 +235,12 @@ fun SignalKeywordLoadingScreenPreview() {
 fun SignalKeywordScreenPreview() {
     SsamDTheme {
         SignalKeywordScreen(
-            isLoading = false,
             onDialogBackClick = {},
             onSendClick = {},
+            keywords = listOf(),
+            onKeywordAdd = {},
+            onKeywordDelete = {},
+            keywordUiState = KeywordUiState.Success
         )
     }
 }
