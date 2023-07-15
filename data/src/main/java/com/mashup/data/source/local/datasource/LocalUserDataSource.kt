@@ -3,7 +3,6 @@ package com.mashup.data.source.local.datasource
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import com.mashup.data.network.AppHeaderProvider
 import javax.inject.Inject
 
 class LocalUserDataSource @Inject constructor(
@@ -11,6 +10,10 @@ class LocalUserDataSource @Inject constructor(
 ) {
     private val preferences: SharedPreferences =
         application.getSharedPreferences(LOGIN_PREFERENCE, Context.MODE_PRIVATE)
+
+    fun getToken(): String {
+        return preferences.getString(JWT, "") ?: ""
+    }
 
     fun saveToken(token: String?) {
         preferences.edit().putString(JWT, token).apply()
