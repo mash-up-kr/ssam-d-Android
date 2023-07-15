@@ -15,7 +15,7 @@ class RemoteUserDataSource @Inject constructor(
     }
 
     suspend fun getNicknameDuplication(nickname: String) {
-        loginService.getNicknameDuplication(nickname)
+        userService.getNicknameDuplication(nickname)
     }
 
     suspend fun patchNickname(nickname: String) {
