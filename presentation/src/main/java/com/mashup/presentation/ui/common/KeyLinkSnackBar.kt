@@ -33,7 +33,7 @@ fun KeyLinkSnackBar(
         hostState = snackBarHostState,
         modifier = modifier,
     ) {
-        snackBarHostState.currentSnackbarData?.let{ snackBarData ->
+        snackBarHostState.currentSnackbarData?.let { snackBarData ->
             KeyLinkSnackBarContent(snackBarData.message)
         }
     }
@@ -49,7 +49,7 @@ fun KeyLinkSnackBarContent(
         backgroundColor = BlackAlpha50,
         modifier = modifier
             .fillMaxWidth()
-            .padding(bottom = 12.dp)
+            .padding(bottom = 12.dp, start = 20.dp, end = 20.dp)
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
