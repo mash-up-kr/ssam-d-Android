@@ -15,8 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mashup.presentation.feature.onboarding.OnBoardingViewModel
 import com.mashup.presentation.feature.profile.ProfileViewModel
 import com.mashup.presentation.feature.profile.ProfileViewType
+import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.common.KeyLinkLogoutDialog
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.Black
@@ -34,12 +36,11 @@ fun ProfileRoute(
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
-    val optionsList by viewModel.optionsList.collectAsStateWithLifecycle()
     var isChecked by rememberSaveable { mutableStateOf(false) }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     ProfileScreen(
         modifier = modifier,
-        optionsList = optionsList,
         isChecked = isChecked,
         onCheckedChange = {
             isChecked = it
@@ -51,7 +52,8 @@ fun ProfileRoute(
         onLogoutClick = {
             // viewModel.logoutUser
             onLogoutClick()
-        }
+        },
+        uiState = uiState
     )
 }
 
@@ -63,8 +65,8 @@ private fun ProfileScreen(
     onBackClick: () -> Unit,
     onNavigateClick: (String) -> Unit,
     onLogoutClick: () -> Unit,
-    optionsList: List<ProfileViewType>,
     modifier: Modifier = Modifier,
+    uiState: ProfileViewModel.UiState
 ) {
     Scaffold(
         modifier = modifier,
@@ -75,15 +77,25 @@ private fun ProfileScreen(
             )
         }
     ) { innerPaddingValues ->
-        ProfileContent(
-            modifier = Modifier.padding(innerPaddingValues),
-            optionsList = optionsList,
-            isChecked = isChecked,
-            onCheckedChange = onCheckedChange,
-            onEditClick = onEditClick,
-            onNavigateClick = onNavigateClick,
-            onLogoutClick = onLogoutClick
-        )
+        when (uiState) {
+            ProfileViewModel.UiState.Loading -> {
+                KeyLinkLoading()
+            }
+            is ProfileViewModel.UiState.Success -> {
+                ProfileContent(
+                    modifier = Modifier.padding(innerPaddingValues),
+                    optionsList = uiState.profileList,
+                    isChecked = isChecked,
+                    onCheckedChange = onCheckedChange,
+                    onEditClick = onEditClick,
+                    onNavigateClick = onNavigateClick,
+                    onLogoutClick = onLogoutClick
+                )
+            }
+            is ProfileViewModel.UiState.Failure -> {
+                // TODO: fail 화면
+            }
+        }
     }
 }
 
