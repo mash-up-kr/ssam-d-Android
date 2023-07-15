@@ -119,7 +119,6 @@ fun SignalContent(
             hint = stringResource(id = R.string.hint_signal_content),
             hintAlign = TextAlign.Start,
             onClickDone = { /*TODO*/ },
-            fontSize = 18.sp,  // typo + lineheight 확
             maxLength = 300
         )
         KeyLinkButton(

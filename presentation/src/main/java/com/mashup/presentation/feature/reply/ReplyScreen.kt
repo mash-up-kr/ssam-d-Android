@@ -147,7 +147,6 @@ fun ReplyContent(
             hint = stringResource(id = R.string.hint_signal_content),
             hintAlign = TextAlign.Start,
             onClickDone = { /*TODO*/ },
-            fontSize = 18.sp,
             maxLength = 300
         )
         KeyLinkButton(

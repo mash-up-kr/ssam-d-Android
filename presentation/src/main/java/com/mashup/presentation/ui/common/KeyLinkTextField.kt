@@ -33,7 +33,6 @@ fun KeyLinkTextField(
     hint: String,
     hintAlign: TextAlign = TextAlign.Center,
     onClickDone: () -> Unit,
-    fontSize: TextUnit,
     maxLength: Int = 0
 ) {
     TextField(
@@ -48,7 +47,7 @@ fun KeyLinkTextField(
             Text(
                 textAlign = hintAlign,
                 text = hint,
-                fontSize = fontSize,
+                style = Body1,
                 color = Gray04
             )
         },
@@ -59,10 +58,7 @@ fun KeyLinkTextField(
         keyboardActions = KeyboardActions(
             onDone = { onClickDone.invoke() },
         ),
-        textStyle = TextStyle(
-            fontSize = fontSize,
-            color = White
-        ),
+        textStyle = Body1.copy(color = White),
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.Transparent,
             cursorColor = Mint,
@@ -236,7 +232,6 @@ fun PreviewKeyLinkTextField() {
             value = nickname,
             onValueChange = { nickname = it },
             hint = "닉네임 입력",
-            fontSize = 32.sp,
             maxLength = 10,
             onClickDone = {}
         )
