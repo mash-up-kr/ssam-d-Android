@@ -1,7 +1,9 @@
 package com.mashup.data.source.remote.datasource
 
+import com.mashup.data.source.remote.dto.BaseResponse
 import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody
 import com.mashup.data.source.remote.dto.responsebody.LoginResponseBody
+import com.mashup.data.source.remote.dto.responsebody.UserResponseBody
 import com.mashup.data.source.remote.service.UserService
 import javax.inject.Inject
 
@@ -20,5 +22,16 @@ class RemoteUserDataSource @Inject constructor(
 
     suspend fun patchNickname(nickname: String) {
         userService.patchNickname(nickname)
+    }
+    suspend fun patchAlarm(isAgree: Boolean) {
+        userService.patchAlarm(isAgree)
+    }
+
+    suspend fun getUser(id: Long): BaseResponse<UserResponseBody> {
+        return userService.getUser(id)
+    }
+
+    suspend fun deleteUser(id: Long) {
+        userService.deleteUser(id)
     }
 }

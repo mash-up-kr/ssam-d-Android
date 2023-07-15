@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.onboarding
 
+import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -24,12 +25,14 @@ import com.mashup.presentation.ui.theme.SsamDTheme
 fun OnBoardingRoute(
     modifier: Modifier = Modifier,
     navigateToNotificationPermission: () -> Unit,
+    navigateToHome: () -> Unit,
     finishActivity: () -> Unit
 ) {
     OnBoardingScreen(
         modifier = modifier,
         navigateToNotificationPermission = navigateToNotificationPermission,
-        finishActivity = finishActivity
+        finishActivity = finishActivity,
+        navigateToHome = navigateToHome
     )
 }
 
@@ -37,6 +40,7 @@ fun OnBoardingRoute(
 fun OnBoardingScreen(
     modifier: Modifier = Modifier,
     navigateToNotificationPermission: () -> Unit,
+    navigateToHome: () -> Unit,
     finishActivity: () -> Unit,
     viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
@@ -60,7 +64,11 @@ fun OnBoardingScreen(
                 KeyLinkLoading()
             }
             OnBoardingViewModel.UiState.SaveSuccess -> {
-                navigateToNotificationPermission()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    navigateToNotificationPermission()
+                } else {
+                    navigateToHome()
+                }
             }
             is OnBoardingViewModel.UiState.Editing -> {
                 OnBoardingContent(
@@ -185,7 +193,8 @@ fun PreviewOnBoardingScreen() {
         OnBoardingScreen(
             modifier = Modifier,
             navigateToNotificationPermission = {},
-            finishActivity = {}
+            finishActivity = {},
+            navigateToHome = {}
         )
     }
 }

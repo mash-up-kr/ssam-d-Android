@@ -1,5 +1,6 @@
 package com.mashup.presentation.onboarding
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -8,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -33,6 +35,10 @@ fun NotificationPermissionScreen(
     navigateToHome: () -> Unit = {},
     requestNotificationPermission: () -> Unit = {}
 ) {
+    BackHandler(true) {
+        navigateToHome()
+    }
+
     Scaffold(
         backgroundColor = Black,
         modifier = modifier.fillMaxSize()
@@ -93,12 +99,13 @@ fun NotificationPermissionGuideImage(
 ) {
     Box(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(top = 48.dp),
+            .padding(top = 48.dp)
     ) {
         Image(
+            modifier = modifier.fillMaxWidth(),
             painter = painterResource(id = R.drawable.img_notificationsenabled),
-            contentDescription = stringResource(id = R.string.notification_img_content_description)
+            contentDescription = stringResource(id = R.string.notification_img_content_description),
+            contentScale = ContentScale.Crop
         )
     }
 }
