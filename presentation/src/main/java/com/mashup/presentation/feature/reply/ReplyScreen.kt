@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.reply
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -86,6 +87,10 @@ private fun ReplyScreen(
 ) {
     var showGoBackDialog by rememberSaveable { mutableStateOf(false) }
     var showLengthOverDialog by rememberSaveable { mutableStateOf(false) }
+
+    BackHandler(true) {
+        showGoBackDialog = true
+    }
 
     Scaffold(
         modifier = modifier,
