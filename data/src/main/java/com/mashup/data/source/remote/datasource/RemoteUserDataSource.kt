@@ -1,6 +1,7 @@
 package com.mashup.data.source.remote.datasource
 
 import com.mashup.data.source.remote.dto.BaseResponse
+import com.mashup.data.source.remote.dto.requestbody.AlarmRequestBody
 import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody
 import com.mashup.data.source.remote.dto.responsebody.LoginResponseBody
 import com.mashup.data.source.remote.dto.responsebody.UserResponseBody
@@ -24,7 +25,7 @@ class RemoteUserDataSource @Inject constructor(
         userService.patchNickname(nickname)
     }
     suspend fun patchAlarm(isAgree: Boolean) {
-        userService.patchAlarm(isAgree)
+        userService.patchAlarm(AlarmRequestBody(isAgree))
     }
 
     suspend fun getUser(id: Long): BaseResponse<UserResponseBody> {

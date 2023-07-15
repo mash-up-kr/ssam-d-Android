@@ -36,14 +36,11 @@ fun ProfileRoute(
     modifier: Modifier = Modifier,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
-    var isChecked by rememberSaveable { mutableStateOf(false) }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     ProfileScreen(
         modifier = modifier,
-        isChecked = isChecked,
         onCheckedChange = {
-            isChecked = it
             viewModel.toggleNotificationSwitch(it)
         },
         onEditClick = {},
@@ -59,7 +56,6 @@ fun ProfileRoute(
 
 @Composable
 private fun ProfileScreen(
-    isChecked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     onEditClick: () -> Unit,
     onBackClick: () -> Unit,
@@ -82,10 +78,10 @@ private fun ProfileScreen(
                 KeyLinkLoading()
             }
             is ProfileViewModel.UiState.Success -> {
+
                 ProfileContent(
                     modifier = Modifier.padding(innerPaddingValues),
                     optionsList = uiState.profileList,
-                    isChecked = isChecked,
                     onCheckedChange = onCheckedChange,
                     onEditClick = onEditClick,
                     onNavigateClick = onNavigateClick,
@@ -101,7 +97,6 @@ private fun ProfileScreen(
 
 @Composable
 fun ProfileContent(
-    isChecked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     onEditClick: () -> Unit,
     onNavigateClick: (String) -> Unit,
@@ -157,9 +152,14 @@ fun ProfileContent(
                     )
                 }
                 is ProfileViewType.NotificationContent -> {
+                    var isChecked by rememberSaveable { mutableStateOf(viewType.isAgree) }
+
                     NotificationContent(
                         isChecked = isChecked,
-                        onCheckedChange = onCheckedChange,
+                        onCheckedChange = {
+                            onCheckedChange(it)
+                            isChecked = it
+                        },
                         description = viewType.description
                     )
                 }

@@ -9,7 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,7 +21,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val optionsProvider: ProfileOptionsProvider,
     private val getUserInformation: GetUserInformationUseCase,
-    private val saveAlarmStateUse: SaveAlarmStateUseCase
+    private val saveAlarmState: SaveAlarmStateUseCase
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> =
         MutableStateFlow(UiState.Loading)
@@ -49,7 +48,7 @@ class ProfileViewModel @Inject constructor(
 
     fun toggleNotificationSwitch(isChecked: Boolean) {
         viewModelScope.launch {
-
+            saveAlarmState.execute(isChecked)
         }
     }
 
