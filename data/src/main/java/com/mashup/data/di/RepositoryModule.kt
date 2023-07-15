@@ -16,7 +16,7 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
-    fun bindLoginRepository(loginRepository: UserRepositoryImpl): UserRepository
+    fun bindUserRepository(userRepository: UserRepositoryImpl): UserRepository
 
     @Binds
     @Singleton
