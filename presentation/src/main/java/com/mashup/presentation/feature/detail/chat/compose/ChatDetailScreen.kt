@@ -45,7 +45,7 @@ fun ChatDetailRoute(
                 onBackClick = onBackClick,
                 onMessageClick = onMessageClick,
                 onReportClick = onReportClick,
-                chatDetailUiState = state
+                chatDetailUiModel = state.chatDetailUiModel
             )
         }
         is ChatDetailUiState.Failure -> {}
@@ -54,12 +54,12 @@ fun ChatDetailRoute(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ChatDetailScreen(
+private fun ChatDetailScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onMessageClick: () -> Unit,
     onReportClick: () -> Unit,
-    chatDetailUiState: ChatDetailUiState.Success
+    chatDetailUiModel: ChatDetailUiModel
 ) {
     val coroutineScope = rememberCoroutineScope()
     var currentBottomSheetType by remember { mutableStateOf(BottomSheetType.MORE) }
@@ -78,10 +78,7 @@ fun ChatDetailScreen(
     val scrollState = rememberLazyGridState()
     val isScrollingUp = scrollState.isScrollingUp()
     var showDisconnectDialog by remember { mutableStateOf(false) }
-    /**
-     * val viewModel: ~ by hiltViewModel()
-     * collectAsState~
-     */
+
     KeyLinkBottomSheetLayout(
         bottomSheetContent = {
             when (currentBottomSheetType) {
@@ -89,7 +86,7 @@ fun ChatDetailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentWidth(),
-                    matchedKeywords = ProvideChatDetailState.matchedKeywords
+                    matchedKeywords = chatDetailUiModel.matchedKeywords
                 )
                 BottomSheetType.MORE -> KeyLinkChatBottomSheet(
                     modifier = Modifier
@@ -139,7 +136,7 @@ fun ChatDetailScreen(
         ) { paddingValues ->
             ChatDetailContent(
                 modifier = Modifier.padding(paddingValues),
-                chatDetailState = chatDetailUiState.chatDetailUiModel,
+                chatDetailState = chatDetailUiModel,
                 onChatItemClick = onMessageClick,
                 keywordBottomSheetState = keywordBottomSheetState,
                 onChangeBottomSheetType = { currentBottomSheetType = it },
@@ -163,7 +160,7 @@ fun ChatDetailScreen(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ChatDetailContent(
+private fun ChatDetailContent(
     chatDetailState: ChatDetailUiModel,
     onChatItemClick: () -> Unit,
     modifier: Modifier = Modifier,
