@@ -1,4 +1,4 @@
-package com.mashup.presentation.onboarding
+package com.mashup.presentation.feature.onboarding
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
