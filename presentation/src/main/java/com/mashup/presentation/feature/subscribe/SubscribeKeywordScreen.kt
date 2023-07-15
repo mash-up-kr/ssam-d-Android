@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.subscribe
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -41,10 +42,15 @@ fun SubscribeKeywordScreen(
     onSaveButtonClick: () -> Unit = {}
 ) {
     val keywords = remember { mutableStateListOf<String>() }
+    var showGoBackDialog by remember { mutableStateOf(false) }
+
+    BackHandler(true) {
+        showGoBackDialog = true
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         KeyLinkToolbar(
-            onClickBack = onBackClick
+            onClickBack = { showGoBackDialog = true }
         )
         SubscribeKeywordContent(
             modifier = Modifier.weight(1f),
@@ -63,6 +69,16 @@ fun SubscribeKeywordScreen(
                 .padding(bottom = 12.dp, start = 20.dp, end = 20.dp),
             enable = !keywords.isEmpty(),
             onClick = onSaveButtonClick
+        )
+    }
+    if (showGoBackDialog) {
+        KeyLinkGoBackDialog(
+            onDismissRequest = {},
+            onGoBackClick = {
+                onBackClick()
+                showGoBackDialog = false
+            },
+            onCloseClick = { showGoBackDialog = false }
         )
     }
 }

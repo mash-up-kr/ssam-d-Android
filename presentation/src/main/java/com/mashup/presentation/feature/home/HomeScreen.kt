@@ -15,6 +15,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.graphics.*
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -25,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.drawColoredShadow
+import com.mashup.presentation.common.extension.isScrollingUp
 import com.mashup.presentation.common.extension.pxToDp
 import com.mashup.presentation.feature.home.model.SignalUiModel
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
@@ -34,13 +37,15 @@ import com.mashup.presentation.ui.theme.*
 fun HomeRoute(
     onSubscribeKeywordClick: () -> Unit,
     onGuideClick: () -> Unit,
+    onProfileClick: () -> Unit,
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
     HomeScreen(
         navigateToSubscribeKeyword = onSubscribeKeywordClick,
         navigateToGuide = onGuideClick,
-        modifier = modifier,
+        onProfileClick = onProfileClick,
+        modifier = modifier
     )
 }
 
@@ -48,6 +53,7 @@ fun HomeRoute(
 fun HomeScreen(
     navigateToSubscribeKeyword: () -> Unit,
     navigateToGuide: () -> Unit,
+    onProfileClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val signals = emptyList<SignalUiModel>()
@@ -81,7 +87,10 @@ fun HomeScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            HomeScreenToolBar(topBarBackgroundColor)
+            HomeScreenToolBar(
+                topBarBackgroundColor = topBarBackgroundColor,
+                onProfileClick = onProfileClick
+            )
             HomeKeywordInfoContainer(
                 onClick = { navigateToSubscribeKeyword() },
                 visible = isScrollingUp,
@@ -97,8 +106,10 @@ fun HomeScreen(
 }
 
 @Composable
-private fun HomeScreenToolBar(topBarBackgroundColor: Color) {
-
+private fun HomeScreenToolBar(
+    topBarBackgroundColor: Color,
+    onProfileClick: () -> Unit,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -119,6 +130,9 @@ private fun HomeScreenToolBar(topBarBackgroundColor: Color) {
             )
         }
         Image(
+            modifier = Modifier.clickable {
+                onProfileClick()
+            },
             painter = painterResource(id = R.drawable.ic_profile_fill),
             contentDescription = stringResource(id = R.string.home_my_page_icon_content_description),
             contentScale = ContentScale.None
@@ -215,25 +229,6 @@ private fun SignalCardList(signals: List<SignalUiModel>, scrollState: LazyListSt
             SignalCard(signal)
         }
     }
-}
-
-@Composable
-private fun LazyListState.isScrollingUp(): Boolean {
-    var previousIndex by remember(this) { mutableStateOf(firstVisibleItemIndex) }
-    var previousScrollOffset by remember(this) { mutableStateOf(firstVisibleItemScrollOffset) }
-
-    return remember(this) {
-        derivedStateOf {
-            if (previousIndex != firstVisibleItemIndex) {
-                previousIndex > firstVisibleItemIndex
-            } else {
-                previousScrollOffset >= firstVisibleItemScrollOffset
-            }.also {
-                previousIndex = firstVisibleItemIndex
-                previousScrollOffset = firstVisibleItemScrollOffset
-            }
-        }
-    }.value
 }
 
 @Composable
@@ -338,6 +333,7 @@ private fun SignalCardKeywordsChip(keyword: String) {
 fun PreviewHomeScreen() {
     HomeScreen(
         navigateToSubscribeKeyword = {},
-        navigateToGuide = {}
+        navigateToGuide = {},
+        onProfileClick = {}
     )
 }

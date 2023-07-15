@@ -1,11 +1,12 @@
 package com.mashup.data.di
 
 import com.mashup.data.repository.KeywordRepositoryImpl
-import com.mashup.data.repository.LoginRepositoryImpl
 import com.mashup.data.repository.OnboardingRepositoryImpl
 import com.mashup.data.repository.SignalRepositoryImpl
 import com.mashup.domain.repository.KeywordRepository
 import com.mashup.domain.repository.LoginRepository
+import com.mashup.data.repository.UserRepositoryImpl
+import com.mashup.domain.repository.UserRepository
 import com.mashup.domain.repository.OnboardingRepository
 import com.mashup.domain.repository.SignalRepository
 import dagger.Binds
@@ -20,7 +21,7 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
-    fun bindLoginRepository(loginRepository: LoginRepositoryImpl): LoginRepository
+    fun bindLoginRepository(loginRepository: UserRepositoryImpl): UserRepository
 
     @Binds
     @Singleton

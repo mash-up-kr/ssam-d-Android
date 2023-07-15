@@ -1,7 +1,7 @@
 package com.mashup.data.di
 
 import com.mashup.data.source.remote.service.KeywordService
-import com.mashup.data.source.remote.service.LoginService
+import com.mashup.data.source.remote.service.UserService
 import com.mashup.data.source.remote.service.OnboardingService
 import com.mashup.data.source.remote.service.SignalService
 import dagger.Module
@@ -17,8 +17,8 @@ class ServiceModule {
 
     @Provides
     @Singleton
-    fun provideLoginService(retrofit: Retrofit): LoginService =
-        retrofit.create(LoginService::class.java)
+    fun provideLoginService(retrofit: Retrofit): UserService =
+        retrofit.create(UserService::class.java)
 
     @Provides
     @Singleton
