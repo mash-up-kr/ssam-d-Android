@@ -11,13 +11,17 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.KeyLinkSwitch
 import com.mashup.presentation.ui.theme.*
@@ -28,6 +32,7 @@ import com.mashup.presentation.ui.theme.*
  * @author jaesung
  * @created 2023/07/11
  */
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun UserInfoContent(
     userImageUrl: String,
@@ -41,11 +46,11 @@ fun UserInfoContent(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        /* GlideImage로 수정 필요*/
-        Image(
+        GlideImage(
             modifier = Modifier.size(64.dp),
-            painter = painterResource(id = R.drawable.img_avatar),
-            contentDescription = ""
+            model = userImageUrl,
+            contentDescription = "",
+            contentScale = ContentScale.Crop
         )
 
         Column(modifier = Modifier.padding(start = 16.dp)) {
