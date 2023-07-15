@@ -12,44 +12,38 @@ import com.mashup.presentation.ui.theme.White
  */
 
 interface BaseViewType {
-    val id: Int
     val description: String
 }
 
 @Immutable
 sealed class ProfileViewType {
     data class UserInfo(
-        val id: Int,
         val userImageUrl: String,
         val userName: String,
         val userEmail: String
     ) : ProfileViewType()
 
     data class Header(
-        override val id: Int,
         override val description: String,
     ) : ProfileViewType(), BaseViewType
 
     data class NavigationContent(
-        override val id: Int,
         override val description: String,
         val route: String,
         val color: Color = White
     ) : ProfileViewType(), BaseViewType
 
     data class NotificationContent(
-        override val id: Int,
         override val description: String,
+        val isAgree: Boolean
     ) : ProfileViewType(), BaseViewType
 
     data class AppVersionContent(
-        override val id: Int,
         override val description: String,
         val appVersion: String
     ) : ProfileViewType(), BaseViewType
 
     data class LogoutContent(
-        override val id: Int,
         override val description: String,
     ) : ProfileViewType(), BaseViewType
 }
