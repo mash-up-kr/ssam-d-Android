@@ -22,8 +22,6 @@ import com.mashup.presentation.ui.theme.Black
 fun KeyLinkApp(
     appState: KeyLinkAppState = rememberKeyLinkAppState()
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
-
     Scaffold(
         bottomBar = {
             if (appState.isBottomBarVisible()) {
@@ -31,22 +29,21 @@ fun KeyLinkApp(
                     destinations = appState.topLevelDestinations,
                     onNavigateToDestination = appState::navigateToTopLevelDestination,
                     currentDestination = appState.currentDestination,
-                    modifier = Modifier
                 )
             }
         },
         backgroundColor = Black,
-        snackbarHost = { KeyLinkSnackBar(snackBarHostState = snackbarHostState) }
+        snackbarHost = { KeyLinkSnackBar(snackBarHostState = appState.scaffoldState.snackbarHostState) },
+        scaffoldState = appState.scaffoldState
     ) { innerPadding ->
         KeyLinkNavHost(
             appState = appState,
             modifier = Modifier.padding(innerPadding),
-            onShowSnackbar = { message, action ->
-                snackbarHostState.showSnackbar(
+            onShowSnackbar = { message, duration ->
+                appState.showSnackbar(
                     message = message,
-                    actionLabel = action,
-                    duration = SnackbarDuration.Long
-                ) == SnackbarResult.Dismissed
+                    duration = duration
+                )
             }
         )
     }

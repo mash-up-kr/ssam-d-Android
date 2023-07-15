@@ -4,9 +4,11 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,7 +29,7 @@ fun SubscribeRoute(
     onBackClick: () -> Unit,
     onSaveButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onShowSnackbar: suspend (String, String?) -> Boolean,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     viewModel: SubscribeViewModel = hiltViewModel()
 ) {
 
@@ -41,14 +43,14 @@ fun SubscribeRoute(
 
 @Composable
 fun SubscribeKeywordScreen(
-    onShowSnackbar: suspend (String, String?) -> Boolean,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
     onSaveButtonClick: () -> Unit = {}
 ) {
     val keywords = remember { mutableStateListOf<String>() }
     var showGoBackDialog by remember { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
+    val snackbarMessage = stringResource(id = R.string.snackbar_subscribe_keyword)
 
     BackHandler(true) {
         showGoBackDialog = true
@@ -75,9 +77,7 @@ fun SubscribeKeywordScreen(
                 .padding(bottom = 12.dp, start = 20.dp, end = 20.dp),
             enable = !keywords.isEmpty(),
             onClick = {
-                coroutineScope.launch {
-                    onShowSnackbar("구독 키워드가 저장되었습니다.", null)
-                }
+                onShowSnackbar(snackbarMessage, SnackbarDuration.Short)
                 onSaveButtonClick()
             }
         )
@@ -156,6 +156,6 @@ fun SubscribeKeywordContent(
 @Composable
 private fun SubscribeKeywordScreenPreview() {
     SsamDTheme {
-        SubscribeKeywordScreen(onShowSnackbar = { _, _ -> false })
+        SubscribeKeywordScreen(onShowSnackbar = { _, _ -> })
     }
 }

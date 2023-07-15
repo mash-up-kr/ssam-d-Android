@@ -1,5 +1,6 @@
 package com.mashup.presentation.navigation
 
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -23,7 +24,7 @@ import com.mashup.presentation.feature.subscribe.navigation.navigateToSubscribeK
 @Composable
 fun KeyLinkNavHost(
     appState: KeyLinkAppState,
-    onShowSnackbar: suspend (String, String?) -> Boolean,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = KeyLinkNavigationRoute.HomeGraph.route
 ) {
