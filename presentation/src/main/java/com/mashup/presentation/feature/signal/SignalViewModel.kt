@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.signal
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,6 +11,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import okhttp3.internal.toImmutableList
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -33,7 +35,7 @@ class SignalViewModel @Inject constructor(
 
     fun getRecommendKeywords(content: String) {
         viewModelScope.launch {
-            delay(1000L)
+            delay(1000L)  // shimmer loading
             getRecommendKeywordUseCase.execute(content).catch {
                 _uiStateFlow.value = KeywordUiState.Error(it)
             }.collect { keywords ->
@@ -54,7 +56,8 @@ class SignalViewModel @Inject constructor(
     }
 
     fun sendSignal(content: String) {
-        val requestPair: Pair<String, List<String>> = Pair(content, keywordListState.toImmutableList())
+        val requestPair: Pair<String, List<String>> =
+            Pair(content, keywordListState.toImmutableList())
         viewModelScope.launch {
             sendSignalUseCase.execute(param = requestPair)
                 .onSuccess {
