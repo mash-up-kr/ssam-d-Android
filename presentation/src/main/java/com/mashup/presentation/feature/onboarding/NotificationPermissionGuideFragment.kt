@@ -45,6 +45,7 @@ class NotificationPermissionGuideFragment :
                 modifier = Modifier,
                 navigateToHome = {
                     startActivity(Intent(context, MainActivity::class.java))
+                    activity?.finish()
                 },
                 requestNotificationPermission = ::requestNotificationPermission
             )
