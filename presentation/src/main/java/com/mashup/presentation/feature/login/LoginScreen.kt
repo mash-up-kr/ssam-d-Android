@@ -24,31 +24,65 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.airbnb.lottie.compose.*
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun LoginScreen(
-    loginViewModel: LoginViewModel = viewModel(),
+fun LoginRoute(
+    loginViewModel: LoginViewModel = hiltViewModel(),
     loginButtonClicked: () -> Unit,
     loginToOnBoarding: () -> Unit,
     handleOnBackPressed: () -> Unit
 ) {
-    val pagerState = rememberPagerState(0)
-
-    LaunchedEffect(loginViewModel.currentPage) {
-        pagerState.animateScrollToPage(loginViewModel.currentPage)
-    }
+    val nicknameState by loginViewModel.nicknameState.collectAsStateWithLifecycle()
 
     BackHandler(enabled = true) {
         when (loginViewModel.currentPage) {
             0 -> handleOnBackPressed()
             else -> loginViewModel.backToPrevPage()
         }
+    }
+
+    LoginScreen(
+        currentPage = loginViewModel.currentPage,
+        nickname = loginViewModel.nickname,
+        nicknameState = nicknameState,
+        loginButtonClicked = loginButtonClicked,
+        loginToOnBoarding = loginToOnBoarding,
+        patchNickname = { nickname ->
+            loginViewModel.patchNickname(nickname)
+        },
+        getNicknameDuplication = { nickname ->
+            loginViewModel.getNicknameDuplication(nickname)
+        }
+    )
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun LoginScreen(
+    currentPage: Int,
+    nickname: String,
+    nicknameState: ValidationState,
+    loginButtonClicked: () -> Unit,
+    loginToOnBoarding: () -> Unit,
+    patchNickname: (String) -> Unit,
+    getNicknameDuplication: (String) -> Unit
+) {
+    val coroutineScope = rememberCoroutineScope()
+
+    val pagerState = rememberPagerState(0)
+
+    LaunchedEffect(currentPage) {
+        pagerState.animateScrollToPage(currentPage)
     }
 
     HorizontalPager(
@@ -66,13 +100,18 @@ fun LoginScreen(
                 onLoginButtonClicked = loginButtonClicked
             )
             1 -> NicknameScreen(
+                coroutineScope = coroutineScope,
+                validationState = nicknameState,
                 onNextButtonClicked = { nickname ->
-                    loginViewModel.patchNickname(nickname)
+                    patchNickname(nickname)
                 },
+                checkNicknameDuplication = { nickname ->
+                    getNicknameDuplication(nickname)
+                }
             )
             2 -> LoginCompletionScreen (
-                onStartButtonClicked = loginToOnBoarding,
-                nickname = loginViewModel.nickname
+                nickname = nickname,
+                onStartButtonClicked = loginToOnBoarding
             )
         }
     }
@@ -138,7 +177,9 @@ private fun LoginContainer(modifier: Modifier = Modifier, content: @Composable C
 @Composable
 private fun LoginTitle(modifier: Modifier) {
     Column(
-        modifier = modifier.fillMaxWidth().padding(horizontal = 20.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -193,12 +234,27 @@ private fun LoginGuideText(modifier: Modifier = Modifier) {
     )
 }
 
+@OptIn(FlowPreview::class)
 @Composable
-fun NicknameScreen(onNextButtonClicked: (String) -> Unit){
-    var nickname by remember { mutableStateOf("") }
-    var validation by remember { mutableStateOf(ValidationState.EMPTY) }
-    val expectedText = "올바른 닉네임"
+fun NicknameScreen(
+    coroutineScope: CoroutineScope,
+    validationState: ValidationState,
+    onNextButtonClicked: (String) -> Unit,
+    checkNicknameDuplication: (String) -> Unit
+){
     val focusManager = LocalFocusManager.current
+
+    val nicknameFlow = remember { MutableStateFlow("") }
+    val nickname = nicknameFlow.collectAsState().value
+    
+    LaunchedEffect(nicknameFlow) {
+        nicknameFlow
+            .debounce(300)
+            .onEach { nickname ->
+                checkNicknameDuplication(nickname)
+            }
+            .launchIn(this)
+    }
 
     Box {
         LoginBackground()
@@ -213,7 +269,9 @@ fun NicknameScreen(onNextButtonClicked: (String) -> Unit){
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 KeyLinkMintText(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 32.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 32.dp),
                     text = stringResource(R.string.login_nickname),
                     textStyle = Heading3,
                     textAlign = TextAlign.Left
@@ -222,33 +280,35 @@ fun NicknameScreen(onNextButtonClicked: (String) -> Unit){
                 KeyLinkBoxTextField(
                     value = nickname,
                     onValueChange = { value ->
-                        nickname = value
-                        checkValidation(nickname, expectedText) { validationState ->
-                            validation = validationState
+                        coroutineScope.launch {
+                            nicknameFlow.emit(value)
                         }
                     },
                     hint = stringResource(R.string.login_nickname_hint),
                     maxLength = 10,
                     fontSize = 32.sp,
-                    validationState = validation
+                    validationState = validationState
                 )
             }
 
             KeyLinkButton(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp).imePadding(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 12.dp)
+                    .imePadding(),
                 text = stringResource(R.string.login_next_btn),
                 onClick = {
                     focusManager.clearFocus()
                     onNextButtonClicked(nickname)
                 },
-                enable = validation == ValidationState.SUCCESS
+                enable = validationState == ValidationState.SUCCESS
             )
         }
     }
 }
 
 @Composable
-fun LoginCompletionScreen(onStartButtonClicked: () -> Unit, nickname: String) {
+fun LoginCompletionScreen(nickname: String, onStartButtonClicked: () -> Unit) {
     Box {
         LoginBackground()
 

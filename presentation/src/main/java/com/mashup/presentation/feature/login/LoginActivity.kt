@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setThemeContent {
-            LoginScreen(
+            LoginRoute(
                 loginButtonClicked = { handleKakaoLogin() },
                 loginToOnBoarding = {
                     startActivity(Intent(this, OnBoardingActivity::class.java))
