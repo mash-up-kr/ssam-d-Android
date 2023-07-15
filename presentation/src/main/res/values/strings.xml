@@ -126,4 +126,5 @@
     <string name="toolbar_reply">시그널 답장</string>
     <string name="snackbar_subscribe_keyword">구독 키워드가 저장되었습니다.</string>
     <string name="snackbar_reply">시그널에 대한 답장을 보냈습니다.</string>
+    <string name="snackbar_report">신고가 접수되었습니다.</string>
 </resources>

@@ -64,7 +64,8 @@ fun NavGraphBuilder.chatGraph(
 
         composable(route = KeyLinkNavigationRoute.ChatGraph.ReportRoute.route) {
             ReportRoute(
-                onBackClick = onBackClick
+                onBackClick = onBackClick,
+                onShowSnackbar = onShowSnackbar
             )
         }
 
