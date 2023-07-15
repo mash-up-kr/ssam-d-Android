@@ -55,6 +55,7 @@ class SampleViewModel @Inject constructor() : ViewModel() {
 @Composable
 fun ReplyRoute(
     onClickBack: () -> Unit,
+    onSendClick: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SampleViewModel = hiltViewModel()
@@ -66,7 +67,10 @@ fun ReplyRoute(
         modifier = modifier,
         onReplyTextChange = { reply = it },
         onClickBack = onClickBack,
-        onSendClick = { viewModel.sendReply(reply) },
+        onSendClick = {
+            viewModel.sendReply(reply)
+            onSendClick()
+        },
         onShowSnackbar = onShowSnackbar
     )
 }
@@ -179,6 +183,7 @@ private fun ReplyScreenPreview() {
     SsamDTheme {
         ReplyRoute(
             onClickBack = {},
+            onSendClick = {},
             onShowSnackbar = { _, _ -> }
         )
     }

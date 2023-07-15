@@ -32,7 +32,8 @@ fun NavGraphBuilder.chatGraph(
     onChatClick: () -> Unit,
     onMessageClick: () -> Unit,
     onReportIconClick: () -> Unit,
-    onReplyButtonClick: () -> Unit
+    onReplyButtonClick: () -> Unit,
+    onReplySendClick: () -> Unit,
 ) {
     navigation(
         route = KeyLinkNavigationRoute.ChatGraph.route,
@@ -70,6 +71,7 @@ fun NavGraphBuilder.chatGraph(
         composable(route = KeyLinkNavigationRoute.ChatGraph.ReplyRoute.route) {
             ReplyRoute(
                 onClickBack = onBackClick,
+                onSendClick = onReplySendClick,
                 onShowSnackbar = onShowSnackbar
             )
         }

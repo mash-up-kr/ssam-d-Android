@@ -4,6 +4,7 @@ import androidx.compose.material.SnackbarDuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import androidx.navigation.navOptions
 import com.mashup.presentation.KeyLinkAppState
 import com.mashup.presentation.feature.chat.navigation.chatGraph
 import com.mashup.presentation.feature.detail.chat.navigation.navigateToChatDetail
@@ -66,7 +67,14 @@ fun KeyLinkNavHost(
             onChatClick = navController::navigateToChatDetail,
             onMessageClick = navController::navigateToMessageDetail,
             onReportIconClick = navController::navigateToReport,
-            onReplyButtonClick = navController::navigateToReplyRoute
+            onReplyButtonClick = navController::navigateToReplyRoute,
+            onReplySendClick = {
+                navController.navigateToChatDetail(
+                    navOptions {
+                        popUpTo(KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route)
+                    }
+                )
+            }
         )
     }
 }
