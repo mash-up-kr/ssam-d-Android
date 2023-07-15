@@ -33,7 +33,7 @@ interface UserService {
     ): BaseResponse<Any>
 
     @PATCH("users/alarm")
-    suspend fun saveAlarmState(
+    suspend fun patchAlarm(
         @Field("agreeAlarm") agreeAlarm: Boolean
     ): BaseResponse<Any>
 
