@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -54,6 +55,7 @@ class SampleViewModel @Inject constructor() : ViewModel() {
 @Composable
 fun ReplyRoute(
     onClickBack: () -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SampleViewModel = hiltViewModel()
 ) {
@@ -64,7 +66,8 @@ fun ReplyRoute(
         modifier = modifier,
         onReplyTextChange = { reply = it },
         onClickBack = onClickBack,
-        onSendClick = { viewModel.sendReply(reply) }
+        onSendClick = { viewModel.sendReply(reply) },
+        onShowSnackbar = onShowSnackbar
     )
 }
 
@@ -74,6 +77,7 @@ private fun ReplyScreen(
     onReplyTextChange: (String) -> Unit,
     onClickBack: () -> Unit,
     onSendClick: () -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showGoBackDialog by rememberSaveable { mutableStateOf(false) }
@@ -100,7 +104,8 @@ private fun ReplyScreen(
             reply = reply,
             onReplyTextChange = onReplyTextChange,
             onSendClick = onSendClick,
-            onLengthOver = { showLengthOverDialog = true }
+            onLengthOver = { showLengthOverDialog = true },
+            onShowSnackbar = onShowSnackbar
         )
 
         if (showGoBackDialog) {
@@ -124,11 +129,13 @@ private fun ReplyScreen(
 fun ReplyContent(
     reply: String,
     onReplyTextChange: (String) -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     onSendClick: () -> Unit,
     onLengthOver: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
+    val snackbarMessage = stringResource(R.string.snackbar_reply)
 
     Column(
         modifier = modifier
@@ -155,7 +162,10 @@ fun ReplyContent(
                 .padding(vertical = 12.dp, horizontal = 20.dp)
                 .padding(bottom = 48.dp),
             text = stringResource(id = R.string.next),
-            onClick = onSendClick,
+            onClick = {
+                onShowSnackbar(snackbarMessage, SnackbarDuration.Short)
+                onSendClick()
+            },
             enable = reply.isNotEmpty()
         )
     }
@@ -169,6 +179,7 @@ private fun ReplyScreenPreview() {
     SsamDTheme {
         ReplyRoute(
             onClickBack = {},
+            onShowSnackbar = { _, _ -> }
         )
     }
 }
