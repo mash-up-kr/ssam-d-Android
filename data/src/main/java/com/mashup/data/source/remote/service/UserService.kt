@@ -16,33 +16,33 @@ import retrofit2.http.Path
 
 interface UserService {
 
-    @POST("auth/login")
+    @POST("/auth/login")
     suspend fun login(
         @Body requestBody: LoginRequestBody
     ): BaseResponse<LoginResponseBody>
 
-    @GET("users/nickname/duplication")
+    @GET("/users/nickname/duplication")
     suspend fun getNicknameDuplication(
         @Query("nickname") nickname: String
     ): BaseResponse<Any>
 
     @FormUrlEncoded
-    @PATCH("users/nickname")
+    @PATCH("/users/nickname")
     suspend fun patchNickname(
         @Field("nickname") nickname: String
     ): BaseResponse<Any>
 
-    @PATCH("users/alarm")
+    @PATCH("/users/alarm")
     suspend fun patchAlarm(
         @Field("agreeAlarm") agreeAlarm: Boolean
     ): BaseResponse<Any>
 
-    @GET("users/{id}")
+    @GET("/users/{id}")
     suspend fun getUser(
         @Path("id") id: Long
     ): BaseResponse<UserResponseBody>
 
-    @DELETE("users/{id}")
+    @DELETE("/users/{id}")
     suspend fun deleteUser(
         @Path("id") id: Long
     ): BaseResponse<Any>
