@@ -26,6 +26,7 @@ fun NavController.navigateToChat(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.chatGraph(
     nestedGraphs: NavGraphBuilder.() -> Unit = {},
     onBackClick: () -> Unit,
+    onEmptyScreenButtonClick: () -> Unit,
     onChatClick: () -> Unit,
     onMessageClick: () -> Unit,
     onReportIconClick: () -> Unit,
@@ -37,7 +38,7 @@ fun NavGraphBuilder.chatGraph(
     ) {
         composable(route = KeyLinkNavigationRoute.ChatGraph.ChatRoute.route) {
             ChatRoute(
-                onEmptyScreenButtonClick = {},
+                onEmptyScreenButtonClick = onEmptyScreenButtonClick,
                 onChatClick = onChatClick
             )
         }
