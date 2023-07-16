@@ -8,9 +8,9 @@ import com.mashup.domain.usecase.chat.GetChatsParam
 
 interface ChatRepository {
 
-    suspend fun getChatInfo(id: Long): ChatInfo
+    suspend fun getChatInfo(id: Long): Flow<ChatInfo>
 
-    suspend fun getChats(param: GetChatsParam): Chats
+    suspend fun getChats(param: GetChatsParam): Flow<Chats>
 
     fun getChatDetail(
         roomId: Long,

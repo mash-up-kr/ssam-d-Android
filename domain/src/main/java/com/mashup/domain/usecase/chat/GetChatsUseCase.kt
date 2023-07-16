@@ -3,16 +3,15 @@ package com.mashup.domain.usecase.chat
 import com.mashup.domain.model.Chats
 import com.mashup.domain.repository.ChatRepository
 import com.mashup.domain.usecase.BaseUseCase
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetChatsUseCase @Inject constructor(
     private val chatRepository: ChatRepository
-): BaseUseCase<GetChatsParam, Result<Chats>>() {
+): BaseUseCase<GetChatsParam, Flow<Chats>>() {
 
-    override suspend fun invoke(param: GetChatsParam): Result<Chats> {
-        return runCatching {
-            chatRepository.getChats(param)
-        }
+    override suspend fun invoke(param: GetChatsParam): Flow<Chats> {
+        return chatRepository.getChats(param)
     }
 }
 
