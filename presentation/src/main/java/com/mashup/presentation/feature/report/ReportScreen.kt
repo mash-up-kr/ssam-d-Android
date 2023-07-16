@@ -4,10 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,17 +25,23 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun ReportRoute(
     onBackClick: () -> Unit,
+    onReportIconClick: () -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ReportScreen(
         modifier = modifier,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onReportIconClick = onReportIconClick,
+        onShowSnackbar = onShowSnackbar
     )
 }
 
 @Composable
 fun ReportScreen(
     onBackClick: () -> Unit,
+    onReportIconClick: () -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -58,20 +61,32 @@ fun ReportScreen(
         ) {
             ReportHeader(modifier = Modifier.fillMaxWidth())
 
-            ReportContent(modifier = Modifier)
+            ReportContent(
+                modifier = Modifier.padding(top = 28.dp),
+                onReportIconClick = onReportIconClick,
+                onShowSnackbar = onShowSnackbar
+            )
         }
     }
 }
 
 @Composable
-fun ReportContent(modifier: Modifier = Modifier) {
+fun ReportContent(
+    onReportIconClick: () -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val reportOptions = stringArrayResource(id = R.array.report)
     LazyColumn(
-        modifier = modifier.padding(top = 28.dp),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         items(reportOptions) {
-            ReportTypeContent(reportType = it)
+            ReportTypeContent(
+                reportType = it,
+                onReportIconClick = onReportIconClick,
+                onShowSnackbar = onShowSnackbar,
+            )
         }
     }
 }
@@ -79,9 +94,11 @@ fun ReportContent(modifier: Modifier = Modifier) {
 @Composable
 fun ReportTypeContent(
     reportType: String,
-    modifier: Modifier = Modifier,
-    onIconClick: () -> Unit = {}
+    onReportIconClick: () -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
+    modifier: Modifier = Modifier
 ) {
+    val snackbarMessage = stringResource(R.string.snackbar_report)
     Column(
         modifier = modifier
     ) {
@@ -96,7 +113,10 @@ fun ReportTypeContent(
                 color = White
             )
             Icon(
-                modifier = Modifier.clickable { onIconClick() },
+                modifier = Modifier.clickable {
+                    onReportIconClick()
+                    onShowSnackbar(snackbarMessage, SnackbarDuration.Short)
+                },
                 painter = painterResource(id = R.drawable.ic_chevron_right_24),
                 tint = White,
                 contentDescription = stringResource(R.string.content_description_report),
@@ -126,6 +146,10 @@ fun ReportHeader(
 @Composable
 private fun ReportScreenPreview() {
     SsamDTheme {
-        ReportScreen(onBackClick = {})
+        ReportScreen(
+            onBackClick = {},
+            onReportIconClick = {},
+            onShowSnackbar = { _, _ -> }
+        )
     }
 }

@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.chat.navigation
 
+import androidx.compose.material.SnackbarDuration
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -8,6 +9,7 @@ import androidx.navigation.navigation
 import com.mashup.presentation.feature.chat.compose.ChatRoute
 import com.mashup.presentation.feature.detail.chat.compose.ChatDetailRoute
 import com.mashup.presentation.feature.detail.message.compose.MessageDetailRoute
+import com.mashup.presentation.feature.reply.ReplyRoute
 import com.mashup.presentation.feature.report.ReportRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 
@@ -25,12 +27,15 @@ fun NavController.navigateToChat(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.chatGraph(
     nestedGraphs: NavGraphBuilder.() -> Unit = {},
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     onBackClick: () -> Unit,
     onEmptyScreenButtonClick: () -> Unit,
     onChatClick: () -> Unit,
     onMessageClick: () -> Unit,
+    onReportMenuClick: () -> Unit,
     onReportIconClick: () -> Unit,
-    onReplyButtonClick: () -> Unit
+    onReplyButtonClick: () -> Unit,
+    onReplySendClick: () -> Unit,
 ) {
     navigation(
         route = KeyLinkNavigationRoute.ChatGraph.route,
@@ -54,14 +59,24 @@ fun NavGraphBuilder.chatGraph(
         composable(route = KeyLinkNavigationRoute.ChatGraph.MessageDetailRoute.route) {
             MessageDetailRoute(
                 onBackClick = onBackClick,
-                onReportIconClick = onReportIconClick,
+                onReportMenuClick = onReportMenuClick,
                 onReplyButtonClick = onReplyButtonClick
             )
         }
 
         composable(route = KeyLinkNavigationRoute.ChatGraph.ReportRoute.route) {
             ReportRoute(
-                onBackClick = onBackClick
+                onBackClick = onBackClick,
+                onReportIconClick = onReportIconClick,
+                onShowSnackbar = onShowSnackbar
+            )
+        }
+
+        composable(route = KeyLinkNavigationRoute.ChatGraph.ReplyRoute.route) {
+            ReplyRoute(
+                onClickBack = onBackClick,
+                onSendClick = onReplySendClick,
+                onShowSnackbar = onShowSnackbar
             )
         }
         nestedGraphs()  // 채팅 없을 경우 SignalGraph 연결

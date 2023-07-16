@@ -4,9 +4,11 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -15,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.*
+import kotlinx.coroutines.launch
 
 /**
  * Ssam_D_Android
@@ -26,29 +29,34 @@ fun SubscribeRoute(
     onBackClick: () -> Unit,
     onSaveButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     viewModel: SubscribeViewModel = hiltViewModel()
 ) {
 
     SubscribeKeywordScreen(
         modifier = modifier,
         onBackClick = onBackClick,
+        onShowSnackbar = onShowSnackbar,
         onSaveButtonClick = onSaveButtonClick
     )
 }
+
 @Composable
 fun SubscribeKeywordScreen(
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit = {},
     onSaveButtonClick: () -> Unit = {}
 ) {
     val keywords = remember { mutableStateListOf<String>() }
     var showGoBackDialog by remember { mutableStateOf(false) }
+    val snackbarMessage = stringResource(id = R.string.snackbar_subscribe_keyword)
 
     BackHandler(true) {
         showGoBackDialog = true
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = modifier.fillMaxSize()) {
         KeyLinkToolbar(
             onClickBack = { showGoBackDialog = true }
         )
@@ -68,7 +76,10 @@ fun SubscribeKeywordScreen(
                 .fillMaxWidth()
                 .padding(bottom = 12.dp, start = 20.dp, end = 20.dp),
             enable = !keywords.isEmpty(),
-            onClick = onSaveButtonClick
+            onClick = {
+                onShowSnackbar(snackbarMessage, SnackbarDuration.Short)
+                onSaveButtonClick()
+            }
         )
     }
     if (showGoBackDialog) {
@@ -145,6 +156,6 @@ fun SubscribeKeywordContent(
 @Composable
 private fun SubscribeKeywordScreenPreview() {
     SsamDTheme {
-        SubscribeKeywordScreen()
+        SubscribeKeywordScreen(onShowSnackbar = { _, _ -> })
     }
 }

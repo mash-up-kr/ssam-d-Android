@@ -31,7 +31,7 @@ import com.mashup.presentation.ui.theme.White
 @Composable
 fun MessageDetailRoute(
     onBackClick: () -> Unit,
-    onReportIconClick: () -> Unit,
+    onReportMenuClick: () -> Unit,
     onReplyButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChatViewModel = hiltViewModel()
@@ -40,7 +40,7 @@ fun MessageDetailRoute(
     MessageDetailScreen(
         modifier = modifier,
         onBackClick = onBackClick,
-        onReportIconClick = onReportIconClick,
+        onReportMenuClick = onReportMenuClick,
         onReplyButtonClick = onReplyButtonClick,
     )
 }
@@ -48,7 +48,7 @@ fun MessageDetailRoute(
 @Composable
 fun MessageDetailScreen(
     onBackClick: () -> Unit,
-    onReportIconClick: () -> Unit,
+    onReportMenuClick: () -> Unit,
     onReplyButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -65,7 +65,7 @@ fun MessageDetailScreen(
                         modifier = Modifier
                             .padding(end = 20.dp)
                             .clickable {
-                                onReportIconClick()
+                                onReportMenuClick()
                             },
                         painter = painterResource(id = R.drawable.ic_declare_24),
                         tint = White,
@@ -113,7 +113,7 @@ private fun MessageScreenPreview() {
     SsamDTheme {
         MessageDetailScreen(
             onBackClick = {},
-            onReportIconClick = {},
+            onReportMenuClick = {},
             onReplyButtonClick = {},
         )
     }

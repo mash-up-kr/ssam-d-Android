@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.home.navigation
 
+import androidx.compose.material.SnackbarDuration
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -26,6 +27,7 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.homeGraph(
     navController: NavController,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     onSubscribeKeywordClick: () -> Unit,
     onGuideClick: () -> Unit,
     onBackClick: () -> Unit,
@@ -52,7 +54,8 @@ fun NavGraphBuilder.homeGraph(
         composable(route = KeyLinkNavigationRoute.HomeGraph.SubscribeKeywordRoute.route) {
             SubscribeRoute(
                 onBackClick = onBackClick,
-                onSaveButtonClick = onBackClick
+                onSaveButtonClick = onBackClick,
+                onShowSnackbar = onShowSnackbar
             )
         }
         nestedSignalGraph()

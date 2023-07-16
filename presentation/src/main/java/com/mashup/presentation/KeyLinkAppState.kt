@@ -1,8 +1,13 @@
 package com.mashup.presentation
 
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -14,6 +19,8 @@ import com.mashup.presentation.feature.home.navigation.navigateToHome
 import com.mashup.presentation.feature.signal.navigation.navigateToSignal
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 import com.mashup.presentation.navigation.TopLevelDestination
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * Ssam_D_Android
@@ -23,10 +30,18 @@ import com.mashup.presentation.navigation.TopLevelDestination
 
 @Composable
 fun rememberKeyLinkAppState(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    scaffoldState: ScaffoldState = rememberScaffoldState(
+        snackbarHostState = remember { SnackbarHostState() }
+    ),
+    coroutineScope: CoroutineScope = rememberCoroutineScope()
 ): KeyLinkAppState {
-    return remember(navController) {
-        KeyLinkAppState(navController)
+    return remember(navController, scaffoldState, coroutineScope) {
+        KeyLinkAppState(
+            navController,
+            scaffoldState,
+            coroutineScope
+        )
     }
 }
 
@@ -40,13 +55,23 @@ fun rememberKeyLinkAppState(
  */
 @Stable
 class KeyLinkAppState(
-    val navController: NavHostController
+    val navController: NavHostController,
+    val scaffoldState: ScaffoldState,
+    val coroutineScope: CoroutineScope
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().toList()
 
+    fun showSnackbar(message: String, duration: SnackbarDuration = SnackbarDuration.Short) {
+        coroutineScope.launch {
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = message,
+                duration = duration
+            )
+        }
+    }
     @Composable
     fun isBottomBarVisible(): Boolean {
         return when (currentDestination?.route) {
