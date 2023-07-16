@@ -10,7 +10,7 @@ data class GetChatsResponseBody(
     val pageLength: Int,
     val totalPage: Int,
     val list: List<ChatResponseBody>
-): DomainMapper<Chats> {
+) : DomainMapper<Chats> {
     override fun toDomainModel(): Chats {
         return Chats(
             pageLength = pageLength,
@@ -26,7 +26,7 @@ data class ChatResponseBody(
     val content: String,
     val senderName: String,
     val receivedTimeMillis: Long
-): DomainMapper<Chat> {
+) : DomainMapper<Chat> {
     override fun toDomainModel(): Chat {
         return Chat(
             id = id,

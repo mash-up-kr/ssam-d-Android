@@ -12,7 +12,7 @@ data class GetChatInfoResponseBody(
     val matchingUserProfileImage: String,
     val chatColor: String,
     val isAlive: Boolean
-): DomainMapper<ChatInfo> {
+) : DomainMapper<ChatInfo> {
     override fun toDomainModel(): ChatInfo {
         return ChatInfo(
             id = id,
