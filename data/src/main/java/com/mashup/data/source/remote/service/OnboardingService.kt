@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface OnboardingService {
 
-    @POST("keywords")
+    @POST("/keywords")
     suspend fun saveOnboardingKeywords(
         @Body keywords: KeywordsRequestBody
     ): BaseResponse<Any>
