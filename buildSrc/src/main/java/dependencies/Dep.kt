@@ -4,7 +4,8 @@ object Dep {
     object AndroidX {
         const val appCompat = "androidx.appcompat:appcompat:1.6.1"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.4"
-        const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+        const val constraintLayoutCompose =
+            "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
         object Activity {
             const val ktx = "androidx.activity:activity-ktx:1.2.3"
@@ -47,6 +48,12 @@ object Dep {
 
         object Hilt {
             const val hiltNavigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
+        }
+
+        object Paging3 {
+            const val pagingRuntime = "androidx.paging:paging-runtime-ktx:3.1.1"
+            const val pagingCompose = "androidx.paging:paging-compose:1.0.0-alpha20"
+            const val pagingCommon = "androidx.paging:paging-common-ktx:3.1.1"  // for domain layer
         }
     }
 
@@ -128,7 +135,8 @@ object Dep {
         private const val version = "4.13.2"
         const val glide = "com.github.bumptech.glide:glide:$version"
         const val compiler = "com.github.bumptech.glide:compiler:$version"
-        const val recyclerviewIntegration = "com.github.bumptech.glide:recyclerview-integration:$version"
+        const val recyclerviewIntegration =
+            "com.github.bumptech.glide:recyclerview-integration:$version"
         const val okHttpIntegration = "com.github.bumptech.glide:okhttp3-integration:$version"
     }
 
