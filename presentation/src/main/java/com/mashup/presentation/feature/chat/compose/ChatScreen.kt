@@ -26,16 +26,15 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun ChatRoute(
     onEmptyScreenButtonClick: () -> Unit,
-    onChatClick: () -> Unit,
+    onChatClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
     ChatScreen(
         modifier = modifier,
         onEmptyScreenButtonClick = onEmptyScreenButtonClick,
-        onChatClick =  { id ->
-            viewModel.getChats(id)
-            onChatClick()
+        onChatClick =  { chatId ->
+            onChatClick(chatId)
         }
     )
 }

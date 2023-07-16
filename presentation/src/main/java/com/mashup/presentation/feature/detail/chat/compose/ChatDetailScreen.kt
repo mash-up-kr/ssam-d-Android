@@ -22,6 +22,7 @@ import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * Ssam_D_Android
@@ -31,12 +32,18 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ChatDetailRoute(
+    chatId: Long,
     onBackClick: () -> Unit,
     onMessageClick: () -> Unit,
     onReportClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(Unit) {
+        Timber.i("ChatDetailRoute chatId: $chatId")
+        viewModel.getChats(chatId)
+    }
+
     when (val state = viewModel.chatDetailUiState.collectAsStateWithLifecycle().value) {
         is ChatDetailUiState.Loading -> {}
         is ChatDetailUiState.Success -> {

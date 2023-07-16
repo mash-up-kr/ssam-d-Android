@@ -68,7 +68,9 @@ fun KeyLinkNavHost(
             onShowSnackbar = onShowSnackbar,
             onBackClick = navController::navigateUp,
             onEmptyScreenButtonClick = navController::navigateToSignal,
-            onChatClick = navController::navigateToChatDetail,
+            onChatClick = { chatId ->
+                navController.navigateToChatDetail(chatId)
+            },
             onMessageClick = navController::navigateToMessageDetail,
             onReportMenuClick = navController::navigateToReport,
             onReportIconClick = {
@@ -84,6 +86,7 @@ fun KeyLinkNavHost(
             onReplyButtonClick = navController::navigateToReplyRoute,
             onReplySendClick = {
                 navController.navigateToChatDetail(
+                    chatId = 1,  // TODO: chatId 넘겨줘야 함
                     navOptions {
                         popUpTo(KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route)
                     }
