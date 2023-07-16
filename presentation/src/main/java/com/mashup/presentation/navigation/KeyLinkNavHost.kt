@@ -17,6 +17,7 @@ import com.mashup.presentation.feature.profile.navigation.navigateToNavigationRo
 import com.mashup.presentation.feature.profile.navigation.profileGraph
 import com.mashup.presentation.feature.reply.navigation.navigateToReplyRoute
 import com.mashup.presentation.feature.report.navigation.navigateToReport
+import com.mashup.presentation.feature.signal.navigation.navigateToSignal
 import com.mashup.presentation.feature.signal.navigation.signalGraph
 import com.mashup.presentation.feature.subscribe.navigation.navigateToSubscribeKeywordRoute
 
@@ -66,6 +67,7 @@ fun KeyLinkNavHost(
         chatGraph(
             onShowSnackbar = onShowSnackbar,
             onBackClick = navController::navigateUp,
+            onEmptyScreenButtonClick = navController::navigateToSignal,
             onChatClick = navController::navigateToChatDetail,
             onMessageClick = navController::navigateToMessageDetail,
             onReportMenuClick = navController::navigateToReport,

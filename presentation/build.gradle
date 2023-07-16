@@ -102,4 +102,8 @@ dependencies {
     // lottie
     implementation Dep.Airbnb.lottie
     implementation Dep.Airbnb.lottieCompose
+
+    // paging
+    implementation Dep.AndroidX.Paging3.pagingCompose
+    implementation Dep.AndroidX.Paging3.pagingRuntime
 }

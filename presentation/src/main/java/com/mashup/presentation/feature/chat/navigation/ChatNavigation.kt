@@ -29,6 +29,7 @@ fun NavGraphBuilder.chatGraph(
     nestedGraphs: NavGraphBuilder.() -> Unit = {},
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     onBackClick: () -> Unit,
+    onEmptyScreenButtonClick: () -> Unit,
     onChatClick: () -> Unit,
     onMessageClick: () -> Unit,
     onReportMenuClick: () -> Unit,
@@ -42,7 +43,7 @@ fun NavGraphBuilder.chatGraph(
     ) {
         composable(route = KeyLinkNavigationRoute.ChatGraph.ChatRoute.route) {
             ChatRoute(
-                onEmptyScreenButtonClick = {},
+                onEmptyScreenButtonClick = onEmptyScreenButtonClick,
                 onChatClick = onChatClick
             )
         }
