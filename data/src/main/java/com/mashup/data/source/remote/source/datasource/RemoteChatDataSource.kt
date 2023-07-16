@@ -1,6 +1,7 @@
 package com.mashup.data.source.remote.source.datasource
 
 import com.mashup.data.source.remote.dto.responsebody.chat.ChatDetailResponse
+import com.mashup.data.source.remote.dto.responsebody.chat.GetChatInfoResponseBody
 import com.mashup.data.source.remote.dto.responsebody.chat.GetChatsResponseBody
 import com.mashup.data.source.remote.service.ChatService
 import javax.inject.Inject
@@ -9,8 +10,13 @@ class RemoteChatDataSource @Inject constructor(
     private val chatService: ChatService
 ) {
 
-    suspend fun getChats(id: Long): GetChatsResponseBody {
-        val response = chatService.getChats(id)
+    suspend fun getChatInfo(id: Long): GetChatInfoResponseBody {
+        val response = chatService.getChatInfo(id)
+        return response.data ?: throw Exception(response.message)
+    }
+
+    suspend fun getChats(id: Long, pageNo: Int): GetChatsResponseBody {
+        val response = chatService.getChats(id, pageNo)
         return response.data ?: throw Exception(response.message)
     }
 
