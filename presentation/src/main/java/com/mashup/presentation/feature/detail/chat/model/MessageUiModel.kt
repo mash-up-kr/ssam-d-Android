@@ -37,7 +37,7 @@ fun Chat.toUiModel(chatColor: String, matchingUserName: String): MessageUiModel 
     return MessageUiModel(
         message = content,
         userName = senderName,
-        date = createdAt.toString(),
+        date = receivedTimeMillis.toString(),
         isMine = isMine,
         backgroundColor = if (!isMine) getStringToEnumColor(chatColor) else null
     )

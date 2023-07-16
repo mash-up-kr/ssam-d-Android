@@ -1,6 +1,7 @@
 package com.mashup.presentation.feature.detail.chat.model
 
-import com.mashup.domain.model.ChatDetail
+import com.mashup.domain.model.ChatInfo
+import com.mashup.domain.model.Chats
 
 /**
  * Ssam_D_Android
@@ -11,6 +12,9 @@ data class ChatDetailUiModel(
     val othersProfileImage: String,
     val othersNickName: String,
     val matchedKeywords: List<String>,
+    val isAlive: Boolean,
+    val pageLength: Int,
+    val totalPage: Int,
     val chat: List<MessageUiModel>
 ) {
     fun getMatchedKeywordSummery(): List<String> {
@@ -29,11 +33,14 @@ data class ChatDetailUiModel(
     }
 }
 
-fun ChatDetail.toUiModel(): ChatDetailUiModel {
+fun ChatInfo.toUiModel(chats: Chats): ChatDetailUiModel {
     return ChatDetailUiModel(
         othersProfileImage = matchingUserProfileImage,
         othersNickName = matchingUserName,
         matchedKeywords = keywords,
-        chat = chat.map { it.toUiModel(chatColor, matchingUserName) }
+        isAlive = isAlive,
+        pageLength = chats.pageLength,
+        totalPage = chats.totalPage,
+        chat = chats.list.map { it.toUiModel(chatColor, matchingUserName) }
     )
 }
