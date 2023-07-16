@@ -1,7 +1,10 @@
 package com.mashup.data.source.remote.dto.responsebody.signal
 
+import com.mashup.domain.base.DomainMapper
+import com.mashup.domain.model.ReceivedSignal
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.mashup.data.source.remote.dto.responsebody.signal.ReceivedSignal as DReceivedSignal
 
 /**
  * Ssam_D_Android
@@ -15,7 +18,7 @@ data class ReceivedSignalResponse(
     @field:Json(name = "totalPage")
     val totalPage: Int,
     @field:Json(name = "list")
-    val receivedSignals: List<ReceivedSignal>
+    val receivedSignals: List<DReceivedSignal>,
 )
 
 @JsonClass(generateAdapter = true)
@@ -37,5 +40,18 @@ data class ReceivedSignal(
     @field:Json(name = "keywordsCount")
     val keywordsCount: Int,
     @field:Json(name = "receivedTimeMillis")
-    val receivedMillis: Long
-)
+    val receivedTimeMillis: Long,
+) : DomainMapper<ReceivedSignal> {
+    override fun toDomainModel(): ReceivedSignal =
+        ReceivedSignal(
+            signalId = signalId,
+            receiverId = receiverId,
+            senderId = senderId,
+            senderName = senderName,
+            senderImageUrl = senderImageUrl,
+            signalContent = signalContent,
+            keywords = keywords,
+            keywordsCount = keywordsCount,
+            receivedTimeMillis = receivedTimeMillis,
+        )
+}

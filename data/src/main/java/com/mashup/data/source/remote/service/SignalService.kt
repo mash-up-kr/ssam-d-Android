@@ -21,7 +21,7 @@ interface SignalService {
     ): BaseResponse<Any>
 
     @GET(ApiPattern.Signal.PREFIX)
-    suspend fun getSignal(
+    suspend fun getReceivedSignal(
         @Query("pageNo") pageNumber: Int,
         @Query("pageLength") pageLength: Int = PAGE_LENGTH
     ): BaseResponse<ReceivedSignalResponse>
