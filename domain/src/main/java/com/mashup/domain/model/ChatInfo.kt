@@ -1,17 +1,25 @@
 package com.mashup.domain.model
 
-data class ChatDetail(
+import com.mashup.domain.base.DomainModel
+
+data class ChatInfo(
     val id: Long,
     val keywords: List<String>,
     val matchingUserName: String,
     val matchingUserProfileImage: String,
     val chatColor: String,
-    val chat: List<Chat>
-)
+    val isAlive: Boolean
+): DomainModel
+
+data class Chats(
+    val pageLength: Int,
+    val totalPage: Int,
+    val list: List<Chat>
+): DomainModel
 
 data class Chat(
     val id: Long,
     val content: String,
     val senderName: String,
-    val createdAt: Long
-)
+    val receivedTimeMillis: Long
+): DomainModel
