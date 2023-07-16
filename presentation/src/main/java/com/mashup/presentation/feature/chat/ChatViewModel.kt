@@ -2,12 +2,13 @@ package com.mashup.presentation.feature.chat
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mashup.domain.usecase.GetChatsUseCase
+import com.mashup.domain.usecase.chat.GetChatInfoUseCase
+import com.mashup.domain.usecase.chat.GetChatsParam
+import com.mashup.domain.usecase.chat.GetChatsUseCase
 import com.mashup.presentation.feature.detail.chat.compose.ChatDetailUiState
 import com.mashup.presentation.feature.detail.chat.model.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -19,21 +20,25 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class ChatViewModel @Inject constructor(
+    private val getChatInfoUseCase: GetChatInfoUseCase,
     private val getChatsUseCase: GetChatsUseCase
 ): ViewModel() {
 
     private val _chatDetailUiState: MutableStateFlow<ChatDetailUiState> = MutableStateFlow(ChatDetailUiState.Loading)
     val chatDetailUiState = _chatDetailUiState.asStateFlow()
 
-    fun getChats(id: Long) {
+    fun getChatInfoAndChats(id: Long, pageNo: Int) {
         viewModelScope.launch {
-            getChatsUseCase.execute(id)
-                .onSuccess { chatDetail ->
-                    Timber.i("채팅 상세 get 성공~!")
-                    _chatDetailUiState.emit(ChatDetailUiState.Success(chatDetail.toUiModel()))
-                }.onFailure {
+            val param = GetChatsParam(id, pageNo)
+            getChatInfoUseCase.execute(id)
+                .zip(getChatsUseCase.execute(param)) { chatInfo, chats ->
+                    chatInfo.toUiModel(chats)
+                }.catch {
                     Timber.e("채팅 상세 get 실패.")
-                    _chatDetailUiState.emit(ChatDetailUiState.Failure(it.message))
+                    _chatDetailUiState.value = ChatDetailUiState.Failure(it.message)
+                }.collect { chatDetailUiModel ->
+                    Timber.i("채팅 상세 get 성공~!")
+                    _chatDetailUiState.value = ChatDetailUiState.Success(chatDetailUiModel)
                 }
         }
     }
