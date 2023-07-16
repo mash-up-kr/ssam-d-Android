@@ -1,4 +1,4 @@
-package com.mashup.data.source.remote.dto.responsebody
+package com.mashup.data.source.remote.dto.responsebody.chat
 
 import com.mashup.domain.model.Chat
 import com.mashup.domain.model.ChatDetail

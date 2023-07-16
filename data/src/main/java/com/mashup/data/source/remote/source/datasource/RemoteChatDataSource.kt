@@ -1,7 +1,7 @@
 package com.mashup.data.source.remote.source.datasource
 
 import com.mashup.data.source.remote.dto.responsebody.chat.ChatDetailResponse
-import com.mashup.data.source.remote.dto.responsebody.GetChatsResponseBody
+import com.mashup.data.source.remote.dto.responsebody.chat.GetChatsResponseBody
 import com.mashup.data.source.remote.service.ChatService
 import javax.inject.Inject
 

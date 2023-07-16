@@ -2,7 +2,7 @@ package com.mashup.data.source.remote.service
 
 import com.mashup.data.source.remote.dto.BaseResponse
 import com.mashup.data.source.remote.dto.responsebody.chat.ChatDetailResponse
-import com.mashup.data.source.remote.dto.responsebody.GetChatsResponseBody
+import com.mashup.data.source.remote.dto.responsebody.chat.GetChatsResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Path
 
