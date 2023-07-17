@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.mashup.domain.usecase.mypage.GetUserInformationUseCase
 import com.mashup.domain.usecase.mypage.SaveAlarmStateUseCase
 import com.mashup.presentation.feature.profile.model.ProfileUiModel
+import com.mashup.domain.usecase.mypage.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val optionsProvider: ProfileOptionsProvider,
     private val getUserInformation: GetUserInformationUseCase,
-    private val saveAlarmState: SaveAlarmStateUseCase
+    private val saveAlarmState: SaveAlarmStateUseCase,
+    private val logout: LogoutUseCase
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState> =
         MutableStateFlow(UiState.Loading)
@@ -49,6 +51,12 @@ class ProfileViewModel @Inject constructor(
     fun toggleNotificationSwitch(isChecked: Boolean) {
         viewModelScope.launch {
             saveAlarmState.execute(isChecked)
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            logout.execute(Unit)
         }
     }
 

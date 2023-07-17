@@ -43,8 +43,7 @@ fun NavGraphBuilder.profileGraph(
         composable(route = KeyLinkNavigationRoute.ProfileGraph.ProfileRoute.route) {
             ProfileRoute(
                 onBackClick = onBackClick,
-                onNavigateClick = onNavigateClick,
-                onLogoutClick = { /* TODO 로그아웃 시 화면 전환 */ }
+                onNavigateClick = onNavigateClick
             )
         }
         composable(route = KeyLinkNavigationRoute.ProfileGraph.SendSignalRoute.route) {

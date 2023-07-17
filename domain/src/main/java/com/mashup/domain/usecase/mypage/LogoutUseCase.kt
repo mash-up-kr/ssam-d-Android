@@ -1,12 +1,12 @@
 package com.mashup.domain.usecase.mypage
 
 import com.mashup.domain.repository.UserRepository
-import com.mashup.domain.usecase.BaseUseCase
+import com.mashup.domain.usecase.common.CoroutineUseCase
 import javax.inject.Inject
 
 class LogoutUseCase @Inject constructor(
     private val userRepository: UserRepository
-): BaseUseCase<Unit, Unit>() {
+): CoroutineUseCase<Unit, Unit>() {
     override suspend fun invoke(param: Unit) {
         userRepository.logout()
     }
