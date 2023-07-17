@@ -5,9 +5,6 @@ import com.mashup.presentation.common.base.UiMapper
 import com.mashup.presentation.common.base.UiModel
 import java.util.concurrent.TimeUnit
 
-/**
- * 임시 data model입니다.
- */
 data class SignalUiModel(
     val signalId: Int = -1,
     val receiverId: Int = -1,
