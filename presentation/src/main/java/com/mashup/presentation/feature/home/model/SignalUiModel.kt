@@ -9,15 +9,15 @@ import java.util.concurrent.TimeUnit
  * 임시 data model입니다.
  */
 data class SignalUiModel(
-    val signalId: Int,
-    val receiverId: Int,
-    val senderId: Int,
-    val senderName: String,
-    val senderImageUrl: String,
-    val signalContent: String,
-    val keywords: List<String>,
-    val keywordsCount: Int,
-    val receivedTimeMillis: String,
+    val signalId: Int = -1,
+    val receiverId: Int = -1,
+    val senderId: Int = -1,
+    val senderName: String = "",
+    val senderImageUrl: String = "",
+    val signalContent: String = "",
+    val keywords: List<String> = emptyList(),
+    val keywordsCount: Int = -1,
+    val receivedTimeMillis: String = "",
 ) : UiModel, UiMapper<ReceivedSignal, SignalUiModel> {
     fun getDisplayedTime(receivedTimeMillis: Long): String {
         val currentTimeMillis = System.currentTimeMillis()
