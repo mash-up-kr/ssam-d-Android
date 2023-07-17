@@ -281,7 +281,7 @@ private fun SignalCardUserInfo(signal: SignalUiModel) {
             color = White
         )
         Text(
-            text = signal.receivedTimeMillis,
+            text = signal.receivedDisplayedTime,
             style = Caption2,
             color = Gray06
         )
