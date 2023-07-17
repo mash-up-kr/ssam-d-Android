@@ -1,7 +1,7 @@
-package com.mashup.domain.usecase
+package com.mashup.domain.usecase.common
 
 
-abstract class BaseUseCase<I, O> {
+abstract class CoroutineUseCase<I, O> {
     protected abstract suspend fun invoke(param: I): O
 
     suspend fun execute(param: I): O {

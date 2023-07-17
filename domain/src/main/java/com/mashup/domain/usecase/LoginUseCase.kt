@@ -1,11 +1,12 @@
 package com.mashup.domain.usecase
 
 import com.mashup.domain.repository.UserRepository
+import com.mashup.domain.usecase.common.CoroutineUseCase
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(
     private val userRepository: UserRepository
-) : BaseUseCase<LoginParam, Result<Unit>>() {
+) : CoroutineUseCase<LoginParam, Result<Unit>>() {
 
     override suspend fun invoke(param: LoginParam): Result<Unit> {
         return runCatching {

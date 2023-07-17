@@ -1,8 +1,7 @@
 package com.mashup.domain.usecase
 
 import com.mashup.domain.repository.SignalRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import com.mashup.domain.usecase.common.CoroutineUseCase
 import javax.inject.Inject
 
 /**
@@ -13,7 +12,7 @@ import javax.inject.Inject
 
 class SendSignalUseCase @Inject constructor(
     private val signalRepository: SignalRepository
-) : BaseUseCase<Pair<String, List<String>>, Result<Unit>>() {
+) : CoroutineUseCase<Pair<String, List<String>>, Result<Unit>>() {
 
     override suspend fun invoke(param: Pair<String, List<String>>): Result<Unit> {
         val response = runCatching {
