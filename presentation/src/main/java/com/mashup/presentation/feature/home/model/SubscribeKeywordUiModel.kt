@@ -1,5 +1,7 @@
 package com.mashup.presentation.feature.home.model
 
+import com.mashup.presentation.common.base.UiModel
+
 /**
  * Ssam_D_Android
  * @author jaesung
@@ -7,4 +9,4 @@ package com.mashup.presentation.feature.home.model
  */
 data class SubscribeKeywordUiModel(
     val a: String
-)
+) : UiModel
