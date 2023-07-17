@@ -11,7 +11,5 @@ import kotlinx.coroutines.flow.flow
 abstract class FlowUseCase<I, O> {
     protected abstract fun invoke(params: I): Flow<O>
 
-    fun execute(params: I): Flow<O> = flow {
-        invoke(params)
-    }
+    fun execute(params: I): Flow<O> = invoke(params)
 }
