@@ -1,7 +1,7 @@
 package com.mashup.data.repository
 
 import androidx.paging.PagingData
-import com.mashup.data.source.remote.datasource.RemoteSignalDataSource
+import com.mashup.data.source.remote.source.datasource.RemoteSignalDataSource
 import com.mashup.data.util.createPager
 import com.mashup.domain.model.ReceivedSignal
 import com.mashup.domain.repository.SignalRepository

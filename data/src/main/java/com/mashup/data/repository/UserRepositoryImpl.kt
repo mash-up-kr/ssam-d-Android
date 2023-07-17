@@ -1,7 +1,7 @@
 package com.mashup.data.repository
 
 import com.mashup.data.source.local.datasource.LocalUserDataSource
-import com.mashup.data.source.remote.datasource.RemoteUserDataSource
+import com.mashup.data.source.remote.source.datasource.RemoteUserDataSource
 import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody
 import com.mashup.data.util.suspendRunCatching
 import com.mashup.domain.model.User

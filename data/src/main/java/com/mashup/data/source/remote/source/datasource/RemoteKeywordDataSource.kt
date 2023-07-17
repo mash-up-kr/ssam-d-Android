@@ -1,4 +1,4 @@
-package com.mashup.data.source.remote.datasource
+package com.mashup.data.source.remote.source.datasource
 
 import com.mashup.data.source.remote.dto.BaseResponse
 import com.mashup.data.source.remote.dto.responsebody.keyword.KeywordRecommendResponse

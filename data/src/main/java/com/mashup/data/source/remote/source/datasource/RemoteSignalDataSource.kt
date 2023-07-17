@@ -1,4 +1,4 @@
-package com.mashup.data.source.remote.datasource
+package com.mashup.data.source.remote.source.datasource
 
 import com.mashup.data.source.remote.dto.requestbody.SignalRequest
 import com.mashup.data.source.remote.service.SignalService
