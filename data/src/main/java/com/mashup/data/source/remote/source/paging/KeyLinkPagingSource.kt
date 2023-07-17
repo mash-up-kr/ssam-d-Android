@@ -22,8 +22,6 @@ class KeyLinkPagingSource<T : Any>(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
         val page = params.key ?: INITIAL_PAGE
 
-        if (page != INITIAL_PAGE) delay(100L)
-
         return try {
             val result = executor.invoke(page)
 
