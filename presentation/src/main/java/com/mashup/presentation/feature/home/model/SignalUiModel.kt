@@ -14,7 +14,7 @@ data class SignalUiModel(
     val signalContent: String = "",
     val keywords: List<String> = emptyList(),
     val keywordsCount: Int = -1,
-    val receivedTimeMillis: String = "",
+    val receivedDisplayedTime: String = "",
 ) : UiModel, UiMapper<ReceivedSignal, SignalUiModel> {
     override fun toUiModel(domain: ReceivedSignal) = SignalUiModel(
         signalId = domain.signalId,
@@ -25,6 +25,6 @@ data class SignalUiModel(
         signalContent = domain.signalContent,
         keywords = domain.keywords.map { "#$it" },
         keywordsCount = domain.keywordsCount,
-        receivedTimeMillis = domain.receivedTimeMillis.getDisplayedTime()
+        receivedDisplayedTime = domain.receivedTimeMillis.getDisplayedTime()
     )
 }
