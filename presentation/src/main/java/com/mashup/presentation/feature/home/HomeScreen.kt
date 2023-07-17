@@ -253,7 +253,7 @@ private fun SignalCard(signal: SignalUiModel) {
         ) {
             SignalCardUserInfo(signal)
             Text(
-                text = signal.summery,
+                text = signal.signalContent,
                 style = Body1,
                 color = White,
                 maxLines = 3
@@ -276,12 +276,12 @@ private fun SignalCardUserInfo(signal: SignalUiModel) {
             contentScale = ContentScale.Inside
         )
         Text(
-            text = signal.nickname,
+            text = signal.senderName,
             style = Body2,
             color = White
         )
         Text(
-            text = signal.getDisplayedTime(),
+            text = signal.receivedTimeMillis,
             style = Caption2,
             color = Gray06
         )
