@@ -82,3 +82,13 @@ fun Context.getAppVersion(): String {
 fun Int.toPx(): Int {
     return (this * Resources.getSystem().displayMetrics.density).toInt()
 }
+
+
+fun Context.findActivity(): Activity {
+    var context = this
+    while (context is ContextWrapper) {
+        if (context is Activity) return context
+        context = context.baseContext
+    }
+    throw IllegalStateException("no activity")
+}
