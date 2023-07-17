@@ -42,7 +42,9 @@ fun ChatDetailRoute(
     }
 
     when (val state = viewModel.chatDetailUiState.collectAsStateWithLifecycle().value) {
-        is ChatDetailUiState.Loading -> {}
+        is ChatDetailUiState.Loading -> {
+            KeyLinkLoading()
+        }
         is ChatDetailUiState.Success -> {
             ChatDetailScreen(
                 modifier = modifier,
