@@ -1,6 +1,6 @@
 package com.mashup.data.repository
 
-import com.mashup.data.source.remote.datasource.RemoteChatDataSource
+import com.mashup.data.source.remote.source.datasource.RemoteChatDataSource
 import com.mashup.domain.model.chat.ChatDetail
 import com.mashup.domain.repository.ChatRepository
 import kotlinx.coroutines.flow.Flow
