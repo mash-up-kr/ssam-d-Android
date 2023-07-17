@@ -1,20 +1,27 @@
 package com.mashup.presentation.feature.home.model
 
+import com.mashup.domain.model.ReceivedSignal
+import com.mashup.presentation.common.base.UiMapper
+import com.mashup.presentation.common.base.UiModel
 import java.util.concurrent.TimeUnit
 
 /**
  * 임시 data model입니다.
  */
 data class SignalUiModel(
-    val profileImage: String? = null,
-    val nickname: String,
-    val summery: String,
+    val signalId: Int,
+    val receiverId: Int,
+    val senderId: Int,
+    val senderName: String,
+    val senderImageUrl: String,
+    val signalContent: String,
     val keywords: List<String>,
-    val uploadTime: Long
-) {
-    fun getDisplayedTime(): String {
+    val keywordsCount: Int,
+    val receivedTimeMillis: String,
+) : UiModel, UiMapper<ReceivedSignal, SignalUiModel> {
+    fun getDisplayedTime(receivedTimeMillis: Long): String {
         val currentTimeMillis = System.currentTimeMillis()
-        val diffMillis = currentTimeMillis - uploadTime
+        val diffMillis = currentTimeMillis - receivedTimeMillis
 
         return when {
             diffMillis < TimeUnit.MINUTES.toMillis(1) -> "지금"
@@ -39,4 +46,15 @@ data class SignalUiModel(
             }
         }
     }
+    override fun toUiModel(domain: ReceivedSignal) = SignalUiModel(
+        signalId = domain.signalId,
+        receiverId = domain.receiverId,
+        senderId = domain.senderId,
+        senderName = domain.senderName,
+        senderImageUrl = domain.senderImageUrl,
+        signalContent = domain.signalContent,
+        keywords = domain.keywords.map { "#$it" },
+        keywordsCount = domain.keywordsCount,
+        receivedTimeMillis = getDisplayedTime(domain.receivedTimeMillis)
+    )
 }
