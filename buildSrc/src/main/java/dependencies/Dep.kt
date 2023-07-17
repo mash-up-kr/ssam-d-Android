@@ -50,6 +50,11 @@ object Dep {
             const val hiltNavigation = "androidx.hilt:hilt-navigation-compose:1.0.0"
         }
 
+        object Paging3 {
+            const val pagingRuntime = "androidx.paging:paging-runtime-ktx:3.1.1"
+            const val pagingCompose = "androidx.paging:paging-compose:1.0.0-alpha20"
+            const val pagingCommon = "androidx.paging:paging-common-ktx:3.1.1"  // for domain layer
+        }
     }
 
     object Google {

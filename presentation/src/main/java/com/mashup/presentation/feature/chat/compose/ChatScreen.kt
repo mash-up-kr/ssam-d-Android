@@ -67,7 +67,7 @@ fun ChatScreen(
         }
     ) { paddingValues ->
         ChatContent(
-            isConnected = true,
+            isConnected = false,
             onEmptyScreenButtonClick = onEmptyScreenButtonClick,
             onChatClick = onChatClick,
             modifier = Modifier.padding(paddingValues)

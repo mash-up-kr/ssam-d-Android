@@ -70,4 +70,7 @@ dependencies {
     implementation Dep.AndroidX.Room.runtime
     kapt Dep.AndroidX.Room.compiler
 
+    // Pagin3
+    implementation Dep.AndroidX.Paging3.pagingRuntime
+
 }
