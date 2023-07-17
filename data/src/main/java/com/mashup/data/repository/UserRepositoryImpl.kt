@@ -29,6 +29,10 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun logout() {
+        localUserDataSource.removeToken()
+    }
+
     override suspend fun getNicknameDuplication(nickname: String): Result<Unit> {
         return suspendRunCatching {
             remoteUserDataSource.getNicknameDuplication(nickname)
