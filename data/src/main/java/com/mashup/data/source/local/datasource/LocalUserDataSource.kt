@@ -19,6 +19,11 @@ class LocalUserDataSource @Inject constructor(
         preferences.edit().putString(JWT, token).apply()
     }
 
+    fun removeToken() {
+        val token = getToken()
+        preferences.edit().remove(token).apply ()
+    }
+
     fun getUserId(): Long {
         return preferences.getLong(USER_ID, -1)
     }
