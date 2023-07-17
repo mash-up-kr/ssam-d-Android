@@ -39,9 +39,8 @@ fun ChatDetailRoute(
     modifier: Modifier = Modifier,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(Unit) {
-        Timber.i("ChatDetailRoute chatId: $chatId")
-        viewModel.getChats(chatId)
+    LaunchedEffect(true) {
+        viewModel.getChatInfoAndChats(id = chatId, pageNo = 1)
     }
 
     when (val state = viewModel.chatDetailUiState.collectAsStateWithLifecycle().value) {
@@ -208,31 +207,6 @@ private fun ChatDetailContent(
             chat = chatDetailState.chat,
             onChatItemClick = { onChatItemClick() },
             scrollState = scrollState
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun ChatDetailScreenPreview() {
-    SsamDTheme {
-        // ChatDetailScreen(onBackClick = {}, onMessageClick = {}, onReportClick = {})
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Preview(showBackground = true)
-@Composable
-private fun ChatDetailContentPreview() {
-    SsamDTheme {
-        ChatDetailContent(
-            chatDetailState = ProvideChatDetailState,
-            onChatItemClick = {},
-            keywordBottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden),
-            coroutineScope = rememberCoroutineScope(),
-            onChangeBottomSheetType = {},
-            isMatchedKeywordVisible = true,
-            scrollState = rememberLazyGridState()
         )
     }
 }
