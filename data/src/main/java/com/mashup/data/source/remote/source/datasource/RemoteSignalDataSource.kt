@@ -24,8 +24,8 @@ class RemoteSignalDataSource @Inject constructor(
         signalService.sendSignal(signalRequest)
     }
 
-    suspend fun getReceivedSignal(pageNumber: Int): ReceivedSignalResponse {
-        val response = signalService.getReceivedSignal(pageNumber = pageNumber)
+    suspend fun getReceivedSignal(pageNumber: Int, pageLength: Int?): ReceivedSignalResponse {
+        val response = signalService.getReceivedSignal(pageNumber = pageNumber, pageLength = pageLength)
         return response.data ?: throw Exception(response.message)
     }
 }

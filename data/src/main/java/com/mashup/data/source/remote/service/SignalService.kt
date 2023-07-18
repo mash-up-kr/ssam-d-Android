@@ -23,10 +23,6 @@ interface SignalService {
     @GET(ApiPattern.Signal.PREFIX)
     suspend fun getReceivedSignal(
         @Query("pageNo") pageNumber: Int,
-        @Query("pageLength") pageLength: Int = PAGE_LENGTH
+        @Query("pageLength") pageLength: Int?
     ): BaseResponse<ReceivedSignalResponse>
-
-    companion object {
-        const val PAGE_LENGTH = 10
-    }
 }
