@@ -8,5 +8,5 @@ import com.mashup.presentation.common.base.UiModel
  * @created 2023/07/17
  */
 data class SubscribeKeywordUiModel(
-    val a: String
+    val a: String = ""
 ) : UiModel
