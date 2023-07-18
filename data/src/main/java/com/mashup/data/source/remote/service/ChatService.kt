@@ -4,6 +4,7 @@ import com.mashup.data.source.remote.dto.BaseResponse
 import com.mashup.data.source.remote.dto.responsebody.chat.ChatDetailResponse
 import com.mashup.data.source.remote.dto.responsebody.chat.GetChatInfoResponseBody
 import com.mashup.data.source.remote.dto.responsebody.chat.GetChatsResponseBody
+import com.mashup.data.source.remote.dto.responsebody.chat.ChatRoomPagingResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -21,6 +22,11 @@ interface ChatService {
         @Query("pageNo") pageNo: Int,
         @Query("pageLength") pageLength: Int
     ): BaseResponse<GetChatsResponseBody>
+    @GET("rooms")
+    suspend fun getChatRooms(
+        @Query("pageNo") pageNo: Int,
+        @Query("pageLength") pageLength: Int?
+    ): BaseResponse<ChatRoomPagingResponse>
 
     @GET("rooms/{roomId}/chats/{chatId}")
     suspend fun getChatDetail(
