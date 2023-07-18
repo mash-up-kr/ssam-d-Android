@@ -1,9 +1,10 @@
 package com.mashup.data.network
 
-import android.util.Log
 import com.mashup.data.source.local.datasource.LocalUserDataSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
 import javax.inject.Inject
 
@@ -12,16 +13,18 @@ class TokenInterceptor @Inject constructor(
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        val requestBuilder: Request.Builder = request.newBuilder()
+        val requestBuilder = request.newBuilder()
+            .apply {
+                runBlocking(Dispatchers.IO) {
+                    val jwtToken = localUserDataSource.getToken()
+                    header(AUTHORIZATION_KEY, "Bearer $jwtToken")
+                }
+            }.build()
 
-        val jwt = localUserDataSource.getToken()
-        if (jwt.isNotEmpty()) {
-            Log.d("TokenInterceptor", jwt)
-            requestBuilder.header("Authorization", "Bearer $jwt")
-        } else {
-            Log.d("TokenInterceptor", "Token is empty")
-        }
+        return chain.proceed(requestBuilder)
+    }
 
-        return chain.proceed(requestBuilder.build())
+    companion object {
+        private const val AUTHORIZATION_KEY = "Authorization"
     }
 }

@@ -27,9 +27,23 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
+            debuggable true
             minifyEnabled false
+            manifestPlaceholders = ["appName":"@string/app_name_debug"]
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationIdSuffix '.debug'
+
+            buildConfigField "boolean","IS_DEBUG","true"
+        }
+
+        release {
+            debuggable false
+            minifyEnabled true
+            manifestPlaceholders = ["appName":"@string/app_name"]
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "boolean","IS_DEBUG","false"
         }
     }
     compileOptions {
