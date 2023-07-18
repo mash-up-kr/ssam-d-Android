@@ -22,8 +22,8 @@ class SignalRepositoryImpl @Inject constructor(
     }
 
     override fun getReceivedSignal(): Flow<PagingData<ReceivedSignal>> {
-        return createPager { page ->
-            remoteSignalDataSource.getReceivedSignal(pageNumber = page).map { it.toDomainModel() }
+        return createPager { page, _ ->
+            remoteSignalDataSource.getReceivedSignal(pageNumber = page).toDomainModel()
         }.flow
     }
 }
