@@ -1,6 +1,6 @@
 package com.mashup.data.repository
 
-import com.mashup.data.source.remote.datasource.RemoteKeywordDataSource
+import com.mashup.data.source.remote.source.datasource.RemoteKeywordDataSource
 import com.mashup.domain.repository.KeywordRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

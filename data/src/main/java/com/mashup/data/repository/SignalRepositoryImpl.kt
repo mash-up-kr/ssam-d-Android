@@ -1,7 +1,11 @@
 package com.mashup.data.repository
 
-import com.mashup.data.source.remote.datasource.RemoteSignalDataSource
+import androidx.paging.PagingData
+import com.mashup.data.source.remote.source.datasource.RemoteSignalDataSource
+import com.mashup.data.util.createPager
+import com.mashup.domain.model.ReceivedSignal
 import com.mashup.domain.repository.SignalRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
@@ -15,5 +19,11 @@ class SignalRepositoryImpl @Inject constructor(
 
     override suspend fun postSignal(content: String, keywords: List<String>) {
         remoteSignalDataSource.postSignal(content, keywords)
+    }
+
+    override fun getReceivedSignal(): Flow<PagingData<ReceivedSignal>> {
+        return createPager { page ->
+            remoteSignalDataSource.getReceivedSignal(pageNumber = page).map { it.toDomainModel() }
+        }.flow
     }
 }

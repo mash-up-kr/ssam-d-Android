@@ -2,16 +2,16 @@ package com.mashup.domain.usecase.chat
 
 import com.mashup.domain.model.chat.ChatDetail
 import com.mashup.domain.repository.ChatRepository
-import com.mashup.domain.usecase.BaseUseCase
+import com.mashup.domain.usecase.common.FlowUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetChatDetailUseCase @Inject constructor(
     private val chatRepository: ChatRepository
-) : BaseUseCase<GetChatDetailUseCase.ChatDetailParam, Flow<ChatDetail>>() {
+) : FlowUseCase<GetChatDetailUseCase.ChatDetailParam, ChatDetail>() {
 
-    override suspend fun invoke(param: ChatDetailParam): Flow<ChatDetail> {
-        return chatRepository.getChatDetail(roomId = param.roomId, chatId = param.chatId)
+    override fun invoke(params: ChatDetailParam): Flow<ChatDetail> {
+        return chatRepository.getChatDetail(roomId = params.roomId, chatId = params.chatId)
     }
 
     data class ChatDetailParam(

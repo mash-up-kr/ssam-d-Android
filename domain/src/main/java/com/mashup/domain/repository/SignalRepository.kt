@@ -1,5 +1,9 @@
 package com.mashup.domain.repository
 
+import androidx.paging.PagingData
+import com.mashup.domain.model.ReceivedSignal
+import kotlinx.coroutines.flow.Flow
+
 /**
  * Ssam_D_Android
  * @author jaesung
@@ -8,4 +12,6 @@ package com.mashup.domain.repository
 interface SignalRepository {
 
     suspend fun postSignal(content: String, keywords: List<String>)
+
+    fun getReceivedSignal(): Flow<PagingData<ReceivedSignal>>
 }
