@@ -28,7 +28,7 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.homeGraph(
     navController: NavController,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
-    onSubscribeKeywordClick: () -> Unit,
+    onKeywordContainerClick: () -> Unit,
     onGuideClick: () -> Unit,
     onBackClick: () -> Unit,
     nestedSignalGraph: NavGraphBuilder.() -> Unit,
@@ -40,7 +40,7 @@ fun NavGraphBuilder.homeGraph(
     ) {
         composable(route = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route) {
             HomeRoute(
-                onKeywordContainerClick = onSubscribeKeywordClick,
+                onKeywordContainerClick = onKeywordContainerClick,
                 onGuideClick = onGuideClick,
                 onProfileMenuClick = navController::navigateToProfile,
                 onReceivedSignalClick = {}

@@ -3,7 +3,6 @@ package com.mashup.presentation.navigation
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.PopUpToBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
 import com.mashup.presentation.KeyLinkAppState
@@ -41,7 +40,7 @@ fun KeyLinkNavHost(
     ) {
         homeGraph(
             navController = navController,
-            onSubscribeKeywordClick = navController::navigateToSubscribeKeywordRoute,
+            onKeywordContainerClick = navController::navigateToSubscribeKeywordRoute,
             onGuideClick = navController::navigateToGuideRoute,
             onBackClick = navController::navigateUp,
             onShowSnackbar = onShowSnackbar,
