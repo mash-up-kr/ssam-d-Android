@@ -14,9 +14,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
-import com.mashup.presentation.feature.chat.ChatViewModel
 import com.mashup.presentation.feature.detail.chat.model.ChatDetailUiModel
 import com.mashup.presentation.common.extension.isScrollingUp
+import com.mashup.presentation.feature.detail.ChatDetailViewModel
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.*
 import kotlinx.coroutines.CoroutineScope
@@ -35,7 +35,7 @@ fun ChatDetailRoute(
     onMessageClick: () -> Unit,
     onReportClick: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: ChatViewModel = hiltViewModel()
+    viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
     LaunchedEffect(true) {
         viewModel.getChatInfoAndChats(id = chatId, pageNo = 1)
