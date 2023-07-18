@@ -1,7 +1,6 @@
 package com.mashup.domain.usecase.common
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
 /**
  * Ssam_D_Android
