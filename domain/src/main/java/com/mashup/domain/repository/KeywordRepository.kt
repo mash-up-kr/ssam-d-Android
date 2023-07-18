@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
  */
 interface KeywordRepository {
 
+    fun getSubscribeKeywords(): Flow<List<String>>
     suspend fun getRecommendKeywords(content: String) : Flow<List<String>>
 
 }
