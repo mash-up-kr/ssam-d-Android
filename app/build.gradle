@@ -8,6 +8,9 @@ plugins {
     id 'com.google.dagger.hilt.android'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     namespace 'com.mashup.ssamd'
     compileSdk 33
@@ -27,9 +30,23 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
+            debuggable true
             minifyEnabled false
+            manifestPlaceholders = ["appName":"@string/app_name_debug"]
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationIdSuffix '.debug'
+
+            buildConfigField "boolean","IS_DEBUG","true"
+        }
+
+        release {
+            debuggable false
+            minifyEnabled true
+            manifestPlaceholders = ["appName":"@string/app_name"]
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "boolean","IS_DEBUG","false"
         }
     }
     compileOptions {
