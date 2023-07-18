@@ -22,7 +22,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getReceivedSignalUseCase: GetReceivedSignalUseCase
+    private val getReceivedSignalUseCase: GetReceivedSignalUseCase,
+    private val getSubscribeKeywordsUseCase: GetSubscribeKeywordsUseCase
 ) : ViewModel() {
 
 
@@ -30,6 +31,12 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(PagingData.empty())
     val pagingData = _pagingData.asStateFlow()
 
+    val subscribeKeywords = getSubscribeKeywordsUseCase.execute(Unit)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = emptyList()
+        )
 
     fun getReceivedSignal() {
         viewModelScope.launch {
