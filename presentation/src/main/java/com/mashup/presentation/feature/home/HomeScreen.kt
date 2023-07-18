@@ -1,9 +1,6 @@
 package com.mashup.presentation.feature.home
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -74,32 +71,7 @@ private fun HomeBackgroundScreen(
     val signalCount = pagedReceivedSignal.itemCount
 
     Box(modifier = modifier.fillMaxSize()) {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = painterResource(R.drawable.img_space),
-            contentDescription = stringResource(R.string.login_description_space),
-            contentScale = ContentScale.Crop
-        )
-        if (signalCount == 0) {
-            Image(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth(),
-                painter = painterResource(R.drawable.img_planet_home_empty),
-                contentDescription = stringResource(R.string.home_planet_background_empty),
-                contentScale = ContentScale.Crop
-            )
-        } else {
-            Image(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth(),
-                painter = painterResource(R.drawable.img_planet_home_default),
-                contentDescription = stringResource(R.string.home_planet_background_default),
-                contentScale = ContentScale.Crop
-            )
-        }
-
+        HomeBackgroundImage(signalCount = signalCount)
         HomeScreen(
             signalCount = signalCount,
             pagedReceivedSignal = pagedReceivedSignal,
@@ -110,9 +82,40 @@ private fun HomeBackgroundScreen(
     }
 }
 
+@Composable
+fun BoxScope.HomeBackgroundImage(
+    signalCount: Int,
+    modifier: Modifier = Modifier
+) {
+    Image(
+        modifier = Modifier.fillMaxSize(),
+        painter = painterResource(R.drawable.img_space),
+        contentDescription = stringResource(R.string.login_description_space),
+        contentScale = ContentScale.Crop
+    )
+    if (signalCount == 0) {
+        Image(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth(),
+            painter = painterResource(R.drawable.img_planet_home_empty),
+            contentDescription = stringResource(R.string.home_planet_background_empty),
+            contentScale = ContentScale.Crop
+        )
+    } else {
+        Image(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth(),
+            painter = painterResource(R.drawable.img_planet_home_default),
+            contentDescription = stringResource(R.string.home_planet_background_default),
+            contentScale = ContentScale.Crop
+        )
+    }
+}
 
 @Composable
-fun HomeScreen(
+fun BoxScope.HomeScreen(
     signalCount: Int,
     pagedReceivedSignal: LazyPagingItems<SignalUiModel>,
     onKeywordContainerClick: () -> Unit,
@@ -146,7 +149,7 @@ fun HomeScreen(
                 LoadState.Loading -> KeyLinkLoading()
                 is LoadState.Error -> { /* Error */ }
                 else -> {
-                    SignalCardList(
+                    ReceivedSignalCards(
                         receivedSignals = pagedReceivedSignal,
                         scrollState = scrollState,
                     )
@@ -190,231 +193,3 @@ private fun HomeScreenToolBar(
         )
     }
 }
-
-@Composable
-private fun HomeKeywordInfoContainer(
-    visible: Boolean,
-    topBarBackgroundColor: Color,
-    onKeywordContainerClick: () -> Unit
-) {
-    AnimatedVisibility(
-        visible = visible,
-        enter = expandVertically(),
-        exit = shrinkVertically()
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(color = topBarBackgroundColor)
-                .clickable { onKeywordContainerClick() }
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(44.dp)
-                    .padding(start = 20.dp, top = 12.dp, end = 20.dp, bottom = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.Start),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_tag_mint),
-                    contentDescription = stringResource(id = R.string.home_signal_icon_content_description),
-                    modifier = Modifier.size(24.dp),
-                    contentScale = ContentScale.Inside,
-                )
-                Text(
-                    text = stringResource(id = R.string.home_subscribe_keywords, 4),
-                    style = Body2,
-                    color = White
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.ic_chevron_right_24),
-                    contentDescription = stringResource(id = R.string.home_signal_icon_content_description),
-                    modifier = Modifier.size(16.dp),
-                    contentScale = ContentScale.Inside,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun EmptyContent(
-    onGuideClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
-    ) {
-        EmptySignal(
-            onGuideClick = onGuideClick
-        )
-    }
-}
-
-@Composable
-private fun EmptySignal(
-    onGuideClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(25.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = stringResource(id = R.string.home_planet_guide, "Æ X-03"),
-            style = Body1,
-            color = White,
-            textAlign = TextAlign.Center
-        )
-        KeyLinkRoundButton(
-            text = stringResource(id = R.string.home_planet_guide_button),
-            onClick = onGuideClick
-        )
-    }
-}
-
-@Composable
-private fun SignalCardList(
-    receivedSignals: LazyPagingItems<SignalUiModel>,
-    scrollState: LazyListState,
-    modifier: Modifier = Modifier
-) {
-    LazyColumn(
-        verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
-        horizontalAlignment = Alignment.Start,
-        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
-        state = scrollState
-    ) {
-        items(
-            count = receivedSignals.itemCount,
-            key = receivedSignals.itemKey(),
-            contentType = receivedSignals.itemContentType()
-        ) { index ->
-            val item = receivedSignals[index]
-            item?.let {
-                SignalCard(signal = item)
-            }
-        }
-    }
-}
-
-@Composable
-private fun SignalCard(signal: SignalUiModel) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .drawColoredShadow(
-                color = Color.Blue,
-                offsetX = 4.pxToDp().dp,
-                offsetY = 6.pxToDp().dp,
-                borderRadius = 28.pxToDp().dp,
-                shadowRadius = 20.pxToDp().dp
-            )
-            .background(shape = RoundedCornerShape(12.dp), color = Black.copy(alpha = 0.6f))
-    ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier
-                .padding(vertical = 12.dp, horizontal = 16.dp),
-        ) {
-            SignalCardUserInfo(signal)
-            Text(
-                text = signal.signalContent,
-                style = Body1,
-                color = White,
-                maxLines = 3
-            )
-            SignalCardKeywordsChips(
-                keywords = signal.keywords,
-                keywordsCount = signal.keywordsCount
-            )
-        }
-    }
-}
-
-@Composable
-private fun SignalCardUserInfo(signal: SignalUiModel) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Image(
-            modifier = Modifier.size(24.dp),
-            painter = painterResource(id = R.drawable.img_avatar),
-            contentDescription = stringResource(id = R.string.home_item_avatar_content_description),
-            contentScale = ContentScale.Inside
-        )
-        Text(
-            text = signal.senderName,
-            style = Body2,
-            color = White
-        )
-        Text(
-            text = signal.receivedDisplayedTime,
-            style = Caption2,
-            color = Gray06
-        )
-    }
-}
-
-@Composable
-private fun SignalCardKeywordsChips(
-    keywords: List<String>,
-    keywordsCount: Int,
-    modifier: Modifier = Modifier
-) {
-    val maxKeywordCount = 3
-    val keywordChipItems = mutableListOf<String>().apply {
-        if (keywords.size > maxKeywordCount) {
-            addAll(keywords.subList(0, maxKeywordCount))
-        } else {
-            addAll(keywords)
-        }
-    }
-
-    LazyRow(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.Start),
-    ) {
-        items(keywordChipItems.size) {
-            SignalCardKeywordsChip(keyword = keywordChipItems[it])
-        }
-        item {
-            SignalCardKeywordsChip(keyword = "+$keywordsCount")
-        }
-    }
-}
-
-@Composable
-private fun SignalCardKeywordsChip(keyword: String) {
-    Box(
-        modifier = Modifier
-            .background(color = Gray01, shape = RoundedCornerShape(10.dp)),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            modifier = Modifier
-                .padding(vertical = 4.dp, horizontal = 8.dp),
-            text = keyword,
-            fontSize = 10.sp,
-            color = Gray10,
-            textAlign = TextAlign.Center,
-        )
-    }
-}
-//
-//@Preview
-//@Composable
-//fun PreviewHomeScreen() {
-//    HomeScreen(
-//        signalCount = 0,
-//        pagedReceivedSignal = emptyList(),
-//        onKeywordContainerClick = {},
-//        onGuideClick = {},
-//        onProfileMenuClick = {},
-//    )
-//}
