@@ -1,6 +1,7 @@
 package com.mashup.presentation.feature.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -35,6 +36,7 @@ import com.mashup.presentation.ui.theme.*
 fun ReceivedSignalCards(
     receivedSignals: LazyPagingItems<SignalUiModel>,
     scrollState: LazyListState,
+    onReceivedSignalClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -50,17 +52,24 @@ fun ReceivedSignalCards(
         ) { index ->
             val receivedSignal = receivedSignals[index]
             receivedSignal?.let {
-                ReceivedSignalCard(receivedSignal = receivedSignal)
+                ReceivedSignalCard(
+                    receivedSignal = receivedSignal,
+                    onCardClick = onReceivedSignalClick,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
         }
     }
 }
 
 @Composable
-private fun ReceivedSignalCard(receivedSignal: SignalUiModel) {
+private fun ReceivedSignalCard(
+    receivedSignal: SignalUiModel,
+    onCardClick: () -> Unit,  // 람다 파라미터 수정 필요
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier
-            .fillMaxSize()
             .drawColoredShadow(
                 color = Color.Blue,
                 offsetX = 4.pxToDp().dp,
@@ -69,6 +78,7 @@ private fun ReceivedSignalCard(receivedSignal: SignalUiModel) {
                 shadowRadius = 20.pxToDp().dp
             )
             .background(shape = RoundedCornerShape(12.dp), color = Black.copy(alpha = 0.6f))
+            .clickable { onCardClick() }
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
