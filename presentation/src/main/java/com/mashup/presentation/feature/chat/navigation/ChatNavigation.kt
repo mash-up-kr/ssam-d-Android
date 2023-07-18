@@ -1,11 +1,8 @@
 package com.mashup.presentation.feature.chat.navigation
 
 import androidx.compose.material.SnackbarDuration
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
+import androidx.navigation.*
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.mashup.presentation.feature.chat.compose.ChatRoute
 import com.mashup.presentation.feature.detail.chat.compose.ChatDetailRoute
 import com.mashup.presentation.feature.detail.message.compose.MessageDetailRoute
@@ -30,7 +27,7 @@ fun NavGraphBuilder.chatGraph(
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     onBackClick: () -> Unit,
     onEmptyScreenButtonClick: () -> Unit,
-    onChatClick: () -> Unit,
+    onChatClick: (Long) -> Unit,
     onMessageClick: () -> Unit,
     onReportMenuClick: () -> Unit,
     onReportIconClick: () -> Unit,
@@ -44,12 +41,22 @@ fun NavGraphBuilder.chatGraph(
         composable(route = KeyLinkNavigationRoute.ChatGraph.ChatRoute.route) {
             ChatRoute(
                 onEmptyScreenButtonClick = onEmptyScreenButtonClick,
-                onChatClick = onChatClick
+                onChatClick = { chatId ->
+                    onChatClick(chatId)
+                }
             )
         }
 
-        composable(route = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route) {
+        composable(
+            route = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route,
+            arguments = listOf(
+                navArgument("chatId") {
+                    type = NavType.StringType
+                }
+            )
+        ) { entry ->
             ChatDetailRoute(
+                chatId = entry.arguments?.getString("chatId")?.toLong() ?: -1,
                 onBackClick = onBackClick,
                 onMessageClick = onMessageClick,
                 onReportClick = onReportIconClick

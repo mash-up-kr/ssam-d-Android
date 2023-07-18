@@ -1,16 +1,15 @@
 package com.mashup.presentation.feature.detail.chat.compose
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mashup.presentation.ui.theme.Red
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.mashup.presentation.ui.theme.SsamDTheme
 import com.mashup.presentation.ui.theme.Title2
 import com.mashup.presentation.ui.theme.White
@@ -21,24 +20,23 @@ import com.mashup.presentation.ui.theme.White
  * @created 2023/06/28
  */
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun OtherUserInfo(
+    modifier: Modifier = Modifier,
     othersNickName: String,
-    othersProfileImage: String = "",
-    modifier: Modifier = Modifier
+    othersProfileImage: String = ""
 ) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.Start),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Box(
-            modifier = Modifier
-                .size(36.dp)
-                .background(
-                    color = Red,
-                    shape = CircleShape
-                )
+        GlideImage(
+            modifier = Modifier.size(36.dp),
+            model = othersProfileImage,
+            contentDescription = "",
+            contentScale = ContentScale.Crop
         )
 
         Text(

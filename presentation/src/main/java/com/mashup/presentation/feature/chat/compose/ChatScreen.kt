@@ -26,21 +26,23 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun ChatRoute(
     onEmptyScreenButtonClick: () -> Unit,
-    onChatClick: () -> Unit,
+    onChatClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
     ChatScreen(
         modifier = modifier,
         onEmptyScreenButtonClick = onEmptyScreenButtonClick,
-        onChatClick = onChatClick
+        onChatClick =  { chatId ->
+            onChatClick(chatId)
+        }
     )
 }
 
 @Composable
 fun ChatScreen(
     onEmptyScreenButtonClick: () -> Unit,
-    onChatClick: () -> Unit,
+    onChatClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -79,7 +81,7 @@ fun ChatScreen(
 fun ChatContent(
     isConnected: Boolean,
     onEmptyScreenButtonClick: () -> Unit,
-    onChatClick: () -> Unit,
+    onChatClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     if (!isConnected) {

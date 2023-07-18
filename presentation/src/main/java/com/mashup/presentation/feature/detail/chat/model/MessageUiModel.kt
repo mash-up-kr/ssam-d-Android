@@ -1,6 +1,7 @@
 package com.mashup.presentation.feature.detail.chat.model
 
 import androidx.compose.ui.graphics.Color
+import com.mashup.domain.model.Chat
 import com.mashup.presentation.ui.theme.*
 
 /**
@@ -29,4 +30,22 @@ enum class MessageBackgroundColor(
     fun getGradientColors(): List<Color> {
         return listOf(startColor, endColor)
     }
+}
+
+fun Chat.toUiModel(chatColor: String, matchingUserName: String): MessageUiModel {
+    val isMine = matchingUserName != senderName
+    return MessageUiModel(
+        message = content,
+        userName = senderName,
+        date = receivedTimeMillis.toString(),
+        isMine = isMine,
+        backgroundColor = if (!isMine) getStringToEnumColor(chatColor) else null
+    )
+}
+
+private fun getStringToEnumColor(color: String): MessageBackgroundColor? {
+    MessageBackgroundColor.values().forEach {
+        if (MessageBackgroundColor.valueOf(color) == it) return it
+    }
+    return null
 }

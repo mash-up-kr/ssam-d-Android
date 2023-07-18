@@ -6,16 +6,17 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
-import com.mashup.presentation.feature.chat.ChatViewModel
 import com.mashup.presentation.feature.detail.chat.model.ChatDetailUiModel
 import com.mashup.presentation.common.extension.isScrollingUp
+import com.mashup.presentation.feature.detail.ChatDetailViewModel
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.*
 import kotlinx.coroutines.CoroutineScope
@@ -26,30 +27,45 @@ import kotlinx.coroutines.launch
  * @author jaesung
  * @created 2023/06/28
  */
+
 @Composable
 fun ChatDetailRoute(
+    chatId: Long,
     onBackClick: () -> Unit,
     onMessageClick: () -> Unit,
     onReportClick: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: ChatViewModel = hiltViewModel()
+    viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(true) {
+        viewModel.getChatInfoAndChats(id = chatId, pageNo = 1)
+    }
 
-    ChatDetailScreen(
-        modifier = modifier,
-        onBackClick = onBackClick,
-        onMessageClick = onMessageClick,
-        onReportClick = onReportClick
-    )
+    when (val state = viewModel.chatDetailUiState.collectAsStateWithLifecycle().value) {
+        is ChatDetailUiState.Loading -> {
+            KeyLinkLoading()
+        }
+        is ChatDetailUiState.Success -> {
+            ChatDetailScreen(
+                modifier = modifier,
+                onBackClick = onBackClick,
+                onMessageClick = onMessageClick,
+                onReportClick = onReportClick,
+                chatDetailUiModel = state.chatDetailUiModel
+            )
+        }
+        is ChatDetailUiState.Failure -> {}
+    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ChatDetailScreen(
+private fun ChatDetailScreen(
+    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onMessageClick: () -> Unit,
     onReportClick: () -> Unit,
-    modifier: Modifier = Modifier
+    chatDetailUiModel: ChatDetailUiModel
 ) {
     val coroutineScope = rememberCoroutineScope()
     var currentBottomSheetType by remember { mutableStateOf(BottomSheetType.MORE) }
@@ -68,10 +84,7 @@ fun ChatDetailScreen(
     val scrollState = rememberLazyGridState()
     val isScrollingUp = scrollState.isScrollingUp()
     var showDisconnectDialog by remember { mutableStateOf(false) }
-    /**
-     * val viewModel: ~ by hiltViewModel()
-     * collectAsState~
-     */
+
     KeyLinkBottomSheetLayout(
         bottomSheetContent = {
             when (currentBottomSheetType) {
@@ -79,7 +92,7 @@ fun ChatDetailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentWidth(),
-                    matchedKeywords = ProvideChatDetailState.matchedKeywords
+                    matchedKeywords = chatDetailUiModel.matchedKeywords
                 )
                 BottomSheetType.MORE -> KeyLinkChatBottomSheet(
                     modifier = Modifier
@@ -129,7 +142,7 @@ fun ChatDetailScreen(
         ) { paddingValues ->
             ChatDetailContent(
                 modifier = Modifier.padding(paddingValues),
-                chatDetailState = ProvideChatDetailState,
+                chatDetailState = chatDetailUiModel,
                 onChatItemClick = onMessageClick,
                 keywordBottomSheetState = keywordBottomSheetState,
                 onChangeBottomSheetType = { currentBottomSheetType = it },
@@ -153,7 +166,7 @@ fun ChatDetailScreen(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ChatDetailContent(
+private fun ChatDetailContent(
     chatDetailState: ChatDetailUiModel,
     onChatItemClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -194,31 +207,6 @@ fun ChatDetailContent(
             chat = chatDetailState.chat,
             onChatItemClick = { onChatItemClick() },
             scrollState = scrollState
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun ChatDetailScreenPreview() {
-    SsamDTheme {
-        ChatDetailScreen(onBackClick = {}, onMessageClick = {}, onReportClick = {})
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Preview(showBackground = true)
-@Composable
-private fun ChatDetailContentPreview() {
-    SsamDTheme {
-        ChatDetailContent(
-            chatDetailState = ProvideChatDetailState,
-            onChatItemClick = {},
-            keywordBottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden),
-            coroutineScope = rememberCoroutineScope(),
-            onChangeBottomSheetType = {},
-            isMatchedKeywordVisible = true,
-            scrollState = rememberLazyGridState()
         )
     }
 }

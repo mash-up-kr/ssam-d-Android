@@ -32,6 +32,7 @@ import com.mashup.presentation.ui.theme.*
 
 private val messageList = List(100) {
     Message(
+        id = 1,
         userName = "슈퍼 니카1",
         matchedCount = 10,
         date = "5월 30일",
@@ -43,13 +44,13 @@ private val messageList = List(100) {
 @Composable
 fun ChatListScreen(
     modifier: Modifier = Modifier,
-    onMessageClick: () -> Unit = {}
+    onMessageClick: (Long) -> Unit = {}
 ) {
     LazyColumn(modifier = modifier) {
         items(messageList) { message ->
             ChatItem(
                 message = message,
-                onMessageClick = { onMessageClick() }
+                onMessageClick = { onMessageClick(message.id) }
             )
         }
     }
