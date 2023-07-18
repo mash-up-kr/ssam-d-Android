@@ -1,13 +1,12 @@
 package com.mashup.data.repository
 
 import androidx.paging.PagingData
-import androidx.room.Room
 import com.mashup.data.source.remote.source.datasource.RemoteChatDataSource
 import com.mashup.data.util.createPager
 import com.mashup.domain.model.chat.ChatDetail
-import com.mashup.domain.model.chat.Room
 import com.mashup.domain.repository.ChatRepository
 import kotlinx.coroutines.flow.Flow
+import com.mashup.domain.model.chat.Room
 import kotlinx.coroutines.flow.flow
 import com.mashup.domain.model.ChatInfo
 import com.mashup.domain.model.Chats
