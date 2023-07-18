@@ -7,7 +7,7 @@ package com.mashup.data.source.remote.service
  */
 object ApiPattern {
     object Keywords {
-        private const val PREFIX = "keywords"
+        const val PREFIX = "keywords"
         const val RECOMMEND = "$PREFIX/recommend"
     }
 
