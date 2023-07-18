@@ -47,8 +47,8 @@ fun ReceivedSignalCards(
     ) {
         items(
             count = receivedSignals.itemCount,
-            key = receivedSignals.itemKey(),
-            contentType = receivedSignals.itemContentType()
+            key = receivedSignals.itemKey(SignalUiModel::signalId),
+            contentType = receivedSignals.itemContentType { "ReceivedSignal" }
         ) { index ->
             val receivedSignal = receivedSignals[index]
             receivedSignal?.let {
