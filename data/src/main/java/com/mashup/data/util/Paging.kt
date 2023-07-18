@@ -3,6 +3,7 @@ package com.mashup.data.util
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.mashup.data.source.remote.source.paging.KeyLinkPagingSource
+import com.mashup.domain.base.paging.PagedData
 
 /**
  * Ssam_D_Android
@@ -13,7 +14,7 @@ import com.mashup.data.source.remote.source.paging.KeyLinkPagingSource
 fun <T : Any> createPager(
     pageSize: Int = 10,
     initialLoadSize: Int = 10,
-    executor: suspend (Int) -> List<T>
+    executor: suspend (Int, Int?) -> PagedData<List<T>>
 ): Pager<Int, T> = Pager(
     config = PagingConfig(
         pageSize = pageSize,
