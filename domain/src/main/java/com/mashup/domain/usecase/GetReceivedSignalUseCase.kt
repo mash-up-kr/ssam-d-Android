@@ -17,7 +17,6 @@ import javax.inject.Inject
 class GetReceivedSignalUseCase @Inject constructor(
     private val signalRepository: SignalRepository
 ) : FlowUseCase<Unit, PagingData<ReceivedSignal>>() {
-    override fun invoke(params: Unit): Flow<PagingData<ReceivedSignal>> = flow {
-        signalRepository.getReceivedSignal()
-    }
+    override fun invoke(params: Unit): Flow<PagingData<ReceivedSignal>>
+        = signalRepository.getReceivedSignal()
 }
