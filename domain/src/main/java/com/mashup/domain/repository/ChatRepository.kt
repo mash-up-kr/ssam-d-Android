@@ -1,5 +1,6 @@
 package com.mashup.domain.repository
 
+import androidx.paging.PagingData
 import com.mashup.domain.model.chat.ChatDetail
 import kotlinx.coroutines.flow.Flow
 import com.mashup.domain.model.ChatInfo
@@ -16,4 +17,5 @@ interface ChatRepository {
         roomId: Long,
         chatId: Long
     ): Flow<ChatDetail>
+    fun getChatRooms(): Flow<PagingData<Room>>
 }
