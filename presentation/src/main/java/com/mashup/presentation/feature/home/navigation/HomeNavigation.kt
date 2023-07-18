@@ -40,9 +40,9 @@ fun NavGraphBuilder.homeGraph(
     ) {
         composable(route = KeyLinkNavigationRoute.HomeGraph.HomeRoute.route) {
             HomeRoute(
-                onSubscribeKeywordClick = onSubscribeKeywordClick,
+                onKeywordContainerClick = onSubscribeKeywordClick,
                 onGuideClick = onGuideClick,
-                onProfileClick = navController::navigateToProfile
+                onProfileMenuClick = navController::navigateToProfile,
             )
         }
         composable(route = KeyLinkNavigationRoute.HomeGraph.GuideRoute.route) {
