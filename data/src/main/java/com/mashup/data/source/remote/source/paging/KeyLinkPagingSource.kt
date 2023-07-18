@@ -26,12 +26,12 @@ class KeyLinkPagingSource<T : Any> (
 
         return try {
             val result = executor.invoke(page, loadSize)
-            val isLastPage = page == result.paging?.totalPage
+            val isLastPage = (page == result.paging?.totalPage) || (result.paging?.totalPage == 0)
 
             LoadResult.Page(
                 data = result.data,
                 prevKey = if (page == INITIAL_PAGE) null else page - 1,
-                nextKey = if (isLastPage == true) null else page + 1
+                nextKey = if (isLastPage) null else page + 1
             )
         } catch (e: Throwable) {
             LoadResult.Error(e)
