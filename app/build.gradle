@@ -8,9 +8,6 @@ plugins {
     id 'com.google.dagger.hilt.android'
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
 android {
     namespace 'com.mashup.ssamd'
     compileSdk 33
