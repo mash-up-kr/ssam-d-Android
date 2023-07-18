@@ -15,8 +15,8 @@ class RemoteChatDataSource @Inject constructor(
         return response.data ?: throw Exception(response.message)
     }
 
-    suspend fun getChats(id: Long, pageNo: Int): GetChatsResponseBody {
-        val response = chatService.getChats(id, pageNo)
+    suspend fun getChats(id: Long, pageNo: Int, pageLength: Int): GetChatsResponseBody {
+        val response = chatService.getChats(id, pageNo, pageLength)
         return response.data ?: throw Exception(response.message)
     }
 

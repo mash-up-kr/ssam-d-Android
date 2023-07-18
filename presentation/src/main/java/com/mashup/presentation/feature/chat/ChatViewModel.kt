@@ -27,9 +27,9 @@ class ChatViewModel @Inject constructor(
     private val _chatDetailUiState: MutableStateFlow<ChatDetailUiState> = MutableStateFlow(ChatDetailUiState.Loading)
     val chatDetailUiState = _chatDetailUiState.asStateFlow()
 
-    fun getChatInfoAndChats(id: Long, pageNo: Int) {
+    fun getChatInfoAndChats(id: Long, pageNo: Int, pageLength: Int = PAGE_LENGTH) {
         viewModelScope.launch {
-            val param = GetChatsParam(id, pageNo)
+            val param = GetChatsParam(id, pageNo, pageLength)
             getChatInfoUseCase.execute(id)
                 .zip(getChatsUseCase.execute(param)) { chatInfo, chats ->
                     chatInfo.toUiModel(chats)
@@ -41,5 +41,9 @@ class ChatViewModel @Inject constructor(
                     _chatDetailUiState.value = ChatDetailUiState.Success(chatDetailUiModel)
                 }
         }
+    }
+
+    companion object {
+        const val PAGE_LENGTH = 10
     }
 }

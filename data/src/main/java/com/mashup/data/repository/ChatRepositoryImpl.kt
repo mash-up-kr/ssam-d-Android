@@ -8,8 +8,6 @@ import com.mashup.domain.model.ChatInfo
 import com.mashup.domain.model.Chats
 import com.mashup.domain.repository.ChatRepository
 import com.mashup.domain.usecase.chat.GetChatsParam
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class ChatRepositoryImpl @Inject constructor(
@@ -26,13 +24,13 @@ class ChatRepositoryImpl @Inject constructor(
     override suspend fun getChats(param: GetChatsParam): Flow<Chats> = flow {
         val result = runCatching {
             with(param) {
-                remoteChatDataSource.getChats(id, pageNo).toDomainModel()
+                remoteChatDataSource.getChats(id, pageNo, pageLength).toDomainModel()
             }
         }.getOrThrow()
         emit(result)
     }
 
-    override fun getChatDetail(roomId: Long, chatId: Long): Flow<ChatDetail> = flow{
+    override fun getChatDetail(roomId: Long, chatId: Long): Flow<ChatDetail> = flow {
         val result = runCatching {
             remoteChatDataSource.getChatDetail(roomId, chatId).toDomainModel()
         }.getOrThrow()

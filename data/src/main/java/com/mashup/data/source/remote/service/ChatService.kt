@@ -19,7 +19,7 @@ interface ChatService {
     suspend fun getChats(
         @Path("id") id: Long,
         @Query("pageNo") pageNo: Int,
-        @Query("pageLength") pageLength: Int = PAGE_LENGTH
+        @Query("pageLength") pageLength: Int
     ): BaseResponse<GetChatsResponseBody>
 
     @GET("rooms/{roomId}/chats/{chatId}")
@@ -27,8 +27,4 @@ interface ChatService {
         @Path("roomId") roomId: Long,
         @Path("chatId") chatId: Long
     ): BaseResponse<ChatDetailResponse>
-
-    companion object {
-        const val PAGE_LENGTH = 10
-    }
 }
