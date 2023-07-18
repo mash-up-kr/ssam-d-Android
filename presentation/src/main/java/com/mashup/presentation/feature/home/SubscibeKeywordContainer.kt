@@ -27,6 +27,8 @@ import com.mashup.presentation.ui.theme.White
  */
 @Composable
 fun HomeKeywordInfoContainer(
+    subscribeKeywordsCount: Int,
+    subscribeKeywords: List<String>,
     visible: Boolean,
     topBarBackgroundColor: Color,
     onKeywordContainerClick: () -> Unit
@@ -57,7 +59,7 @@ fun HomeKeywordInfoContainer(
                     contentScale = ContentScale.Inside,
                 )
                 Text(
-                    text = stringResource(id = R.string.home_subscribe_keywords, 4),
+                    text = stringResource(id = R.string.home_subscribe_keywords, subscribeKeywordsCount),
                     style = Body2,
                     color = White
                 )
