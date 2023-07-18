@@ -8,10 +8,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,87 +24,133 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.drawColoredShadow
 import com.mashup.presentation.common.extension.isScrollingUp
 import com.mashup.presentation.common.extension.pxToDp
 import com.mashup.presentation.feature.home.model.SignalUiModel
+import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.theme.*
 
 @Composable
 fun HomeRoute(
-    onSubscribeKeywordClick: () -> Unit,
+    onKeywordContainerClick: () -> Unit,
     onGuideClick: () -> Unit,
-    onProfileClick: () -> Unit,
+    onProfileMenuClick: () -> Unit,
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
-    HomeScreen(
-        navigateToSubscribeKeyword = onSubscribeKeywordClick,
-        navigateToGuide = onGuideClick,
-        onProfileClick = onProfileClick,
-        modifier = modifier
+    val pagedReceivedSignal = homeViewModel.pagingData.collectAsLazyPagingItems()
+
+    LaunchedEffect(Unit) {
+        homeViewModel.getReceivedSignal()
+    }
+
+    HomeBackgroundScreen(
+        pagedReceivedSignal = pagedReceivedSignal,
+        onKeywordContainerClick = onKeywordContainerClick,
+        onGuideClick = onGuideClick,
+        onProfileMenuClick = onProfileMenuClick,
     )
 }
 
 @Composable
-fun HomeScreen(
-    navigateToSubscribeKeyword: () -> Unit,
-    navigateToGuide: () -> Unit,
-    onProfileClick: () -> Unit,
+private fun HomeBackgroundScreen(
+    pagedReceivedSignal: LazyPagingItems<SignalUiModel>,
+    onKeywordContainerClick: () -> Unit,
+    onGuideClick: () -> Unit,
+    onProfileMenuClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val signals = emptyList<SignalUiModel>()
-    val scrollState = rememberLazyListState()
-    val isScrollingUp = scrollState.isScrollingUp()
-    val isAtTop = !scrollState.canScrollBackward
-    val topBarBackgroundColor by animateColorAsState(if (isAtTop) Color.Transparent else Gray01)
+    val signalCount = pagedReceivedSignal.itemCount
 
-
-    Box {
+    Box(modifier = modifier.fillMaxSize()) {
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = painterResource(R.drawable.img_space),
             contentDescription = stringResource(R.string.login_description_space),
             contentScale = ContentScale.Crop
         )
-        if (signals.isEmpty()) {
+        if (signalCount == 0) {
             Image(
-                modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth(),
                 painter = painterResource(R.drawable.img_planet_home_empty),
                 contentDescription = stringResource(R.string.home_planet_background_empty),
                 contentScale = ContentScale.Crop
             )
         } else {
             Image(
-                modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth(),
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth(),
                 painter = painterResource(R.drawable.img_planet_home_default),
                 contentDescription = stringResource(R.string.home_planet_background_default),
                 contentScale = ContentScale.Crop
             )
         }
 
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            HomeScreenToolBar(
-                topBarBackgroundColor = topBarBackgroundColor,
-                onProfileClick = onProfileClick
+        HomeScreen(
+            signalCount = signalCount,
+            pagedReceivedSignal = pagedReceivedSignal,
+            onKeywordContainerClick = onKeywordContainerClick,
+            onGuideClick = onGuideClick,
+            onProfileMenuClick = onProfileMenuClick,
+        )
+    }
+}
+
+
+@Composable
+fun HomeScreen(
+    signalCount: Int,
+    pagedReceivedSignal: LazyPagingItems<SignalUiModel>,
+    onKeywordContainerClick: () -> Unit,
+    onGuideClick: () -> Unit,
+    onProfileMenuClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val scrollState = rememberLazyListState()
+    val isScrollingUp = scrollState.isScrollingUp()
+    val isAtTop = !scrollState.canScrollBackward
+    val topBarBackgroundColor by animateColorAsState(if (isAtTop) Color.Transparent else Gray01)
+
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        HomeScreenToolBar(
+            topBarBackgroundColor = topBarBackgroundColor,
+            onProfileMenuClick = onProfileMenuClick
+        )
+        HomeKeywordInfoContainer(
+            onKeywordContainerClick = onKeywordContainerClick,
+            visible = isScrollingUp,
+            topBarBackgroundColor = topBarBackgroundColor
+        )
+        if (signalCount == 0) {
+            EmptyContent(
+                onGuideClick = onGuideClick
             )
-            HomeKeywordInfoContainer(
-                onClick = { navigateToSubscribeKeyword() },
-                visible = isScrollingUp,
-                topBarBackgroundColor = topBarBackgroundColor
-            )
-            if (signals.isEmpty()) {
-                EmptyContent(navigateToGuide = { navigateToGuide() })
-            } else {
-                SignalCardList(signals, scrollState)
+        } else {
+            when (pagedReceivedSignal.loadState.refresh) {
+                LoadState.Loading -> KeyLinkLoading()
+                is LoadState.Error -> { /* Error */ }
+                else -> {
+                    SignalCardList(
+                        receivedSignals = pagedReceivedSignal,
+                        scrollState = scrollState,
+                    )
+                }
             }
         }
     }
@@ -109,7 +159,7 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenToolBar(
     topBarBackgroundColor: Color,
-    onProfileClick: () -> Unit,
+    onProfileMenuClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -132,7 +182,7 @@ private fun HomeScreenToolBar(
         }
         Image(
             modifier = Modifier.clickable {
-                onProfileClick()
+                onProfileMenuClick()
             },
             painter = painterResource(id = R.drawable.ic_profile_fill),
             contentDescription = stringResource(id = R.string.home_my_page_icon_content_description),
@@ -143,9 +193,9 @@ private fun HomeScreenToolBar(
 
 @Composable
 private fun HomeKeywordInfoContainer(
-    onClick: () -> Unit,
     visible: Boolean,
-    topBarBackgroundColor: Color
+    topBarBackgroundColor: Color,
+    onKeywordContainerClick: () -> Unit
 ) {
     AnimatedVisibility(
         visible = visible,
@@ -156,7 +206,7 @@ private fun HomeKeywordInfoContainer(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = topBarBackgroundColor)
-                .clickable { onClick() }
+                .clickable { onKeywordContainerClick() }
         ) {
             Row(
                 modifier = Modifier
@@ -189,20 +239,28 @@ private fun HomeKeywordInfoContainer(
 }
 
 @Composable
-private fun EmptyContent(navigateToGuide: () -> Unit = {}) {
+private fun EmptyContent(
+    onGuideClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
-        EmptySignal(navigateToGuide)
+        EmptySignal(
+            onGuideClick = onGuideClick
+        )
     }
 }
 
 @Composable
-private fun EmptySignal(navigateToGuide: () -> Unit) {
+private fun EmptySignal(
+    onGuideClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(25.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -212,22 +270,34 @@ private fun EmptySignal(navigateToGuide: () -> Unit) {
             color = White,
             textAlign = TextAlign.Center
         )
-        KeyLinkRoundButton(text = stringResource(id = R.string.home_planet_guide_button)) {
-            navigateToGuide()
-        }
+        KeyLinkRoundButton(
+            text = stringResource(id = R.string.home_planet_guide_button),
+            onClick = onGuideClick
+        )
     }
 }
 
 @Composable
-private fun SignalCardList(signals: List<SignalUiModel>, scrollState: LazyListState) {
+private fun SignalCardList(
+    receivedSignals: LazyPagingItems<SignalUiModel>,
+    scrollState: LazyListState,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(12.dp, Alignment.Top),
         horizontalAlignment = Alignment.Start,
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
         state = scrollState
     ) {
-        items(signals) { signal ->
-            SignalCard(signal)
+        items(
+            count = receivedSignals.itemCount,
+            key = receivedSignals.itemKey(),
+            contentType = receivedSignals.itemContentType()
+        ) { index ->
+            val item = receivedSignals[index]
+            item?.let {
+                SignalCard(signal = item)
+            }
         }
     }
 }
@@ -258,7 +328,10 @@ private fun SignalCard(signal: SignalUiModel) {
                 color = White,
                 maxLines = 3
             )
-            SignalCardKeywordsChips(signal.keywords)
+            SignalCardKeywordsChips(
+                keywords = signal.keywords,
+                keywordsCount = signal.keywordsCount
+            )
         }
     }
 }
@@ -289,24 +362,29 @@ private fun SignalCardUserInfo(signal: SignalUiModel) {
 }
 
 @Composable
-private fun SignalCardKeywordsChips(keywords: List<String>) {
+private fun SignalCardKeywordsChips(
+    keywords: List<String>,
+    keywordsCount: Int,
+    modifier: Modifier = Modifier
+) {
     val maxKeywordCount = 3
-
     val keywordChipItems = mutableListOf<String>().apply {
         if (keywords.size > maxKeywordCount) {
             addAll(keywords.subList(0, maxKeywordCount))
-            add(
-                "+${keywords.size.minus(maxKeywordCount)}"
-            )
         } else {
             addAll(keywords)
         }
     }
+
     LazyRow(
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.Start),
     ) {
         items(keywordChipItems.size) {
             SignalCardKeywordsChip(keyword = keywordChipItems[it])
+        }
+        item {
+            SignalCardKeywordsChip(keyword = "+$keywordsCount")
         }
     }
 }
@@ -328,13 +406,15 @@ private fun SignalCardKeywordsChip(keyword: String) {
         )
     }
 }
-
-@Preview
-@Composable
-fun PreviewHomeScreen() {
-    HomeScreen(
-        navigateToSubscribeKeyword = {},
-        navigateToGuide = {},
-        onProfileClick = {}
-    )
-}
+//
+//@Preview
+//@Composable
+//fun PreviewHomeScreen() {
+//    HomeScreen(
+//        signalCount = 0,
+//        pagedReceivedSignal = emptyList(),
+//        onKeywordContainerClick = {},
+//        onGuideClick = {},
+//        onProfileMenuClick = {},
+//    )
+//}
