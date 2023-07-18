@@ -1,6 +1,5 @@
 package com.mashup.data.source.remote.source.datasource
 
-import com.mashup.data.source.remote.dto.BaseResponse
 import com.mashup.data.source.remote.dto.responsebody.keyword.KeywordRecommendResponse
 import com.mashup.data.source.remote.service.KeywordService
 import javax.inject.Inject
@@ -13,6 +12,10 @@ import javax.inject.Inject
 class RemoteKeywordDataSource @Inject constructor(
     private val keywordService: KeywordService
 ) {
+    suspend fun getSubscribeKeywords(): List<String> {
+        val response = keywordService.getSubscribeKeywords()
+        return response.data ?: throw Exception(response.message)
+    }
 
     suspend fun getRecommendKeyword(content: String): KeywordRecommendResponse {
         val response = keywordService.getRecommendKeyword(content)
