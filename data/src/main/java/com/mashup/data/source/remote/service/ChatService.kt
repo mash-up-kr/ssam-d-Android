@@ -1,7 +1,7 @@
 package com.mashup.data.source.remote.service
 
 import com.mashup.data.source.remote.dto.BaseResponse
-import com.mashup.data.source.remote.dto.responsebody.chat.ChatDetailResponse
+import com.mashup.data.source.remote.dto.responsebody.chat.MessageDetailResponse
 import com.mashup.data.source.remote.dto.responsebody.chat.GetChatInfoResponseBody
 import com.mashup.data.source.remote.dto.responsebody.chat.GetChatsResponseBody
 import com.mashup.data.source.remote.dto.responsebody.chat.ChatRoomPagingResponse
@@ -30,10 +30,10 @@ interface ChatService {
     ): BaseResponse<ChatRoomPagingResponse>
 
     @GET("rooms/{roomId}/chats/{chatId}")
-    suspend fun getChatDetail(
+    suspend fun getMessageDetail(
         @Path("roomId") roomId: Long,
         @Path("chatId") chatId: Long
-    ): BaseResponse<ChatDetailResponse>
+    ): BaseResponse<MessageDetailResponse>
 
     @DELETE("rooms/{roomId}")
     suspend fun disconnectRoom(
