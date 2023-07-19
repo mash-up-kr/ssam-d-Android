@@ -9,13 +9,17 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.chat.ChatViewModel
+import com.mashup.presentation.feature.chat.model.RoomUiModel
 import com.mashup.presentation.ui.theme.*
 
 /**
@@ -30,12 +34,19 @@ fun ChatRoute(
     modifier: Modifier = Modifier,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
+    val pagedChatRoomList = viewModel.pagingData.collectAsLazyPagingItems()
+
+    LaunchedEffect(Unit) {
+        viewModel.getChatRooms()
+    }
+
     ChatScreen(
         modifier = modifier,
         onEmptyScreenButtonClick = onEmptyScreenButtonClick,
-        onChatClick =  { chatId ->
+        onChatClick = { chatId ->
             onChatClick(chatId)
-        }
+        },
+        chatRoomList = pagedChatRoomList
     )
 }
 
@@ -43,7 +54,8 @@ fun ChatRoute(
 fun ChatScreen(
     onEmptyScreenButtonClick: () -> Unit,
     onChatClick: (Long) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    chatRoomList: LazyPagingItems<RoomUiModel>
 ) {
     Scaffold(
         modifier = modifier,
@@ -69,43 +81,50 @@ fun ChatScreen(
         }
     ) { paddingValues ->
         ChatContent(
-            isConnected = false,
             onEmptyScreenButtonClick = onEmptyScreenButtonClick,
             onChatClick = onChatClick,
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues),
+            chatRoomList = chatRoomList
         )
     }
 }
 
 @Composable
 fun ChatContent(
-    isConnected: Boolean,
     onEmptyScreenButtonClick: () -> Unit,
     onChatClick: (Long) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    chatRoomList: LazyPagingItems<RoomUiModel>
 ) {
-    if (!isConnected) {
+    if (chatRoomList.itemCount == 0) {
         EmptyChatScreen(
             onButtonClick = onEmptyScreenButtonClick,
             modifier = modifier.fillMaxSize(),
         )
     } else {
-        ChatListScreen(
+        ChatRoomListScreen(
             onMessageClick = onChatClick,
             modifier = modifier
                 .fillMaxSize()
-                .padding(top = 8.dp)
+                .padding(top = 8.dp),
+            chatRoomList = chatRoomList
         )
+
+
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun ChatScreenPreview() {
+    val viewModel: ChatViewModel = hiltViewModel()
+    val pagedChatRoomList = viewModel.pagingData.collectAsLazyPagingItems()
+
     SsamDTheme(darkTheme = true) {
         ChatScreen(
             onEmptyScreenButtonClick = {},
-            onChatClick = {}
+            onChatClick = {},
+            chatRoomList = pagedChatRoomList
         )
     }
 }
