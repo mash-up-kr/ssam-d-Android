@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
-import com.mashup.presentation.feature.chat.ChatViewModel
+import com.mashup.presentation.feature.detail.ChatDetailViewModel
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.Black
@@ -34,7 +34,7 @@ fun MessageDetailRoute(
     onReportMenuClick: () -> Unit,
     onReplyButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: ChatViewModel = hiltViewModel()
+    viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
 
     MessageDetailScreen(

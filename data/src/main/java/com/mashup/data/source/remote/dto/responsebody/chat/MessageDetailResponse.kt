@@ -1,11 +1,11 @@
 package com.mashup.data.source.remote.dto.responsebody.chat
 
 import com.mashup.domain.base.DomainMapper
-import com.mashup.domain.model.chat.ChatDetail
+import com.mashup.domain.model.chat.MessageDetail
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class ChatDetailResponse(
+data class MessageDetailResponse(
     val id: Long,
     val profileImage: String,
     val nickname: String,
@@ -13,9 +13,9 @@ data class ChatDetailResponse(
     val matchingKeywordCount: Int,
     val content: String,
     val receivedTimeMillis: Long
-) : DomainMapper<ChatDetail> {
-    override fun toDomainModel(): ChatDetail {
-        return ChatDetail(
+) : DomainMapper<MessageDetail> {
+    override fun toDomainModel(): MessageDetail {
+        return MessageDetail(
             id = id,
             profileImage = profileImage,
             nickname = nickname,

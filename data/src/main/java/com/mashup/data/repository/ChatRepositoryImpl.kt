@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import com.mashup.data.source.remote.source.datasource.RemoteChatDataSource
 import com.mashup.data.util.createPager
 import com.mashup.data.util.suspendRunCatching
-import com.mashup.domain.model.chat.ChatDetail
+import com.mashup.domain.model.chat.MessageDetail
 import com.mashup.domain.repository.ChatRepository
 import kotlinx.coroutines.flow.Flow
 import com.mashup.domain.model.chat.Room
@@ -34,9 +34,9 @@ class ChatRepositoryImpl @Inject constructor(
         emit(result)
     }
 
-    override fun getChatDetail(roomId: Long, chatId: Long): Flow<ChatDetail> = flow {
+    override fun getMessageDetail(roomId: Long, chatId: Long): Flow<MessageDetail> = flow {
         val result = runCatching {
-            remoteChatDataSource.getChatDetail(roomId, chatId).toDomainModel()
+            remoteChatDataSource.getMessageDetail(roomId, chatId).toDomainModel()
         }.getOrThrow()
         emit(result)
     }
