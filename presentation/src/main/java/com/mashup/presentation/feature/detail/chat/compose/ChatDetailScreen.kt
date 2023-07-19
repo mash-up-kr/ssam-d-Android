@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ChatDetailRoute(
-    chatId: Long,
+    roomId: Long,
     onBackClick: () -> Unit,
     onMessageClick: () -> Unit,
     onReportClick: () -> Unit,
@@ -38,7 +38,7 @@ fun ChatDetailRoute(
     viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
     LaunchedEffect(true) {
-        viewModel.getChatInfoAndChats(id = chatId, pageNo = 1)
+        viewModel.getChatInfoAndChats(id = roomId, pageNo = 1)
     }
 
     when (val state = viewModel.chatDetailUiState.collectAsStateWithLifecycle().value) {
