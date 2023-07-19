@@ -6,11 +6,15 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.mashup.domain.usecase.GetReceivedSignalUseCase
-import com.mashup.presentation.feature.home.model.HomeUiModel
+import com.mashup.domain.usecase.GetSubscribeKeywordsUseCase
 import com.mashup.presentation.feature.home.model.SignalUiModel
+import com.mashup.presentation.feature.home.model.SignalUiModel.Companion.toUiModel
+import com.mashup.presentation.feature.home.model.SubscribeKeywordUiModel
+import com.mashup.presentation.feature.home.model.SubscribeKeywordUiModel.Companion.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,32 +30,38 @@ class HomeViewModel @Inject constructor(
     private val getSubscribeKeywordsUseCase: GetSubscribeKeywordsUseCase
 ) : ViewModel() {
 
-
-    private val _pagingData: MutableStateFlow<PagingData<SignalUiModel>> =
+    private val _receivedSignals: MutableStateFlow<PagingData<SignalUiModel>> =
         MutableStateFlow(PagingData.empty())
-    val pagingData = _pagingData.asStateFlow()
+    val receivedSignals = _receivedSignals.asStateFlow()
 
-    val subscribeKeywords = getSubscribeKeywordsUseCase.execute(Unit)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = emptyList()
-        )
+    private val _subscribeKeywordsState: MutableStateFlow<SubscribeKeywordUiState> =
+        MutableStateFlow(Loading)
+    val subscribeKeywordsState = _subscribeKeywordsState.asStateFlow()
+
+    fun getSubscribedKeywords() {
+        viewModelScope.launch {
+            getSubscribeKeywordsUseCase.execute(Unit).catch {
+                _subscribeKeywordsState.value = Error(it)
+            }.collect {
+                _subscribeKeywordsState.value = Success(it.toUiModel())
+            }
+        }
+    }
 
     fun getReceivedSignal() {
         viewModelScope.launch {
             getReceivedSignalUseCase.execute(Unit).cachedIn(viewModelScope)
                 .map { pagingData ->
-                    pagingData.map { SignalUiModel().toUiModel(it) }
+                    pagingData.map { it.toUiModel() }
                 }.collect {
-                    _pagingData.value = it
+                    _receivedSignals.value = it
                 }
         }
     }
 
 }
 
-sealed interface HomeUiState
-data class Success(val data: HomeUiModel) : HomeUiState
-data class Error(val exception: Throwable) : HomeUiState
-object Loading : HomeUiState
+sealed interface SubscribeKeywordUiState
+data class Success(val data: SubscribeKeywordUiModel) : SubscribeKeywordUiState
+data class Error(val exception: Throwable) : SubscribeKeywordUiState
+object Loading : SubscribeKeywordUiState
