@@ -10,6 +10,7 @@ import com.mashup.presentation.ui.theme.*
  * @created 2023/06/30
  */
 data class ChatUiModel(
+    val id: Long,
     val message: String,
     val userName: String,
     val date: String,
@@ -35,6 +36,7 @@ enum class MessageBackgroundColor(
 fun Chat.toUiModel(chatColor: String, matchingUserName: String): ChatUiModel {
     val isMine = matchingUserName != senderName
     return ChatUiModel(
+        id = id,
         message = content,
         userName = senderName,
         date = receivedTimeMillis.toString(),
