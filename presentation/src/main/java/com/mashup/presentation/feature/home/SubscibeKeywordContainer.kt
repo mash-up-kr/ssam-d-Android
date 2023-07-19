@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.R
+import com.mashup.presentation.feature.home.model.SubscribeKeywordUiModel
 import com.mashup.presentation.ui.theme.Body2
 import com.mashup.presentation.ui.theme.White
 
@@ -27,11 +28,10 @@ import com.mashup.presentation.ui.theme.White
  */
 @Composable
 fun HomeKeywordInfoContainer(
-    subscribeKeywordsCount: Int,
-    subscribeKeywords: List<String>,
+    subscribeKeywords: SubscribeKeywordUiModel,
     visible: Boolean,
     topBarBackgroundColor: Color,
-    onKeywordContainerClick: () -> Unit
+    onKeywordContainerClick: (List<String>) -> Unit
 ) {
     AnimatedVisibility(
         visible = visible,
@@ -42,7 +42,7 @@ fun HomeKeywordInfoContainer(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = topBarBackgroundColor)
-                .clickable { onKeywordContainerClick() }
+                .clickable { onKeywordContainerClick(subscribeKeywords.subscribeKeywords) }
         ) {
             Row(
                 modifier = Modifier
@@ -59,7 +59,10 @@ fun HomeKeywordInfoContainer(
                     contentScale = ContentScale.Inside,
                 )
                 Text(
-                    text = stringResource(id = R.string.home_subscribe_keywords, subscribeKeywordsCount),
+                    text = stringResource(
+                        id = R.string.home_subscribe_keywords,
+                        subscribeKeywords.subscribeKeywordsCount
+                    ),
                     style = Body2,
                     color = White
                 )
