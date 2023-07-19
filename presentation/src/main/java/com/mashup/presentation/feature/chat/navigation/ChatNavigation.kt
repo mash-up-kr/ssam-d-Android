@@ -50,13 +50,13 @@ fun NavGraphBuilder.chatGraph(
         composable(
             route = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route,
             arguments = listOf(
-                navArgument("chatId") {
+                navArgument("roomId") {
                     type = NavType.StringType
                 }
             )
         ) { entry ->
             ChatDetailRoute(
-                chatId = entry.arguments?.getString("chatId")?.toLong() ?: -1,
+                roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
                 onBackClick = onBackClick,
                 onMessageClick = onMessageClick,
                 onReportClick = onReportIconClick

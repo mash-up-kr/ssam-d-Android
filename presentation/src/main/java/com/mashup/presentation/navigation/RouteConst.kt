@@ -18,7 +18,7 @@ const val SIGNAL_COMPLETE_ROUTE = "signal_graph/complete"
 
 const val CHAT_GRAPH_PATTERN = "chat_graph"
 const val CHAT_ROUTE = "chat_graph/chat"
-const val CHAT_DETAIL_ROUTE = "chat_graph/chat_detail/{chatId}"
+const val CHAT_DETAIL_ROUTE = "chat_graph/chat_detail/{roomId}"
 const val MESSAGE_DETAIL_ROUTE = "chat_graph/message_detail"
 const val REPORT_ROUTE = "chat_graph/report"
 const val REPLY_ROUTE = "chat_graph/reply"
