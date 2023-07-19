@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.feature.detail.chat.model.MessageBackgroundColor
-import com.mashup.presentation.feature.detail.chat.model.MessageUiModel
+import com.mashup.presentation.feature.detail.chat.model.ChatUiModel
 import com.mashup.presentation.ui.theme.*
 
 /**
@@ -29,7 +29,7 @@ import com.mashup.presentation.ui.theme.*
  */
 @Composable
 fun ChatContent(
-    chat: List<MessageUiModel>,
+    chat: List<ChatUiModel>,
     onChatItemClick: () -> Unit,
     modifier: Modifier = Modifier,
     scrollState: LazyGridState
@@ -133,7 +133,7 @@ fun MessageContent(
 @Preview(showBackground = true)
 @Composable
 private fun DefaultMessagePreview() {
-    val myMessage = MessageUiModel(
+    val myMessage = ChatUiModel(
         message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
         userName = "나",
         date = "2023년 6월 28일",
@@ -155,7 +155,7 @@ private fun DefaultMessagePreview() {
 @Preview(showBackground = true)
 @Composable
 private fun MintMessagePreview() {
-    val othersMessage = MessageUiModel(
+    val othersMessage = ChatUiModel(
         message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
         userName = "슈퍼니카",
         date = "2023년 6월 28일",

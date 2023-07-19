@@ -15,7 +15,7 @@ data class ChatDetailUiModel(
     val isAlive: Boolean,
     val pageLength: Int,
     val totalPage: Int,
-    val chat: List<MessageUiModel>
+    val chat: List<ChatUiModel>
 ) {
     fun getMatchedKeywordSummery(): List<String> {
         val maxKeywordCount = 3
