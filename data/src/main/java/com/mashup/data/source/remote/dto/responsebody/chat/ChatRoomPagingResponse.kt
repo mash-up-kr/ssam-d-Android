@@ -10,11 +10,11 @@ import com.squareup.moshi.JsonClass
 data class ChatRoomPagingResponse(
     val pageLength: Int,
     val totalPage: Int,
-    val room: List<RoomResponse>,
+    val list: List<RoomResponse>,
 ): DomainMapper<PagedData<List<Room>>> {
     override fun toDomainModel(): PagedData<List<Room>> {
         return PagedData(
-            data = room.map { it.toDomainModel() },
+            data = list.map { it.toDomainModel() },
             paging = Paging(
                 loadedSize = pageLength,
                 totalPage = totalPage
