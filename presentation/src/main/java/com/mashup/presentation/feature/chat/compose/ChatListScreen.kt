@@ -111,14 +111,14 @@ fun ChatRoomItem(
         ) {
             ChatRoomInfo(
                 date = chatRoom.receivedTime,
-                userName = chatRoom.id.toString(), // FIXME
+                userName = chatRoom.nickname,
                 matchedCount = chatRoom.matchingKeywordCount,
                 modifier = Modifier.fillMaxWidth()
             )
 
             ChatRoomMessageInfo(
                 recentMessage = chatRoom.recentSignalContent,
-                isNewMessage = true, // FIXME
+                isNewMessage = chatRoom.isChatRead,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 2.dp)

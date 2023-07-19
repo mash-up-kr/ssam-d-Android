@@ -9,7 +9,9 @@ data class RoomUiModel (
     val recentSignalContent: String,
     val matchingKeywordCount: Int,
     val profileImage: String,
-    val receivedTime: String
+    val receivedTime: String,
+    val nickname: String,
+    val isChatRead: Boolean
 ) {
     companion object {
         fun fromDomainModel(domain: Room): RoomUiModel {
@@ -20,7 +22,9 @@ data class RoomUiModel (
                     recentSignalContent = recentSignalContent,
                     matchingKeywordCount = matchingKeywordCount,
                     profileImage = profileImage,
-                    receivedTime = recentSignalReceivedTimeMillis.getDisplayedTime()
+                    receivedTime = recentSignalReceivedTimeMillis.getDisplayedTime(),
+                    nickname = nickname,
+                    isChatRead = isChatRead
                 )
             }
         }

@@ -8,5 +8,7 @@ data class Room (
     val recentSignalContent: String,
     val matchingKeywordCount: Int,
     val profileImage: String,
-    val recentSignalReceivedTimeMillis: Long
+    val recentSignalReceivedTimeMillis: Long,
+    val nickname: String,
+    val isChatRead: Boolean
 ): DomainModel
