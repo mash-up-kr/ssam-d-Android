@@ -68,6 +68,7 @@ fun ChatRoomList(
     chatRoomList: LazyPagingItems<RoomUiModel>
 ) {
     LazyColumn(modifier = modifier) {
+        // TODO: chatRoomList id값 unique한걸로 서버에 더미 요청 후 key값 추가
         items(
             count = chatRoomList.itemCount,
             contentType = chatRoomList.itemContentType { "ChatRoom" }
