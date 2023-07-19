@@ -32,7 +32,9 @@ data class RoomResponse(
     val recentSignalContent: String,
     val matchingKeywordCount: Int,
     val profileImage: String,
-    val recentSignalReceivedTimeMillis: Long
+    val recentSignalReceivedTimeMillis: Long,
+    val nickname: String,
+    val isChatRead: Boolean
 ) : DomainMapper<Room> {
     override fun toDomainModel(): Room {
         return Room(
@@ -41,7 +43,9 @@ data class RoomResponse(
             recentSignalContent = recentSignalContent,
             matchingKeywordCount = matchingKeywordCount,
             profileImage = profileImage,
-            recentSignalReceivedTimeMillis = recentSignalReceivedTimeMillis
+            recentSignalReceivedTimeMillis = recentSignalReceivedTimeMillis,
+            nickname = nickname,
+            isChatRead = isChatRead
         )
     }
 }
