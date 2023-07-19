@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -13,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -20,9 +20,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.chat.model.Message
+import com.mashup.presentation.feature.chat.model.RoomUiModel
+import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.theme.*
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * Ssam_D_Android
@@ -30,35 +41,51 @@ import com.mashup.presentation.ui.theme.*
  * @created 2023/06/27
  */
 
-private val messageList = List(100) {
-    Message(
-        id = 1,
-        userName = "슈퍼 니카1",
-        matchedCount = 10,
-        date = "5월 30일",
-        recentMessage = "키링 MAU 1000만 가즈아-!!",
-        isNewMessage = true
-    )
-}
-
 @Composable
-fun ChatListScreen(
+fun ChatRoomListScreen(
     modifier: Modifier = Modifier,
-    onMessageClick: (Long) -> Unit = {}
+    onMessageClick: (Long) -> Unit = {},
+    chatRoomList: LazyPagingItems<RoomUiModel>
 ) {
-    LazyColumn(modifier = modifier) {
-        items(messageList) { message ->
-            ChatItem(
-                message = message,
-                onMessageClick = { onMessageClick(message.id) }
+    when (chatRoomList.loadState.refresh) {
+        LoadState.Loading -> KeyLinkLoading()
+        is LoadState.Error -> {/* Error */
+        }
+        else -> {
+            ChatRoomList(
+                modifier = modifier,
+                onMessageClick = onMessageClick,
+                chatRoomList = chatRoomList
             )
         }
     }
 }
 
 @Composable
-fun ChatItem(
-    message: Message,
+fun ChatRoomList(
+    modifier: Modifier = Modifier,
+    onMessageClick: (Long) -> Unit = {},
+    chatRoomList: LazyPagingItems<RoomUiModel>
+) {
+    LazyColumn(modifier = modifier) {
+        items(
+            count = chatRoomList.itemCount,
+            contentType = chatRoomList.itemContentType { "ChatRoom" }
+        ) { index ->
+            chatRoomList[index]?.let {
+                ChatRoomItem(
+                    chatRoom = it,
+                    onMessageClick = { onMessageClick(it.id) }
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun ChatRoomItem(
+    chatRoom: RoomUiModel,
     modifier: Modifier = Modifier,
     onMessageClick: () -> Unit = {}
 ) {
@@ -71,25 +98,26 @@ fun ChatItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         /* 이미지 대신 임시로 추가 */
-        Box(
-            modifier = Modifier
-                .size(36.dp)
-                .background(Red),
+        GlideImage(
+            modifier = Modifier.size(36.dp),
+            model = chatRoom.profileImage,
+            contentDescription = stringResource(id = R.string.home_item_avatar_content_description),
+            contentScale = ContentScale.Inside
         )
 
         Column(
             modifier = Modifier.padding(start = 8.dp)
         ) {
-            ChatItemMessageInfoContent(
-                date = message.date,
-                userName = message.userName,
-                matchedCount = message.matchedCount,
+            ChatRoomInfo(
+                date = chatRoom.receivedTime,
+                userName = chatRoom.id.toString(), // FIXME
+                matchedCount = chatRoom.matchingKeywordCount,
                 modifier = Modifier.fillMaxWidth()
             )
 
-            ChatItemMessageContent(
-                recentMessage = message.recentMessage,
-                isNewMessage = message.isNewMessage,
+            ChatRoomMessageInfo(
+                recentMessage = chatRoom.recentSignalContent,
+                isNewMessage = true, // FIXME
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 2.dp)
@@ -100,7 +128,7 @@ fun ChatItem(
 }
 
 @Composable
-private fun ChatItemMessageInfoContent(
+private fun ChatRoomInfo(
     userName: String,
     matchedCount: Int,
     date: String,
@@ -137,7 +165,7 @@ private fun ChatItemMessageInfoContent(
 }
 
 @Composable
-private fun ChatItemMessageContent(
+private fun ChatRoomMessageInfo(
     recentMessage: String,
     isNewMessage: Boolean,
     modifier: Modifier = Modifier
@@ -209,7 +237,10 @@ private fun SignalChipPreview() {
 @Preview
 @Composable
 private fun CardItemPreview() {
+    val chatRoomList = emptyList<RoomUiModel>()
+    val flow = MutableStateFlow(PagingData.from(chatRoomList))
+    val pagedChatRoomList = flow.collectAsLazyPagingItems()
     SsamDTheme {
-        ChatListScreen()
+        ChatRoomListScreen(chatRoomList = pagedChatRoomList)
     }
 }
