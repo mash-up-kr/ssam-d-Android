@@ -15,16 +15,18 @@ data class SignalUiModel(
     val keywords: List<String> = emptyList(),
     val keywordsCount: Int = -1,
     val receivedDisplayedTime: String = "",
-) : UiModel, UiMapper<ReceivedSignal, SignalUiModel> {
-    override fun toUiModel(domain: ReceivedSignal) = SignalUiModel(
-        signalId = domain.signalId,
-        receiverId = domain.receiverId,
-        senderId = domain.senderId,
-        senderName = domain.senderName,
-        senderImageUrl = domain.senderImageUrl,
-        signalContent = domain.signalContent,
-        keywords = domain.keywords.map { "#$it" },
-        keywordsCount = domain.keywordsCount,
-        receivedDisplayedTime = domain.receivedTimeMillis.getDisplayedTime()
-    )
+) {
+    companion object {
+        fun ReceivedSignal.toUiModel() = SignalUiModel(
+            signalId = signalId,
+            receiverId = receiverId,
+            senderId = senderId,
+            senderName = senderName,
+            senderImageUrl = senderImageUrl,
+            signalContent = signalContent,
+            keywords = keywords.map { "#$it" },
+            keywordsCount = keywordsCount,
+            receivedDisplayedTime = receivedTimeMillis.getDisplayedTime()
+        )
+    }
 }
