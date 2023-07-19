@@ -29,25 +29,31 @@ import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.theme.Gray01
 import com.mashup.presentation.ui.theme.Heading4
 import com.mashup.presentation.ui.theme.White
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeRoute(
-    onKeywordContainerClick: () -> Unit,
+    onKeywordContainerClick: (List<String>) -> Unit,
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: () -> Unit,
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
-    val pagedReceivedSignal = homeViewModel.pagingData.collectAsLazyPagingItems()
-    val subscribeKeywords by homeViewModel.subscribeKeywords.collectAsStateWithLifecycle()
+    val pagedReceivedSignal = homeViewModel.receivedSignals.collectAsLazyPagingItems()
+    val subscribeKeywordsUiState by homeViewModel.subscribeKeywordsState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        homeViewModel.getReceivedSignal()
+        launch {
+            homeViewModel.getReceivedSignal()
+        }
+        launch {
+            homeViewModel.getSubscribedKeywords()
+        }
     }
 
     HomeBackgroundScreen(
-        subscribeKeywords = subscribeKeywords,
+        subscribeKeywordsUiState = subscribeKeywordsUiState,
         pagedReceivedSignal = pagedReceivedSignal,
         onKeywordContainerClick = onKeywordContainerClick,
         onGuideClick = onGuideClick,
@@ -58,9 +64,9 @@ fun HomeRoute(
 
 @Composable
 private fun HomeBackgroundScreen(
-    subscribeKeywords: List<String>,
+    subscribeKeywordsUiState: SubscribeKeywordUiState,
     pagedReceivedSignal: LazyPagingItems<SignalUiModel>,
-    onKeywordContainerClick: () -> Unit,
+    onKeywordContainerClick: (List<String>) -> Unit,
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: () -> Unit,
@@ -71,7 +77,7 @@ private fun HomeBackgroundScreen(
     Box(modifier = modifier.fillMaxSize()) {
         HomeBackgroundImage(signalCount = signalCount)
         HomeScreen(
-            subscribeKeywords = subscribeKeywords,
+            subscribeKeywordsUiState = subscribeKeywordsUiState,
             signalCount = signalCount,
             pagedReceivedSignal = pagedReceivedSignal,
             onKeywordContainerClick = onKeywordContainerClick,
@@ -116,10 +122,10 @@ fun BoxScope.HomeBackgroundImage(
 
 @Composable
 fun BoxScope.HomeScreen(
-    subscribeKeywords: List<String>,
+    subscribeKeywordsUiState: SubscribeKeywordUiState,
     signalCount: Int,
     pagedReceivedSignal: LazyPagingItems<SignalUiModel>,
-    onKeywordContainerClick: () -> Unit,
+    onKeywordContainerClick: (List<String>) -> Unit,
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: () -> Unit,
@@ -137,13 +143,15 @@ fun BoxScope.HomeScreen(
             topBarBackgroundColor = topBarBackgroundColor,
             onProfileMenuClick = onProfileMenuClick
         )
-        HomeKeywordInfoContainer(
-            subscribeKeywordsCount = subscribeKeywords.size,
-            subscribeKeywords = subscribeKeywords,
-            onKeywordContainerClick = onKeywordContainerClick,
-            visible = isScrollingUp,
-            topBarBackgroundColor = topBarBackgroundColor
-        )
+        if (subscribeKeywordsUiState is Success) {
+            HomeKeywordInfoContainer(
+                subscribeKeywords = subscribeKeywordsUiState.data,
+                onKeywordContainerClick = onKeywordContainerClick,
+                visible = isScrollingUp,
+                topBarBackgroundColor = topBarBackgroundColor
+            )
+        }
+
         if (signalCount == 0) {
             EmptyContent(
                 onGuideClick = onGuideClick
