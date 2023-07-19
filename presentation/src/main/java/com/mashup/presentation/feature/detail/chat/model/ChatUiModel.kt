@@ -9,7 +9,7 @@ import com.mashup.presentation.ui.theme.*
  * @author jaesung
  * @created 2023/06/30
  */
-data class MessageUiModel(
+data class ChatUiModel(
     val message: String,
     val userName: String,
     val date: String,
@@ -32,9 +32,9 @@ enum class MessageBackgroundColor(
     }
 }
 
-fun Chat.toUiModel(chatColor: String, matchingUserName: String): MessageUiModel {
+fun Chat.toUiModel(chatColor: String, matchingUserName: String): ChatUiModel {
     val isMine = matchingUserName != senderName
-    return MessageUiModel(
+    return ChatUiModel(
         message = content,
         userName = senderName,
         date = receivedTimeMillis.toString(),
