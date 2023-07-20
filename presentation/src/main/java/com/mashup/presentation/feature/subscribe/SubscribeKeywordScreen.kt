@@ -1,6 +1,5 @@
 package com.mashup.presentation.feature.subscribe
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -34,25 +33,26 @@ fun SubscribeRoute(
 ) {
     val subscribeKeywords = homeViewModel.subscribeKeywords.toImmutableList()
 
-    SideEffect {
-        Log.e("zAA","$subscribeKeywords")
-    }
-
-
     SubscribeKeywordScreen(
+        subscribeKeywords = subscribeKeywords,
         modifier = modifier,
         onBackClick = onBackClick,
         onShowSnackbar = onShowSnackbar,
-        onSaveButtonClick = onSaveButtonClick
+        onSaveButtonClick = onSaveButtonClick,
+        onAddKeyword = homeViewModel::addSubscribeKeywords,
+        onDeleteKeyword = homeViewModel::deleteSubscribeKeywords,
     )
 }
 
 @Composable
 fun SubscribeKeywordScreen(
+    subscribeKeywords: List<String>,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
-    modifier: Modifier = Modifier,
-    onBackClick: () -> Unit = {},
-    onSaveButtonClick: () -> Unit = {}
+    onBackClick: () -> Unit,
+    onSaveButtonClick: () -> Unit,
+    onAddKeyword: (String) -> Unit,
+    onDeleteKeyword: (Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val keywords = remember { mutableStateListOf<String>() }
     var showGoBackDialog by remember { mutableStateOf(false) }
@@ -68,20 +68,16 @@ fun SubscribeKeywordScreen(
         )
         SubscribeKeywordContent(
             modifier = Modifier.weight(1f),
-            keywords = keywords,
-            onKeywordAdd = {
-                keywords.add(it)
-            },
-            onKeywordDelete = {
-                keywords.removeAt(it)
-            }
+            keywords = subscribeKeywords,
+            onKeywordAdd = onAddKeyword,
+            onKeywordDelete = onDeleteKeyword
         )
         KeyLinkButton(
             text = stringResource(R.string.button_save),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 12.dp, start = 20.dp, end = 20.dp),
-            enable = !keywords.isEmpty(),
+            enable = subscribeKeywords.isNotEmpty(),
             onClick = {
                 onShowSnackbar(snackbarMessage, SnackbarDuration.Short)
                 onSaveButtonClick()
@@ -162,6 +158,13 @@ fun SubscribeKeywordContent(
 @Composable
 private fun SubscribeKeywordScreenPreview() {
     SsamDTheme {
-        SubscribeKeywordScreen(onShowSnackbar = { _, _ -> })
+        SubscribeKeywordScreen(
+            subscribeKeywords = emptyList(),
+            onShowSnackbar = { _, _ -> },
+            onBackClick = {},
+            onSaveButtonClick = {},
+            onAddKeyword = {},
+            onDeleteKeyword = {},
+        )
     }
 }

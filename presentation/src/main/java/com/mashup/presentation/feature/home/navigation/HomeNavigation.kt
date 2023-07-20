@@ -5,10 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
+import androidx.navigation.*
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.mashup.presentation.feature.guide.GuideRoute
@@ -65,7 +62,14 @@ fun NavGraphBuilder.homeGraph(
 
             SubscribeRoute(
                 onBackClick = onBackClick,
-                onSaveButtonClick = onBackClick,
+                onSaveButtonClick = {
+                    navController.navigateToHome(
+                        navOptions {
+                            popUpTo(KeyLinkNavigationRoute.HomeGraph.route) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    )
+                },
                 onShowSnackbar = onShowSnackbar,
                 homeViewModel = homeViewModel
             )
