@@ -102,7 +102,6 @@ private fun ChatDetailScreen(
                         .wrapContentWidth(),
                     onDisconnectSignal = {
                         coroutineScope.launch {
-                            onDisconnectRoom()
                             chatMoreMenuBottomSheetState.hide()
                         }
                         showDisconnectDialog = true
@@ -159,6 +158,7 @@ private fun ChatDetailScreen(
         KeyLinkDisconnectSignalDialog(
             onDismissRequest = {},
             onDisconnectClick = {
+                onDisconnectRoom()
                 onBackClick()
                 showDisconnectDialog = false
             },
