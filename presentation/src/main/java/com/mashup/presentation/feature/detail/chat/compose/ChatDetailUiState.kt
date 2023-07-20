@@ -1,6 +1,7 @@
 package com.mashup.presentation.feature.detail.chat.compose
 
 import com.mashup.presentation.feature.detail.chat.model.ChatDetailUiModel
+import com.mashup.presentation.feature.detail.message.model.MessageDetailUiModel
 
 /**
  * Ssam_D_Android
@@ -18,4 +19,15 @@ sealed class ChatDetailUiState {
     data class Failure(
         val message: String?
     ) : ChatDetailUiState()
+}
+
+sealed class MessageDetailUiState {
+    object Loading: MessageDetailUiState()
+    data class Success(
+        val messageDetail: MessageDetailUiModel
+    ): MessageDetailUiState()
+
+    data class Failure(
+        val message: String?
+    ): MessageDetailUiState()
 }
