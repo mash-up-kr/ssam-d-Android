@@ -38,5 +38,5 @@ interface ChatService {
     @DELETE("rooms/{roomId}")
     suspend fun disconnectRoom(
         @Path("roomId") roomId: Long
-    ): BaseResponse<Unit>
+    ): BaseResponse<Any>
 }
