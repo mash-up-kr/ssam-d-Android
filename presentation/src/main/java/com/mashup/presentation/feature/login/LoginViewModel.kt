@@ -79,3 +79,7 @@ class LoginViewModel @Inject constructor(
         }
     }
 }
+
+enum class LoginUiState {
+    IDLE, AUTO
+}
