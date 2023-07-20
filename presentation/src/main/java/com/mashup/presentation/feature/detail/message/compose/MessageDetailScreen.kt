@@ -47,7 +47,7 @@ fun MessageDetailRoute(
     val messageDetailUiState by viewModel.messageDetailUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.getMessageDetail(roomId, chatId)
+        viewModel.getMessageDetail(roomId = roomId, chatId = chatId)
     }
 
     MessageDetailScreen(
