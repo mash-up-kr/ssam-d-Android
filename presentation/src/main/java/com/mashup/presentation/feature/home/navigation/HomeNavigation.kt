@@ -1,13 +1,13 @@
 package com.mashup.presentation.feature.home.navigation
 
 import androidx.compose.material.SnackbarDuration
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import androidx.navigation.*
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.navOptions
+import com.mashup.presentation.common.extension.sharedViewModel
 import com.mashup.presentation.feature.guide.GuideRoute
 import com.mashup.presentation.feature.home.HomeRoute
 import com.mashup.presentation.feature.home.HomeViewModel
@@ -77,14 +77,4 @@ fun NavGraphBuilder.homeGraph(
         nestedSignalGraph()
         nestedProfileGraph()
     }
-}
-
-@Composable
-inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(navController: NavController): T {
-    val navGraphRoute = destination.parent?.route ?: return hiltViewModel()
-    val parentEntry = remember(this) {
-        navController.getBackStackEntry(navGraphRoute)
-    }
-
-    return hiltViewModel(parentEntry)
 }
