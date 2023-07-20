@@ -46,9 +46,9 @@ class ChatRepositoryImpl @Inject constructor(
         }.flow
     }
 
-    override suspend fun disconnectRoom(roomId: Long) {
+    override suspend fun disconnectRoom(roomId: Long): Result<Unit> {
         return suspendRunCatching {
             remoteChatDataSource.disconnectRoom(roomId)
-        }.getOrThrow()
+        }
     }
 }
