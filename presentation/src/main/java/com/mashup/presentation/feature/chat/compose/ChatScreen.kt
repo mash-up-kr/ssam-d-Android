@@ -30,7 +30,7 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun ChatRoute(
     onEmptyScreenButtonClick: () -> Unit,
-    onChatClick: (Long) -> Unit,
+    onChatRoomClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
@@ -43,8 +43,8 @@ fun ChatRoute(
     ChatScreen(
         modifier = modifier,
         onEmptyScreenButtonClick = onEmptyScreenButtonClick,
-        onChatClick = { chatId ->
-            onChatClick(chatId)
+        onChatRoomClick = { chatId ->
+            onChatRoomClick(chatId)
         },
         chatRoomList = pagedChatRoomList
     )
@@ -53,7 +53,7 @@ fun ChatRoute(
 @Composable
 fun ChatScreen(
     onEmptyScreenButtonClick: () -> Unit,
-    onChatClick: (Long) -> Unit,
+    onChatRoomClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     chatRoomList: LazyPagingItems<RoomUiModel>
 ) {
@@ -82,7 +82,7 @@ fun ChatScreen(
     ) { paddingValues ->
         ChatContent(
             onEmptyScreenButtonClick = onEmptyScreenButtonClick,
-            onChatClick = onChatClick,
+            onChatRoomClick = onChatRoomClick,
             modifier = Modifier.padding(paddingValues),
             chatRoomList = chatRoomList
         )
@@ -92,7 +92,7 @@ fun ChatScreen(
 @Composable
 fun ChatContent(
     onEmptyScreenButtonClick: () -> Unit,
-    onChatClick: (Long) -> Unit,
+    onChatRoomClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     chatRoomList: LazyPagingItems<RoomUiModel>
 ) {
@@ -103,7 +103,7 @@ fun ChatContent(
         )
     } else {
         ChatRoomListScreen(
-            onMessageClick = onChatClick,
+            onChatRoomClick = onChatRoomClick,
             modifier = modifier
                 .fillMaxSize()
                 .padding(top = 8.dp),
@@ -123,7 +123,7 @@ private fun ChatScreenPreview() {
     SsamDTheme(darkTheme = true) {
         ChatScreen(
             onEmptyScreenButtonClick = {},
-            onChatClick = {},
+            onChatRoomClick = {},
             chatRoomList = pagedChatRoomList
         )
     }
