@@ -20,8 +20,7 @@ class LocalUserDataSource @Inject constructor(
     }
 
     fun removeToken() {
-        val token = getToken()
-        preferences.edit().remove(token).apply ()
+        preferences.edit().putString(JWT, "").apply ()
     }
 
     fun getUserId(): Long {
@@ -30,14 +29,6 @@ class LocalUserDataSource @Inject constructor(
 
     fun setUserId(id: Long) {
         preferences.edit().putLong(USER_ID, id).apply()
-    }
-
-    fun getIsLoginCompleted(): Boolean {
-        return preferences.getBoolean(IS_LOGIN_COMPLETED, false)
-    }
-
-    fun setIsLoginCompleted(isLoginCompleted: Boolean) {
-        preferences.edit().putBoolean(IS_LOGIN_COMPLETED, isLoginCompleted).apply()
     }
 
     companion object {
