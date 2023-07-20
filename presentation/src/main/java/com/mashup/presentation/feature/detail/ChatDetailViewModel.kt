@@ -3,6 +3,7 @@ package com.mashup.presentation.feature.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.domain.usecase.chat.*
+import androidx.paging.map
 import com.mashup.presentation.feature.detail.chat.compose.ChatDetailUiState
 import com.mashup.presentation.feature.detail.chat.compose.MessageDetailUiState
 import com.mashup.presentation.feature.detail.chat.compose.MessageReplyUiState
@@ -34,12 +35,11 @@ class ChatDetailViewModel @Inject constructor(
         MutableStateFlow(MessageReplyUiState.Idle)
     val replyUiState = _replyUiState.asStateFlow()
 
-    fun getChatInfoAndChats(id: Long, pageNo: Int, pageLength: Int?) {
+    fun getChatInfoAndChats(id: Long) {
         viewModelScope.launch {
-            val param = GetChatsParam(id, pageNo, pageLength)
             getChatInfoUseCase.execute(id)
-                .zip(getChatsUseCase.execute(param)) { chatInfo, chats ->
-                    chatInfo.toUiModel(chats)
+                .combine(getChatsUseCase.execute(id)) { chatInfo, pagingData ->
+                    pagingData.map { chat -> chatInfo.toUiModel(listOf(chat)) }
                 }.catch {
                     Timber.e("채팅 상세 get 실패.")
                     _chatDetailUiState.value = ChatDetailUiState.Failure(it.message)

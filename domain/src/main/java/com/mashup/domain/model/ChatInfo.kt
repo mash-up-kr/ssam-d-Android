@@ -11,12 +11,6 @@ data class ChatInfo(
     val isAlive: Boolean
 ) : DomainModel
 
-data class Chats(
-    val pageLength: Int,
-    val totalPage: Int,
-    val list: List<Chat>
-) : DomainModel
-
 data class Chat(
     val id: Long,
     val content: String,

@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.detail.chat.compose
 
+import androidx.paging.PagingData
 import com.mashup.presentation.feature.detail.chat.model.ChatDetailUiModel
 import com.mashup.presentation.feature.detail.message.model.MessageDetailUiModel
 
@@ -13,7 +14,7 @@ sealed class ChatDetailUiState {
     object Loading : ChatDetailUiState()
 
     data class Success(
-        val chatDetailUiModel: ChatDetailUiModel
+        val chatDetailUiModel: PagingData<ChatDetailUiModel>
     ) : ChatDetailUiState()
 
     data class Failure(

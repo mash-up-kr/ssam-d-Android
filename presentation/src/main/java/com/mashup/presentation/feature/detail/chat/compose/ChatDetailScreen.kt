@@ -38,7 +38,7 @@ fun ChatDetailRoute(
     viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
     LaunchedEffect(true) {
-        viewModel.getChatInfoAndChats(id = roomId, pageNo = 1)
+        viewModel.getChatInfoAndChats(roomId)
     }
 
     when (val state = viewModel.chatDetailUiState.collectAsStateWithLifecycle().value) {
