@@ -30,7 +30,7 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun ChatContent(
     chat: List<ChatUiModel>,
-    onChatItemClick: () -> Unit,
+    onChatItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     scrollState: LazyGridState
 ) {
@@ -50,7 +50,7 @@ fun ChatContent(
                 userName = message.userName,
                 date = message.date,
                 backgroundColor = message.backgroundColor,
-                onChatItemClick = { onChatItemClick() }
+                onChatItemClick = { onChatItemClick(message.id) }
             )
         }
     }

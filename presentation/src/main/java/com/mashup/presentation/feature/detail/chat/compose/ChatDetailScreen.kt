@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 fun ChatDetailRoute(
     roomId: Long,
     onBackClick: () -> Unit,
-    onMessageClick: () -> Unit,
+    onMessageClick: (Long, Long) -> Unit,
     onReportClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChatDetailViewModel = hiltViewModel()
@@ -49,7 +49,9 @@ fun ChatDetailRoute(
             ChatDetailScreen(
                 modifier = modifier,
                 onBackClick = onBackClick,
-                onMessageClick = onMessageClick,
+                onMessageClick = { chatId ->
+                    onMessageClick(roomId, chatId)
+                },
                 onReportClick = onReportClick,
                 onDisconnectRoom = { viewModel.disconnectRoom(roomId) },
                 chatDetailUiModel = state.chatDetailUiModel
@@ -64,7 +66,7 @@ fun ChatDetailRoute(
 private fun ChatDetailScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onMessageClick: () -> Unit,
+    onMessageClick: (Long) -> Unit,
     onReportClick: () -> Unit,
     onDisconnectRoom: () -> Unit,
     chatDetailUiModel: ChatDetailUiModel
@@ -171,7 +173,7 @@ private fun ChatDetailScreen(
 @Composable
 private fun ChatDetailContent(
     chatDetailState: ChatDetailUiModel,
-    onChatItemClick: () -> Unit,
+    onChatItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     keywordBottomSheetState: ModalBottomSheetState,
     onChangeBottomSheetType: (BottomSheetType) -> Unit,
@@ -208,7 +210,7 @@ private fun ChatDetailContent(
         ChatContent(
             modifier = Modifier,
             chat = chatDetailState.chat,
-            onChatItemClick = { onChatItemClick() },
+            onChatItemClick = onChatItemClick,
             scrollState = scrollState
         )
     }
