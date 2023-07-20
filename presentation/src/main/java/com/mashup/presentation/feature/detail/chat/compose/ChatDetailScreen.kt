@@ -51,6 +51,7 @@ fun ChatDetailRoute(
                 onBackClick = onBackClick,
                 onMessageClick = onMessageClick,
                 onReportClick = onReportClick,
+                onDisconnectRoom = { viewModel.disconnectRoom(roomId) },
                 chatDetailUiModel = state.chatDetailUiModel
             )
         }
@@ -65,6 +66,7 @@ private fun ChatDetailScreen(
     onBackClick: () -> Unit,
     onMessageClick: () -> Unit,
     onReportClick: () -> Unit,
+    onDisconnectRoom: () -> Unit,
     chatDetailUiModel: ChatDetailUiModel
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -100,6 +102,7 @@ private fun ChatDetailScreen(
                         .wrapContentWidth(),
                     onDisconnectSignal = {
                         coroutineScope.launch {
+                            onDisconnectRoom()
                             chatMoreMenuBottomSheetState.hide()
                         }
                         showDisconnectDialog = true
