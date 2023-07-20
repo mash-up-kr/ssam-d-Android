@@ -9,7 +9,9 @@ data class MessageDetailUiModel(
     val keywords: List<String>,
     val matchingKeywordCount: Int,
     val content: String,
-    val receivedTimeMillis: Long
+    val receivedTimeMillis: Long,
+    val isAlive: Boolean,
+    val isMine: Boolean
 ) {
     companion object {
         fun fromDomainModel(domain: MessageDetail): MessageDetailUiModel {
@@ -21,7 +23,9 @@ data class MessageDetailUiModel(
                     keywords = keywords,
                     matchingKeywordCount = matchingKeywordCount,
                     content = content,
-                    receivedTimeMillis = receivedTimeMillis
+                    receivedTimeMillis = receivedTimeMillis,
+                    isAlive = isAlive,
+                    isMine = isMine
                 )
             }
         }
