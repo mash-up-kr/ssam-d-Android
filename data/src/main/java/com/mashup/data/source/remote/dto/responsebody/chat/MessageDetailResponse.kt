@@ -12,7 +12,9 @@ data class MessageDetailResponse(
     val keywords: List<String>,
     val matchingKeywordCount: Int,
     val content: String,
-    val receivedTimeMillis: Long
+    val receivedTimeMillis: Long,
+    val isAlive: Boolean,
+    val isMine: Boolean
 ) : DomainMapper<MessageDetail> {
     override fun toDomainModel(): MessageDetail {
         return MessageDetail(
@@ -22,7 +24,9 @@ data class MessageDetailResponse(
             keywords = keywords,
             matchingKeywordCount = matchingKeywordCount,
             content = content,
-            receivedTimeMillis = receivedTimeMillis
+            receivedTimeMillis = receivedTimeMillis,
+            isAlive = isAlive,
+            isMine = isMine
         )
     }
 }

@@ -9,5 +9,7 @@ data class MessageDetail(
     val keywords: List<String>,
     val matchingKeywordCount: Int,
     val content: String,
-    val receivedTimeMillis: Long
+    val receivedTimeMillis: Long,
+    val isAlive: Boolean,
+    val isMine: Boolean
 ) : DomainModel
