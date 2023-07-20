@@ -24,7 +24,7 @@ interface ChatService {
     suspend fun getChats(
         @Path("id") id: Long,
         @Query("pageNo") pageNo: Int,
-        @Query("pageLength") pageLength: Int
+        @Query("pageLength") pageLength: Int?
     ): BaseResponse<GetChatsResponseBody>
 
     @GET("rooms")

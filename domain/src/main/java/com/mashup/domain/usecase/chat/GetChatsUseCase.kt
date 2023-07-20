@@ -19,5 +19,5 @@ class GetChatsUseCase @Inject constructor(
 data class GetChatsParam(
     val id: Long,
     val pageNo: Int,
-    val pageLength: Int
+    val pageLength: Int?
 )
