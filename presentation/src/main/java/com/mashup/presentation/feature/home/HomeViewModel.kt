@@ -1,9 +1,7 @@
 package com.mashup.presentation.feature.home
 
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.toMutableStateList
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -11,17 +9,16 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import com.mashup.domain.usecase.GetReceivedSignalUseCase
 import com.mashup.domain.usecase.GetSubscribeKeywordsUseCase
+import com.mashup.domain.usecase.UpdateSubscribeKeywordsUseCase
 import com.mashup.presentation.feature.home.model.SignalUiModel
 import com.mashup.presentation.feature.home.model.SignalUiModel.Companion.toUiModel
 import com.mashup.presentation.feature.home.model.SubscribeKeywordUiModel
 import com.mashup.presentation.feature.home.model.SubscribeKeywordUiModel.Companion.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import okhttp3.internal.toImmutableList
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -32,7 +29,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getReceivedSignalUseCase: GetReceivedSignalUseCase,
-    private val getSubscribeKeywordsUseCase: GetSubscribeKeywordsUseCase
+    private val getSubscribeKeywordsUseCase: GetSubscribeKeywordsUseCase,
+    private val updateSubscribeKeywordsUseCase: UpdateSubscribeKeywordsUseCase
 ) : ViewModel() {
 
     var subscribeKeywords = mutableStateListOf<String>()
@@ -45,6 +43,10 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(Loading)
     val subscribeKeywordsState = _subscribeKeywordsState.asStateFlow()
 
+    private val _eventFlow: MutableSharedFlow<SubscribeKeywordUiEvent> =
+        MutableSharedFlow<SubscribeKeywordUiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
+
     fun getSubscribedKeywords() {
         viewModelScope.launch {
             getSubscribeKeywordsUseCase.execute(Unit).catch {
@@ -52,6 +54,18 @@ class HomeViewModel @Inject constructor(
             }.collect {
                 _subscribeKeywordsState.value = Success(it.toUiModel())
             }
+        }
+    }
+
+    fun updateSubscribeKeywords() {
+        viewModelScope.launch {
+            updateSubscribeKeywordsUseCase.execute(subscribeKeywords.toImmutableList())
+                .onSuccess {
+                    _eventFlow.emit(UpdateSuccess)
+                }
+                .onFailure {
+                    _eventFlow.emit(UpdateFailed(it))
+                }
         }
     }
 
@@ -84,3 +98,8 @@ sealed interface SubscribeKeywordUiState
 data class Success(val data: SubscribeKeywordUiModel) : SubscribeKeywordUiState
 data class Error(val exception: Throwable) : SubscribeKeywordUiState
 object Loading : SubscribeKeywordUiState
+
+sealed interface SubscribeKeywordUiEvent
+object UpdateSuccess : SubscribeKeywordUiEvent
+data class UpdateFailed(val exception: Throwable) : SubscribeKeywordUiEvent
+object Nothing : SubscribeKeywordUiEvent
