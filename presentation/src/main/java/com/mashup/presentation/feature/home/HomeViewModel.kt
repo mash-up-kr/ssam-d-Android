@@ -2,6 +2,7 @@ package com.mashup.presentation.feature.home
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,6 +21,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import okhttp3.internal.toImmutableList
 import javax.inject.Inject
 
 /**
@@ -49,7 +51,6 @@ class HomeViewModel @Inject constructor(
                 _subscribeKeywordsState.value = Error(it)
             }.collect {
                 _subscribeKeywordsState.value = Success(it.toUiModel())
-                subscribeKeywords.addAll(it.toUiModel().subscribeKeywords)
             }
         }
     }
@@ -74,7 +75,9 @@ class HomeViewModel @Inject constructor(
         subscribeKeywords.removeAt(index)
     }
 
-
+    fun setSubscribeKeywords(keywords: List<String>) {
+        subscribeKeywords = keywords.toMutableStateList()
+    }
 }
 
 sealed interface SubscribeKeywordUiState
