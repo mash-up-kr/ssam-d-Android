@@ -1,15 +1,19 @@
 package com.mashup.presentation.feature.detail.message.compose
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
+import com.mashup.presentation.R
 import com.mashup.presentation.ui.theme.*
 
 /**
@@ -17,9 +21,11 @@ import com.mashup.presentation.ui.theme.*
  * @author jaesung
  * @created 2023/07/03
  */
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun MessageInfo(
     othersName: String,
+    profileImage: String,
     date: String,
     modifier: Modifier = Modifier,
 ) {
@@ -28,10 +34,11 @@ fun MessageInfo(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
-            modifier = Modifier
-                .size(36.dp)
-                .background(Red)
+        GlideImage(
+            modifier = Modifier.size(36.dp),
+            model = profileImage,
+            contentDescription = stringResource(id = R.string.home_item_avatar_content_description),
+            contentScale = ContentScale.Inside
         )
 
         Column(
@@ -64,7 +71,7 @@ fun MessageInfo(
 private fun MessageInfoPreview() {
     SsamDTheme {
         Surface(color = Black) {
-            MessageInfo(othersName = "연날리기", date = "2023년 5월 30일")
+            MessageInfo(othersName = "연날리기", date = "2023년 5월 30일", profileImage = "")
         }
     }
 }

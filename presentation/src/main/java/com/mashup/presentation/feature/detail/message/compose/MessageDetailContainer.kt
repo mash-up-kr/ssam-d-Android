@@ -22,11 +22,12 @@ fun MessageDetailContainer(
     date: String,
     message: String,
     matchedKeywords: List<String>,
+    profileImage: String,
     modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
     Column(modifier = modifier.verticalScroll(scrollState)) {
-        MessageInfo(modifier = Modifier, othersName = othersName, date = date)
+        MessageInfo(modifier = Modifier, othersName = othersName, date = date, profileImage = profileImage)
 
         MessageDetailContent(
             modifier = Modifier.padding(top = 16.dp),
