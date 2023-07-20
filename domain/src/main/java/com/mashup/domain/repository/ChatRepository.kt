@@ -6,13 +6,12 @@ import com.mashup.domain.model.Chat
 import kotlinx.coroutines.flow.Flow
 import com.mashup.domain.model.ChatInfo
 import com.mashup.domain.model.chat.Room
-import com.mashup.domain.usecase.chat.GetChatsParam
 
 interface ChatRepository {
 
     suspend fun getChatInfo(id: Long): Flow<ChatInfo>
 
-    suspend fun getChats(param: GetChatsParam): Flow<PagingData<Chat>>
+    fun getChats(id: Long): Flow<PagingData<Chat>>
 
     fun getMessageDetail(
         roomId: Long,

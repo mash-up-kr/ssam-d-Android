@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 import com.mashup.domain.model.chat.Room
 import kotlinx.coroutines.flow.flow
 import com.mashup.domain.model.ChatInfo
-import com.mashup.domain.usecase.chat.GetChatsParam
 import javax.inject.Inject
 
 class ChatRepositoryImpl @Inject constructor(
@@ -25,9 +24,9 @@ class ChatRepositoryImpl @Inject constructor(
         emit(result)
     }
 
-    override suspend fun getChats(param: GetChatsParam): Flow<PagingData<Chat>> {
+    override fun getChats(id: Long): Flow<PagingData<Chat>> {
         return createPager { page, loadSize ->
-            remoteChatDataSource.getChats(param.id, page, loadSize).toDomainModel()
+            remoteChatDataSource.getChats(id, page, loadSize).toDomainModel()
         }.flow
     }
 
