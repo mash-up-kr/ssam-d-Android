@@ -36,4 +36,9 @@ class RemoteChatDataSource @Inject constructor(
         val response = chatService.getChatRooms(pageNo, loadSize)
         return response.data ?: throw Exception(response.message)
     }
+
+    suspend fun disconnectRoom(roomId: Long) {
+        val response = chatService.disconnectRoom(roomId)
+        return response.data ?: throw Exception(response.message)
+    }
 }
