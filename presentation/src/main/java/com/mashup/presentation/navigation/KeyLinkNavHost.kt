@@ -18,7 +18,6 @@ import com.mashup.presentation.feature.reply.navigation.navigateToReplyRoute
 import com.mashup.presentation.feature.report.navigation.navigateToReport
 import com.mashup.presentation.feature.signal.navigation.navigateToSignal
 import com.mashup.presentation.feature.signal.navigation.signalGraph
-import com.mashup.presentation.feature.subscribe.navigation.navigateToSubscribeKeywordRoute
 
 /**
  * Ssam_D_Android
@@ -40,7 +39,6 @@ fun KeyLinkNavHost(
     ) {
         homeGraph(
             navController = navController,
-            onKeywordContainerClick = navController::navigateToSubscribeKeywordRoute,
             onGuideClick = navController::navigateToGuideRoute,
             onBackClick = navController::navigateUp,
             onShowSnackbar = onShowSnackbar,
