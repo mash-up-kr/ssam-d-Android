@@ -69,7 +69,7 @@ fun KeyLinkNavHost(
                 navController.navigateToChatDetail(roomId)
             },
             onMessageClick = { roomId, chatId ->
-                navController.navigateToMessageDetail(chatId, roomId)
+                navController.navigateToMessageDetail(chatId = chatId, roomId = roomId)
             },
             onReportMenuClick = navController::navigateToReport,
             onReportIconClick = {
