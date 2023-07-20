@@ -14,9 +14,5 @@ import javax.inject.Inject
 class GetSubscribeKeywordsUseCase @Inject constructor(
     private val keywordRepository: KeywordRepository
 ) : FlowUseCase<Unit, List<String>>() {
-    override fun invoke(params: Unit): Flow<List<String>> = flow {
-        keywordRepository.getSubscribeKeywords().collect { subscribeKeywords ->
-            emit(subscribeKeywords)
-        }
-    }
+    override fun invoke(params: Unit): Flow<List<String>> = keywordRepository.getSubscribeKeywords()
 }
