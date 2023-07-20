@@ -44,4 +44,8 @@ class ChatRepositoryImpl @Inject constructor(
             remoteChatDataSource.getChatRooms(page, loadSize).toDomainModel()
         }.flow
     }
+
+    override suspend fun disconnectRoom(roomId: Long) {
+        return remoteChatDataSource.disconnectRoom(roomId)
+    }
 }
