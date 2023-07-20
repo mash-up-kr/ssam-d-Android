@@ -5,6 +5,7 @@ import com.mashup.data.source.remote.dto.responsebody.chat.ChatDetailResponse
 import com.mashup.data.source.remote.dto.responsebody.chat.GetChatInfoResponseBody
 import com.mashup.data.source.remote.dto.responsebody.chat.GetChatsResponseBody
 import com.mashup.data.source.remote.dto.responsebody.chat.ChatRoomPagingResponse
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -33,4 +34,9 @@ interface ChatService {
         @Path("roomId") roomId: Long,
         @Path("chatId") chatId: Long
     ): BaseResponse<ChatDetailResponse>
+
+    @DELETE("rooms/{roomId}")
+    suspend fun disconnectRoom(
+        @Path("roomId") roomId: Long
+    ): BaseResponse<Unit>
 }
