@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.subscribe
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -8,16 +9,15 @@ import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
+import com.mashup.presentation.feature.home.HomeViewModel
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.*
-import kotlinx.coroutines.launch
+import okhttp3.internal.toImmutableList
 
 /**
  * Ssam_D_Android
@@ -30,8 +30,14 @@ fun SubscribeRoute(
     onSaveButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
-    viewModel: SubscribeViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel
 ) {
+    val subscribeKeywords = homeViewModel.subscribeKeywords.toImmutableList()
+
+    SideEffect {
+        Log.e("zAA","$subscribeKeywords")
+    }
+
 
     SubscribeKeywordScreen(
         modifier = modifier,

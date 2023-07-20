@@ -1,5 +1,8 @@
 package com.mashup.presentation.feature.home
 
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -30,6 +33,8 @@ class HomeViewModel @Inject constructor(
     private val getSubscribeKeywordsUseCase: GetSubscribeKeywordsUseCase
 ) : ViewModel() {
 
+    var subscribeKeywords = mutableStateListOf<String>()
+
     private val _receivedSignals: MutableStateFlow<PagingData<SignalUiModel>> =
         MutableStateFlow(PagingData.empty())
     val receivedSignals = _receivedSignals.asStateFlow()
@@ -44,6 +49,7 @@ class HomeViewModel @Inject constructor(
                 _subscribeKeywordsState.value = Error(it)
             }.collect {
                 _subscribeKeywordsState.value = Success(it.toUiModel())
+                subscribeKeywords.addAll(it.toUiModel().subscribeKeywords)
             }
         }
     }
@@ -58,6 +64,16 @@ class HomeViewModel @Inject constructor(
                 }
         }
     }
+
+
+    fun addSubscribeKeywords(keyword: String) {
+        subscribeKeywords.add(keyword)
+    }
+
+    fun deleteSubscribeKeywords(index: Int) {
+        subscribeKeywords.removeAt(index)
+    }
+
 
 }
 
