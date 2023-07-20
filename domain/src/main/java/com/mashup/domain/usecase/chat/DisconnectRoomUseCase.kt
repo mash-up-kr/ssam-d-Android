@@ -6,8 +6,8 @@ import javax.inject.Inject
 
 class DisconnectRoomUseCase @Inject constructor(
     private val chatRepository: ChatRepository
-) : CoroutineUseCase<Long, Unit>() {
-    override suspend fun invoke(param: Long) {
+) : CoroutineUseCase<Long, Result<Unit>>() {
+    override suspend fun invoke(param: Long): Result<Unit> {
         return chatRepository.disconnectRoom(param)
     }
 }
