@@ -21,6 +21,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.detail.ChatDetailViewModel
 import com.mashup.presentation.feature.detail.chat.compose.MessageDetailUiState
+import com.mashup.presentation.feature.detail.message.model.MessageDetailUiModel
+import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.Black
@@ -65,8 +67,6 @@ fun MessageDetailScreen(
     modifier: Modifier = Modifier,
     messageDetailUiState: MessageDetailUiState
 ) {
-    val matchedKeywords = listOf("매쉬업", "일상", "디자인", "IT", "취준", "일상", "디자인", "IT", "취준")
-
     Scaffold(
         modifier = modifier,
         backgroundColor = Black,
@@ -94,31 +94,51 @@ fun MessageDetailScreen(
             start = 20.dp,
             end = 20.dp
         )
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            MessageDetailContainer(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f),
-                othersName = "연날리기",
-                date = "2023년 5월 30일",
-                message = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
-                matchedKeywords = matchedKeywords
-            )
-
-            KeyLinkRoundButton(
-                modifier = Modifier.padding(top = 48.dp, bottom = 42.dp),
-                text = stringResource(R.string.button_send_reply),
-                onClick = onReplyButtonClick
-            )
+        when (messageDetailUiState) {
+            is MessageDetailUiState.Loading -> KeyLinkLoading()
+            is MessageDetailUiState.Success -> {
+                MessageDetailContent(
+                    contentPadding = contentPadding,
+                    messageDetail = messageDetailUiState.messageDetail,
+                    onReplyButtonClick = onReplyButtonClick
+                )
+            }
+            is MessageDetailUiState.Failure -> {}
         }
     }
 }
+
+@Composable
+private fun MessageDetailContent(
+    contentPadding: PaddingValues,
+    messageDetail: MessageDetailUiModel,
+    onReplyButtonClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(contentPadding),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        MessageDetailContainer(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f),
+            othersName = messageDetail.nickname,
+            date = messageDetail.receivedTimeMillis.toString(),
+            message = messageDetail.content,
+            matchedKeywords = messageDetail.keywords,
+            profileImage = messageDetail.profileImage
+        )
+
+        KeyLinkRoundButton(
+            modifier = Modifier.padding(top = 48.dp, bottom = 42.dp),
+            text = stringResource(R.string.button_send_reply),
+            onClick = onReplyButtonClick
+        )
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
