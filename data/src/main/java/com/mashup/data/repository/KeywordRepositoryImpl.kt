@@ -22,6 +22,12 @@ class KeywordRepositoryImpl @Inject constructor(
         emit(result)
     }
 
+    override suspend fun postSubscribeKeywords(subscribeKeywords: List<String>): Result<Unit> {
+        return suspendRunCatching {
+            remoteDataSource.postSubscribeKeywords(subscribeKeywords)
+        }
+    }
+
     override suspend fun getRecommendKeywords(content: String): Flow<List<String>> = flow {
         val result = runCatching {
             remoteDataSource.getRecommendKeyword(content).keywords
