@@ -25,11 +25,9 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
-import androidx.paging.compose.itemKey
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.mashup.presentation.R
-import com.mashup.presentation.feature.chat.model.Message
 import com.mashup.presentation.feature.chat.model.RoomUiModel
 import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.theme.*
@@ -44,7 +42,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 @Composable
 fun ChatRoomListScreen(
     modifier: Modifier = Modifier,
-    onMessageClick: (Long) -> Unit = {},
+    onChatRoomClick: (Long) -> Unit = {},
     chatRoomList: LazyPagingItems<RoomUiModel>
 ) {
     when (chatRoomList.loadState.refresh) {
@@ -54,7 +52,7 @@ fun ChatRoomListScreen(
         else -> {
             ChatRoomList(
                 modifier = modifier,
-                onMessageClick = onMessageClick,
+                onChatRoomClick = onChatRoomClick,
                 chatRoomList = chatRoomList
             )
         }
@@ -64,7 +62,7 @@ fun ChatRoomListScreen(
 @Composable
 fun ChatRoomList(
     modifier: Modifier = Modifier,
-    onMessageClick: (Long) -> Unit = {},
+    onChatRoomClick: (Long) -> Unit = {},
     chatRoomList: LazyPagingItems<RoomUiModel>
 ) {
     LazyColumn(modifier = modifier) {
@@ -76,7 +74,7 @@ fun ChatRoomList(
             chatRoomList[index]?.let {
                 ChatRoomItem(
                     chatRoom = it,
-                    onMessageClick = { onMessageClick(it.id) }
+                    onMessageClick = { onChatRoomClick(it.id) }
                 )
             }
         }
