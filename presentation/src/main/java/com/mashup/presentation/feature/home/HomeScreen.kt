@@ -55,7 +55,8 @@ fun HomeRoute(
     HomeBackgroundScreen(
         subscribeKeywordsUiState = subscribeKeywordsUiState,
         pagedReceivedSignal = pagedReceivedSignal,
-        onKeywordContainerClick = {
+        onKeywordContainerClick = { keywords ->
+            homeViewModel.setSubscribeKeywords(keywords)
             onKeywordContainerClick()
         },
         onGuideClick = onGuideClick,
