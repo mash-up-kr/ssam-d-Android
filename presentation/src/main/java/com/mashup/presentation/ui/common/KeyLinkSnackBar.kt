@@ -3,7 +3,6 @@ package com.mashup.presentation.ui.common
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -14,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.theme.BlackAlpha50
-import com.mashup.presentation.ui.theme.Caption3
+import com.mashup.presentation.ui.theme.Caption2
 import com.mashup.presentation.ui.theme.Mint
 import com.mashup.presentation.ui.theme.White
 
@@ -63,7 +62,7 @@ fun KeyLinkSnackBarContent(
 
             Text(
                 text = snackBarMessage,
-                style = Caption3,
+                style = Caption2,
                 color = White,
                 modifier = Modifier.padding(start = 8.dp)
             )
