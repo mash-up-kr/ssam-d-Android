@@ -3,6 +3,7 @@ package com.mashup.data.repository
 import androidx.paging.PagingData
 import com.mashup.data.source.remote.source.datasource.RemoteChatDataSource
 import com.mashup.data.util.createPager
+import com.mashup.data.util.suspendRunCatching
 import com.mashup.domain.model.chat.ChatDetail
 import com.mashup.domain.repository.ChatRepository
 import kotlinx.coroutines.flow.Flow
@@ -46,6 +47,8 @@ class ChatRepositoryImpl @Inject constructor(
     }
 
     override suspend fun disconnectRoom(roomId: Long) {
-        return remoteChatDataSource.disconnectRoom(roomId)
+        return suspendRunCatching {
+            remoteChatDataSource.disconnectRoom(roomId)
+        }.getOrThrow()
     }
 }
