@@ -2,6 +2,7 @@ package com.mashup.presentation.feature.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mashup.domain.usecase.chat.DisconnectRoomUseCase
 import com.mashup.domain.usecase.chat.GetChatInfoUseCase
 import com.mashup.domain.usecase.chat.GetChatsParam
 import com.mashup.domain.usecase.chat.GetChatsUseCase
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatDetailViewModel @Inject constructor(
     private val getChatInfoUseCase: GetChatInfoUseCase,
-    private val getChatsUseCase: GetChatsUseCase
+    private val getChatsUseCase: GetChatsUseCase,
+    private val disconnectRoomUseCase: DisconnectRoomUseCase
 ): ViewModel() {
 
     private val _chatDetailUiState: MutableStateFlow<ChatDetailUiState> = MutableStateFlow(
@@ -39,6 +41,12 @@ class ChatDetailViewModel @Inject constructor(
                     Timber.i("채팅 상세 get 성공~!")
                     _chatDetailUiState.value = ChatDetailUiState.Success(chatDetailUiModel)
                 }
+        }
+    }
+
+    fun disconnectRoom(roomId: Long) {
+        viewModelScope.launch {
+            disconnectRoomUseCase.execute(roomId)
         }
     }
 
