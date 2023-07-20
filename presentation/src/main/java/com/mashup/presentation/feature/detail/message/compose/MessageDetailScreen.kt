@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -15,8 +17,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.detail.ChatDetailViewModel
+import com.mashup.presentation.feature.detail.chat.compose.MessageDetailUiState
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.Black
@@ -34,14 +38,22 @@ fun MessageDetailRoute(
     onReportMenuClick: () -> Unit,
     onReplyButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
+    roomId: Long,
+    chatId: Long,
     viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
+    val messageDetailUiState by viewModel.messageDetailUiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.getMessageDetail(roomId, chatId)
+    }
 
     MessageDetailScreen(
         modifier = modifier,
         onBackClick = onBackClick,
         onReportMenuClick = onReportMenuClick,
         onReplyButtonClick = onReplyButtonClick,
+        messageDetailUiState = messageDetailUiState
     )
 }
 
@@ -51,6 +63,7 @@ fun MessageDetailScreen(
     onReportMenuClick: () -> Unit,
     onReplyButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
+    messageDetailUiState: MessageDetailUiState
 ) {
     val matchedKeywords = listOf("매쉬업", "일상", "디자인", "IT", "취준", "일상", "디자인", "IT", "취준")
 
@@ -115,6 +128,7 @@ private fun MessageScreenPreview() {
             onBackClick = {},
             onReportMenuClick = {},
             onReplyButtonClick = {},
+            messageDetailUiState = MessageDetailUiState.Loading,
         )
     }
 }
