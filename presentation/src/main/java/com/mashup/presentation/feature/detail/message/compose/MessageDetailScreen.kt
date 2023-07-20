@@ -125,7 +125,7 @@ private fun MessageDetailContent(
                 .fillMaxSize()
                 .weight(1f),
             othersName = messageDetail.nickname,
-            date = messageDetail.receivedTimeMillis.toString(),
+            date = messageDetail.getDisplayedDate(),
             message = messageDetail.content,
             matchedKeywords = messageDetail.keywords,
             profileImage = messageDetail.profileImage

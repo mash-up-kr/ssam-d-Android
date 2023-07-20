@@ -1,6 +1,10 @@
 package com.mashup.presentation.feature.detail.message.model
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.mashup.domain.model.chat.MessageDetail
+import java.text.SimpleDateFormat
+import java.util.*
 
 data class MessageDetailUiModel(
     val id: Long,
@@ -13,6 +17,11 @@ data class MessageDetailUiModel(
     val isAlive: Boolean,
     val isMine: Boolean
 ) {
+    fun getDisplayedDate(): String {
+        val formatter = SimpleDateFormat("yyyy년 M월 d일", Locale.KOREA)
+        return formatter.format(Date(receivedTimeMillis))
+    }
+
     companion object {
         fun fromDomainModel(domain: MessageDetail): MessageDetailUiModel {
             with(domain) {
