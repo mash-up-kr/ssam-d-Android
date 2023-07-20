@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.login
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,7 +10,8 @@ import com.mashup.domain.exception.ConflictException
 import com.mashup.domain.usecase.*
 import com.mashup.presentation.ui.common.ValidationState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -18,29 +20,46 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val checkNicknameDuplicationUseCase: CheckNicknameDuplicationUseCase,
-    private val patchNicknameUseCase: PatchNicknameUseCase
-): ViewModel() {
+    private val patchNicknameUseCase: PatchNicknameUseCase,
+    private val getAccessTokenUseCase: GetAccessTokenUseCase,
+) : ViewModel() {
+
+    init {
+        checkAutoLogin()
+    }
 
     var currentPage by mutableStateOf(0)
     var nickname by mutableStateOf("")
 
-    private val _nicknameState: MutableStateFlow<ValidationState> = MutableStateFlow(ValidationState.EMPTY)
+    private val _nicknameState: MutableStateFlow<ValidationState> =
+        MutableStateFlow(ValidationState.EMPTY)
     val nicknameState = _nicknameState.asStateFlow()
+
+    private val _loginUiState: MutableStateFlow<LoginUiState> = MutableStateFlow(LoginUiState.IDLE)
+    val loginUiState = _loginUiState.asStateFlow()
 
     private fun goToNextPage() = currentPage++
 
     fun backToPrevPage() = currentPage--
 
+    private fun checkAutoLogin() {
+        viewModelScope.launch {
+            if (getAccessTokenUseCase.execute(Unit).isNotBlank()) {
+                _loginUiState.emit(LoginUiState.AUTO)
+            }
+        }
+    }
+
     fun login(email: String?, socialId: String, deviceToken: String? = "") {
         viewModelScope.launch {
             val param = LoginParam(email = email, socialId = socialId, deviceToken = deviceToken)
             loginUseCase.execute(param)
-               .onSuccess {
-                   Timber.i("드디어 로그인 성공~!")
-                   goToNextPage()
-               }.onFailure {
+                .onSuccess {
+                    Timber.i("드디어 로그인 성공~!")
+                    goToNextPage()
+                }.onFailure {
                     Timber.i("삐빅- 로그인 실패")
-               }
+                }
         }
     }
 
