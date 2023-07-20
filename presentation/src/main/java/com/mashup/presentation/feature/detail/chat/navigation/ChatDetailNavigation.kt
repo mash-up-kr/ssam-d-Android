@@ -10,9 +10,9 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
  * @created 2023/07/09
  */
 
-fun NavController.navigateToChatDetail(chatId: Long, navOptions: NavOptions? = null) {
+fun NavController.navigateToChatDetail(roomId: Long, navOptions: NavOptions? = null) {
     navigate(
-        route = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route.replace("{roomId}", "$chatId"),
+        route = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route.replace("{roomId}", "$roomId"),
         navOptions = navOptions
     )
 }
