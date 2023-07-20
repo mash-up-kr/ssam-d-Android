@@ -6,12 +6,18 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import com.mashup.presentation.common.extension.setThemeContent
 import com.mashup.presentation.feature.onboarding.OnBoardingActivity
+import com.mashup.presentation.navigation.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -33,6 +39,24 @@ class LoginActivity : AppCompatActivity() {
                 },
                 handleOnBackPressed = { handleOnBackPressed() }
             )
+        }
+
+        observeState()
+    }
+
+    private fun observeState() {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                loginViewModel.loginUiState.collectLatest { uiState ->
+                    when (uiState) {
+                        LoginUiState.AUTO -> {
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                            finish()
+                        }
+                        else -> {}
+                    }
+                }
+            }
         }
     }
 
