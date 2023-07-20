@@ -62,7 +62,7 @@ fun NavGraphBuilder.homeGraph(
 
             SubscribeRoute(
                 onBackClick = onBackClick,
-                onSaveButtonClick = {
+                onSaveSuccess = {
                     navController.navigateToHome(
                         navOptions {
                             popUpTo(KeyLinkNavigationRoute.HomeGraph.route) { inclusive = true }
@@ -70,6 +70,7 @@ fun NavGraphBuilder.homeGraph(
                         }
                     )
                 },
+                onSaveFailed = {},
                 onShowSnackbar = onShowSnackbar,
                 homeViewModel = homeViewModel
             )

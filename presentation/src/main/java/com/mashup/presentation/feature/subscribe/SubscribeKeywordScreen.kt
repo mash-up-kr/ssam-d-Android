@@ -12,8 +12,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.home.HomeViewModel
+import com.mashup.presentation.feature.home.Nothing
+import com.mashup.presentation.feature.home.UpdateSuccess
+import com.mashup.presentation.feature.home.UpdateFailed
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.*
 import okhttp3.internal.toImmutableList
@@ -26,19 +30,29 @@ import okhttp3.internal.toImmutableList
 @Composable
 fun SubscribeRoute(
     onBackClick: () -> Unit,
-    onSaveButtonClick: () -> Unit,
+    onSaveSuccess: () -> Unit,
+    onSaveFailed: () -> Unit,
     modifier: Modifier = Modifier,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     homeViewModel: HomeViewModel
 ) {
     val subscribeKeywords = homeViewModel.subscribeKeywords.toImmutableList()
+    val uiEvent by homeViewModel.eventFlow.collectAsStateWithLifecycle(initialValue = Nothing)
+
+    LaunchedEffect(uiEvent) {
+        when (uiEvent) {
+            UpdateSuccess -> onSaveSuccess()
+            is UpdateFailed -> onSaveFailed()
+            else -> {}
+        }
+    }
 
     SubscribeKeywordScreen(
         subscribeKeywords = subscribeKeywords,
         modifier = modifier,
         onBackClick = onBackClick,
         onShowSnackbar = onShowSnackbar,
-        onSaveButtonClick = onSaveButtonClick,
+        onSaveButtonClick = homeViewModel::updateSubscribeKeywords,
         onAddKeyword = homeViewModel::addSubscribeKeywords,
         onDeleteKeyword = homeViewModel::deleteSubscribeKeywords,
     )
