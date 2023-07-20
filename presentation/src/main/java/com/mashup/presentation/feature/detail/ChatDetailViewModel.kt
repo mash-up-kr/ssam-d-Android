@@ -3,16 +3,16 @@ package com.mashup.presentation.feature.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.domain.usecase.chat.DisconnectRoomUseCase
+import com.mashup.domain.usecase.chat.GetMessageDetailUseCase
 import com.mashup.domain.usecase.chat.GetChatInfoUseCase
 import com.mashup.domain.usecase.chat.GetChatsParam
 import com.mashup.domain.usecase.chat.GetChatsUseCase
 import com.mashup.presentation.feature.detail.chat.compose.ChatDetailUiState
+import com.mashup.presentation.feature.detail.chat.compose.MessageDetailUiState
 import com.mashup.presentation.feature.detail.chat.model.toUiModel
+import com.mashup.presentation.feature.detail.message.model.MessageDetailUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.zip
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -22,11 +22,17 @@ class ChatDetailViewModel @Inject constructor(
     private val getChatInfoUseCase: GetChatInfoUseCase,
     private val getChatsUseCase: GetChatsUseCase,
     private val disconnectRoomUseCase: DisconnectRoomUseCase
-): ViewModel() {
+    private val getMessageDetailUseCase: GetMessageDetailUseCase
+) : ViewModel() {
 
     private val _chatDetailUiState: MutableStateFlow<ChatDetailUiState> = MutableStateFlow(
-        ChatDetailUiState.Loading)
+        ChatDetailUiState.Loading
+    )
     val chatDetailUiState = _chatDetailUiState.asStateFlow()
+
+    private val _messageDetailUiState: MutableStateFlow<MessageDetailUiState> =
+        MutableStateFlow(MessageDetailUiState.Loading)
+    val messageDetailUiState = _messageDetailUiState.asStateFlow()
 
     fun getChatInfoAndChats(id: Long, pageNo: Int, pageLength: Int = PAGE_LENGTH) {
         viewModelScope.launch {
@@ -47,6 +53,23 @@ class ChatDetailViewModel @Inject constructor(
     fun disconnectRoom(roomId: Long) {
         viewModelScope.launch {
             disconnectRoomUseCase.execute(roomId)
+        }
+    }
+
+    fun getMessageDetail(roomId: Long, chatId: Long) {
+        viewModelScope.launch {
+            val param = GetMessageDetailUseCase.MessageDetailParam(
+                roomId = roomId,
+                chatId = chatId
+            )
+            getMessageDetailUseCase.execute(param).collectLatest {
+                _messageDetailUiState.emit(
+                    MessageDetailUiState.Success(
+                        messageDetail = MessageDetailUiModel.fromDomainModel(it)
+                    )
+                )
+            }
+
         }
     }
 
