@@ -42,7 +42,9 @@ fun HomeKeywordInfoContainer(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = topBarBackgroundColor)
-                .clickable { onKeywordContainerClick(subscribeKeywords.subscribeKeywords) }
+                .clickable {
+                    onKeywordContainerClick(subscribeKeywords.subscribeKeywords)
+                }
         ) {
             Row(
                 modifier = Modifier

@@ -17,7 +17,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -33,13 +32,14 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeRoute(
-    onKeywordContainerClick: (List<String>) -> Unit,
+    onKeywordContainerClick: () -> Unit,
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    homeViewModel: HomeViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel,
+    modifier: Modifier = Modifier
 ) {
+
     val pagedReceivedSignal = homeViewModel.receivedSignals.collectAsLazyPagingItems()
     val subscribeKeywordsUiState by homeViewModel.subscribeKeywordsState.collectAsStateWithLifecycle()
 
@@ -55,7 +55,9 @@ fun HomeRoute(
     HomeBackgroundScreen(
         subscribeKeywordsUiState = subscribeKeywordsUiState,
         pagedReceivedSignal = pagedReceivedSignal,
-        onKeywordContainerClick = onKeywordContainerClick,
+        onKeywordContainerClick = {
+            onKeywordContainerClick()
+        },
         onGuideClick = onGuideClick,
         onProfileMenuClick = onProfileMenuClick,
         onReceivedSignalClick = onReceivedSignalClick
