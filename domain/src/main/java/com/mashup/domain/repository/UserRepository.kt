@@ -8,6 +8,8 @@ interface UserRepository {
 
     suspend fun logout()
 
+    suspend fun getUserAccessToken(): String
+
     suspend fun getNicknameDuplication(nickname: String): Result<Unit>
 
     suspend fun patchNickname(nickname: String)

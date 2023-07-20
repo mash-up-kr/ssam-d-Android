@@ -12,7 +12,7 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val remoteUserDataSource: RemoteUserDataSource,
     private val localUserDataSource: LocalUserDataSource
-): UserRepository {
+) : UserRepository {
 
     override suspend fun login(param: LoginParam) {
         val loginRequestBody = with(param) {
@@ -29,9 +29,9 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun logout() {
-        localUserDataSource.removeToken()
-    }
+    override suspend fun logout() = localUserDataSource.removeToken()
+
+    override suspend fun getUserAccessToken(): String = localUserDataSource.getToken()
 
     override suspend fun getNicknameDuplication(nickname: String): Result<Unit> {
         return suspendRunCatching {
@@ -49,7 +49,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getUser(): User {
         val id = localUserDataSource.getUserId()
-        remoteUserDataSource.getUser(id).let {result ->
+        remoteUserDataSource.getUser(id).let { result ->
             return result.data?.toDomainModel() ?: throw Exception(result.message)
         }
     }
