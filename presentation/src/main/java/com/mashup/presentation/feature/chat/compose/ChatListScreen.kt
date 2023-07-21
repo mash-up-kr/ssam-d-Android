@@ -45,18 +45,11 @@ fun ChatRoomListScreen(
     onChatRoomClick: (Long) -> Unit = {},
     chatRoomList: LazyPagingItems<RoomUiModel>
 ) {
-    when (chatRoomList.loadState.refresh) {
-        LoadState.Loading -> KeyLinkLoading()
-        is LoadState.Error -> {/* Error */
-        }
-        else -> {
-            ChatRoomList(
-                modifier = modifier,
-                onChatRoomClick = onChatRoomClick,
-                chatRoomList = chatRoomList
-            )
-        }
-    }
+    ChatRoomList(
+        modifier = modifier,
+        onChatRoomClick = onChatRoomClick,
+        chatRoomList = chatRoomList
+    )
 }
 
 @Composable
