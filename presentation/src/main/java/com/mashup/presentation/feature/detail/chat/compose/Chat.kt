@@ -62,6 +62,7 @@ fun ChatContent(
             }
         }
     }
+    Spacer(modifier = Modifier.height(42.dp))
 }
 
 /**
