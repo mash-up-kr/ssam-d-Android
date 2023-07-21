@@ -67,3 +67,34 @@ data class ReceivedSignal(
             receivedTimeMillis = receivedTimeMillis,
         )
 }
+
+@JsonClass(generateAdapter = true)
+data class ReceivedSignalDetail(
+    @field:Json(name = "id")
+    val signalId: Int,
+    @field:Json(name = "keywords")
+    val keywords: List<String>,
+    @field:Json(name = "matchingKeywordCount")
+    val matchedKeywordsCount: Int,
+    @field:Json(name = "content")
+    val signalContent: String,
+    @field:Json(name = "profileImage")
+    val senderImageUrl: String,
+    @field:Json(name = "nickname")
+    val senderName: String,
+    @field:Json(name = "receivedTimeMillis")
+    val receivedTimeMillis: Long,
+) : DomainMapper<ReceivedSignal> {
+    override fun toDomainModel(): ReceivedSignal =
+        ReceivedSignal(
+            signalId = signalId,
+            receiverId = null,
+            senderId = null,
+            senderName = senderName,
+            senderImageUrl = senderImageUrl,
+            signalContent = signalContent,
+            keywords = keywords,
+            keywordsCount = matchedKeywordsCount,
+            receivedTimeMillis = receivedTimeMillis
+        )
+}

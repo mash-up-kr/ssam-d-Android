@@ -9,8 +9,8 @@ import com.mashup.domain.base.DomainModel
  */
 data class ReceivedSignal(
     val signalId: Long,
-    val receiverId: Long,
-    val senderId: Long,
+    val receiverId: Long?,
+    val senderId: Long?,
     val senderName: String,
     val senderImageUrl: String,
     val signalContent: String,
