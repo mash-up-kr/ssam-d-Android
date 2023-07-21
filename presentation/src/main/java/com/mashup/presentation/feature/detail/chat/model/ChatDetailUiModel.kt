@@ -1,6 +1,5 @@
 package com.mashup.presentation.feature.detail.chat.model
 
-import com.mashup.domain.model.Chat
 import com.mashup.domain.model.ChatInfo
 
 /**
@@ -12,9 +11,19 @@ data class ChatDetailUiModel(
     val othersProfileImage: String,
     val othersNickName: String,
     val matchedKeywords: List<String>,
-    val isAlive: Boolean,
-    val chat: List<ChatUiModel>
+    val isAlive: Boolean
 ) {
+    companion object {
+        fun ChatInfo.toUiModel(): ChatDetailUiModel {
+            return ChatDetailUiModel(
+                othersProfileImage = matchingUserProfileImage,
+                othersNickName = matchingUserName,
+                matchedKeywords = keywords,
+                isAlive = isAlive
+            )
+        }
+    }
+
     fun getMatchedKeywordSummery(): List<String> {
         val maxKeywordCount = 3
 
@@ -29,14 +38,4 @@ data class ChatDetailUiModel(
             }
         }
     }
-}
-
-fun ChatInfo.toUiModel(chats: List<Chat>): ChatDetailUiModel {
-    return ChatDetailUiModel(
-        othersProfileImage = matchingUserProfileImage,
-        othersNickName = matchingUserName,
-        matchedKeywords = keywords,
-        isAlive = isAlive,
-        chat = chats.map { it.toUiModel(chatColor, matchingUserName) }
-    )
 }

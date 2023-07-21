@@ -28,14 +28,18 @@ data class ChatResponseBody(
     val id: Long,
     val content: String,
     val senderName: String,
-    val receivedTimeMillis: Long
+    val receivedTimeMillis: Long,
+    val chatColor: String,
+    val isMine: Boolean
 ) : DomainMapper<Chat> {
     override fun toDomainModel(): Chat {
         return Chat(
             id = id,
             content = content,
             senderName = senderName,
-            receivedTimeMillis = receivedTimeMillis
+            receivedTimeMillis = receivedTimeMillis,
+            chatColor = chatColor,
+            isMine = isMine
         )
     }
 }

@@ -15,5 +15,7 @@ data class Chat(
     val id: Long,
     val content: String,
     val senderName: String,
-    val receivedTimeMillis: Long
+    val receivedTimeMillis: Long,
+    val chatColor: String,
+    val isMine: Boolean
 ) : DomainModel

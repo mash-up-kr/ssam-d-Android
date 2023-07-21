@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.presentation.feature.detail.chat.model.MessageBackgroundColor
 import com.mashup.presentation.feature.detail.chat.model.ChatUiModel
@@ -49,7 +48,7 @@ fun ChatContent(
                 message = message.message,
                 userName = message.userName,
                 date = message.date,
-                backgroundColor = message.backgroundColor,
+                backgroundColor = null,
                 onChatItemClick = { onChatItemClick(message.id) }
             )
         }
