@@ -35,7 +35,8 @@ fun NavGraphBuilder.homeGraph(
     onGuideClick: () -> Unit,
     onBackClick: () -> Unit,
     nestedSignalGraph: NavGraphBuilder.() -> Unit,
-    nestedProfileGraph: NavGraphBuilder.() -> Unit
+    nestedProfileGraph: NavGraphBuilder.() -> Unit,
+    nestedChatGraph: NavGraphBuilder.() -> Unit,
 ) {
     navigation(
         route = KeyLinkNavigationRoute.HomeGraph.route,
@@ -77,5 +78,6 @@ fun NavGraphBuilder.homeGraph(
         }
         nestedSignalGraph()
         nestedProfileGraph()
+        nestedChatGraph()
     }
 }

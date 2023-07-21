@@ -33,6 +33,7 @@ sealed class KeyLinkNavigationRoute(val route: String) {
 
     object ChatGraph : KeyLinkNavigationRoute(CHAT_GRAPH_PATTERN) {
         object ChatDetailRoute : KeyLinkNavigationRoute(CHAT_DETAIL_ROUTE)
+        object ReceivedSignalDetailRoute : KeyLinkNavigationRoute(RECEIVED_SIGNAL_DETAIL_ROUTE)
         object ReportRoute : KeyLinkNavigationRoute(REPORT_ROUTE)
         object ReplyRoute : KeyLinkNavigationRoute(REPLY_ROUTE)
     }
