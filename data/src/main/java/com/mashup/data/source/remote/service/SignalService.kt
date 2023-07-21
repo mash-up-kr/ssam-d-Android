@@ -2,11 +2,9 @@ package com.mashup.data.source.remote.service
 
 import com.mashup.data.source.remote.dto.BaseResponse
 import com.mashup.data.source.remote.dto.requestbody.SignalRequest
+import com.mashup.data.source.remote.dto.responsebody.signal.ReceivedSignalDetail
 import com.mashup.data.source.remote.dto.responsebody.signal.ReceivedSignalResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 /**
  * Ssam_D_Android
@@ -25,4 +23,9 @@ interface SignalService {
         @Query("pageNo") pageNumber: Int,
         @Query("pageLength") pageLength: Int?
     ): BaseResponse<ReceivedSignalResponse>
+
+    @GET("${ApiPattern.Signal.SEND_SIGNAL}/{id}")
+    suspend fun getReceivedSignalDetail(
+        @Path("id") signalId: Long
+    ): BaseResponse<ReceivedSignalDetail>
 }
