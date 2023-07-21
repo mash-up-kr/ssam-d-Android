@@ -14,4 +14,6 @@ interface SignalRepository {
     suspend fun postSignal(content: String, keywords: List<String>)
 
     fun getReceivedSignal(): Flow<PagingData<ReceivedSignal>>
+
+    fun getReceivedSignalDetail(signalId: Long): Flow<ReceivedSignal>
 }

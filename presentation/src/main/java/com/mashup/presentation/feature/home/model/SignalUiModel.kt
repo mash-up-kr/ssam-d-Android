@@ -19,8 +19,8 @@ data class SignalUiModel(
     companion object {
         fun ReceivedSignal.toUiModel() = SignalUiModel(
             signalId = signalId,
-            receiverId = receiverId,
-            senderId = senderId,
+            receiverId = receiverId ?: -1,
+            senderId = senderId ?: -1,
             senderName = senderName,
             senderImageUrl = senderImageUrl,
             signalContent = signalContent,

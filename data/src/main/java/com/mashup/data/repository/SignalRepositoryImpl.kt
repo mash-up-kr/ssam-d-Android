@@ -3,9 +3,11 @@ package com.mashup.data.repository
 import androidx.paging.PagingData
 import com.mashup.data.source.remote.source.datasource.RemoteSignalDataSource
 import com.mashup.data.util.createPager
+import com.mashup.data.util.suspendRunCatching
 import com.mashup.domain.model.ReceivedSignal
 import com.mashup.domain.repository.SignalRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 /**
@@ -25,5 +27,12 @@ class SignalRepositoryImpl @Inject constructor(
         return createPager { page, loadSize ->
             remoteSignalDataSource.getReceivedSignal(pageNumber = page, pageLength = loadSize).toDomainModel()
         }.flow
+    }
+
+    override fun getReceivedSignalDetail(signalId: Long): Flow<ReceivedSignal> = flow {
+        val result = suspendRunCatching {
+            remoteSignalDataSource.getReceivedSignalDetail(signalId).toDomainModel()
+        }.getOrThrow()
+        emit(result)
     }
 }
