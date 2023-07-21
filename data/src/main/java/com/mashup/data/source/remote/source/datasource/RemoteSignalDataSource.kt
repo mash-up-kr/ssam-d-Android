@@ -1,9 +1,9 @@
 package com.mashup.data.source.remote.source.datasource
 
 import com.mashup.data.source.remote.dto.requestbody.SignalRequest
-import com.mashup.data.source.remote.service.SignalService
-import com.mashup.data.source.remote.dto.responsebody.signal.ReceivedSignal
+import com.mashup.data.source.remote.dto.responsebody.signal.ReceivedSignalDetail
 import com.mashup.data.source.remote.dto.responsebody.signal.ReceivedSignalResponse
+import com.mashup.data.source.remote.service.SignalService
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,6 +26,11 @@ class RemoteSignalDataSource @Inject constructor(
 
     suspend fun getReceivedSignal(pageNumber: Int, pageLength: Int?): ReceivedSignalResponse {
         val response = signalService.getReceivedSignal(pageNumber = pageNumber, pageLength = pageLength)
+        return response.data ?: throw Exception(response.message)
+    }
+
+    suspend fun getReceivedSignalDetail(signalId: Long): ReceivedSignalDetail {
+        val response = signalService.getReceivedSignalDetail(signalId)
         return response.data ?: throw Exception(response.message)
     }
 }
