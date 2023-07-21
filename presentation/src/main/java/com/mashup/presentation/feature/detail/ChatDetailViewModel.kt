@@ -21,7 +21,7 @@ import javax.inject.Inject
 class ChatDetailViewModel @Inject constructor(
     private val getChatInfoUseCase: GetChatInfoUseCase,
     private val getChatsUseCase: GetChatsUseCase,
-    private val disconnectRoomUseCase: DisconnectRoomUseCase
+    private val disconnectRoomUseCase: DisconnectRoomUseCase,
     private val getMessageDetailUseCase: GetMessageDetailUseCase
 ) : ViewModel() {
 
