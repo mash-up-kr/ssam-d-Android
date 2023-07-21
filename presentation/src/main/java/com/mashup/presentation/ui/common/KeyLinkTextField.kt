@@ -114,7 +114,10 @@ fun KeyLinkOnBoardingTextField(
                     }
                 }
             ),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
             decorationBox = { innerTextField ->
                 if (value.isEmpty()) {
                     Text(
