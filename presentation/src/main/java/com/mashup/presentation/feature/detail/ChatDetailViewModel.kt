@@ -4,11 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.domain.usecase.chat.*
 import androidx.paging.map
-import com.mashup.presentation.feature.detail.chat.compose.ChatDetailUiState
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.mashup.presentation.feature.detail.chat.compose.MessageDetailUiState
 import com.mashup.presentation.feature.detail.chat.compose.MessageReplyUiState
 import com.mashup.presentation.feature.detail.chat.model.toUiModel
 import com.mashup.presentation.feature.detail.message.model.MessageDetailUiModel
+import com.mashup.presentation.feature.detail.chat.compose.ChatInfoUiState
+import com.mashup.presentation.feature.detail.chat.model.ChatInfoUiModel.Companion.toUiModel
+import com.mashup.presentation.feature.detail.chat.model.ChatUiModel
+import com.mashup.presentation.feature.detail.chat.model.ChatUiModel.Companion.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -24,8 +29,11 @@ class ChatDetailViewModel @Inject constructor(
     private val replyUseCase: ReplyUseCase
 ) : ViewModel() {
 
-    private val _chatDetailUiState: MutableStateFlow<ChatDetailUiState> = MutableStateFlow(ChatDetailUiState.Loading)
-    val chatDetailUiState = _chatDetailUiState.asStateFlow()
+    private val _chatInfoUiState: MutableStateFlow<ChatInfoUiState> = MutableStateFlow(ChatInfoUiState.Loading)
+    val chatDetailUiState = _chatInfoUiState.asStateFlow()
+
+    private val _chatPagingData: MutableStateFlow<PagingData<ChatUiModel>> = MutableStateFlow(PagingData.empty())
+    val chatPagingData = _chatPagingData.asStateFlow()
 
     private val _messageDetailUiState: MutableStateFlow<MessageDetailUiState> =
         MutableStateFlow(MessageDetailUiState.Loading)
@@ -35,18 +43,27 @@ class ChatDetailViewModel @Inject constructor(
         MutableStateFlow(MessageReplyUiState.Idle)
     val replyUiState = _replyUiState.asStateFlow()
 
-    fun getChatInfoAndChats(id: Long) {
+    fun getChatInfo(id: Long) {
         viewModelScope.launch {
             getChatInfoUseCase.execute(id)
-                .combine(getChatsUseCase.execute(id)) { chatInfo, pagingData ->
-                    pagingData.map { chat -> chatInfo.toUiModel(listOf(chat)) }
-                }.catch {
-                    Timber.e("채팅 상세 get 실패.")
-                    _chatDetailUiState.value = ChatDetailUiState.Failure(it.message)
-                }.collect { chatDetailUiModel ->
-                    Timber.i("채팅 상세 get 성공~!")
-                    _chatDetailUiState.value = ChatDetailUiState.Success(chatDetailUiModel)
+                .catch {
+                    Timber.e("채팅방 정보 get 실패.")
+                    _chatInfoUiState.value = ChatInfoUiState.Failure(it.message)
+                }.collect {
+                    Timber.i("채팅방 정보 get 성공~!")
+                    _chatInfoUiState.value = ChatInfoUiState.Success(it.toUiModel())
                 }
+        }
+    }
+
+    fun getChats(id: Long) {
+        viewModelScope.launch {
+            getChatsUseCase.execute(id).cachedIn(viewModelScope).map { pagingData ->
+                pagingData.map { chat -> chat.toUiModel() }
+            }.collect {
+                Timber.i("채팅방 채팅 목록 get 성공~!")
+                _chatPagingData.value = it
+            }
         }
     }
 
