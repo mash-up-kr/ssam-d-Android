@@ -23,10 +23,13 @@ fun NavController.navigateToChat(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.chatGraph(
-    nestedGraphs: NavGraphBuilder.() -> Unit = {},
-    onShowSnackbar: (String, SnackbarDuration) -> Unit,
+    nestedSignalGraph: NavGraphBuilder.() -> Unit = {},
+    nestedMessageGraph: NavGraphBuilder.() -> Unit,
     onBackClick: () -> Unit,
     onEmptyScreenButtonClick: () -> Unit,
+    onChatClick: (Long) -> Unit,
+    onMessageClick: () -> Unit,
+    onBottomSheetReportClick: () -> Unit,
     onChatRoomClick: (Long) -> Unit,
     onMessageClick: (Long, Long) -> Unit,
     onReportMenuClick: () -> Unit,
@@ -59,9 +62,11 @@ fun NavGraphBuilder.chatGraph(
                 roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
                 onBackClick = onBackClick,
                 onMessageClick = onMessageClick,
-                onReportClick = onReportIconClick
+                onReportClick = onBottomSheetReportClick
             )
         }
+        nestedSignalGraph()  // 채팅 없을 경우 SignalGraph 연결
+        nestedMessageGraph()  // 메시지 상세 nested graph
 
         composable(route = KeyLinkNavigationRoute.ChatGraph.MessageDetailRoute.route,
             arguments = listOf(
