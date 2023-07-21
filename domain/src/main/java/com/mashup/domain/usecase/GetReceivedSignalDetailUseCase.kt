@@ -1,6 +1,6 @@
 package com.mashup.domain.usecase
 
-import com.mashup.domain.model.ReceivedSignal
+import com.mashup.domain.model.Signal
 import com.mashup.domain.repository.SignalRepository
 import com.mashup.domain.usecase.common.FlowUseCase
 import kotlinx.coroutines.flow.Flow
@@ -13,8 +13,8 @@ import javax.inject.Inject
  */
 class GetReceivedSignalDetailUseCase @Inject constructor(
     private val signalRepository: SignalRepository
-) : FlowUseCase<Long, ReceivedSignal>() {
+) : FlowUseCase<Long, Signal>() {
 
-    override fun invoke(params: Long): Flow<ReceivedSignal> =
+    override fun invoke(params: Long): Flow<Signal> =
         signalRepository.getReceivedSignalDetail(signalId = params)
 }
