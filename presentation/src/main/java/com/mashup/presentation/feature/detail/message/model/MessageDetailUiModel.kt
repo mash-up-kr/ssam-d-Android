@@ -15,11 +15,6 @@ data class MessageDetailUiModel(
     val isAlive: Boolean,
     val isMine: Boolean
 ) {
-    fun getDisplayedDate(): String {
-        val formatter = SimpleDateFormat("yyyy년 M월 d일", Locale.KOREA)
-        return formatter.format(Date(receivedTimeMillis))
-    }
-
     companion object {
         fun fromDomainModel(domain: MessageDetail): MessageDetailUiModel {
             with(domain) {
