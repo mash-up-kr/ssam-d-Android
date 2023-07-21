@@ -1,6 +1,7 @@
 package com.mashup.data.source.remote.source.datasource
 
 import com.mashup.data.source.remote.dto.responsebody.chat.MessageDetailResponse
+import com.mashup.data.source.remote.dto.requestbody.ReplyRequestBody
 import com.mashup.data.source.remote.dto.responsebody.chat.GetChatInfoResponseBody
 import com.mashup.data.source.remote.dto.responsebody.chat.GetChatsResponseBody
 import com.mashup.data.source.remote.dto.responsebody.chat.ChatRoomPagingResponse
@@ -39,5 +40,13 @@ class RemoteChatDataSource @Inject constructor(
 
     suspend fun disconnectRoom(roomId: Long) {
         chatService.disconnectRoom(roomId)
+    }
+
+    suspend fun reply(
+        roomId: Long,
+        content: String
+    ) {
+        val requestBody = ReplyRequestBody(content = content)
+        chatService.reply(roomId, requestBody)
     }
 }

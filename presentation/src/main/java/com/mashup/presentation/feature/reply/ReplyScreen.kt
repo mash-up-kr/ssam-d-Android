@@ -20,11 +20,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.mashup.presentation.R
+import com.mashup.presentation.feature.detail.ChatDetailViewModel
+import com.mashup.presentation.feature.detail.chat.compose.MessageReplyUiState
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.Black
 import com.mashup.presentation.ui.theme.Body2
@@ -41,48 +43,43 @@ import javax.inject.Inject
  * @created 2023/07/10
  */
 
-/**
- * 임시 뷰모델
- */
-@HiltViewModel
-class SampleViewModel @Inject constructor() : ViewModel() {
-    fun sendReply(reply: String) {
-        viewModelScope.launch {
-            // Call UseCase
-        }
-    }
-}
-
 @Composable
 fun ReplyRoute(
+    roomId: Long,
     onClickBack: () -> Unit,
-    onSendClick: () -> Unit,
+    navigateToChatDetail: (Long) -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: SampleViewModel = hiltViewModel()
+    viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
+    val uiState by viewModel.replyUiState.collectAsStateWithLifecycle()
     var reply by rememberSaveable { mutableStateOf("") }
 
     ReplyScreen(
+        roomId = roomId,
         reply = reply,
         modifier = modifier,
         onReplyTextChange = { reply = it },
         onClickBack = onClickBack,
         onSendClick = {
-            viewModel.sendReply(reply)
-            onSendClick()
+            viewModel.reply(roomId, reply)
         },
-        onShowSnackbar = onShowSnackbar
+        onShowSnackbar = onShowSnackbar,
+        uiState = uiState,
+        navigateToChatDetail = navigateToChatDetail
     )
 }
 
 @Composable
 private fun ReplyScreen(
+    roomId: Long,
     reply: String,
     onReplyTextChange: (String) -> Unit,
     onClickBack: () -> Unit,
     onSendClick: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
+    uiState : MessageReplyUiState,
+    navigateToChatDetail: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showGoBackDialog by rememberSaveable { mutableStateOf(false) }
@@ -108,14 +105,22 @@ private fun ReplyScreen(
             )
         }
     ) { innerPaddingValues ->
-        ReplyContent(
-            modifier = Modifier.padding(innerPaddingValues),
-            reply = reply,
-            onReplyTextChange = onReplyTextChange,
-            onSendClick = onSendClick,
-            onLengthOver = { showLengthOverDialog = true },
-            onShowSnackbar = onShowSnackbar
-        )
+        when(uiState) {
+            is MessageReplyUiState.Loading -> KeyLinkLoading()
+            is MessageReplyUiState.SaveSuccess -> {
+                navigateToChatDetail(roomId)
+            }
+            else -> {
+                ReplyContent(
+                    modifier = Modifier.padding(innerPaddingValues),
+                    reply = reply,
+                    onReplyTextChange = onReplyTextChange,
+                    onSendClick = onSendClick,
+                    onLengthOver = { showLengthOverDialog = true },
+                    onShowSnackbar = onShowSnackbar
+                )
+            }
+        }
 
         if (showGoBackDialog) {
             KeyLinkGoBackDialog(
@@ -170,7 +175,7 @@ fun ReplyContent(
                 .fillMaxWidth()
                 .padding(vertical = 12.dp, horizontal = 20.dp)
                 .padding(bottom = 48.dp),
-            text = stringResource(id = R.string.next),
+            text = stringResource(id = R.string.button_send_reply),
             onClick = {
                 onShowSnackbar(snackbarMessage, SnackbarDuration.Short)
                 onSendClick()
@@ -187,8 +192,9 @@ private const val MAX_LENGTH = 300
 private fun ReplyScreenPreview() {
     SsamDTheme {
         ReplyRoute(
+            roomId = 1,
             onClickBack = {},
-            onSendClick = {},
+            navigateToChatDetail = {},
             onShowSnackbar = { _, _ -> }
         )
     }

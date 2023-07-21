@@ -38,7 +38,7 @@ import com.mashup.presentation.ui.theme.White
 fun MessageDetailRoute(
     onBackClick: () -> Unit,
     onReportMenuClick: () -> Unit,
-    onReplyButtonClick: () -> Unit,
+    onReplyButtonClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     roomId: Long,
     chatId: Long,
@@ -54,7 +54,9 @@ fun MessageDetailRoute(
         modifier = modifier,
         onBackClick = onBackClick,
         onReportMenuClick = onReportMenuClick,
-        onReplyButtonClick = onReplyButtonClick,
+        onReplyButtonClick = {
+            onReplyButtonClick(roomId)
+        },
         messageDetailUiState = messageDetailUiState
     )
 }

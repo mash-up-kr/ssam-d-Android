@@ -31,3 +31,13 @@ sealed class MessageDetailUiState {
         val message: String?
     ): MessageDetailUiState()
 }
+
+sealed class MessageReplyUiState {
+    object Idle: MessageReplyUiState()
+    object Loading: MessageReplyUiState()
+    object SaveSuccess: MessageReplyUiState()
+
+    data class Failure(
+        val message: String?
+    ): MessageReplyUiState()
+}
