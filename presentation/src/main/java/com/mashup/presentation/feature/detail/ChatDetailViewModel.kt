@@ -8,7 +8,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.mashup.presentation.feature.detail.chat.compose.MessageDetailUiState
 import com.mashup.presentation.feature.detail.chat.compose.MessageReplyUiState
-import com.mashup.presentation.feature.detail.chat.model.toUiModel
 import com.mashup.presentation.feature.detail.message.model.MessageDetailUiModel
 import com.mashup.presentation.feature.detail.chat.compose.ChatInfoUiState
 import com.mashup.presentation.feature.detail.chat.model.ChatInfoUiModel.Companion.toUiModel
