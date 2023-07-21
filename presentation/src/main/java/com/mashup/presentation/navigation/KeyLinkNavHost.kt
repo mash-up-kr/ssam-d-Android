@@ -17,8 +17,8 @@ import com.mashup.presentation.feature.profile.navigation.navigateToNavigationRo
 import com.mashup.presentation.feature.profile.navigation.profileGraph
 import com.mashup.presentation.feature.reply.navigation.navigateToReplyRoute
 import com.mashup.presentation.feature.report.navigation.navigateToReport
-import com.mashup.presentation.feature.signal.navigation.navigateToSignal
-import com.mashup.presentation.feature.signal.navigation.signalGraph
+import com.mashup.presentation.feature.signal.send.navigation.navigateToSignal
+import com.mashup.presentation.feature.signal.send.navigation.signalGraph
 
 /**
  * Ssam_D_Android

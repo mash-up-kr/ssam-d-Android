@@ -1,4 +1,4 @@
-package com.mashup.presentation.feature.signal.compose
+package com.mashup.presentation.feature.signal.send.compose
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*

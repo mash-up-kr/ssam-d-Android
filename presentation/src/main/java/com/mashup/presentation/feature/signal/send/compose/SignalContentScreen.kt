@@ -1,4 +1,4 @@
-package com.mashup.presentation.feature.signal.compose
+package com.mashup.presentation.feature.signal.send.compose
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
