@@ -2,13 +2,10 @@ package com.mashup.presentation.feature.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mashup.domain.usecase.chat.DisconnectRoomUseCase
-import com.mashup.domain.usecase.chat.GetMessageDetailUseCase
-import com.mashup.domain.usecase.chat.GetChatInfoUseCase
-import com.mashup.domain.usecase.chat.GetChatsParam
-import com.mashup.domain.usecase.chat.GetChatsUseCase
+import com.mashup.domain.usecase.chat.*
 import com.mashup.presentation.feature.detail.chat.compose.ChatDetailUiState
 import com.mashup.presentation.feature.detail.chat.compose.MessageDetailUiState
+import com.mashup.presentation.feature.detail.chat.compose.MessageReplyUiState
 import com.mashup.presentation.feature.detail.chat.model.toUiModel
 import com.mashup.presentation.feature.detail.message.model.MessageDetailUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +19,8 @@ class ChatDetailViewModel @Inject constructor(
     private val getChatInfoUseCase: GetChatInfoUseCase,
     private val getChatsUseCase: GetChatsUseCase,
     private val disconnectRoomUseCase: DisconnectRoomUseCase,
-    private val getMessageDetailUseCase: GetMessageDetailUseCase
+    private val getMessageDetailUseCase: GetMessageDetailUseCase,
+    private val replyUseCase: ReplyUseCase
 ) : ViewModel() {
 
     private val _chatDetailUiState: MutableStateFlow<ChatDetailUiState> = MutableStateFlow(
@@ -33,6 +31,10 @@ class ChatDetailViewModel @Inject constructor(
     private val _messageDetailUiState: MutableStateFlow<MessageDetailUiState> =
         MutableStateFlow(MessageDetailUiState.Loading)
     val messageDetailUiState = _messageDetailUiState.asStateFlow()
+
+    private val _replyUiState: MutableStateFlow<MessageReplyUiState> =
+        MutableStateFlow(MessageReplyUiState.Idle)
+    val replyUiState = _replyUiState.asStateFlow()
 
     fun getChatInfoAndChats(id: Long, pageNo: Int, pageLength: Int = PAGE_LENGTH) {
         viewModelScope.launch {
@@ -69,7 +71,24 @@ class ChatDetailViewModel @Inject constructor(
                     )
                 )
             }
+        }
+    }
 
+    fun reply(roomId: Long, content: String) {
+        val param = ReplyUseCase.Param(
+            roomId = roomId,
+            content = content
+        )
+        viewModelScope.launch {
+            _replyUiState.emit(MessageReplyUiState.Loading)
+
+            replyUseCase.execute(param)
+                .onSuccess {
+                    _replyUiState.emit(MessageReplyUiState.SaveSuccess)
+                }
+                .onFailure {
+                    _replyUiState.emit(MessageReplyUiState.Failure(it.message))
+                }
         }
     }
 
