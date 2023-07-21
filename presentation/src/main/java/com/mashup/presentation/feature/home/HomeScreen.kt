@@ -35,7 +35,7 @@ fun HomeRoute(
     onKeywordContainerClick: () -> Unit,
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
-    onReceivedSignalClick: () -> Unit,
+    onReceivedSignalClick: (Long) -> Unit,
     homeViewModel: HomeViewModel,
     modifier: Modifier = Modifier
 ) {
@@ -72,7 +72,7 @@ private fun HomeBackgroundScreen(
     onKeywordContainerClick: (List<String>) -> Unit,
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
-    onReceivedSignalClick: () -> Unit,
+    onReceivedSignalClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val signalCount = pagedReceivedSignal.itemCount
@@ -131,7 +131,7 @@ fun BoxScope.HomeScreen(
     onKeywordContainerClick: (List<String>) -> Unit,
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
-    onReceivedSignalClick: () -> Unit,
+    onReceivedSignalClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scrollState = rememberLazyListState()
