@@ -18,7 +18,7 @@ class ChatRepositoryImpl @Inject constructor(
     private val remoteChatDataSource: RemoteChatDataSource
 ) : ChatRepository {
 
-    override suspend fun getChatInfo(id: Long): Flow<ChatInfo>  = flow {
+    override suspend fun getChatInfo(id: Long): Flow<ChatInfo> = flow {
         val result = runCatching {
             remoteChatDataSource.getChatInfo(id).toDomainModel()
         }.getOrThrow()
@@ -40,6 +40,7 @@ class ChatRepositoryImpl @Inject constructor(
         }.getOrThrow()
         emit(result)
     }
+
     override fun getChatRooms(): Flow<PagingData<Room>> {
         return createPager { page, loadSize ->
             remoteChatDataSource.getChatRooms(page, loadSize).toDomainModel()
@@ -49,6 +50,12 @@ class ChatRepositoryImpl @Inject constructor(
     override suspend fun disconnectRoom(roomId: Long): Result<Unit> {
         return suspendRunCatching {
             remoteChatDataSource.disconnectRoom(roomId)
+        }
+    }
+
+    override suspend fun reply(roomId: Long, content: String): Result<Unit> {
+        return suspendRunCatching {
+            remoteChatDataSource.reply(roomId, content)
         }
     }
 }
