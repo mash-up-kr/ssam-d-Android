@@ -75,7 +75,7 @@ fun KeyLinkNavHost(
                         )
                     },
                     onReplyButtonClick = navController::navigateToReplyRoute,
-                    onReplySendClick = {
+                    navigateToHome = {
                         navController.navigateToHome(
                             navOptions {
                                 popUpTo(
@@ -127,16 +127,16 @@ fun KeyLinkNavHost(
                     onReplyButtonClick = { roomId ->
                         navController.navigateToReplyRoute(roomId = roomId)
                     },
-                    navigateToChatDetail = { roomId ->
-                        navController.navigateToChatDetail(
+                    navigateToChat = { roomId ->
+                        navController.navigateToChatRoomDetail(
                             roomId = roomId,
                             navOptions {
-                                popUpTo(KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route)
+                                popUpTo(route = KeyLinkNavigationRoute.ChatRoomGraph.ChatRoomDetailRoute.route)
                             }
                         )
                     }
                 )
-            }
+            },
         )
     }
 }
