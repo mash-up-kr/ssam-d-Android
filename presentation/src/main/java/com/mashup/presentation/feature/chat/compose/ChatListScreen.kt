@@ -89,7 +89,6 @@ fun ChatRoomItem(
             .clickable { onMessageClick() },
         verticalAlignment = Alignment.CenterVertically
     ) {
-        /* 이미지 대신 임시로 추가 */
         GlideImage(
             modifier = Modifier.size(36.dp),
             model = chatRoom.profileImage,
@@ -109,7 +108,7 @@ fun ChatRoomItem(
 
             ChatRoomMessageInfo(
                 recentMessage = chatRoom.recentSignalContent,
-                isNewMessage = chatRoom.isChatRead,
+                isNewMessage = !chatRoom.isChatRead,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 2.dp)
