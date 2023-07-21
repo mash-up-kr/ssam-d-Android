@@ -41,9 +41,9 @@ fun ChatDetailRoute(
     modifier: Modifier = Modifier,
     viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(true) {
-        viewModel.getChatInfo(roomId)
-        viewModel.getChats(roomId)
+    LaunchedEffect(Unit) {
+        launch { viewModel.getChatInfo(roomId) }
+        launch { viewModel.getChats(roomId) }
     }
 
     val chatInfoUiState by viewModel.chatInfoUiState.collectAsStateWithLifecycle()
