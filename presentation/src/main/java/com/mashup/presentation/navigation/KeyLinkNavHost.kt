@@ -9,6 +9,7 @@ import com.mashup.presentation.KeyLinkAppState
 import com.mashup.presentation.feature.chat.navigation.chatGraph
 import com.mashup.presentation.feature.chat.navigation.navigateToChat
 import com.mashup.presentation.feature.detail.chat.navigation.navigateToChatDetail
+import com.mashup.presentation.feature.detail.message.navigation.messageGraph
 import com.mashup.presentation.feature.detail.message.navigation.navigateToMessageDetail
 import com.mashup.presentation.feature.guide.navigation.navigateToGuideRoute
 import com.mashup.presentation.feature.home.navigation.homeGraph
@@ -62,7 +63,6 @@ fun KeyLinkNavHost(
             onBackClick = navController::navigateUp,
         )
         chatGraph(
-            onShowSnackbar = onShowSnackbar,
             onBackClick = navController::navigateUp,
             onEmptyScreenButtonClick = navController::navigateToSignal,
             onChatRoomClick = { roomId ->
@@ -71,25 +71,38 @@ fun KeyLinkNavHost(
             onMessageClick = { roomId, chatId ->
                 navController.navigateToMessageDetail(chatId = chatId, roomId = roomId)
             },
-            onReportMenuClick = navController::navigateToReport,
-            onReportIconClick = {
-                navController.navigateToChat(
-                    navOptions {
-                        popUpTo(
-                            route = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route,
-                            popUpToBuilder = { inclusive = true }
-                        )
-                    }
+            onBottomSheetReportClick = navController::navigateToReport,
+            nestedSignalGraph = {
+                signalGraph(
+                    navController = navController,
+                    onBackClick = navController::navigateUp
                 )
             },
-            onReplyButtonClick = { roomId ->
-                navController.navigateToReplyRoute(roomId = roomId)
-            },
-            navigateToChatDetail = { roomId ->
-                navController.navigateToChatDetail(
-                    roomId = roomId,  // TODO: roomId 넘겨줘야 함
-                    navOptions {
-                        popUpTo(KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route)
+            nestedMessageGraph = {
+                messageGraph(
+                    onBackClick = navController::navigateUp,
+                    onShowSnackbar = onShowSnackbar,
+                    onReportMenuClick = navController::navigateToReport,
+                    onReportIconClick = {
+                        navController.navigateToChat(
+                            navOptions {
+                                popUpTo(
+                                    route = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route,
+                                    popUpToBuilder = { inclusive = true }
+                                )
+                            }
+                        )
+                    },
+                    onReplyButtonClick = { roomId ->
+                        navController.navigateToReplyRoute(roomId = roomId)
+                    },
+                    navigateToChatDetail = { roomId ->
+                        navController.navigateToChatDetail(
+                            roomId = roomId,
+                            navOptions {
+                                popUpTo(KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route)
+                            }
+                        )
                     }
                 )
             }

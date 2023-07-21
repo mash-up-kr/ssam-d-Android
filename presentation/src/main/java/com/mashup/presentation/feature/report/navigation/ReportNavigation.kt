@@ -11,7 +11,7 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
  */
 fun NavController.navigateToReport(navOptions: NavOptions? = null) {
     navigate(
-        route = KeyLinkNavigationRoute.ChatGraph.ReportRoute.route,
+        route = KeyLinkNavigationRoute.MessageGraph.ReportRoute.route,
         navOptions = navOptions
     )
 }
