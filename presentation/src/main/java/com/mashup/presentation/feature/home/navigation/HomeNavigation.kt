@@ -12,7 +12,7 @@ import com.mashup.presentation.feature.guide.GuideRoute
 import com.mashup.presentation.feature.home.HomeRoute
 import com.mashup.presentation.feature.home.HomeViewModel
 import com.mashup.presentation.feature.profile.navigation.navigateToProfile
-import com.mashup.presentation.feature.signal.navigation.navigateToSignal
+import com.mashup.presentation.feature.signal.send.navigation.navigateToSignal
 import com.mashup.presentation.feature.subscribe.SubscribeRoute
 import com.mashup.presentation.feature.subscribe.navigation.navigateToSubscribeKeywordRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute

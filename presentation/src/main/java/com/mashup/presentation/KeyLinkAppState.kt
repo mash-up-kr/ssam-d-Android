@@ -16,7 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.mashup.presentation.feature.chat.navigation.navigateToChatRoom
 import com.mashup.presentation.feature.home.navigation.navigateToHome
-import com.mashup.presentation.feature.signal.navigation.navigateToSignal
+import com.mashup.presentation.feature.signal.send.navigation.navigateToSignal
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 import com.mashup.presentation.navigation.TopLevelDestination
 import kotlinx.coroutines.CoroutineScope

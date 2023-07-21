@@ -1,11 +1,11 @@
-package com.mashup.presentation.feature.signal.navigation
+package com.mashup.presentation.feature.signal.send.navigation
 
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.mashup.presentation.feature.home.navigation.navigateToHome
-import com.mashup.presentation.feature.signal.compose.SignalCompleteRoute
-import com.mashup.presentation.feature.signal.compose.SignalContentRoute
-import com.mashup.presentation.feature.signal.compose.SignalKeywordRoute
+import com.mashup.presentation.feature.signal.send.compose.SignalCompleteRoute
+import com.mashup.presentation.feature.signal.send.compose.SignalContentRoute
+import com.mashup.presentation.feature.signal.send.compose.SignalKeywordRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 
 /**
