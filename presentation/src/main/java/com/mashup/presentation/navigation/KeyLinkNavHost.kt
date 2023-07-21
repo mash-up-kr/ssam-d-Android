@@ -13,6 +13,7 @@ import com.mashup.presentation.feature.detail.message.navigation.chatGraph
 import com.mashup.presentation.feature.detail.message.navigation.navigateToChatDetail
 import com.mashup.presentation.feature.guide.navigation.navigateToGuideRoute
 import com.mashup.presentation.feature.home.navigation.homeGraph
+import com.mashup.presentation.feature.home.navigation.navigateToHome
 import com.mashup.presentation.feature.profile.navigation.navigateToNavigationRoute
 import com.mashup.presentation.feature.profile.navigation.profileGraph
 import com.mashup.presentation.feature.reply.navigation.navigateToReplyRoute
@@ -56,6 +57,35 @@ fun KeyLinkNavHost(
                         navController.navigateToNavigationRoute(route)
                     }
                 )
+            },
+            nestedChatGraph = {
+                chatGraph(
+                    fromChatRoom = false,
+                    onBackClick = navController::navigateUp,
+                    onShowSnackbar = onShowSnackbar,
+                    onReportMenuClick = navController::navigateToReport,
+                    onReportIconClick = {
+                        navController.navigateToHome(
+                            navOptions {
+                                popUpTo(
+                                    route = KeyLinkNavigationRoute.ChatGraph.ReceivedSignalDetailRoute.route,
+                                    popUpToBuilder = { inclusive = true }
+                                )
+                            }
+                        )
+                    },
+                    onReplyButtonClick = navController::navigateToReplyRoute,
+                    onReplySendClick = {
+                        navController.navigateToHome(
+                            navOptions {
+                                popUpTo(
+                                    route = KeyLinkNavigationRoute.ChatGraph.ReceivedSignalDetailRoute.route,
+                                    popUpToBuilder = { inclusive = true }
+                                )
+                            }
+                        )
+                    }
+                )
             }
         )
         signalGraph(
@@ -80,6 +110,7 @@ fun KeyLinkNavHost(
             },
             nestedMessageGraph = {
                 chatGraph(
+                    fromChatRoom = true,
                     onBackClick = navController::navigateUp,
                     onShowSnackbar = onShowSnackbar,
                     onReportMenuClick = navController::navigateToReport,

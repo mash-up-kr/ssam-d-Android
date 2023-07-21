@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import com.mashup.presentation.feature.detail.message.compose.MessageDetailRoute
 import com.mashup.presentation.feature.reply.ReplyRoute
 import com.mashup.presentation.feature.report.ReportRoute
+import com.mashup.presentation.feature.signal.received.ReceivedSignalDetailRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 
 /**
@@ -26,7 +27,9 @@ fun NavController.navigateToChatDetail(
     )
 }
 
+
 fun NavGraphBuilder.chatGraph(
+    fromChatRoom: Boolean,
     onBackClick: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     onReportMenuClick: () -> Unit,
@@ -36,7 +39,11 @@ fun NavGraphBuilder.chatGraph(
 ) {
     navigation(
         route = KeyLinkNavigationRoute.ChatGraph.route,
-        startDestination = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route
+        startDestination = if (fromChatRoom) {
+            KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route
+        } else {
+            KeyLinkNavigationRoute.ChatGraph.ReceivedSignalDetailRoute.route
+        }
     ) {
         composable(route = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route,
             arguments = listOf(
@@ -51,6 +58,22 @@ fun NavGraphBuilder.chatGraph(
             MessageDetailRoute(
                 roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
                 chatId = entry.arguments?.getString("chatId")?.toLong() ?: -1,
+                onBackClick = onBackClick,
+                onReportMenuClick = onReportMenuClick,
+                onReplyButtonClick = onReplyButtonClick
+            )
+        }
+
+        composable(
+            route = KeyLinkNavigationRoute.ChatGraph.ReceivedSignalDetailRoute.route,
+            arguments = listOf(
+                navArgument("signalId") {
+                    type = NavType.StringType
+                },
+            )
+        ) { entry ->
+            ReceivedSignalDetailRoute(
+                signalId = entry.arguments?.getString("signalId")?.toLong() ?: -1,
                 onBackClick = onBackClick,
                 onReportMenuClick = onReportMenuClick,
                 onReplyButtonClick = onReplyButtonClick

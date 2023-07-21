@@ -29,5 +29,6 @@ const val OPEN_SOURCE_ROUTE = "profile_graph/oss"
 
 const val CHAT_GRAPH_PATTERN = "chat_graph"
 const val CHAT_DETAIL_ROUTE = "chat_graph/rooms/{roomId}/chats/{chatId}"
+const val RECEIVED_SIGNAL_DETAIL_ROUTE = "chat_graph/signal/{signalId}"
 const val REPORT_ROUTE = "chat_graph/report"
 const val REPLY_ROUTE = "chat_graph/reply"
