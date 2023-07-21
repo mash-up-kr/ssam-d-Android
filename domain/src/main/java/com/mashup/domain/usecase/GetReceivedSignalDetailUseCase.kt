@@ -1,6 +1,5 @@
 package com.mashup.domain.usecase
 
-import androidx.paging.PagingData
 import com.mashup.domain.model.ReceivedSignal
 import com.mashup.domain.repository.SignalRepository
 import com.mashup.domain.usecase.common.FlowUseCase
@@ -10,11 +9,12 @@ import javax.inject.Inject
 /**
  * Ssam_D_Android
  * @author jaesung
- * @created 2023/07/17
+ * @created 2023/07/21
  */
-class GetReceivedSignalUseCase @Inject constructor(
+class GetReceivedSignalDetailUseCase @Inject constructor(
     private val signalRepository: SignalRepository
-) : FlowUseCase<Unit, PagingData<ReceivedSignal>>() {
-    override fun invoke(params: Unit): Flow<PagingData<ReceivedSignal>>
-        = signalRepository.getReceivedSignal()
+) : FlowUseCase<Long, ReceivedSignal>() {
+
+    override fun invoke(params: Long): Flow<ReceivedSignal> =
+        signalRepository.getReceivedSignalDetail(signalId = params)
 }
