@@ -30,7 +30,7 @@ class ChatDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _chatInfoUiState: MutableStateFlow<ChatInfoUiState> = MutableStateFlow(ChatInfoUiState.Loading)
-    val chatDetailUiState = _chatInfoUiState.asStateFlow()
+    val chatInfoUiState = _chatInfoUiState.asStateFlow()
 
     private val _chatPagingData: MutableStateFlow<PagingData<ChatUiModel>> = MutableStateFlow(PagingData.empty())
     val chatPagingData = _chatPagingData.asStateFlow()
