@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
-import com.mashup.presentation.common.extension.getDisplayedDate
+import com.mashup.presentation.common.extension.getDisplayedDateWithDay
 import com.mashup.presentation.feature.detail.ChatDetailViewModel
 import com.mashup.presentation.feature.detail.chat.compose.MessageDetailUiState
 import com.mashup.presentation.feature.detail.message.model.MessageDetailUiModel
@@ -128,7 +128,7 @@ private fun MessageDetailContent(
                 .fillMaxSize()
                 .weight(1f),
             othersName = messageDetail.nickname,
-            date = messageDetail.receivedTimeMillis.getDisplayedDate(),
+            date = messageDetail.receivedTimeMillis.getDisplayedDateWithDay(),
             message = messageDetail.content,
             matchedKeywords = messageDetail.keywords,
             profileImage = messageDetail.profileImage
