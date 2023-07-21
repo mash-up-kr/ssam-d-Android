@@ -9,7 +9,7 @@ package com.mashup.presentation.navigation
 const val HOME_GRAPH_PATTERN = "home_graph"
 const val HOME_ROUTE = "home_graph/home"
 const val GUIDE_ROUTE = "home_graph/guide"
-const val SUBSCRIBE_KEYWORD_PATTERN = "home_graph/subscribe_keyword"
+const val SUBSCRIBE_KEYWORD_ROUTE = "home_graph/subscribe_keyword"
 
 const val SIGNAL_GRAPH_PATTERN = "signal_graph"
 const val SIGNAL_CONTENT_ROUTE = "signal_graph/content"

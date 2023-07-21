@@ -17,7 +17,7 @@ import com.mashup.presentation.ui.theme.White
  */
 fun NavController.navigateToProfile(navOptions: NavOptions? = null) {
     navigate(
-        route = KeyLinkNavigationRoute.HomeGraph.ProfileRoute.route,
+        route = KeyLinkNavigationRoute.ProfileGraph.route,
         navOptions = navOptions
     )
 }
