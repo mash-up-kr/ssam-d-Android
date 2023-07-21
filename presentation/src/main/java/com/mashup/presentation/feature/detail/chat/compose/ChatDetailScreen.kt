@@ -43,6 +43,7 @@ fun ChatDetailRoute(
 ) {
     LaunchedEffect(true) {
         viewModel.getChatInfo(roomId)
+        viewModel.getChats(roomId)
     }
 
     val chatInfoUiState by viewModel.chatInfoUiState.collectAsStateWithLifecycle()
@@ -240,14 +241,14 @@ private fun ChatInfoContent(
     coroutineScope: CoroutineScope
 ) {
     OtherUserInfo(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(start = 20.dp, end = 20.dp, bottom = 16.dp),
         othersNickName = chatInfoUiModel.othersNickName,
         othersProfileImage = chatInfoUiModel.othersProfileImage
     )
     MatchedKeywords(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(start = 20.dp, end = 20.dp, bottom = 16.dp)
             .clickable {

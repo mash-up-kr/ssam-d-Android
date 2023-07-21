@@ -41,7 +41,7 @@ fun ChatContent(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         state = scrollState,
-        contentPadding = PaddingValues(vertical = 8.dp, horizontal = 20.dp)
+        contentPadding = PaddingValues(top = 8.dp, bottom = 42.dp, start = 20.dp, end = 20.dp)
     ) {
         items(
             count = chatList.itemCount,
@@ -62,7 +62,6 @@ fun ChatContent(
             }
         }
     }
-    Spacer(modifier = Modifier.height(42.dp))
 }
 
 /**
