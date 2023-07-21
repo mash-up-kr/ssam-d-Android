@@ -34,8 +34,9 @@ fun NavGraphBuilder.chatGraph(
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     onReportMenuClick: () -> Unit,
     onReportIconClick: () -> Unit,
-    onReplyButtonClick: () -> Unit,
-    onReplySendClick: () -> Unit,
+    onReplyButtonClick: (Long) -> Unit,
+    navigateToChat: (Long) -> Unit = {},
+    navigateToHome: (Long) -> Unit = {},
 ) {
     navigation(
         route = KeyLinkNavigationRoute.ChatGraph.route,
@@ -76,7 +77,7 @@ fun NavGraphBuilder.chatGraph(
                 signalId = entry.arguments?.getString("signalId")?.toLong() ?: -1,
                 onBackClick = onBackClick,
                 onReportMenuClick = onReportMenuClick,
-                onReplyButtonClick = onReplyButtonClick
+                onReplyButtonClick = { }
             )
         }
 
@@ -88,10 +89,18 @@ fun NavGraphBuilder.chatGraph(
             )
         }
 
-        composable(route = KeyLinkNavigationRoute.ChatGraph.ReplyRoute.route) {
+        composable(
+            route = KeyLinkNavigationRoute.ChatGraph.ReplyRoute.route,
+            arguments = listOf(
+                navArgument("roomId") {
+                    type = NavType.StringType
+                }
+            )
+        ) { entry ->
             ReplyRoute(
+                roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
                 onClickBack = onBackClick,
-                onSendClick = onReplySendClick,
+                navigateToChat = navigateToChat,
                 onShowSnackbar = onShowSnackbar
             )
         }

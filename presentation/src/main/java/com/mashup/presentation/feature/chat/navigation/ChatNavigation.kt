@@ -26,10 +26,6 @@ fun NavGraphBuilder.chatRoomGraph(
     onBottomSheetReportClick: () -> Unit,
     onChatRoomClick: (Long) -> Unit,
     onMessageClick: (Long, Long) -> Unit,
-    onReportMenuClick: () -> Unit,
-    onReportIconClick: () -> Unit,
-    onReplyButtonClick: (Long) -> Unit,
-    navigateToChatDetail: (Long) -> Unit,
 ) {
     navigation(
         route = KeyLinkNavigationRoute.ChatRoomGraph.route,

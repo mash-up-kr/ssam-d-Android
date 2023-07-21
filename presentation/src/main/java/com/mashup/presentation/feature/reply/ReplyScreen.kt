@@ -21,9 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewModelScope
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.detail.ChatDetailViewModel
 import com.mashup.presentation.feature.detail.chat.compose.MessageReplyUiState
@@ -32,9 +30,6 @@ import com.mashup.presentation.ui.theme.Black
 import com.mashup.presentation.ui.theme.Body2
 import com.mashup.presentation.ui.theme.SsamDTheme
 import com.mashup.presentation.ui.theme.White
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
 /**
@@ -47,7 +42,7 @@ import javax.inject.Inject
 fun ReplyRoute(
     roomId: Long,
     onClickBack: () -> Unit,
-    navigateToChatDetail: (Long) -> Unit,
+    navigateToChat: (Long) -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChatDetailViewModel = hiltViewModel()
@@ -66,7 +61,7 @@ fun ReplyRoute(
         },
         onShowSnackbar = onShowSnackbar,
         uiState = uiState,
-        navigateToChatDetail = navigateToChatDetail
+        navigateToChat = navigateToChat
     )
 }
 
@@ -79,7 +74,7 @@ private fun ReplyScreen(
     onSendClick: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     uiState : MessageReplyUiState,
-    navigateToChatDetail: (Long) -> Unit,
+    navigateToChat: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showGoBackDialog by rememberSaveable { mutableStateOf(false) }
@@ -108,7 +103,7 @@ private fun ReplyScreen(
         when(uiState) {
             is MessageReplyUiState.Loading -> KeyLinkLoading()
             is MessageReplyUiState.SaveSuccess -> {
-                navigateToChatDetail(roomId)
+                navigateToChat(roomId)
             }
             else -> {
                 ReplyContent(
@@ -194,7 +189,7 @@ private fun ReplyScreenPreview() {
         ReplyRoute(
             roomId = 1,
             onClickBack = {},
-            navigateToChatDetail = {},
+            navigateToChat = {},
             onShowSnackbar = { _, _ -> }
         )
     }
