@@ -36,11 +36,11 @@ data class ReceivedSignalResponse(
 @JsonClass(generateAdapter = true)
 data class ReceivedSignal(
     @field:Json(name = "signalId")
-    val signalId: Int,
+    val signalId: Long,
     @field:Json(name = "receiverId")
-    val receiverId: Int,
+    val receiverId: Long,
     @field:Json(name = "senderId")
-    val senderId: Int,
+    val senderId: Long,
     @field:Json(name = "senderName")
     val senderName: String,
     @field:Json(name = "senderProfileImageUrl")

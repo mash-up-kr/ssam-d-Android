@@ -6,9 +6,9 @@ import com.mashup.presentation.common.base.UiModel
 import com.mashup.presentation.common.extension.getDisplayedTime
 
 data class SignalUiModel(
-    val signalId: Int = -1,
-    val receiverId: Int = -1,
-    val senderId: Int = -1,
+    val signalId: Long = -1,
+    val receiverId: Long = -1,
+    val senderId: Long = -1,
     val senderName: String = "",
     val senderImageUrl: String = "",
     val signalContent: String = "",

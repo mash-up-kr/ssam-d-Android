@@ -36,7 +36,7 @@ import com.mashup.presentation.ui.theme.*
 fun ReceivedSignalCards(
     receivedSignals: LazyPagingItems<SignalUiModel>,
     scrollState: LazyListState,
-    onReceivedSignalClick: () -> Unit,
+    onReceivedSignalClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -65,7 +65,7 @@ fun ReceivedSignalCards(
 @Composable
 private fun ReceivedSignalCard(
     receivedSignal: SignalUiModel,
-    onCardClick: () -> Unit,  // 람다 파라미터 수정 필요
+    onCardClick: (Long) -> Unit,  // 람다 파라미터 수정 필요
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -78,7 +78,7 @@ private fun ReceivedSignalCard(
                 shadowRadius = 20.pxToDp().dp
             )
             .background(shape = RoundedCornerShape(12.dp), color = Black.copy(alpha = 0.6f))
-            .clickable { onCardClick() }
+            .clickable { onCardClick(receivedSignal.signalId) }
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),

@@ -12,6 +12,7 @@ import com.mashup.presentation.feature.guide.GuideRoute
 import com.mashup.presentation.feature.home.HomeRoute
 import com.mashup.presentation.feature.home.HomeViewModel
 import com.mashup.presentation.feature.profile.navigation.navigateToProfile
+import com.mashup.presentation.feature.signal.received.navigation.navigateToReceivedSignalDetail
 import com.mashup.presentation.feature.signal.send.navigation.navigateToSignal
 import com.mashup.presentation.feature.subscribe.SubscribeRoute
 import com.mashup.presentation.feature.subscribe.navigation.navigateToSubscribeKeywordRoute
@@ -48,7 +49,7 @@ fun NavGraphBuilder.homeGraph(
                 onKeywordContainerClick = navController::navigateToSubscribeKeywordRoute,
                 onGuideClick = onGuideClick,
                 onProfileMenuClick = navController::navigateToProfile,
-                onReceivedSignalClick = {},
+                onReceivedSignalClick = navController::navigateToReceivedSignalDetail,
                 homeViewModel = homeViewModel
             )
         }
