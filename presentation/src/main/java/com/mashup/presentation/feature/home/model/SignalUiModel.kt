@@ -1,8 +1,6 @@
 package com.mashup.presentation.feature.home.model
 
-import com.mashup.domain.model.ReceivedSignal
-import com.mashup.presentation.common.base.UiMapper
-import com.mashup.presentation.common.base.UiModel
+import com.mashup.domain.model.Signal
 import com.mashup.presentation.common.extension.getDisplayedTime
 
 data class SignalUiModel(
@@ -17,7 +15,7 @@ data class SignalUiModel(
     val receivedDisplayedTime: String = "",
 ) {
     companion object {
-        fun ReceivedSignal.toUiModel() = SignalUiModel(
+        fun Signal.toUiModel() = SignalUiModel(
             signalId = signalId,
             receiverId = receiverId ?: -1,
             senderId = senderId ?: -1,

@@ -7,7 +7,7 @@ import com.mashup.domain.base.DomainModel
  * @author jaesung
  * @created 2023/07/16
  */
-data class ReceivedSignal(
+data class Signal(
     val signalId: Long,
     val receiverId: Long?,
     val senderId: Long?,

@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import com.mashup.data.source.remote.source.datasource.RemoteSignalDataSource
 import com.mashup.data.util.createPager
 import com.mashup.data.util.suspendRunCatching
-import com.mashup.domain.model.ReceivedSignal
+import com.mashup.domain.model.Signal
 import com.mashup.domain.repository.SignalRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -23,13 +23,13 @@ class SignalRepositoryImpl @Inject constructor(
         remoteSignalDataSource.postSignal(content, keywords)
     }
 
-    override fun getReceivedSignal(): Flow<PagingData<ReceivedSignal>> {
+    override fun getReceivedSignal(): Flow<PagingData<Signal>> {
         return createPager { page, loadSize ->
             remoteSignalDataSource.getReceivedSignal(pageNumber = page, pageLength = loadSize).toDomainModel()
         }.flow
     }
 
-    override fun getReceivedSignalDetail(signalId: Long): Flow<ReceivedSignal> = flow {
+    override fun getReceivedSignalDetail(signalId: Long): Flow<Signal> = flow {
         val result = suspendRunCatching {
             remoteSignalDataSource.getReceivedSignalDetail(signalId).toDomainModel()
         }.getOrThrow()
