@@ -82,10 +82,12 @@ fun KeyLinkNavHost(
                     }
                 )
             },
-            onReplyButtonClick = navController::navigateToReplyRoute,
-            onReplySendClick = {
+            onReplyButtonClick = { roomId ->
+                navController.navigateToReplyRoute(roomId = roomId)
+            },
+            navigateToChatDetail = { roomId ->
                 navController.navigateToChatDetail(
-                    roomId = 1,  // TODO: roomId 넘겨줘야 함
+                    roomId = roomId,  // TODO: roomId 넘겨줘야 함
                     navOptions {
                         popUpTo(KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route)
                     }

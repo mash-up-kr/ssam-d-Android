@@ -9,9 +9,9 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
  * @author jaesung
  * @created 2023/07/15
  */
-fun NavController.navigateToReplyRoute(navOptions: NavOptions? = null) {
+fun NavController.navigateToReplyRoute(roomId: Long, navOptions: NavOptions? = null) {
     navigate(
-        route = KeyLinkNavigationRoute.ChatGraph.ReplyRoute.route,
+        route = KeyLinkNavigationRoute.ChatGraph.ReplyRoute.route.replace("{roomId}", "$roomId"),
         navOptions = navOptions
     )
 }
