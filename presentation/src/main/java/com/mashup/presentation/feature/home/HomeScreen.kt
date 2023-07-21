@@ -6,10 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,6 +32,7 @@ import com.mashup.presentation.ui.theme.Heading4
 import com.mashup.presentation.ui.theme.White
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeRoute(
     onKeywordContainerClick: () -> Unit,
@@ -42,6 +45,13 @@ fun HomeRoute(
 
     val pagedReceivedSignal = homeViewModel.receivedSignals.collectAsLazyPagingItems()
     val subscribeKeywordsUiState by homeViewModel.subscribeKeywordsState.collectAsStateWithLifecycle()
+    var isRefreshing by remember { mutableStateOf(false) }
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = isRefreshing,
+        onRefresh = {
+            isRefreshing = true
+            pagedReceivedSignal.refresh()
+        })
 
     LaunchedEffect(Unit) {
         launch {
@@ -51,18 +61,29 @@ fun HomeRoute(
             homeViewModel.getSubscribedKeywords()
         }
     }
+    LaunchedEffect(pagedReceivedSignal.loadState) {
+        if (pagedReceivedSignal.loadState.refresh is LoadState.NotLoading)
+            isRefreshing = false
+    }
 
-    HomeBackgroundScreen(
-        subscribeKeywordsUiState = subscribeKeywordsUiState,
-        pagedReceivedSignal = pagedReceivedSignal,
-        onKeywordContainerClick = { keywords ->
-            homeViewModel.setSubscribeKeywords(keywords)
-            onKeywordContainerClick()
-        },
-        onGuideClick = onGuideClick,
-        onProfileMenuClick = onProfileMenuClick,
-        onReceivedSignalClick = onReceivedSignalClick
-    )
+    Box(modifier = Modifier.pullRefresh(pullRefreshState), contentAlignment = Alignment.TopCenter) {
+        HomeBackgroundScreen(
+            subscribeKeywordsUiState = subscribeKeywordsUiState,
+            pagedReceivedSignal = pagedReceivedSignal,
+            onKeywordContainerClick = { keywords ->
+                homeViewModel.setSubscribeKeywords(keywords)
+                onKeywordContainerClick()
+            },
+            onGuideClick = onGuideClick,
+            onProfileMenuClick = onProfileMenuClick,
+            onReceivedSignalClick = onReceivedSignalClick
+        )
+        PullRefreshIndicator(refreshing = isRefreshing, state = pullRefreshState)
+    }
+    if (pagedReceivedSignal.loadState.append == LoadState.Loading) {
+        KeyLinkLoading()
+    }
+
 }
 
 @Composable
@@ -160,17 +181,11 @@ fun BoxScope.HomeScreen(
                 onGuideClick = onGuideClick
             )
         } else {
-            when (pagedReceivedSignal.loadState.refresh) {
-                LoadState.Loading -> KeyLinkLoading()
-                is LoadState.Error -> { /* Error */ }
-                else -> {
-                    ReceivedSignalCards(
-                        receivedSignals = pagedReceivedSignal,
-                        scrollState = scrollState,
-                        onReceivedSignalClick = onReceivedSignalClick,
-                    )
-                }
-            }
+            ReceivedSignalCards(
+                receivedSignals = pagedReceivedSignal,
+                scrollState = scrollState,
+                onReceivedSignalClick = onReceivedSignalClick,
+            )
         }
     }
 }
