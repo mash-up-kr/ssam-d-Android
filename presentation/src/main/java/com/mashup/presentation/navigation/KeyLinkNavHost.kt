@@ -6,11 +6,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
 import com.mashup.presentation.KeyLinkAppState
-import com.mashup.presentation.feature.chat.navigation.chatGraph
-import com.mashup.presentation.feature.chat.navigation.navigateToChat
-import com.mashup.presentation.feature.detail.chat.navigation.navigateToChatDetail
-import com.mashup.presentation.feature.detail.message.navigation.messageGraph
-import com.mashup.presentation.feature.detail.message.navigation.navigateToMessageDetail
+import com.mashup.presentation.feature.chat.navigation.chatRoomGraph
+import com.mashup.presentation.feature.chat.navigation.navigateToChatRoom
+import com.mashup.presentation.feature.detail.chat.navigation.navigateToChatRoomDetail
+import com.mashup.presentation.feature.detail.message.navigation.chatGraph
+import com.mashup.presentation.feature.detail.message.navigation.navigateToChatDetail
 import com.mashup.presentation.feature.guide.navigation.navigateToGuideRoute
 import com.mashup.presentation.feature.home.navigation.homeGraph
 import com.mashup.presentation.feature.profile.navigation.navigateToNavigationRoute
@@ -62,14 +62,14 @@ fun KeyLinkNavHost(
             navController = navController,
             onBackClick = navController::navigateUp,
         )
-        chatGraph(
+        chatRoomGraph(
             onBackClick = navController::navigateUp,
             onEmptyScreenButtonClick = navController::navigateToSignal,
             onChatRoomClick = { roomId ->
-                navController.navigateToChatDetail(roomId)
+                navController.navigateToChatRoomDetail(roomId)
             },
             onMessageClick = { roomId, chatId ->
-                navController.navigateToMessageDetail(chatId = chatId, roomId = roomId)
+                navController.navigateToChatDetail(chatId = chatId, roomId = roomId)
             },
             onBottomSheetReportClick = navController::navigateToReport,
             nestedSignalGraph = {
@@ -79,15 +79,15 @@ fun KeyLinkNavHost(
                 )
             },
             nestedMessageGraph = {
-                messageGraph(
+                chatGraph(
                     onBackClick = navController::navigateUp,
                     onShowSnackbar = onShowSnackbar,
                     onReportMenuClick = navController::navigateToReport,
                     onReportIconClick = {
-                        navController.navigateToChat(
+                        navController.navigateToChatRoom(
                             navOptions {
                                 popUpTo(
-                                    route = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route,
+                                    route = KeyLinkNavigationRoute.ChatRoomGraph.ChatRoomDetailRoute.route,
                                     popUpToBuilder = { inclusive = true }
                                 )
                             }

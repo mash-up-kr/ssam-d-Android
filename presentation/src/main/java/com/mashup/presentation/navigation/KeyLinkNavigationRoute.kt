@@ -18,9 +18,9 @@ sealed class KeyLinkNavigationRoute(val route: String) {
         object SignalCompleteRoute : KeyLinkNavigationRoute(SIGNAL_COMPLETE_ROUTE)
     }
 
-    object ChatGraph : KeyLinkNavigationRoute(CHAT_GRAPH_PATTERN) {
-        object ChatRoute : KeyLinkNavigationRoute(CHAT_ROUTE)
-        object ChatDetailRoute : KeyLinkNavigationRoute(CHAT_DETAIL_ROUTE)
+    object ChatRoomGraph : KeyLinkNavigationRoute(CHAT_ROOM_GRAPH_PATTERN) {
+        object ChatRoomRoute : KeyLinkNavigationRoute(CHAT_ROOM_ROUTE)
+        object ChatRoomDetailRoute : KeyLinkNavigationRoute(CHAT_ROOM_DETAIL_ROUTE)
     }
 
     object ProfileGraph : KeyLinkNavigationRoute(PROFILE_GRAPH_PATTERN) {
@@ -31,8 +31,8 @@ sealed class KeyLinkNavigationRoute(val route: String) {
         object OpenSourceRoute : KeyLinkNavigationRoute(OPEN_SOURCE_ROUTE)
     }
 
-    object MessageGraph : KeyLinkNavigationRoute(MESSAGE_GRAPH_PATTERN) {
-        object MessageDetailRoute : KeyLinkNavigationRoute(MESSAGE_DETAIL_ROUTE)
+    object ChatGraph : KeyLinkNavigationRoute(CHAT_GRAPH_PATTERN) {
+        object ChatDetailRoute : KeyLinkNavigationRoute(CHAT_DETAIL_ROUTE)
         object ReportRoute : KeyLinkNavigationRoute(REPORT_ROUTE)
         object ReplyRoute : KeyLinkNavigationRoute(REPLY_ROUTE)
     }

@@ -1,11 +1,8 @@
 package com.mashup.presentation.feature.detail.message.navigation
 
 import androidx.compose.material.SnackbarDuration
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
+import androidx.navigation.*
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.mashup.presentation.feature.detail.message.compose.MessageDetailRoute
 import com.mashup.presentation.feature.reply.ReplyRoute
 import com.mashup.presentation.feature.report.ReportRoute
@@ -16,21 +13,20 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
  * @author jaesung
  * @created 2023/07/09
  */
-fun NavController.navigateToMessageDetail(
+fun NavController.navigateToChatDetail(
     roomId: Long,
     chatId: Long,
     navOptions: NavOptions? = null
 ) {
     navigate(
-        route = KeyLinkNavigationRoute.MessageGraph.MessageDetailRoute.route,
-        route = KeyLinkNavigationRoute.ChatGraph.MessageDetailRoute.route
+        route = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route
             .replace("{roomId}", "$roomId")
             .replace("{chatId}", "$chatId"),
         navOptions = navOptions
     )
 }
 
-fun NavGraphBuilder.messageGraph(
+fun NavGraphBuilder.chatGraph(
     onBackClick: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     onReportMenuClick: () -> Unit,
@@ -39,18 +35,29 @@ fun NavGraphBuilder.messageGraph(
     onReplySendClick: () -> Unit,
 ) {
     navigation(
-        route = KeyLinkNavigationRoute.MessageGraph.route,
-        startDestination = KeyLinkNavigationRoute.MessageGraph.MessageDetailRoute.route
+        route = KeyLinkNavigationRoute.ChatGraph.route,
+        startDestination = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route
     ) {
-        composable(route = KeyLinkNavigationRoute.MessageGraph.MessageDetailRoute.route) {
+        composable(route = KeyLinkNavigationRoute.ChatGraph.ChatDetailRoute.route,
+            arguments = listOf(
+                navArgument("roomId") {
+                    type = NavType.StringType
+                },
+                navArgument("chatId") {
+                    type = NavType.StringType
+                }
+            )
+        ) { entry ->
             MessageDetailRoute(
+                roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
+                chatId = entry.arguments?.getString("chatId")?.toLong() ?: -1,
                 onBackClick = onBackClick,
                 onReportMenuClick = onReportMenuClick,
                 onReplyButtonClick = onReplyButtonClick
             )
         }
 
-        composable(route = KeyLinkNavigationRoute.MessageGraph.ReportRoute.route) {
+        composable(route = KeyLinkNavigationRoute.ChatGraph.ReportRoute.route) {
             ReportRoute(
                 onBackClick = onBackClick,
                 onReportIconClick = onReportIconClick,
@@ -58,7 +65,7 @@ fun NavGraphBuilder.messageGraph(
             )
         }
 
-        composable(route = KeyLinkNavigationRoute.MessageGraph.ReplyRoute.route) {
+        composable(route = KeyLinkNavigationRoute.ChatGraph.ReplyRoute.route) {
             ReplyRoute(
                 onClickBack = onBackClick,
                 onSendClick = onReplySendClick,

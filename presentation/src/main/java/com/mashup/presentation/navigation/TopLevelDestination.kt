@@ -25,7 +25,7 @@ enum class TopLevelDestination(
         iconTextId = R.string.navigation_signal,
         textLabelId = R.string.navigation_signal,
     ),
-    CHAT(
+    CHAT_ROOM(
         selectedIconId = R.drawable.ic_chat_fill_32,
         unselectedIconId = R.drawable.ic_chat_fill_32,
         iconTextId = R.string.navigation_chat,
