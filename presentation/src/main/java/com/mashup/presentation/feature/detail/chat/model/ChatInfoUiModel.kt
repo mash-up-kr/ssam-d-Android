@@ -7,15 +7,15 @@ import com.mashup.domain.model.ChatInfo
  * @author jaesung
  * @created 2023/06/30
  */
-data class ChatDetailUiModel(
+data class ChatInfoUiModel(
     val othersProfileImage: String,
     val othersNickName: String,
     val matchedKeywords: List<String>,
     val isAlive: Boolean
 ) {
     companion object {
-        fun ChatInfo.toUiModel(): ChatDetailUiModel {
-            return ChatDetailUiModel(
+        fun ChatInfo.toUiModel(): ChatInfoUiModel {
+            return ChatInfoUiModel(
                 othersProfileImage = matchingUserProfileImage,
                 othersNickName = matchingUserName,
                 matchedKeywords = keywords,
