@@ -71,7 +71,7 @@ data class ReceivedSignal(
 @JsonClass(generateAdapter = true)
 data class ReceivedSignalDetail(
     @field:Json(name = "id")
-    val signalId: Int,
+    val signalId: Long,
     @field:Json(name = "keywords")
     val keywords: List<String>,
     @field:Json(name = "matchingKeywordCount")
