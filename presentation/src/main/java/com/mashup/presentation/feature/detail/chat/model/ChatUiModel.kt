@@ -2,6 +2,7 @@ package com.mashup.presentation.feature.detail.chat.model
 
 import androidx.compose.ui.graphics.Color
 import com.mashup.domain.model.Chat
+import com.mashup.presentation.common.extension.getDisplayedDate
 import com.mashup.presentation.ui.theme.*
 
 /**
@@ -23,7 +24,7 @@ data class ChatUiModel(
                 id = id,
                 message = content,
                 userName = senderName,
-                date = receivedTimeMillis.toString(),
+                date = receivedTimeMillis.getDisplayedDate(),
                 isMine = isMine,
                 backgroundColor = getStringToEnumColor(chatColor)
             )
