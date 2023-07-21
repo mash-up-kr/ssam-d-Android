@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
-import com.mashup.presentation.feature.detail.chat.model.ChatDetailUiModel
+import com.mashup.presentation.feature.detail.chat.model.ChatInfoUiModel
 import com.mashup.presentation.common.extension.isScrollingUp
 import com.mashup.presentation.feature.detail.ChatDetailViewModel
 import com.mashup.presentation.ui.common.*
@@ -38,14 +38,14 @@ fun ChatDetailRoute(
     viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
     LaunchedEffect(true) {
-        viewModel.getChatInfoAndChats(roomId)
+        viewModel.getChatInfo(roomId)
     }
 
     when (val state = viewModel.chatDetailUiState.collectAsStateWithLifecycle().value) {
-        is ChatDetailUiState.Loading -> {
+        is ChatInfoUiState.Loading -> {
             KeyLinkLoading()
         }
-        is ChatDetailUiState.Success -> {
+        is ChatInfoUiState.Success -> {
             ChatDetailScreen(
                 modifier = modifier,
                 onBackClick = onBackClick,
@@ -54,10 +54,10 @@ fun ChatDetailRoute(
                 },
                 onReportClick = onReportClick,
                 onDisconnectRoom = { viewModel.disconnectRoom(roomId) },
-                chatDetailUiModel = state.chatDetailUiModel
+                chatInfoUiModel = state.chatInfoUiModel
             )
         }
-        is ChatDetailUiState.Failure -> {}
+        is ChatInfoUiState.Failure -> {}
     }
 }
 
@@ -69,7 +69,7 @@ private fun ChatDetailScreen(
     onMessageClick: (Long) -> Unit,
     onReportClick: () -> Unit,
     onDisconnectRoom: () -> Unit,
-    chatDetailUiModel: ChatDetailUiModel
+    chatInfoUiModel: ChatInfoUiModel
 ) {
     val coroutineScope = rememberCoroutineScope()
     var currentBottomSheetType by remember { mutableStateOf(BottomSheetType.MORE) }
@@ -96,7 +96,7 @@ private fun ChatDetailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentWidth(),
-                    matchedKeywords = chatDetailUiModel.matchedKeywords
+                    matchedKeywords = chatInfoUiModel.matchedKeywords
                 )
                 BottomSheetType.MORE -> KeyLinkChatBottomSheet(
                     modifier = Modifier
@@ -146,7 +146,7 @@ private fun ChatDetailScreen(
         ) { paddingValues ->
             ChatDetailContent(
                 modifier = Modifier.padding(paddingValues),
-                chatDetailState = chatDetailUiModel,
+                chatInfoUiModel = chatInfoUiModel,
                 onChatItemClick = onMessageClick,
                 keywordBottomSheetState = keywordBottomSheetState,
                 onChangeBottomSheetType = { currentBottomSheetType = it },
@@ -172,7 +172,7 @@ private fun ChatDetailScreen(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ChatDetailContent(
-    chatDetailState: ChatDetailUiModel,
+    chatInfoUiModel: ChatInfoUiModel,
     onChatItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     keywordBottomSheetState: ModalBottomSheetState,
@@ -189,8 +189,8 @@ private fun ChatDetailContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 20.dp, end = 20.dp, bottom = 16.dp),
-            othersNickName = chatDetailState.othersNickName,
-            othersProfileImage = chatDetailState.othersProfileImage
+            othersNickName = chatInfoUiModel.othersNickName,
+            othersProfileImage = chatInfoUiModel.othersProfileImage
         )
         MatchedKeywords(
             modifier = Modifier
@@ -203,13 +203,13 @@ private fun ChatDetailContent(
                         else keywordBottomSheetState.show()
                     }
                 },
-            matchedKeywords = chatDetailState.getMatchedKeywordSummery(),
+            matchedKeywords = chatInfoUiModel.getMatchedKeywordSummery(),
             visible = isMatchedKeywordVisible
         )
         Divider(color = Gray01)
         ChatContent(
             modifier = Modifier,
-            chat = chatDetailState.chat,
+            chat = emptyList(),
             onChatItemClick = onChatItemClick,
             scrollState = scrollState
         )
