@@ -65,5 +65,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getNickname(): String = localUserDataSource.getNickname()
 
+    override suspend fun removeNickname() = localUserDataSource.removeNickname()
+
     override suspend fun getKeywords(): List<String> = localUserDataSource.getKeywords()
 }

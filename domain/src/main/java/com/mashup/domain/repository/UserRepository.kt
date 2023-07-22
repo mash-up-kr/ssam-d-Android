@@ -22,5 +22,7 @@ interface UserRepository {
 
     suspend fun getNickname(): String
 
+    suspend fun removeNickname()
+
     suspend fun getKeywords(): List<String>
 }
