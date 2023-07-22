@@ -50,7 +50,12 @@ class LoginActivity : AppCompatActivity() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.loginUiState.collectLatest { uiState ->
                     when (uiState) {
-                        LoginUiState.AUTO -> {
+                        LoginUiState.NICKNAME -> { loginViewModel.goToNextPage() }
+                        LoginUiState.KEYWORD -> {
+                            startActivity(Intent(this@LoginActivity, OnBoardingActivity::class.java))
+                            finish()
+                        }
+                        LoginUiState.MAIN -> {
                             startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                             finish()
                         }

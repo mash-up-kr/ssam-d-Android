@@ -20,11 +20,11 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val checkNicknameDuplicationUseCase: CheckNicknameDuplicationUseCase,
     private val patchNicknameUseCase: PatchNicknameUseCase,
-    private val getAccessTokenUseCase: GetAccessTokenUseCase,
+    private val getFirstEntryScreenTypeUseCase: GetFirstEntryScreenTypeUseCase,
 ) : ViewModel() {
 
     init {
-        checkAutoLogin()
+        initScreenType()
     }
 
     var currentPage by mutableStateOf(0)
@@ -37,14 +37,17 @@ class LoginViewModel @Inject constructor(
     private val _loginUiState: MutableStateFlow<LoginUiState> = MutableStateFlow(LoginUiState.IDLE)
     val loginUiState = _loginUiState.asStateFlow()
 
-    private fun goToNextPage() = currentPage++
+    fun goToNextPage() = currentPage++
 
     fun backToPrevPage() = currentPage--
 
-    private fun checkAutoLogin() {
+    private fun initScreenType() {
         viewModelScope.launch {
-            if (getAccessTokenUseCase.execute(Unit).isNotBlank()) {
-                _loginUiState.emit(LoginUiState.LOGIN)
+            when (getFirstEntryScreenTypeUseCase.execute(Unit)) {
+                ScreenType.LOGIN -> _loginUiState.emit(LoginUiState.LOGIN)
+                ScreenType.NICKNAME -> _loginUiState.emit(LoginUiState.NICKNAME)
+                ScreenType.KEYWORD -> _loginUiState.emit(LoginUiState.KEYWORD)
+                else -> _loginUiState.emit(LoginUiState.MAIN)
             }
         }
     }
@@ -99,5 +102,5 @@ class LoginViewModel @Inject constructor(
 }
 
 enum class LoginUiState {
-    IDLE, LOGIN, NICKNAME, KEYWORDS, COMPLETED
+    IDLE, LOGIN, NICKNAME, KEYWORD, MAIN
 }
