@@ -88,7 +88,7 @@ fun OnBoardingScreen(
         KeyLinkGoFirstDialog(
             onDismissRequest = {},
             onPositiveClick = {
-                viewModel.removeTokenAndNickname()
+                viewModel.removeToken()
                 navigateToLogin()
                 showGoFirstDialog = false
             },

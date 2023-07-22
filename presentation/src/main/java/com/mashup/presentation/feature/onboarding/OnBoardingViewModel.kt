@@ -4,7 +4,6 @@ package com.mashup.presentation.feature.onboarding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.domain.usecase.SaveOnboardingKeywordsUseCase
-import com.mashup.domain.usecase.login.RemoveNicknameUseCase
 import com.mashup.domain.usecase.mypage.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,8 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
     private val saveOnboardingKeywordsUseCase: SaveOnboardingKeywordsUseCase,
-    private val logoutUseCase: LogoutUseCase,
-    private val removeNicknameUseCase: RemoveNicknameUseCase
+    private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
     val uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Editing(emptyList()))
 
@@ -56,10 +54,9 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    fun removeTokenAndNickname() {
+    fun removeToken() {
         viewModelScope.launch {
             logoutUseCase.execute(Unit)
-            removeNicknameUseCase.execute(Unit)
         }
     }
 
