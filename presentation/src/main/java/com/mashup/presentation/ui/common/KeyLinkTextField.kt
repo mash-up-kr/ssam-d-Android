@@ -32,8 +32,7 @@ fun KeyLinkTextField(
     onValueChange: (String) -> Unit,
     hint: String,
     hintAlign: TextAlign = TextAlign.Center,
-    onClickDone: () -> Unit,
-    maxLength: Int = 0
+    maxLength: Int = 0,
 ) {
     TextField(
         modifier = modifier,
@@ -53,10 +52,6 @@ fun KeyLinkTextField(
         },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
-            imeAction = ImeAction.Done
-        ),
-        keyboardActions = KeyboardActions(
-            onDone = { onClickDone.invoke() },
         ),
         textStyle = Body1.copy(color = White),
         colors = TextFieldDefaults.textFieldColors(
@@ -94,7 +89,13 @@ fun KeyLinkOnBoardingTextField(
         BasicTextField(
             value = value,
             onValueChange = {
-                // 띄어쓰기 제거
+                // 스페이스일 경우 onClickDone
+                if (it.contains("\\s".toRegex())) {
+                    if (value.length >= minLength) {
+                        onClickDone()
+                        return@BasicTextField
+                    }
+                }
                 val noSpaceText = it.replace("\\s".toRegex(), "")
                 if (maxLength == 0 || noSpaceText.length <= maxLength) {
                     onValueChange(noSpaceText)
@@ -114,7 +115,10 @@ fun KeyLinkOnBoardingTextField(
                     }
                 }
             ),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
             decorationBox = { innerTextField ->
                 if (value.isEmpty()) {
                     Text(
@@ -233,7 +237,6 @@ fun PreviewKeyLinkTextField() {
             onValueChange = { nickname = it },
             hint = "닉네임 입력",
             maxLength = 10,
-            onClickDone = {}
         )
     }
 }
