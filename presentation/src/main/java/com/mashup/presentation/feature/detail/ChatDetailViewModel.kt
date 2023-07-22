@@ -7,7 +7,7 @@ import androidx.paging.map
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.mashup.presentation.feature.detail.chat.compose.MessageDetailUiState
-import com.mashup.presentation.feature.detail.chat.compose.MessageReplyUiState
+import com.mashup.presentation.feature.detail.chat.compose.MessageReplyUiEvent
 import com.mashup.presentation.feature.detail.message.model.MessageDetailUiModel
 import com.mashup.presentation.feature.detail.chat.compose.ChatInfoUiState
 import com.mashup.presentation.feature.detail.chat.model.ChatInfoUiModel.Companion.toUiModel
@@ -38,9 +38,8 @@ class ChatDetailViewModel @Inject constructor(
         MutableStateFlow(MessageDetailUiState.Loading)
     val messageDetailUiState = _messageDetailUiState.asStateFlow()
 
-    private val _replyUiState: MutableStateFlow<MessageReplyUiState> =
-        MutableStateFlow(MessageReplyUiState.Idle)
-    val replyUiState = _replyUiState.asStateFlow()
+    private val _eventFlow: MutableSharedFlow<MessageReplyUiEvent> = MutableSharedFlow<MessageReplyUiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     fun getChatInfo(id: Long) {
         viewModelScope.launch {
@@ -94,14 +93,12 @@ class ChatDetailViewModel @Inject constructor(
             content = content
         )
         viewModelScope.launch {
-            _replyUiState.emit(MessageReplyUiState.Loading)
-
             replyUseCase.execute(param)
                 .onSuccess {
-                    _replyUiState.emit(MessageReplyUiState.SaveSuccess)
+                    _eventFlow.emit(MessageReplyUiEvent.SaveSuccess)
                 }
                 .onFailure {
-                    _replyUiState.emit(MessageReplyUiState.Failure(it.message))
+                    _eventFlow.emit(MessageReplyUiEvent.Failure(it.message))
                 }
         }
     }

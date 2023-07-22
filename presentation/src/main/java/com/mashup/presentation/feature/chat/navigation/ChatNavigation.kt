@@ -91,6 +91,7 @@ fun NavGraphBuilder.chatRoomGraph(
                         roomId = roomId,
                         navOptions {
                             popUpTo(KeyLinkNavigationRoute.ChatRoomGraph.ChatRoomDetailRoute.route)
+                            launchSingleTop = true
                         }
                     )
                 },
