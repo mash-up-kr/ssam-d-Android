@@ -12,6 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.setThemeContent
 import com.mashup.presentation.feature.onboarding.OnBoardingActivity
 import com.mashup.presentation.navigation.MainActivity
@@ -117,7 +118,7 @@ class LoginActivity : AppCompatActivity() {
         if (System.currentTimeMillis() - backPressedTime <= 500L) {
             finish()
         } else {
-            Toast.makeText(this, "한 번 더 클릭하면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.app_finish_toast), Toast.LENGTH_SHORT).show()
         }
         backPressedTime = System.currentTimeMillis()
     }

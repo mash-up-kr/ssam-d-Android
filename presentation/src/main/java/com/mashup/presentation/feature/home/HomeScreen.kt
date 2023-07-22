@@ -1,5 +1,7 @@
 package com.mashup.presentation.feature.home
 
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -24,6 +27,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.mashup.presentation.R
+import com.mashup.presentation.common.extension.findActivity
 import com.mashup.presentation.common.extension.isScrollingUp
 import com.mashup.presentation.feature.home.model.SignalUiModel
 import com.mashup.presentation.ui.common.KeyLinkLoading
@@ -52,6 +56,8 @@ fun HomeRoute(
             isRefreshing = true
             pagedReceivedSignal.refresh()
         })
+    val context = LocalContext.current
+    var backPressedTime = 0L
 
     LaunchedEffect(Unit) {
         launch {
@@ -66,7 +72,21 @@ fun HomeRoute(
             isRefreshing = false
     }
 
-    Box(modifier = Modifier.pullRefresh(pullRefreshState).fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+
+    BackHandler(enabled = true) {
+        if (System.currentTimeMillis() - backPressedTime <= 500L) {
+            context.findActivity().finish()
+        } else {
+            Toast.makeText(
+                context,
+                context.getString(R.string.app_finish_toast),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        backPressedTime = System.currentTimeMillis()
+    }
+
+    Box(modifier = Modifier.pullRefresh(pullRefreshState), contentAlignment = Alignment.TopCenter) {
         HomeBackgroundScreen(
             subscribeKeywordsUiState = subscribeKeywordsUiState,
             pagedReceivedSignal = pagedReceivedSignal,
