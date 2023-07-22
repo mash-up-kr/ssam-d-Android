@@ -94,7 +94,13 @@ fun KeyLinkOnBoardingTextField(
         BasicTextField(
             value = value,
             onValueChange = {
-                // 띄어쓰기 제거
+                // 스페이스일 경우 onClickDone
+                if (it.contains("\\s".toRegex())) {
+                    if (value.length >= minLength) {
+                        onClickDone()
+                        return@BasicTextField
+                    }
+                }
                 val noSpaceText = it.replace("\\s".toRegex(), "")
                 if (maxLength == 0 || noSpaceText.length <= maxLength) {
                     onValueChange(noSpaceText)
