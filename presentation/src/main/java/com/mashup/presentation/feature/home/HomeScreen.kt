@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -44,6 +45,7 @@ fun HomeRoute(
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: (Long) -> Unit,
     homeViewModel: HomeViewModel,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -77,11 +79,7 @@ fun HomeRoute(
         if (System.currentTimeMillis() - backPressedTime <= 500L) {
             context.findActivity().finish()
         } else {
-            Toast.makeText(
-                context,
-                context.getString(R.string.app_finish_toast),
-                Toast.LENGTH_SHORT
-            ).show()
+            onShowSnackbar(context.getString(R.string.app_finish_toast), SnackbarDuration.Short)
         }
         backPressedTime = System.currentTimeMillis()
     }

@@ -47,6 +47,7 @@ fun NavGraphBuilder.homeGraph(
                 onGuideClick = navController::navigateToGuideRoute,
                 onProfileMenuClick = navController::navigateToProfile,
                 onReceivedSignalClick = navController::navigateToReceivedSignalDetail,
+                onShowSnackbar = onShowSnackbar,
                 homeViewModel = homeViewModel
             )
         }
