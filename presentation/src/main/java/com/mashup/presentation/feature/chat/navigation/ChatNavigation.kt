@@ -1,9 +1,18 @@
 package com.mashup.presentation.feature.chat.navigation
 
+import androidx.compose.material.SnackbarDuration
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.mashup.presentation.feature.chat.compose.ChatRoute
 import com.mashup.presentation.feature.detail.chat.compose.ChatDetailRoute
+import com.mashup.presentation.feature.detail.chat.navigation.navigateToChatRoomDetail
+import com.mashup.presentation.feature.detail.message.compose.MessageDetailRoute
+import com.mashup.presentation.feature.detail.message.navigation.navigateToChatDetail
+import com.mashup.presentation.feature.reply.chat.ChatReplyRoute
+import com.mashup.presentation.feature.reply.chat.navigation.navigateToChatReply
+import com.mashup.presentation.feature.report.ReportRoute
+import com.mashup.presentation.feature.report.navigation.navigateToChatReport
+import com.mashup.presentation.feature.signal.send.navigation.navigateToSignal
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 
 /**
@@ -19,13 +28,9 @@ fun NavController.navigateToChatRoom(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.chatRoomGraph(
-    nestedSignalGraph: NavGraphBuilder.() -> Unit = {},
-    nestedMessageGraph: NavGraphBuilder.() -> Unit,
+    navController: NavController,
     onBackClick: () -> Unit,
-    onEmptyScreenButtonClick: () -> Unit,
-    onBottomSheetReportClick: () -> Unit,
-    onChatRoomClick: (Long) -> Unit,
-    onMessageClick: (Long, Long) -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
 ) {
     navigation(
         route = KeyLinkNavigationRoute.ChatRoomGraph.route,
@@ -33,13 +38,10 @@ fun NavGraphBuilder.chatRoomGraph(
     ) {
         composable(route = KeyLinkNavigationRoute.ChatRoomGraph.ChatRoomRoute.route) {
             ChatRoute(
-                onEmptyScreenButtonClick = onEmptyScreenButtonClick,
-                onChatRoomClick = { roomId ->
-                    onChatRoomClick(roomId)
-                }
+                onEmptyScreenButtonClick = navController::navigateToSignal,
+                onChatRoomClick = navController::navigateToChatRoomDetail
             )
         }
-
         composable(
             route = KeyLinkNavigationRoute.ChatRoomGraph.ChatRoomDetailRoute.route,
             arguments = listOf(
@@ -51,11 +53,63 @@ fun NavGraphBuilder.chatRoomGraph(
             ChatDetailRoute(
                 roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
                 onBackClick = onBackClick,
-                onMessageClick = onMessageClick,
-                onReportClick = onBottomSheetReportClick
+                onMessageClick = navController::navigateToChatDetail,
+                onReportClick = navController::navigateToChatReport
             )
         }
-        nestedSignalGraph()  // 채팅 없을 경우 SignalGraph 연결
-        nestedMessageGraph()  // 메시지 상세 nested graph
+        composable(route = KeyLinkNavigationRoute.ChatRoomGraph.ChatDetailRoute.route,
+            arguments = listOf(
+                navArgument("roomId") {
+                    type = NavType.StringType
+                },
+                navArgument("chatId") {
+                    type = NavType.StringType
+                }
+            )
+        ) { entry ->
+            MessageDetailRoute(
+                roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
+                chatId = entry.arguments?.getString("chatId")?.toLong() ?: -1,
+                onBackClick = onBackClick,
+                onReportMenuClick = navController::navigateToChatReport,
+                onReplyButtonClick = navController::navigateToChatReply
+            )
+        }
+        composable(
+            route = KeyLinkNavigationRoute.ChatRoomGraph.ChatReplyRoute.route,
+            arguments = listOf(
+                navArgument("roomId") {
+                    type = NavType.StringType
+                }
+            )
+        ) { entry ->
+            ChatReplyRoute(
+                roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
+                onClickBack = onBackClick,
+                navigateToChat = { roomId ->
+                    navController.navigateToChatRoomDetail(
+                        roomId = roomId,
+                        navOptions {
+                            popUpTo(KeyLinkNavigationRoute.ChatRoomGraph.ChatRoomDetailRoute.route)
+                        }
+                    )
+                },
+                onShowSnackbar = onShowSnackbar
+            )
+        }
+        composable(route = KeyLinkNavigationRoute.ChatRoomGraph.ChatReportRoute.route) {
+            ReportRoute(
+                onBackClick = onBackClick,
+                onReportIconClick = {
+                    navController.navigateToChatRoom(
+                        navOptions {
+                            popUpTo(KeyLinkNavigationRoute.ChatRoomGraph.route) { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    )
+                },
+                onShowSnackbar = onShowSnackbar
+            )
+        }
     }
 }

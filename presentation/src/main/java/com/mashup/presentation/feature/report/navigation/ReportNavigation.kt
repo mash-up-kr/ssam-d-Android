@@ -9,9 +9,16 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
  * @author jaesung
  * @created 2023/07/10
  */
-fun NavController.navigateToReport(navOptions: NavOptions? = null) {
+fun NavController.navigateToChatReport(navOptions: NavOptions? = null) {
     navigate(
-        route = KeyLinkNavigationRoute.ChatGraph.ReportRoute.route,
+        route = KeyLinkNavigationRoute.ChatRoomGraph.ChatReportRoute.route,
+        navOptions = navOptions
+    )
+}
+
+fun NavController.navigateToReceivedSignalReport(navOptions: NavOptions? = null) {
+    navigate(
+        route = KeyLinkNavigationRoute.ReceivedSignalGraph.ReceivedSignalReportRoute.route,
         navOptions = navOptions
     )
 }

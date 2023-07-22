@@ -9,6 +9,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.navOptions
 import com.mashup.presentation.common.extension.sharedViewModel
 import com.mashup.presentation.feature.guide.GuideRoute
+import com.mashup.presentation.feature.guide.navigation.navigateToGuideRoute
 import com.mashup.presentation.feature.home.HomeRoute
 import com.mashup.presentation.feature.home.HomeViewModel
 import com.mashup.presentation.feature.profile.navigation.navigateToProfile
@@ -33,11 +34,7 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.homeGraph(
     navController: NavController,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
-    onGuideClick: () -> Unit,
     onBackClick: () -> Unit,
-    nestedSignalGraph: NavGraphBuilder.() -> Unit,
-    nestedProfileGraph: NavGraphBuilder.() -> Unit,
-    nestedChatGraph: NavGraphBuilder.() -> Unit,
 ) {
     navigation(
         route = KeyLinkNavigationRoute.HomeGraph.route,
@@ -47,7 +44,7 @@ fun NavGraphBuilder.homeGraph(
             val homeViewModel = backStackEntry.sharedViewModel<HomeViewModel>(navController)
             HomeRoute(
                 onKeywordContainerClick = navController::navigateToSubscribeKeywordRoute,
-                onGuideClick = onGuideClick,
+                onGuideClick = navController::navigateToGuideRoute,
                 onProfileMenuClick = navController::navigateToProfile,
                 onReceivedSignalClick = navController::navigateToReceivedSignalDetail,
                 homeViewModel = homeViewModel
@@ -77,8 +74,5 @@ fun NavGraphBuilder.homeGraph(
                 homeViewModel = homeViewModel
             )
         }
-        nestedSignalGraph()
-        nestedProfileGraph()
-        nestedChatGraph()
     }
 }
