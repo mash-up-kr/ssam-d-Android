@@ -1,6 +1,7 @@
 package com.mashup.data.source.remote.service
 
 import com.mashup.data.source.remote.dto.BaseResponse
+import com.mashup.data.source.remote.dto.requestbody.ReplyRequestBody
 import com.mashup.data.source.remote.dto.requestbody.SignalRequest
 import com.mashup.data.source.remote.dto.responsebody.signal.ReceivedSignalDetail
 import com.mashup.data.source.remote.dto.responsebody.signal.ReceivedSignalResponse
@@ -14,7 +15,7 @@ import retrofit2.http.*
 interface SignalService {
 
     @POST(ApiPattern.Signal.SEND_SIGNAL)
-    suspend fun sendSignal(
+    suspend fun postSignal(
         @Body signalRequest: SignalRequest
     ): BaseResponse<Any>
 
@@ -28,4 +29,10 @@ interface SignalService {
     suspend fun getReceivedSignalDetail(
         @Path("id") signalId: Long
     ): BaseResponse<ReceivedSignalDetail>
+
+    @GET("${ApiPattern.Signal.PREFIX}/{id}${ApiPattern.Signal.REPLY_SIGNAL}")
+    suspend fun postReceivedSignalReply(
+        @Path("id") signalId: Long,
+        @Body replyRequest: ReplyRequestBody
+    ): BaseResponse<Any>
 }
