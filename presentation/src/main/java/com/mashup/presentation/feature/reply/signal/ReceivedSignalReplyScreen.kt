@@ -5,19 +5,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
-import com.mashup.presentation.feature.detail.chat.compose.MessageReplyUiState
 import com.mashup.presentation.feature.reply.ReplyContent
 import com.mashup.presentation.ui.common.KeyLinkContentLengthDialog
 import com.mashup.presentation.ui.common.KeyLinkGoBackDialog
-import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.Black
 import com.mashup.presentation.ui.theme.Body2
@@ -30,21 +27,37 @@ import com.mashup.presentation.ui.theme.White
  */
 @Composable
 fun ReceivedSignalReplyRoute(
+    signalId: Long,
     onClickBack: () -> Unit,
     navigateToHome: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: ReceivedSignalReplyViewModel = hiltViewModel()
 ) {
-
+    val event by viewModel.eventFlow.collectAsStateWithLifecycle(initialValue = Idle)
     var reply by rememberSaveable { mutableStateOf("") }
+
+    LaunchedEffect(event) {
+        when (event) {
+            SendReplySuccess -> navigateToHome()
+            is SendReplyFailed -> {
+                onShowSnackbar(
+                    (event as SendReplyFailed).message ?: "",
+                    SnackbarDuration.Short
+                )
+            }
+            else -> {}
+        }
+    }
 
     ReceivedSignalReplyScreen(
         reply = reply,
         onReplyTextChange = { reply = it },
         onClickBack = onClickBack,
-        onSendClick = {},
+        onSendClick = {
+            viewModel.sendReceivedSignalReply(signalId, reply)
+        },
         onShowSnackbar = onShowSnackbar,
-        navigateToHome = navigateToHome,
         modifier = modifier
     )
 }
@@ -56,7 +69,6 @@ private fun ReceivedSignalReplyScreen(
     onClickBack: () -> Unit,
     onSendClick: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
-    navigateToHome: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showGoBackDialog by rememberSaveable { mutableStateOf(false) }

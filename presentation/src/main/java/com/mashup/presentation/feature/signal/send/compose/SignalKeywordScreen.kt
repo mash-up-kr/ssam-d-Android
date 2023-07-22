@@ -139,6 +139,7 @@ fun SignalKeywordScreen(
                 }
             }
             is KeywordUiState.Error -> {}
+            else -> {}
         }
 
         if (showGoBackDialog) {
