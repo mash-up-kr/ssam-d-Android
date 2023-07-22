@@ -12,7 +12,7 @@ interface UserRepository {
 
     suspend fun getNicknameDuplication(nickname: String): Result<Unit>
 
-    suspend fun patchNickname(nickname: String)
+    suspend fun patchNickname(nickname: String): Result<Unit>
 
     suspend fun patchAlarm(isAgree: Boolean)
 
