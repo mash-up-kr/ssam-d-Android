@@ -240,27 +240,29 @@ private fun ChatInfoContent(
     isMatchedKeywordVisible: Boolean,
     coroutineScope: CoroutineScope
 ) {
-    OtherUserInfo(
+    Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(start = 20.dp, end = 20.dp, bottom = 16.dp),
-        othersNickName = chatInfoUiModel.othersNickName,
-        othersProfileImage = chatInfoUiModel.othersProfileImage
-    )
-    MatchedKeywords(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(start = 20.dp, end = 20.dp, bottom = 16.dp)
-            .clickable {
-                onChangeBottomSheetType(BottomSheetType.KEYWORD)
-                coroutineScope.launch {
-                    if (keywordBottomSheetState.isVisible) keywordBottomSheetState.hide()
-                    else keywordBottomSheetState.show()
-                }
-            },
-        matchedKeywords = chatInfoUiModel.getMatchedKeywordSummery(),
-        visible = isMatchedKeywordVisible
-    )
+    ) {
+        OtherUserInfo(
+            modifier = Modifier.padding(bottom = 16.dp),
+            othersNickName = chatInfoUiModel.othersNickName,
+            othersProfileImage = chatInfoUiModel.othersProfileImage
+        )
+        MatchedKeywords(
+            modifier = modifier
+                .clickable {
+                    onChangeBottomSheetType(BottomSheetType.KEYWORD)
+                    coroutineScope.launch {
+                        if (keywordBottomSheetState.isVisible) keywordBottomSheetState.hide()
+                        else keywordBottomSheetState.show()
+                    }
+                },
+            matchedKeywords = chatInfoUiModel.getMatchedKeywordSummery(),
+            visible = isMatchedKeywordVisible
+        )
+    }
 }
 
 enum class BottomSheetType {
