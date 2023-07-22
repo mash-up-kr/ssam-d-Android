@@ -134,8 +134,9 @@ private fun KeywordsChips(
 ) {
     val maxKeywordCount = 3
     val keywordChipItems = mutableListOf<String>().apply {
-        if (keywords.size > maxKeywordCount) {
+        if (keywordsCount > maxKeywordCount) {
             addAll(keywords.subList(0, maxKeywordCount))
+            add("+${keywordsCount - maxKeywordCount}")
         } else {
             addAll(keywords)
         }
@@ -147,9 +148,6 @@ private fun KeywordsChips(
     ) {
         items(keywordChipItems.size) {
             KeywordChip(keyword = keywordChipItems[it])
-        }
-        item {
-            KeywordChip(keyword = "+$keywordsCount")
         }
     }
 }
