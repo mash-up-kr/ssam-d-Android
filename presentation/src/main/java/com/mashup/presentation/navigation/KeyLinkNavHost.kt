@@ -74,7 +74,7 @@ fun KeyLinkNavHost(
                             }
                         )
                     },
-                    onReplyButtonClick = navController::navigateToReplyRoute,
+                    onSignalReplyButtonClick = {}, // navController::navigateToReplyRoute,
                     navigateToHome = {
                         navController.navigateToHome(
                             navOptions {
@@ -124,7 +124,7 @@ fun KeyLinkNavHost(
                             }
                         )
                     },
-                    onReplyButtonClick = { roomId ->
+                    onChatReplyButtonClick = { roomId ->
                         navController.navigateToReplyRoute(roomId = roomId)
                     },
                     navigateToChat = { roomId ->
