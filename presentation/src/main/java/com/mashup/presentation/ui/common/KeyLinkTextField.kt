@@ -32,8 +32,7 @@ fun KeyLinkTextField(
     onValueChange: (String) -> Unit,
     hint: String,
     hintAlign: TextAlign = TextAlign.Center,
-    onClickDone: () -> Unit,
-    maxLength: Int = 0
+    maxLength: Int = 0,
 ) {
     TextField(
         modifier = modifier,
@@ -53,10 +52,6 @@ fun KeyLinkTextField(
         },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
-            imeAction = ImeAction.Done
-        ),
-        keyboardActions = KeyboardActions(
-            onDone = { onClickDone.invoke() },
         ),
         textStyle = Body1.copy(color = White),
         colors = TextFieldDefaults.textFieldColors(
@@ -242,7 +237,6 @@ fun PreviewKeyLinkTextField() {
             onValueChange = { nickname = it },
             hint = "닉네임 입력",
             maxLength = 10,
-            onClickDone = {}
         )
     }
 }
