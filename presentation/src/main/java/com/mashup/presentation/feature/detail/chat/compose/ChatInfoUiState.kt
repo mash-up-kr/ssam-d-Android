@@ -32,12 +32,10 @@ sealed class MessageDetailUiState {
     ): MessageDetailUiState()
 }
 
-sealed class MessageReplyUiState {
-    object Idle: MessageReplyUiState()
-    object Loading: MessageReplyUiState()
-    object SaveSuccess: MessageReplyUiState()
-
+sealed class MessageReplyUiEvent {
+    object Idle: MessageReplyUiEvent()
+    object SaveSuccess: MessageReplyUiEvent()
     data class Failure(
         val message: String?
-    ): MessageReplyUiState()
+    ): MessageReplyUiEvent()
 }
