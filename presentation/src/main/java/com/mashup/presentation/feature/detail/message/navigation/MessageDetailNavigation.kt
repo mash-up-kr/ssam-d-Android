@@ -1,13 +1,16 @@
 package com.mashup.presentation.feature.detail.message.navigation
 
+import android.util.Log
 import androidx.compose.material.SnackbarDuration
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.mashup.presentation.feature.detail.message.compose.MessageDetailRoute
-import com.mashup.presentation.feature.reply.chat.ReplyRoute
+import com.mashup.presentation.feature.reply.chat.ChatReplyRoute
+import com.mashup.presentation.feature.reply.signal.ReceivedSignalReplyRoute
 import com.mashup.presentation.feature.report.ReportRoute
 import com.mashup.presentation.feature.signal.received.ReceivedSignalDetailRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
+import timber.log.Timber
 
 /**
  * Ssam_D_Android
@@ -37,7 +40,7 @@ fun NavGraphBuilder.chatGraph(
     onChatReplyButtonClick: (Long) -> Unit = {},
     onSignalReplyButtonClick: (Long) -> Unit = {},
     navigateToChat: (Long) -> Unit = {},
-    navigateToHome: (Long) -> Unit = {},
+    navigateToHome: () -> Unit = {},
 ) {
     navigation(
         route = KeyLinkNavigationRoute.ChatGraph.route,
@@ -91,18 +94,34 @@ fun NavGraphBuilder.chatGraph(
         }
 
         composable(
-            route = KeyLinkNavigationRoute.ChatGraph.ReplyRoute.route,
+            route = KeyLinkNavigationRoute.ChatGraph.ChatReplyRoute.route,
             arguments = listOf(
                 navArgument("roomId") {
                     type = NavType.StringType
                 }
             )
         ) { entry ->
-            ReplyRoute(
+            ChatReplyRoute(
                 roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
                 onClickBack = onBackClick,
                 navigateToChat = navigateToChat,
                 onShowSnackbar = onShowSnackbar
+            )
+        }
+
+        composable(
+            route = KeyLinkNavigationRoute.ChatGraph.ReceivedSignalReplyRoute.route,
+            arguments = listOf(
+                navArgument("signalId") {
+                    type = NavType.StringType
+                }
+            )
+        ) { entry ->
+            ReceivedSignalReplyRoute(
+                signalId = entry.arguments?.getString("signalId")?.toLong() ?: -1,
+                onClickBack = onBackClick,
+                onShowSnackbar = onShowSnackbar,
+                navigateToHome = navigateToHome
             )
         }
     }

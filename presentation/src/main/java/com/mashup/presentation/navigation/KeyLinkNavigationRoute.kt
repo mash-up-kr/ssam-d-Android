@@ -34,6 +34,7 @@ sealed class KeyLinkNavigationRoute(val route: String) {
         object ChatDetailRoute : KeyLinkNavigationRoute(CHAT_DETAIL_ROUTE)
         object ReceivedSignalDetailRoute : KeyLinkNavigationRoute(RECEIVED_SIGNAL_DETAIL_ROUTE)
         object ReportRoute : KeyLinkNavigationRoute(REPORT_ROUTE)
-        object ReplyRoute : KeyLinkNavigationRoute(REPLY_ROUTE)
+        object ChatReplyRoute : KeyLinkNavigationRoute(CHAT_REPLY_ROUTE)
+        object ReceivedSignalReplyRoute : KeyLinkNavigationRoute(RECEIVED_SIGNAL_REPLY_ROUTE)
     }
 }

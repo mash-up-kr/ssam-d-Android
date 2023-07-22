@@ -16,7 +16,8 @@ import com.mashup.presentation.feature.home.navigation.homeGraph
 import com.mashup.presentation.feature.home.navigation.navigateToHome
 import com.mashup.presentation.feature.profile.navigation.navigateToNavigationRoute
 import com.mashup.presentation.feature.profile.navigation.profileGraph
-import com.mashup.presentation.feature.reply.chat.navigation.navigateToReplyRoute
+import com.mashup.presentation.feature.reply.chat.navigation.navigateToChatReply
+import com.mashup.presentation.feature.reply.signal.navigation.navigateToSignalReplyRoute
 import com.mashup.presentation.feature.report.navigation.navigateToReport
 import com.mashup.presentation.feature.signal.send.navigation.navigateToSignal
 import com.mashup.presentation.feature.signal.send.navigation.signalGraph
@@ -68,18 +69,18 @@ fun KeyLinkNavHost(
                         navController.navigateToHome(
                             navOptions {
                                 popUpTo(
-                                    route = KeyLinkNavigationRoute.ChatGraph.ReceivedSignalDetailRoute.route,
+                                    route = KeyLinkNavigationRoute.HomeGraph.route,
                                     popUpToBuilder = { inclusive = true }
                                 )
                             }
                         )
                     },
-                    onSignalReplyButtonClick = {}, // navController::navigateToReplyRoute,
+                    onSignalReplyButtonClick = navController::navigateToSignalReplyRoute,
                     navigateToHome = {
                         navController.navigateToHome(
                             navOptions {
                                 popUpTo(
-                                    route = KeyLinkNavigationRoute.ChatGraph.ReceivedSignalDetailRoute.route,
+                                    route = KeyLinkNavigationRoute.HomeGraph.route,
                                     popUpToBuilder = { inclusive = true }
                                 )
                             }
@@ -125,7 +126,7 @@ fun KeyLinkNavHost(
                         )
                     },
                     onChatReplyButtonClick = { roomId ->
-                        navController.navigateToReplyRoute(roomId = roomId)
+                        navController.navigateToChatReply(roomId = roomId)
                     },
                     navigateToChat = { roomId ->
                         navController.navigateToChatRoomDetail(
