@@ -1,4 +1,4 @@
-package com.mashup.domain.usecase
+package com.mashup.domain.usecase.login
 
 import com.mashup.domain.repository.UserRepository
 import com.mashup.domain.usecase.common.CoroutineUseCase

@@ -1,7 +1,7 @@
 package com.mashup.domain.repository
 
 import com.mashup.domain.model.User
-import com.mashup.domain.usecase.LoginParam
+import com.mashup.domain.usecase.login.LoginParam
 
 interface UserRepository {
     suspend fun login(param: LoginParam)

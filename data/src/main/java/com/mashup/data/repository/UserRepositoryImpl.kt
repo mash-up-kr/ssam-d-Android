@@ -6,7 +6,7 @@ import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody
 import com.mashup.data.util.suspendRunCatching
 import com.mashup.domain.model.User
 import com.mashup.domain.repository.UserRepository
-import com.mashup.domain.usecase.LoginParam
+import com.mashup.domain.usecase.login.LoginParam
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
