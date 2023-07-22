@@ -30,7 +30,7 @@ interface SignalService {
         @Path("id") signalId: Long
     ): BaseResponse<ReceivedSignalDetail>
 
-    @GET("${ApiPattern.Signal.PREFIX}/{id}${ApiPattern.Signal.REPLY_SIGNAL}")
+    @POST("${ApiPattern.Signal.PREFIX}/{id}${ApiPattern.Signal.REPLY_SIGNAL}")
     suspend fun postReceivedSignalReply(
         @Path("id") signalId: Long,
         @Body replyRequest: ReplyRequestBody
