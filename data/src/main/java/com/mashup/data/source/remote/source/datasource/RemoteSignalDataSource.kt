@@ -21,7 +21,7 @@ class RemoteSignalDataSource @Inject constructor(
             content = content,
             keywords = keywords
         )
-        signalService.sendSignal(signalRequest)
+        signalService.postSignal(signalRequest)
     }
 
     suspend fun getReceivedSignal(pageNumber: Int, pageLength: Int?): ReceivedSignalResponse {

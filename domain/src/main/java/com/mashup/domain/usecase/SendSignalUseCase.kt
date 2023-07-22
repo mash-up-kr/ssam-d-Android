@@ -16,7 +16,7 @@ class SendSignalUseCase @Inject constructor(
 
     override suspend fun invoke(param: Pair<String, List<String>>): Result<Unit> {
         val response = runCatching {
-            signalRepository.postSignal(
+            signalRepository.sendSignal(
                 content = param.first,
                 keywords = param.second
             )

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
  */
 interface SignalRepository {
 
-    suspend fun postSignal(content: String, keywords: List<String>)
+    suspend fun sendSignal(content: String, keywords: List<String>)
 
     fun getReceivedSignal(): Flow<PagingData<Signal>>
 
