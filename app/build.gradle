@@ -33,6 +33,7 @@ android {
             manifestPlaceholders = ["appName":"@string/app_name_debug"]
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
 
             buildConfigField "boolean","IS_DEBUG","true"
         }
