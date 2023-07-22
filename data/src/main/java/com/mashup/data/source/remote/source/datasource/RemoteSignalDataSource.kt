@@ -1,5 +1,6 @@
 package com.mashup.data.source.remote.source.datasource
 
+import com.mashup.data.source.remote.dto.requestbody.ReplyRequestBody
 import com.mashup.data.source.remote.dto.requestbody.SignalRequest
 import com.mashup.data.source.remote.dto.responsebody.signal.ReceivedSignalDetail
 import com.mashup.data.source.remote.dto.responsebody.signal.ReceivedSignalResponse
@@ -25,12 +26,20 @@ class RemoteSignalDataSource @Inject constructor(
     }
 
     suspend fun getReceivedSignal(pageNumber: Int, pageLength: Int?): ReceivedSignalResponse {
-        val response = signalService.getReceivedSignal(pageNumber = pageNumber, pageLength = pageLength)
+        val response =
+            signalService.getReceivedSignal(pageNumber = pageNumber, pageLength = pageLength)
         return response.data ?: throw Exception(response.message)
     }
 
     suspend fun getReceivedSignalDetail(signalId: Long): ReceivedSignalDetail {
         val response = signalService.getReceivedSignalDetail(signalId)
         return response.data ?: throw Exception(response.message)
+    }
+
+    suspend fun postReceivedSignalReply(signalId: Long, content: String) {
+        val replyRequest = ReplyRequestBody(
+            content = content
+        )
+        signalService.postReceivedSignalReply(signalId = signalId, replyRequest = replyRequest)
     }
 }
