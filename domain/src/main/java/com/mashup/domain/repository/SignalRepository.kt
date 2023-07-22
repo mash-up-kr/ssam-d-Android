@@ -17,5 +17,5 @@ interface SignalRepository {
 
     fun getReceivedSignalDetail(signalId: Long): Flow<Signal>
 
-    suspend fun sendReceivedSignalReply(signalId: Long, content: String)
+    suspend fun sendReceivedSignalReply(signalId: Long, content: String): Result<Unit>
 }

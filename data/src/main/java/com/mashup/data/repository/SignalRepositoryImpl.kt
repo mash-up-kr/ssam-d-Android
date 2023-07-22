@@ -39,8 +39,8 @@ class SignalRepositoryImpl @Inject constructor(
         emit(result)
     }
 
-    override suspend fun sendReceivedSignalReply(signalId: Long, content: String) {
-        suspendRunCatching {
+    override suspend fun sendReceivedSignalReply(signalId: Long, content: String): Result<Unit> {
+        return suspendRunCatching {
             remoteSignalDataSource.postReceivedSignalReply(signalId = signalId, content = content)
         }
     }
