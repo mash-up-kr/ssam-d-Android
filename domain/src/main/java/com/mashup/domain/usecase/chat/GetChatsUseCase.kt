@@ -1,23 +1,17 @@
 package com.mashup.domain.usecase.chat
 
-import com.mashup.domain.model.Chats
+import androidx.paging.PagingData
+import com.mashup.domain.model.Chat
 import com.mashup.domain.repository.ChatRepository
-import com.mashup.domain.usecase.common.CoroutineUseCase
 import com.mashup.domain.usecase.common.FlowUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetChatsUseCase @Inject constructor(
     private val chatRepository: ChatRepository
-): CoroutineUseCase<GetChatsParam, Flow<Chats>>() {
+) : FlowUseCase<Long, PagingData<Chat>>() {
 
-    override suspend fun invoke(param: GetChatsParam): Flow<Chats> {
-        return chatRepository.getChats(param)
+    override fun invoke(params: Long): Flow<PagingData<Chat>> {
+        return chatRepository.getChats(params)
     }
 }
-
-data class GetChatsParam(
-    val id: Long,
-    val pageNo: Int,
-    val pageLength: Int
-)

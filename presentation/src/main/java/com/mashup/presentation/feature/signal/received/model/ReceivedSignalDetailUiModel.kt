@@ -1,7 +1,7 @@
 package com.mashup.presentation.feature.signal.received.model
 
 import com.mashup.domain.model.Signal
-import com.mashup.presentation.common.extension.getDisplayedDate
+import com.mashup.presentation.common.extension.getDisplayedDateWithDay
 
 /**
  * Ssam_D_Android
@@ -25,7 +25,7 @@ data class ReceivedSignalDetailUiModel(
             keywords = keywords,
             matchingKeywordCount = keywordsCount,
             content = signalContent,
-            receivedTimeMillis = receivedTimeMillis.getDisplayedDate()
+            receivedTimeMillis = receivedTimeMillis.getDisplayedDateWithDay()
         )
     }
 }

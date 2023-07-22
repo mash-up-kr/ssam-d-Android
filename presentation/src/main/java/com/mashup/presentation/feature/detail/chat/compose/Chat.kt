@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
@@ -16,8 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import com.mashup.presentation.feature.detail.chat.model.MessageBackgroundColor
 import com.mashup.presentation.feature.detail.chat.model.ChatUiModel
 import com.mashup.presentation.ui.theme.*
@@ -29,7 +30,7 @@ import com.mashup.presentation.ui.theme.*
  */
 @Composable
 fun ChatContent(
-    chat: List<ChatUiModel>,
+    chatList: LazyPagingItems<ChatUiModel>,
     onChatItemClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     scrollState: LazyGridState
@@ -40,18 +41,25 @@ fun ChatContent(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         state = scrollState,
-        contentPadding = PaddingValues(vertical = 8.dp, horizontal = 20.dp)
+        contentPadding = PaddingValues(top = 8.dp, bottom = 42.dp, start = 20.dp, end = 20.dp)
     ) {
-        items(chat) { message ->
-            MessageContent(
-                modifier = Modifier,
-                isMine = message.isMine,
-                message = message.message,
-                userName = message.userName,
-                date = message.date,
-                backgroundColor = message.backgroundColor,
-                onChatItemClick = { onChatItemClick(message.id) }
-            )
+        items(
+            count = chatList.itemCount,
+            key = chatList.itemKey(ChatUiModel::id),
+            contentType = chatList.itemContentType { "Chat" }
+        ) { index ->
+            val chat = chatList[index]
+            chat?.let {
+                MessageContent(
+                    modifier = Modifier,
+                    isMine = it.isMine,
+                    message = it.message,
+                    userName = it.userName,
+                    date = it.date,
+                    backgroundColor = it.backgroundColor,
+                    onChatItemClick = { onChatItemClick(it.id) }
+                )
+            }
         }
     }
 }

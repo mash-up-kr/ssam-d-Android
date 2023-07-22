@@ -2,6 +2,7 @@ package com.mashup.presentation.feature.detail.chat.model
 
 import androidx.compose.ui.graphics.Color
 import com.mashup.domain.model.Chat
+import com.mashup.presentation.common.extension.getDisplayedDate
 import com.mashup.presentation.ui.theme.*
 
 /**
@@ -16,7 +17,27 @@ data class ChatUiModel(
     val date: String,
     val isMine: Boolean,
     val backgroundColor: MessageBackgroundColor? = null
-)
+) {
+    companion object {
+        fun Chat.toUiModel(): ChatUiModel {
+            return ChatUiModel(
+                id = id,
+                message = content,
+                userName = senderName,
+                date = receivedTimeMillis.getDisplayedDate(),
+                isMine = isMine,
+                backgroundColor = getStringToEnumColor(chatColor)
+            )
+        }
+
+        private fun getStringToEnumColor(color: String): MessageBackgroundColor? {
+            MessageBackgroundColor.values().forEach {
+                if (MessageBackgroundColor.valueOf(color) == it) return it
+            }
+            return null
+        }
+    }
+}
 
 enum class MessageBackgroundColor(
     private val startColor: Color,
@@ -31,23 +52,4 @@ enum class MessageBackgroundColor(
     fun getGradientColors(): List<Color> {
         return listOf(startColor, endColor)
     }
-}
-
-fun Chat.toUiModel(chatColor: String, matchingUserName: String): ChatUiModel {
-    val isMine = matchingUserName != senderName
-    return ChatUiModel(
-        id = id,
-        message = content,
-        userName = senderName,
-        date = receivedTimeMillis.toString(),
-        isMine = isMine,
-        backgroundColor = if (!isMine) getStringToEnumColor(chatColor) else null
-    )
-}
-
-private fun getStringToEnumColor(color: String): MessageBackgroundColor? {
-    MessageBackgroundColor.values().forEach {
-        if (MessageBackgroundColor.valueOf(color) == it) return it
-    }
-    return null
 }
