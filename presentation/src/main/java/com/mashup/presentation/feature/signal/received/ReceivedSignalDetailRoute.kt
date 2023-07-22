@@ -40,7 +40,7 @@ fun ReceivedSignalDetailRoute(
     signalId: Long,
     onBackClick: () -> Unit,
     onReportMenuClick: () -> Unit,
-    onReplyButtonClick: () -> Unit,
+    onReplyButtonClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ReceivedSignalViewModel = hiltViewModel()
 ) {
@@ -63,7 +63,7 @@ fun ReceivedSignalDetailRoute(
 fun ReceivedSignalDetailScreen(
     onBackClick: () -> Unit,
     onReportMenuClick: () -> Unit,
-    onReplyButtonClick: () -> Unit,
+    onReplyButtonClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     receivedSignalDetailUiState: ReceivedSignalDetailUiState
 ) {
@@ -112,7 +112,7 @@ fun ReceivedSignalDetailScreen(
 private fun ReceivedSignalDetailContent(
     contentPadding: PaddingValues,
     receivedSignalDetail: ReceivedSignalDetailUiModel,
-    onReplyButtonClick: () -> Unit
+    onReplyButtonClick: (Long) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -134,7 +134,7 @@ private fun ReceivedSignalDetailContent(
         KeyLinkRoundButton(
             modifier = Modifier.padding(top = 48.dp, bottom = 42.dp),
             text = stringResource(R.string.button_send_reply),
-            onClick = onReplyButtonClick
+            onClick = { onReplyButtonClick(receivedSignalDetail.signalId) }
         )
     }
 }

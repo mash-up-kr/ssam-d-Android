@@ -34,7 +34,8 @@ fun NavGraphBuilder.chatGraph(
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     onReportMenuClick: () -> Unit,
     onReportIconClick: () -> Unit,
-    onReplyButtonClick: (Long) -> Unit,
+    onChatReplyButtonClick: (Long) -> Unit = {},
+    onSignalReplyButtonClick: (Long) -> Unit = {},
     navigateToChat: (Long) -> Unit = {},
     navigateToHome: (Long) -> Unit = {},
 ) {
@@ -61,7 +62,7 @@ fun NavGraphBuilder.chatGraph(
                 chatId = entry.arguments?.getString("chatId")?.toLong() ?: -1,
                 onBackClick = onBackClick,
                 onReportMenuClick = onReportMenuClick,
-                onReplyButtonClick = onReplyButtonClick
+                onReplyButtonClick = onChatReplyButtonClick
             )
         }
 
@@ -77,7 +78,7 @@ fun NavGraphBuilder.chatGraph(
                 signalId = entry.arguments?.getString("signalId")?.toLong() ?: -1,
                 onBackClick = onBackClick,
                 onReportMenuClick = onReportMenuClick,
-                onReplyButtonClick = { }
+                onReplyButtonClick = onSignalReplyButtonClick
             )
         }
 
