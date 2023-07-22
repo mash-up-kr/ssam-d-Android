@@ -1,7 +1,5 @@
 package com.mashup.presentation.feature.detail.message.model
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.mashup.domain.model.chat.MessageDetail
 import java.text.SimpleDateFormat
 import java.util.*
