@@ -1,6 +1,5 @@
 package com.mashup.presentation.feature.login
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -45,7 +44,7 @@ class LoginViewModel @Inject constructor(
     private fun checkAutoLogin() {
         viewModelScope.launch {
             if (getAccessTokenUseCase.execute(Unit).isNotBlank()) {
-                _loginUiState.emit(LoginUiState.AUTO)
+                _loginUiState.emit(LoginUiState.LOGIN)
             }
         }
     }
@@ -100,5 +99,5 @@ class LoginViewModel @Inject constructor(
 }
 
 enum class LoginUiState {
-    IDLE, AUTO
+    IDLE, LOGIN, NICKNAME, KEYWORDS, COMPLETED
 }
