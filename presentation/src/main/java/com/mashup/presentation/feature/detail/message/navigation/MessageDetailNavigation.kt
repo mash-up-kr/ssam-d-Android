@@ -4,7 +4,7 @@ import androidx.compose.material.SnackbarDuration
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.mashup.presentation.feature.detail.message.compose.MessageDetailRoute
-import com.mashup.presentation.feature.reply.ReplyRoute
+import com.mashup.presentation.feature.reply.chat.ReplyRoute
 import com.mashup.presentation.feature.report.ReportRoute
 import com.mashup.presentation.feature.signal.received.ReceivedSignalDetailRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute

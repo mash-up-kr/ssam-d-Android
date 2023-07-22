@@ -1,4 +1,4 @@
-package com.mashup.presentation.feature.reply
+package com.mashup.presentation.feature.reply.chat
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
@@ -25,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.detail.ChatDetailViewModel
 import com.mashup.presentation.feature.detail.chat.compose.MessageReplyUiState
+import com.mashup.presentation.feature.reply.ReplyContent
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.Black
 import com.mashup.presentation.ui.theme.Body2
@@ -39,7 +40,7 @@ import com.mashup.presentation.ui.theme.White
  */
 
 @Composable
-fun ReplyRoute(
+fun ChatReplyRoute(
     roomId: Long,
     onClickBack: () -> Unit,
     navigateToChat: (Long) -> Unit,
@@ -50,7 +51,7 @@ fun ReplyRoute(
     val uiState by viewModel.replyUiState.collectAsStateWithLifecycle()
     var reply by rememberSaveable { mutableStateOf("") }
 
-    ReplyScreen(
+    ChatReplyScreen(
         roomId = roomId,
         reply = reply,
         modifier = modifier,
@@ -66,7 +67,7 @@ fun ReplyRoute(
 }
 
 @Composable
-private fun ReplyScreen(
+private fun ChatReplyScreen(
     roomId: Long,
     reply: String,
     onReplyTextChange: (String) -> Unit,
@@ -185,7 +186,7 @@ private const val MAX_LENGTH = 300
 @Composable
 private fun ReplyScreenPreview() {
     SsamDTheme {
-        ReplyRoute(
+        ChatReplyRoute(
             roomId = 1,
             onClickBack = {},
             navigateToChat = {},

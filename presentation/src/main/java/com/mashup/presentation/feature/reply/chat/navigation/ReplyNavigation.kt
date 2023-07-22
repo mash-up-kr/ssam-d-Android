@@ -1,4 +1,4 @@
-package com.mashup.presentation.feature.reply.navigation
+package com.mashup.presentation.feature.reply.chat.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
