@@ -16,7 +16,7 @@ class OnBoardingFragment : BaseFragment<FragmentOnBoardingBinding>(R.layout.frag
         binding.composeView.setThemeContent {
             OnBoardingScreen(
                 navigateToNotificationPermission = ::navigateToNotification,
-                finishActivity = ::navigateToLogin,
+                navigateToLogin = ::navigateToLogin,
                 navigateToHome = ::navigateToHome
             )
         }
