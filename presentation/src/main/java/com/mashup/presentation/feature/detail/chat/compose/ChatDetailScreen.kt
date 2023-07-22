@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.*
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,6 +35,7 @@ import kotlinx.coroutines.launch
  * @created 2023/06/28
  */
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ChatDetailRoute(
     roomId: Long,
@@ -41,29 +45,41 @@ fun ChatDetailRoute(
     modifier: Modifier = Modifier,
     viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
+    val chatInfoUiState by viewModel.chatInfoUiState.collectAsStateWithLifecycle()
+    val pagedChatList = viewModel.chatPagingData.collectAsLazyPagingItems()
+    var isRefreshing by remember { mutableStateOf(false) }
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = isRefreshing,
+        onRefresh = {
+            isRefreshing = true
+            pagedChatList.refresh()
+        })
+
     LaunchedEffect(Unit) {
         launch { viewModel.getChatInfo(roomId) }
         launch { viewModel.getChats(roomId) }
     }
+    LaunchedEffect(pagedChatList.loadState) {
+        if (pagedChatList.loadState.refresh is LoadState.NotLoading)
+            isRefreshing = false
+    }
 
-    val chatInfoUiState by viewModel.chatInfoUiState.collectAsStateWithLifecycle()
-    val pagedChatList = viewModel.chatPagingData.collectAsLazyPagingItems()
-
-    when (chatInfoUiState) {
-        is ChatInfoUiState.Loading -> { KeyLinkLoading() }
-        else -> {
-            ChatDetailScreen(
-                modifier = modifier,
-                onBackClick = onBackClick,
-                onMessageClick = { chatId ->
-                    onMessageClick(roomId, chatId)
-                },
-                onReportClick = onReportClick,
-                onDisconnectRoom = { viewModel.disconnectRoom(roomId) },
-                chatInfoUiState = chatInfoUiState,
-                pagedChatList = pagedChatList
-            )
-        }
+    Box(modifier = Modifier.pullRefresh(pullRefreshState).fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+        ChatDetailScreen(
+            modifier = modifier,
+            onBackClick = onBackClick,
+            onMessageClick = { chatId ->
+                onMessageClick(roomId, chatId)
+            },
+            onReportClick = onReportClick,
+            onDisconnectRoom = { viewModel.disconnectRoom(roomId) },
+            chatInfoUiState = chatInfoUiState,
+            pagedChatList = pagedChatList
+        )
+        PullRefreshIndicator(refreshing = isRefreshing, state = pullRefreshState)
+    }
+    if (pagedChatList.loadState.append == LoadState.Loading) {
+        KeyLinkLoading()
     }
 }
 
@@ -215,18 +231,12 @@ private fun ChatDetailContent(
 
         Divider(color = Gray01)
 
-        when (pagedChatList.loadState.refresh) {
-            LoadState.Loading -> KeyLinkLoading()
-            is LoadState.Error -> { /* Error */ }
-            else -> {
-                ChatContent(
-                    modifier = Modifier,
-                    chatList = pagedChatList,
-                    onChatItemClick = onChatItemClick,
-                    scrollState = scrollState
-                )
-            }
-        }
+        ChatContent(
+            modifier = Modifier,
+            chatList = pagedChatList,
+            onChatItemClick = onChatItemClick,
+            scrollState = scrollState
+        )
     }
 }
 

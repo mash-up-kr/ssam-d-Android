@@ -66,7 +66,7 @@ fun HomeRoute(
             isRefreshing = false
     }
 
-    Box(modifier = Modifier.pullRefresh(pullRefreshState), contentAlignment = Alignment.TopCenter) {
+    Box(modifier = Modifier.pullRefresh(pullRefreshState).fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         HomeBackgroundScreen(
             subscribeKeywordsUiState = subscribeKeywordsUiState,
             pagedReceivedSignal = pagedReceivedSignal,
