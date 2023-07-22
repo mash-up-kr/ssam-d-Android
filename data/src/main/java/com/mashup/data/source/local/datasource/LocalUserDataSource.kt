@@ -41,12 +41,17 @@ class LocalUserDataSource @Inject constructor(
     }
 
     fun getKeywords(): List<String> {
-        val jsonArr = JSONArray(preferences.getString(KEYWOREDS, "") ?: "")
-        val keywordList: MutableList<String> = mutableListOf()
-        for (i in 0 until jsonArr.length()) {
-            keywordList.add(jsonArr.optString(i))
+        val json = preferences.getString(KEYWOREDS, null)
+        return if (json == null) {
+            emptyList()
+        } else {
+            val jsonArr = JSONArray(json)
+            val keywordList: MutableList<String> = mutableListOf()
+            for (i in 0 until jsonArr.length()) {
+                keywordList.add(jsonArr.optString(i))
+            }
+            keywordList.toList()
         }
-        return keywordList.toList()
     }
 
     fun setKeywords(keywords: List<String>) {
