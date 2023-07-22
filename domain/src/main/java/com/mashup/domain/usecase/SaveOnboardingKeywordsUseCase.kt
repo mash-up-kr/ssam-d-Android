@@ -9,8 +9,6 @@ class SaveOnboardingKeywordsUseCase @Inject constructor(
 ) : CoroutineUseCase<List<String>, Result<Unit>>() {
 
     override suspend fun invoke(param: List<String>): Result<Unit> {
-        return runCatching {
-            onboardingRepository.saveOnboardingKeywords(param)
-        }
+        return onboardingRepository.saveOnboardingKeywords(param)
     }
 }

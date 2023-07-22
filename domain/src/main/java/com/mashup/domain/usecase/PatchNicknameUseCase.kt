@@ -9,8 +9,6 @@ class PatchNicknameUseCase @Inject constructor(
 ) : CoroutineUseCase<String, Result<Unit>>() {
 
     override suspend fun invoke(param: String): Result<Unit> {
-        return runCatching {
-            userRepository.patchNickname(param)
-        }
+        return userRepository.patchNickname(param)
     }
 }

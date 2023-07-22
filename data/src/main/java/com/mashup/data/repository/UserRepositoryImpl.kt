@@ -39,8 +39,12 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun patchNickname(nickname: String) {
-        remoteUserDataSource.patchNickname(nickname)
+    override suspend fun patchNickname(nickname: String): Result<Unit> {
+        return suspendRunCatching {
+            remoteUserDataSource.patchNickname(nickname)
+        }.onSuccess {
+            localUserDataSource.setNickname(nickname)
+        }.onFailure { throw Exception(it.message) }
     }
 
     override suspend fun patchAlarm(isAgree: Boolean) {
