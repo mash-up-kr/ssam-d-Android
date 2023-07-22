@@ -22,7 +22,7 @@ data class ReceivedSignalDetailUiModel(
             signalId = signalId,
             profileImageUrl = senderImageUrl,
             nickname = senderName,
-            keywords = keywords,
+            keywords = keywords.map { "#$it" },
             matchingKeywordCount = keywordsCount,
             content = signalContent,
             receivedTimeMillis = receivedTimeMillis.getDisplayedDateWithDay()
