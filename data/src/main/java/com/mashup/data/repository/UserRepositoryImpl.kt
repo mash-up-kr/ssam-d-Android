@@ -31,8 +31,6 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun logout() = localUserDataSource.removeToken()
 
-    override suspend fun getUserAccessToken(): String = localUserDataSource.getToken()
-
     override suspend fun getNicknameDuplication(nickname: String): Result<Unit> {
         return suspendRunCatching {
             remoteUserDataSource.getNicknameDuplication(nickname)
@@ -62,4 +60,10 @@ class UserRepositoryImpl @Inject constructor(
         val id = localUserDataSource.getUserId()
         remoteUserDataSource.deleteUser(id)
     }
+
+    override suspend fun getUserAccessToken(): String = localUserDataSource.getToken()
+
+    override suspend fun getNickname(): String = localUserDataSource.getNickname()
+
+    override suspend fun getKeywords(): List<String> = localUserDataSource.getKeywords()
 }
