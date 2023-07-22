@@ -102,20 +102,6 @@ private fun ReceivedSignalReplyScreen(
             onLengthOver = { showLengthOverDialog = true },
             onShowSnackbar = onShowSnackbar
         )
-//        when(uiState) {
-//            is MessageReplyUiState.Loading -> KeyLinkLoading()
-//            is MessageReplyUiState.SaveSuccess -> navigateToHome()
-//            else -> {
-//                ReplyContent(
-//                    modifier = Modifier.padding(innerPaddingValues),
-//                    reply = reply,
-//                    onReplyTextChange = onReplyTextChange,
-//                    onSendClick = onSendClick,
-//                    onLengthOver = { showLengthOverDialog = true },
-//                    onShowSnackbar = onShowSnackbar
-//                )
-//            }
-//        }
 
         if (showGoBackDialog) {
             KeyLinkGoBackDialog(
