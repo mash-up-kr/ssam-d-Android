@@ -4,15 +4,15 @@ import com.mashup.domain.model.Signal
 import com.mashup.presentation.common.extension.getDisplayedTime
 
 data class SignalUiModel(
-    val signalId: Long = -1,
-    val receiverId: Long = -1,
-    val senderId: Long = -1,
-    val senderName: String = "",
-    val senderImageUrl: String = "",
-    val signalContent: String = "",
-    val keywords: List<String> = emptyList(),
-    val keywordsCount: Int = -1,
-    val receivedDisplayedTime: String = "",
+    val signalId: Long,
+    val receiverId: Long,
+    val senderId: Long,
+    val senderName: String,
+    val senderImageUrl: String,
+    val signalContent: String,
+    val keywords: List<String>,
+    val keywordsCount: Int,
+    val receivedDisplayedTime: String,
 ) {
     companion object {
         fun Signal.toUiModel() = SignalUiModel(

@@ -1,5 +1,7 @@
 package com.mashup.presentation.common.extension
 
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -33,4 +35,9 @@ fun Long.getDisplayedTime(): String {
             "오래 전"
         }
     }
+}
+
+fun Long.getDisplayedDate(): String {
+    val formatter = SimpleDateFormat("yyyy년 M월 d일", Locale.KOREA)
+    return formatter.format(Date(this))
 }
