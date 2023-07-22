@@ -1,14 +1,12 @@
 package com.mashup.domain.repository
 
 import com.mashup.domain.model.User
-import com.mashup.domain.usecase.LoginParam
+import com.mashup.domain.usecase.login.LoginParam
 
 interface UserRepository {
     suspend fun login(param: LoginParam)
 
     suspend fun logout()
-
-    suspend fun getUserAccessToken(): String
 
     suspend fun getNicknameDuplication(nickname: String): Result<Unit>
 
@@ -19,4 +17,10 @@ interface UserRepository {
     suspend fun getUser(): User
 
     suspend fun deleteUser()
+
+    suspend fun getUserAccessToken(): String
+
+    suspend fun getNickname(): String
+
+    suspend fun getKeywords(): List<String>
 }

@@ -26,12 +26,12 @@ fun OnBoardingRoute(
     modifier: Modifier = Modifier,
     navigateToNotificationPermission: () -> Unit,
     navigateToHome: () -> Unit,
-    finishActivity: () -> Unit
+    navigateToLogin: () -> Unit
 ) {
     OnBoardingScreen(
         modifier = modifier,
         navigateToNotificationPermission = navigateToNotificationPermission,
-        finishActivity = finishActivity,
+        navigateToLogin = navigateToLogin,
         navigateToHome = navigateToHome
     )
 }
@@ -41,7 +41,7 @@ fun OnBoardingScreen(
     modifier: Modifier = Modifier,
     navigateToNotificationPermission: () -> Unit,
     navigateToHome: () -> Unit,
-    finishActivity: () -> Unit,
+    navigateToLogin: () -> Unit,
     viewModel: OnBoardingViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -88,7 +88,8 @@ fun OnBoardingScreen(
         KeyLinkGoFirstDialog(
             onDismissRequest = {},
             onPositiveClick = {
-                finishActivity()
+                viewModel.removeToken()
+                navigateToLogin()
                 showGoFirstDialog = false
             },
             onNegativeClick = { showGoFirstDialog = false }
@@ -193,7 +194,7 @@ fun PreviewOnBoardingScreen() {
         OnBoardingScreen(
             modifier = Modifier,
             navigateToNotificationPermission = {},
-            finishActivity = {},
+            navigateToLogin = {},
             navigateToHome = {}
         )
     }

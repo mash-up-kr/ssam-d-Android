@@ -6,7 +6,7 @@ import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody
 import com.mashup.data.util.suspendRunCatching
 import com.mashup.domain.model.User
 import com.mashup.domain.repository.UserRepository
-import com.mashup.domain.usecase.LoginParam
+import com.mashup.domain.usecase.login.LoginParam
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -30,8 +30,6 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun logout() = localUserDataSource.removeToken()
-
-    override suspend fun getUserAccessToken(): String = localUserDataSource.getToken()
 
     override suspend fun getNicknameDuplication(nickname: String): Result<Unit> {
         return suspendRunCatching {
@@ -62,4 +60,10 @@ class UserRepositoryImpl @Inject constructor(
         val id = localUserDataSource.getUserId()
         remoteUserDataSource.deleteUser(id)
     }
+
+    override suspend fun getUserAccessToken(): String = localUserDataSource.getToken()
+
+    override suspend fun getNickname(): String = localUserDataSource.getNickname()
+
+    override suspend fun getKeywords(): List<String> = localUserDataSource.getKeywords()
 }
