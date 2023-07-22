@@ -1,6 +1,5 @@
 package com.mashup.data.repository
 
-import android.util.Log
 import com.mashup.data.source.local.datasource.LocalUserDataSource
 import com.mashup.data.source.remote.source.datasource.RemoteOnboardingDataSource
 import com.mashup.data.util.suspendRunCatching
@@ -12,8 +11,8 @@ class OnboardingRepositoryImpl @Inject constructor(
     private val localUserDataSource: LocalUserDataSource
 ): OnboardingRepository {
 
-    override suspend fun saveOnboardingKeywords(keywords: List<String>) {
-        suspendRunCatching {
+    override suspend fun saveOnboardingKeywords(keywords: List<String>): Result<Unit> {
+        return suspendRunCatching {
             remoteOnboardingDataSource.saveOnboardingKeywords(keywords)
         }.onSuccess {
             localUserDataSource.setKeywords(keywords)

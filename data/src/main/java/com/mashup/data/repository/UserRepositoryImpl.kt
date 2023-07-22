@@ -39,8 +39,8 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun patchNickname(nickname: String) {
-        suspendRunCatching {
+    override suspend fun patchNickname(nickname: String): Result<Unit> {
+        return suspendRunCatching {
             remoteUserDataSource.patchNickname(nickname)
         }.onSuccess {
             localUserDataSource.setNickname(nickname)
