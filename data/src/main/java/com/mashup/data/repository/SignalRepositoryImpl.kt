@@ -25,7 +25,10 @@ class SignalRepositoryImpl @Inject constructor(
 
     override fun getReceivedSignal(): Flow<PagingData<Signal>> {
         return createPager { page, loadSize ->
-            remoteSignalDataSource.getReceivedSignal(pageNumber = page, pageLength = loadSize).toDomainModel()
+            remoteSignalDataSource.getReceivedSignal(
+                pageNumber = page,
+                pageLength = loadSize
+            ).toDomainModel()
         }.flow
     }
 
@@ -34,5 +37,11 @@ class SignalRepositoryImpl @Inject constructor(
             remoteSignalDataSource.getReceivedSignalDetail(signalId).toDomainModel()
         }.getOrThrow()
         emit(result)
+    }
+
+    override suspend fun sendReceivedSignalReply(signalId: Long, content: String) {
+        suspendRunCatching {
+            remoteSignalDataSource.postReceivedSignalReply(signalId = signalId, content = content)
+        }
     }
 }

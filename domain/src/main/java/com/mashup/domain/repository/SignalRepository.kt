@@ -16,4 +16,6 @@ interface SignalRepository {
     fun getReceivedSignal(): Flow<PagingData<Signal>>
 
     fun getReceivedSignalDetail(signalId: Long): Flow<Signal>
+
+    suspend fun sendReceivedSignalReply(signalId: Long, content: String)
 }
