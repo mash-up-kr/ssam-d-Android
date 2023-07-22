@@ -12,7 +12,10 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 
 fun NavController.navigateToChatRoomDetail(roomId: Long, navOptions: NavOptions? = null) {
     navigate(
-        route = KeyLinkNavigationRoute.ChatRoomGraph.ChatRoomDetailRoute.route.replace("{roomId}", "$roomId"),
+        route = KeyLinkNavigationRoute.ChatRoomGraph.ChatRoomDetailRoute.route.replace(
+            "{roomId}",
+            "$roomId"
+        ),
         navOptions = navOptions
     )
 }

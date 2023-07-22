@@ -33,8 +33,8 @@ fun NavController.navigateToNavigationRoute(
 }
 
 fun NavGraphBuilder.profileGraph(
+    navController: NavController,
     onBackClick: () -> Unit,
-    onNavigateClick: (String) -> Unit,
 ) {
     navigation(
         route = KeyLinkNavigationRoute.ProfileGraph.route,
@@ -43,7 +43,7 @@ fun NavGraphBuilder.profileGraph(
         composable(route = KeyLinkNavigationRoute.ProfileGraph.ProfileRoute.route) {
             ProfileRoute(
                 onBackClick = onBackClick,
-                onNavigateClick = onNavigateClick
+                onNavigateClick = navController::navigateToNavigationRoute
             )
         }
         composable(route = KeyLinkNavigationRoute.ProfileGraph.SendSignalRoute.route) {

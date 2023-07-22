@@ -11,7 +11,7 @@ import com.mashup.presentation.navigation.KeyLinkNavigationRoute
  */
 fun NavController.navigateToChatReply(roomId: Long, navOptions: NavOptions? = null) {
     navigate(
-        route = KeyLinkNavigationRoute.ChatGraph.ChatReplyRoute.route.replace(
+        route = KeyLinkNavigationRoute.ChatRoomGraph.ChatReplyRoute.route.replace(
             "{roomId}",
             "$roomId"
         ),

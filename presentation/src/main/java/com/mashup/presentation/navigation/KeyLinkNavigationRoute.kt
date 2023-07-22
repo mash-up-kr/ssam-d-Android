@@ -11,6 +11,7 @@ sealed class KeyLinkNavigationRoute(val route: String) {
         object SubscribeKeywordRoute : KeyLinkNavigationRoute(SUBSCRIBE_KEYWORD_ROUTE)
         object GuideRoute : KeyLinkNavigationRoute(GUIDE_ROUTE)
     }
+
     object SignalGraph : KeyLinkNavigationRoute(SIGNAL_GRAPH_PATTERN) {
         object SignalContentRoute : KeyLinkNavigationRoute(SIGNAL_CONTENT_ROUTE)
         object SignalKeywordRoute : KeyLinkNavigationRoute(SIGNAL_KEYWORD_ROUTE)
@@ -20,6 +21,9 @@ sealed class KeyLinkNavigationRoute(val route: String) {
     object ChatRoomGraph : KeyLinkNavigationRoute(CHAT_ROOM_GRAPH_PATTERN) {
         object ChatRoomRoute : KeyLinkNavigationRoute(CHAT_ROOM_ROUTE)
         object ChatRoomDetailRoute : KeyLinkNavigationRoute(CHAT_ROOM_DETAIL_ROUTE)
+        object ChatDetailRoute : KeyLinkNavigationRoute(CHAT_DETAIL_ROUTE)
+        object ChatReplyRoute : KeyLinkNavigationRoute(CHAT_REPLY_ROUTE)
+        object ChatReportRoute : KeyLinkNavigationRoute(CHAT_REPORT_ROUTE)
     }
 
     object ProfileGraph : KeyLinkNavigationRoute(PROFILE_GRAPH_PATTERN) {
@@ -30,11 +34,9 @@ sealed class KeyLinkNavigationRoute(val route: String) {
         object OpenSourceRoute : KeyLinkNavigationRoute(OPEN_SOURCE_ROUTE)
     }
 
-    object ChatGraph : KeyLinkNavigationRoute(CHAT_GRAPH_PATTERN) {
-        object ChatDetailRoute : KeyLinkNavigationRoute(CHAT_DETAIL_ROUTE)
+    object ReceivedSignalGraph : KeyLinkNavigationRoute(RECEIVED_SIGNAL_GRAPH) {
         object ReceivedSignalDetailRoute : KeyLinkNavigationRoute(RECEIVED_SIGNAL_DETAIL_ROUTE)
-        object ReportRoute : KeyLinkNavigationRoute(REPORT_ROUTE)
-        object ChatReplyRoute : KeyLinkNavigationRoute(CHAT_REPLY_ROUTE)
         object ReceivedSignalReplyRoute : KeyLinkNavigationRoute(RECEIVED_SIGNAL_REPLY_ROUTE)
+        object ReceivedSignalReportRoute : KeyLinkNavigationRoute(RECEIVED_SIGNAL_REPORT_ROUTE)
     }
 }

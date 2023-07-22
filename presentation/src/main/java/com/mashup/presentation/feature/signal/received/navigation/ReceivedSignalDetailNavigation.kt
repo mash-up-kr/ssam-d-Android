@@ -15,8 +15,10 @@ fun NavController.navigateToReceivedSignalDetail(
     navOptions: NavOptions? = null
 ) {
     navigate(
-        route = KeyLinkNavigationRoute.ChatGraph.ReceivedSignalDetailRoute.route
-            .replace("{signalId}", "$signalId"),
+        route = KeyLinkNavigationRoute.ReceivedSignalGraph.ReceivedSignalDetailRoute.route.replace(
+            "{signalId}",
+            "$signalId"
+        ),
         navOptions = navOptions
     )
 }
