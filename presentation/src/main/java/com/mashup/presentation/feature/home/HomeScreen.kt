@@ -1,5 +1,7 @@
 package com.mashup.presentation.feature.home
 
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -7,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -16,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -24,6 +28,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.mashup.presentation.R
+import com.mashup.presentation.common.extension.findActivity
 import com.mashup.presentation.common.extension.isScrollingUp
 import com.mashup.presentation.feature.home.model.SignalUiModel
 import com.mashup.presentation.ui.common.KeyLinkLoading
@@ -40,6 +45,7 @@ fun HomeRoute(
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: (Long) -> Unit,
     homeViewModel: HomeViewModel,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -52,6 +58,8 @@ fun HomeRoute(
             isRefreshing = true
             pagedReceivedSignal.refresh()
         })
+    val context = LocalContext.current
+    var backPressedTime = 0L
 
     LaunchedEffect(Unit) {
         launch {
@@ -66,7 +74,17 @@ fun HomeRoute(
             isRefreshing = false
     }
 
-    Box(modifier = Modifier.pullRefresh(pullRefreshState).fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+
+    BackHandler(enabled = true) {
+        if (System.currentTimeMillis() - backPressedTime <= 500L) {
+            context.findActivity().finish()
+        } else {
+            onShowSnackbar(context.getString(R.string.app_finish_toast), SnackbarDuration.Short)
+        }
+        backPressedTime = System.currentTimeMillis()
+    }
+
+    Box(modifier = Modifier.pullRefresh(pullRefreshState), contentAlignment = Alignment.TopCenter) {
         HomeBackgroundScreen(
             subscribeKeywordsUiState = subscribeKeywordsUiState,
             pagedReceivedSignal = pagedReceivedSignal,

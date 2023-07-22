@@ -22,7 +22,7 @@ data class MessageDetailUiModel(
                     id = id,
                     profileImage = profileImage,
                     nickname = nickname,
-                    keywords = keywords,
+                    keywords = keywords.map { "#$it" },
                     matchingKeywordCount = matchingKeywordCount,
                     content = content,
                     receivedTimeMillis = receivedTimeMillis,

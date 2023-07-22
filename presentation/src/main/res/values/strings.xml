@@ -3,6 +3,9 @@
     <string name="app_name_debug">D_키링</string>
     <string name="empty_text" />
 
+    // 공통
+    <string name="app_finish_toast">한 번 더 클릭하면 앱이 종료됩니다.</string>
+
     <string name="navigation_home">홈</string>
     <string name="navigation_signal">보내기</string>
     <string name="navigation_chat">연결됨</string>
