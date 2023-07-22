@@ -19,7 +19,7 @@ class SignalRepositoryImpl @Inject constructor(
     private val remoteSignalDataSource: RemoteSignalDataSource
 ) : SignalRepository {
 
-    override suspend fun postSignal(content: String, keywords: List<String>) {
+    override suspend fun sendSignal(content: String, keywords: List<String>) {
         remoteSignalDataSource.postSignal(content, keywords)
     }
 
