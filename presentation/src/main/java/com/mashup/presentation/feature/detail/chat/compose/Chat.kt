@@ -56,7 +56,7 @@ fun ChatContent(
                     message = it.message,
                     userName = it.userName,
                     date = it.date,
-                    backgroundColor = null,
+                    backgroundColor = it.backgroundColor,
                     onChatItemClick = { onChatItemClick(it.id) }
                 )
             }
