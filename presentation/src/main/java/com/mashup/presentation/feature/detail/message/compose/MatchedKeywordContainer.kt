@@ -2,7 +2,6 @@ package com.mashup.presentation.feature.detail.message.compose
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -13,9 +12,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.paging.compose.itemContentType
 import com.mashup.presentation.R
-import com.mashup.presentation.feature.chat.compose.ChatRoomItem
 import com.mashup.presentation.ui.common.KeywordChip
 import com.mashup.presentation.ui.theme.*
 
