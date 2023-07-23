@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">키링</string>
-    <string name="app_name_debug">D_키링</string>
     <string name="empty_text" />
 
     // 공통
