@@ -26,14 +26,18 @@ fun MatchedKeywordContainer(
     matchedKeywords: List<String>,
     modifier: Modifier = Modifier
 ) {
-    MatchedKeywordHeader(
-        modifier = modifier,
-        matchedKeywords = matchedKeywords.size
-    )
-    MatchedKeywordsContent(
-        modifier = Modifier.padding(top = 20.dp),
-        matchedKeywords = matchedKeywords
-    )
+    Column(
+        modifier = modifier
+    ) {
+        MatchedKeywordHeader(
+            modifier = Modifier,
+            matchedKeywords = matchedKeywords.size
+        )
+        MatchedKeywordsContent(
+            modifier = Modifier.padding(top = 20.dp),
+            matchedKeywords = matchedKeywords
+        )
+    }
 }
 
 @Composable

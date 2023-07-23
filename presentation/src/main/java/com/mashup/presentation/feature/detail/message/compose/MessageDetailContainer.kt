@@ -21,7 +21,6 @@ fun MessageDetailContainer(
     othersName: String,
     date: String,
     message: String,
-    matchedKeywords: List<String>,
     profileImage: String,
     modifier: Modifier = Modifier
 ) {
@@ -32,11 +31,6 @@ fun MessageDetailContainer(
         MessageDetailContent(
             modifier = Modifier.padding(top = 16.dp),
             message = message
-        )
-
-        MatchedKeywordContainer(
-            modifier = Modifier.padding(top = 52.dp),
-            matchedKeywords = matchedKeywords
         )
     }
 }
