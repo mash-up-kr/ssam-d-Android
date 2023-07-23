@@ -1,7 +1,7 @@
 package com.mashup.presentation.feature.chat.model
 
 import com.mashup.domain.model.chat.Room
-import com.mashup.presentation.common.extension.getDisplayedTime
+import com.mashup.presentation.common.extension.getDisplayedDateAfterOneDay
 
 data class RoomUiModel (
     val id: Long,
@@ -22,7 +22,7 @@ data class RoomUiModel (
                     recentSignalContent = recentSignalContent,
                     matchingKeywordCount = matchingKeywordCount,
                     profileImage = profileImage,
-                    receivedTime = recentSignalReceivedTimeMillis.getDisplayedTime(),
+                    receivedTime = recentSignalReceivedTimeMillis.getDisplayedDateAfterOneDay(),
                     nickname = nickname,
                     isChatRead = isChatRead
                 )
