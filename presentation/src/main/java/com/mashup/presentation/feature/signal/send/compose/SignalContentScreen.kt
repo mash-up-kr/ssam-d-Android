@@ -17,10 +17,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.presentation.R
-import com.mashup.presentation.feature.signal.SignalViewModel
+import com.mashup.presentation.feature.signal.send.SignalViewModel
 import com.mashup.presentation.ui.common.KeyLinkButton
 import com.mashup.presentation.ui.common.KeyLinkContentLengthDialog
 import com.mashup.presentation.ui.common.KeyLinkTextField
