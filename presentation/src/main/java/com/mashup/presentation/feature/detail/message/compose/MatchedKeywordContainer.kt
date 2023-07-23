@@ -79,7 +79,8 @@ fun MatchedKeywordsContent(
 ) {
     LazyRow(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(end = 20.dp)
     ) {
         items(matchedKeywords.size) { idx ->
             KeywordChip(
