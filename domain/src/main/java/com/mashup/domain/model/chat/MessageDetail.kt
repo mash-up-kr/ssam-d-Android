@@ -11,5 +11,6 @@ data class MessageDetail(
     val content: String,
     val receivedTimeMillis: Long,
     val isAlive: Boolean,
-    val isMine: Boolean
+    val isMine: Boolean,
+    val isReplyable: Boolean
 ) : DomainModel

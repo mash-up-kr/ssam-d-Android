@@ -134,7 +134,7 @@
     <string name="content_description_error">에러 아이콘입니다.</string>
     <string name="network_error_title">네트워크 연결이 되지 않았어요\n다시 시도해주세요</string>
     <string name="button_go_back">이전으로 돌아가기</string>
-    
+
     // 채팅
     <string name="chat_room_disconnect_room_guide">상대방이 연결을 끊었습니다.\n더이상 대화를 할 수 없습니다.</string>
 </resources>
