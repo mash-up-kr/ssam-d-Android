@@ -1,10 +1,18 @@
 package com.mashup.presentation.navigation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.presentation.KeyLinkApp
 import com.mashup.presentation.common.extension.setThemeContent
+import com.mashup.presentation.common.network.NetworkStatus
+import com.mashup.presentation.common.network.NetworkStatusMonitor
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 /**
  * Ssam_D_Android
@@ -13,11 +21,32 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val networkStatusMonitor: NetworkStatusMonitor by lazy {
+        NetworkStatusMonitor(
+            context = this,
+            coroutineScope = lifecycleScope
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initObservers()
 
         setThemeContent {
             KeyLinkApp()
+        }
+    }
+
+    private fun initObservers() {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                networkStatusMonitor.networkStatus.collectLatest { networkStatus ->
+                    when (networkStatus) {
+                        is NetworkStatus.NetworkConnected -> Log.e("NETWORK", "연결")
+                        is NetworkStatus.NetworkDisconnected -> Log.e("NETWORK", "연결끊김")
+                    }
+                }
+            }
         }
     }
 }
