@@ -90,9 +90,7 @@ fun MessageDetailScreen(
         },
     ) { paddingValues ->
         val contentPadding = PaddingValues(
-            top = paddingValues.calculateTopPadding() + 16.dp,
-            start = 20.dp,
-            end = 20.dp
+            top = paddingValues.calculateTopPadding() + 16.dp
         )
         when (messageDetailUiState) {
             is MessageDetailUiState.Loading -> KeyLinkLoading()
@@ -121,7 +119,7 @@ private fun MessageDetailContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MessageDetailContainer(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f).padding(horizontal = 20.dp),
             othersName = messageDetail.nickname,
             date = messageDetail.receivedTimeMillis.getDisplayedDateWithDay(),
             message = messageDetail.content,
@@ -132,7 +130,7 @@ private fun MessageDetailContent(
             modifier = Modifier.fillMaxWidth().padding(bottom = 40.dp)
         ) {
             MatchedKeywordContainer(
-                modifier = Modifier.padding(vertical = 12.dp),
+                modifier = Modifier.padding(top = 12.dp, bottom = 12.dp, start = 20.dp),
                 matchedKeywords = messageDetail.keywords
             )
 
