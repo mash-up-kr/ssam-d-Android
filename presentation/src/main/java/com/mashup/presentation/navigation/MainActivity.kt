@@ -1,5 +1,6 @@
 package com.mashup.presentation.navigation
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -10,6 +11,7 @@ import com.mashup.presentation.KeyLinkApp
 import com.mashup.presentation.common.extension.setThemeContent
 import com.mashup.presentation.common.network.NetworkStatus
 import com.mashup.presentation.common.network.NetworkStatusMonitor
+import com.mashup.presentation.feature.error.NetworkErrorActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -21,12 +23,7 @@ import kotlinx.coroutines.launch
  */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val networkStatusMonitor: NetworkStatusMonitor by lazy {
-        NetworkStatusMonitor(
-            context = this,
-            coroutineScope = lifecycleScope
-        )
-    }
+    private val networkStatusMonitor by lazy { NetworkStatusMonitor(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,55 +36,18 @@ class MainActivity : ComponentActivity() {
 
     private fun initObservers() {
         lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 networkStatusMonitor.networkStatus.collectLatest { networkStatus ->
                     when (networkStatus) {
-                        is NetworkStatus.NetworkConnected -> Log.e("NETWORK", "연결")
-                        is NetworkStatus.NetworkDisconnected -> Log.e("NETWORK", "연결끊김")
+                        is NetworkStatus.NetworkConnected -> {}
+                        is NetworkStatus.NetworkDisconnected -> onNetworkDisconnected()
                     }
                 }
             }
         }
     }
+
+    private fun onNetworkDisconnected() {
+        startActivity(Intent(this, NetworkErrorActivity::class.java))
+    }
 }
-
-
-//class HomeActivity : BaseActivity<ActivityHomeBinding>(R.layout.activity_home) {
-//    private val navHostFragment by lazy {
-//        supportFragmentManager.findFragmentById(binding.fcvHome.id) as NavHostFragment
-//    }
-//    private val navController by lazy { navHostFragment.navController }
-//
-//    override fun initViews() {
-//        initBottomNavigationView()
-//        initDestinationChangeListener()
-//    }
-//
-//    private fun initBottomNavigationView() {
-//        binding.bnvHome.setupWithNavController(navController)
-//        addSignalIconItemView()
-//        binding.bnvHome.addBadge(this, 1000)
-//    }
-//
-//    private fun initDestinationChangeListener() {
-//        navController.addOnDestinationChangedListener { _, destination, _ ->
-//            binding.bnvHome.visibility = when (destination.id) {
-//                /* 디자인 명세에 따라 수정 */
-//                R.id.homeFragment -> View.VISIBLE
-//                R.id.chatFragment -> {
-//                    binding.bnvHome.removeBadge()
-//                    View.VISIBLE
-//                }
-//                else -> View.GONE
-//            }
-//        }
-//    }
-//
-//    private fun addSignalIconItemView() {
-//        val navigationMenuView = binding.bnvHome.getChildAt(0) as BottomNavigationMenuView
-//        val navigationItemView = navigationMenuView.getChildAt(1) as BottomNavigationItemView
-//        val signalItemView = LayoutInflater.from(this)
-//            .inflate(R.layout.menu_bottom_navigation_signal, binding.bnvHome, false)
-//        navigationItemView.addView(signalItemView)
-//    }
-//}

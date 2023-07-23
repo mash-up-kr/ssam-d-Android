@@ -2,7 +2,9 @@ package com.mashup.presentation.feature.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -14,6 +16,9 @@ import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.setThemeContent
+import com.mashup.presentation.common.network.NetworkStatus
+import com.mashup.presentation.common.network.NetworkStatusMonitor
+import com.mashup.presentation.feature.error.NetworkErrorActivity
 import com.mashup.presentation.feature.onboarding.OnBoardingActivity
 import com.mashup.presentation.navigation.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,14 +26,15 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
-
+class LoginActivity : ComponentActivity() {
+    private val networkStatusMonitor by lazy { NetworkStatusMonitor(this) }
     private val loginViewModel: LoginViewModel by viewModels()
 
     private var backPressedTime = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initObservers()
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setThemeContent {
             LoginRoute(
@@ -63,6 +69,21 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    private fun initObservers() {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
+                networkStatusMonitor.networkStatus.collectLatest { networkStatus ->
+                    when (networkStatus) {
+                        is NetworkStatus.NetworkConnected -> {}
+                        is NetworkStatus.NetworkDisconnected -> onNetworkDisconnected()
+                    }
+                }
+            }
+        }
+    }
+    private fun onNetworkDisconnected() {
+        startActivity(Intent(this, NetworkErrorActivity::class.java))
     }
 
     private fun handleKakaoLogin() {

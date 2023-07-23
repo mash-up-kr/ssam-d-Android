@@ -12,10 +12,7 @@ import kotlinx.coroutines.flow.*
  * @author jaesung
  * @created 2023/07/23
  */
-class NetworkStatusMonitor(
-    context: Context,
-    private val coroutineScope: CoroutineScope
-) {
+class NetworkStatusMonitor(context: Context) {
     private val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
