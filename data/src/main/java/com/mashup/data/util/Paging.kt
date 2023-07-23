@@ -12,12 +12,13 @@ import com.mashup.domain.base.paging.PagedData
  */
 
 fun <T : Any> createPager(
-    pageSize: Int = 5,
+    pageSize: Int = 10,
     executor: suspend (Int, Int?) -> PagedData<List<T>>
 ): Pager<Int, T> = Pager(
     config = PagingConfig(
         pageSize = pageSize,
-        enablePlaceholders = false
+        enablePlaceholders = false,
+        initialLoadSize = 10
     ),
     pagingSourceFactory = { KeyLinkPagingSource(executor) }
 )
