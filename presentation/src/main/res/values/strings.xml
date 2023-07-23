@@ -130,4 +130,8 @@
     <string name="snackbar_subscribe_keyword">구독 키워드가 저장되었습니다.</string>
     <string name="snackbar_reply">시그널에 대한 답장을 보냈습니다.</string>
     <string name="snackbar_report">신고가 접수되었습니다.</string>
+
+    <string name="content_description_error">에러 아이콘입니다.</string>
+    <string name="network_error_title">네트워크 연결이 되지 않았어요\n다시 시도해주세요</string>
+    <string name="button_go_back">이전으로 돌아가기</string>
 </resources>
