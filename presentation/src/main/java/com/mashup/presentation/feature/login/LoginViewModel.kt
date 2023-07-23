@@ -66,7 +66,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun getNicknameDuplication(nickname: String) {
-        if (nickname.isEmpty()) {
+        if (nickname.isBlank()) {
             _nicknameState.value = ValidationState.EMPTY
             return
         }
