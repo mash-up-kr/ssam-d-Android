@@ -15,7 +15,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
@@ -85,34 +84,37 @@ fun LoginScreen(
         pagerState.animateScrollToPage(currentPage)
     }
 
-    HorizontalPager(
-        modifier = Modifier
-            .fillMaxSize()
-            .windowInsetsPadding(
-                WindowInsets.systemBars.only(WindowInsetsSides.Vertical)
-            ),
-        pageCount = 3,
-        state = pagerState,
-        userScrollEnabled = false
-    ) { page ->
-        when (page) {
-            0 -> LoginContentScreen (
-                onLoginButtonClicked = loginButtonClicked
-            )
-            1 -> NicknameScreen(
-                coroutineScope = coroutineScope,
-                validationState = nicknameState,
-                onNextButtonClicked = { nickname ->
-                    patchNickname(nickname)
-                },
-                checkNicknameDuplication = { nickname ->
-                    getNicknameDuplication(nickname)
-                }
-            )
-            2 -> LoginCompletionScreen (
-                nickname = nickname,
-                onStartButtonClicked = loginToOnBoarding
-            )
+    Scaffold { paddingValues ->
+        HorizontalPager(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .windowInsetsPadding(
+                    WindowInsets.systemBars.only(WindowInsetsSides.Vertical)
+                ),
+            pageCount = 3,
+            state = pagerState,
+            userScrollEnabled = false
+        ) { page ->
+            when (page) {
+                0 -> LoginContentScreen (
+                    onLoginButtonClicked = loginButtonClicked
+                )
+                1 -> NicknameScreen(
+                    coroutineScope = coroutineScope,
+                    validationState = nicknameState,
+                    onNextButtonClicked = { nickname ->
+                        patchNickname(nickname)
+                    },
+                    checkNicknameDuplication = { nickname ->
+                        getNicknameDuplication(nickname)
+                    }
+                )
+                2 -> LoginCompletionScreen (
+                    nickname = nickname,
+                    onStartButtonClicked = loginToOnBoarding
+                )
+            }
         }
     }
 }
@@ -124,7 +126,10 @@ fun LoginContentScreen(
     Box {
         LoginBackground()
 
-        LoginContainer(modifier = Modifier.padding(top = 120.dp, bottom = 48.dp)) {
+        Column(
+            modifier = Modifier.padding(top = 120.dp, bottom = 48.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             LoginTitle(modifier = Modifier.padding(bottom = 24.dp))
 
             LoginPlanetLottie(modifier = Modifier
@@ -155,23 +160,6 @@ private fun LoginBackground() {
         contentDescription = stringResource(R.string.login_description_space),
         contentScale = ContentScale.Crop
     )
-}
-
-@Composable
-private fun LoginContainer(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
-    Scaffold(
-        modifier = modifier,
-        backgroundColor = Color.Transparent
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            content()
-        }
-    }
 }
 
 @Composable
@@ -259,15 +247,19 @@ fun NicknameScreen(
     Box {
         LoginBackground()
 
-        LoginContainer(modifier = Modifier
+        Column(modifier = Modifier
             .pointerInput(Unit) {
                 detectTapGestures(onTap = {
                     focusManager.clearFocus()
                 })
             }
-            .padding(top = 185.dp, start = 20.dp, end = 20.dp)
+            .padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(modifier = Modifier.weight(1f)) {
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center
+            ) {
                 KeyLinkMintText(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -318,7 +310,10 @@ fun LoginCompletionScreen(nickname: String, onStartButtonClicked: () -> Unit) {
             contentDescription = stringResource(R.string.login_description_blueplanet)
         )
 
-        LoginContainer(modifier = Modifier.padding(top = 112.dp, bottom = 72.dp, start = 20.dp, end = 20.dp)) {
+        Column(
+            modifier = Modifier.padding(top = 112.dp, bottom = 72.dp, start = 20.dp, end = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Column(modifier = Modifier.weight(1f)) {
                 LoginProfileImage(modifier = Modifier.padding(bottom = 24.dp))
                 LoginCompletionText(nickname = nickname)
