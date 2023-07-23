@@ -46,6 +46,12 @@ val Title2 = TextStyle(
     fontSize = 15.sp,
     lineHeight = 22.sp
 )
+val Title3 = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.Bold,
+    fontSize = 14.sp,
+    lineHeight = 22.sp
+)
 
 val Body1 = TextStyle(
     fontFamily = FontFamily.Default,
