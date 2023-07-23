@@ -134,7 +134,7 @@ private fun MessageDetailContent(
 
         if (messageDetail.isReplyable) {
             KeyLinkRoundButton(
-                modifier = Modifier.padding(top = 16.dp, bottom = 40.dp).align(Alignment.CenterHorizontally),
+                modifier = Modifier.padding(top = 16.dp, bottom = 40.dp, end = 20.dp).align(Alignment.CenterHorizontally),
                 text = stringResource(R.string.button_send_reply),
                 onClick = onReplyButtonClick
             )
