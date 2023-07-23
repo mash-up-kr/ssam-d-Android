@@ -7,6 +7,8 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.mashup.presentation.feature.profile.compose.ProfileRoute
+import com.mashup.presentation.feature.profile.policy.PrivacyPolicyRoute
+import com.mashup.presentation.feature.profile.tos.TermsOfServiceRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 import com.mashup.presentation.ui.theme.White
 
@@ -47,20 +49,16 @@ fun NavGraphBuilder.profileGraph(
             )
         }
         composable(route = KeyLinkNavigationRoute.ProfileGraph.SendSignalRoute.route) {
-            // SendSignalRoute
-            Text(text = "SendSignal", color = White)
+
         }
         composable(route = KeyLinkNavigationRoute.ProfileGraph.TermsOfServiceRoute.route) {
-            // TermsOfServiceRoute
-            Text(text = "TOS", color = White)
+            TermsOfServiceRoute(onBackClick = onBackClick)
         }
         composable(route = KeyLinkNavigationRoute.ProfileGraph.PrivacyPolicyRoute.route) {
-            // PrivacyPolicyRoute
-            Text(text = "Privacy", color = White)
+            PrivacyPolicyRoute(onBackClick = onBackClick)
         }
         composable(route = KeyLinkNavigationRoute.ProfileGraph.OpenSourceRoute.route) {
-            // OpenSourceRoute
-            Text(text = "OpenSource", color = White)
+
         }
     }
 }
