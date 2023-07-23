@@ -88,7 +88,8 @@ fun ReceivedSignalDetailScreen(
         },
     ) { paddingValues ->
         val contentPadding = PaddingValues(
-            top = paddingValues.calculateTopPadding() + 16.dp
+            top = paddingValues.calculateTopPadding() + 16.dp,
+            start = 20.dp
         )
         when (receivedSignalDetailUiState) {
             Loading -> KeyLinkLoading()
@@ -117,14 +118,14 @@ private fun ReceivedSignalDetailContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MessageDetailContainer(
-            modifier = Modifier.weight(1f).padding(horizontal = 20.dp),
+            modifier = Modifier.weight(1f).padding(end = 20.dp),
             othersName = receivedSignalDetail.nickname,
             date = receivedSignalDetail.receivedTimeMillis,
             message = receivedSignalDetail.content,
             profileImage = receivedSignalDetail.profileImageUrl
         )
         MatchedKeywordContainer(
-            modifier = Modifier.padding(top = 12.dp, bottom = 12.dp, start = 20.dp),
+            modifier = Modifier.padding(vertical = 12.dp),
             matchedKeywords = receivedSignalDetail.keywords
         )
         KeyLinkRoundButton(
