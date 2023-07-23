@@ -126,22 +126,18 @@ private fun MessageDetailContent(
             profileImage = messageDetail.profileImage
         )
 
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 40.dp)
-        ) {
-            MatchedKeywordContainer(
-                modifier = Modifier.padding(top = 12.dp, bottom = 12.dp, start = 20.dp),
-                matchedKeywords = messageDetail.keywords
-            )
+        MatchedKeywordContainer(
+            modifier = Modifier.padding(top = 12.dp, bottom = 12.dp, start = 20.dp),
+            matchedKeywords = messageDetail.keywords
+        )
 
-            // 남이 보낸 메세지고, 메세지가 살아있는 경우만 답장 버튼을 노출합니다.
-            if (!messageDetail.isMine && messageDetail.isAlive) {
-                KeyLinkRoundButton(
-                    modifier = Modifier.padding(top = 16.dp).align(Alignment.CenterHorizontally),
-                    text = stringResource(R.string.button_send_reply),
-                    onClick = onReplyButtonClick
-                )
-            }
+        // 남이 보낸 메세지고, 메세지가 살아있는 경우만 답장 버튼을 노출합니다.
+        if (!messageDetail.isMine && messageDetail.isAlive) {
+            KeyLinkRoundButton(
+                modifier = Modifier.padding(top = 16.dp, bottom = 40.dp).align(Alignment.CenterHorizontally),
+                text = stringResource(R.string.button_send_reply),
+                onClick = onReplyButtonClick
+            )
         }
     }
 }

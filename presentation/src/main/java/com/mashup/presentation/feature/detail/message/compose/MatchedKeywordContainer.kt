@@ -28,7 +28,7 @@ fun MatchedKeywordContainer(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier.fillMaxWidth()
     ) {
         MatchedKeywordHeader(
             modifier = Modifier,

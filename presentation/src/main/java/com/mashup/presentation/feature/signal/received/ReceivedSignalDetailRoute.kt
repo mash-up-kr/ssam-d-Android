@@ -123,22 +123,15 @@ private fun ReceivedSignalDetailContent(
             message = receivedSignalDetail.content,
             profileImage = receivedSignalDetail.profileImageUrl
         )
-
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 40.dp)
-        ) {
-            MatchedKeywordContainer(
-                modifier = Modifier.padding(top = 12.dp, bottom = 12.dp, start = 20.dp),
-                matchedKeywords = receivedSignalDetail.keywords
-            )
-            KeyLinkRoundButton(
-                modifier = Modifier.padding(top = 16.dp).align(Alignment.CenterHorizontally),
-                text = stringResource(R.string.button_send_reply),
-                onClick = { onReplyButtonClick(receivedSignalDetail.signalId) }
-            )
-        }
-
-
+        MatchedKeywordContainer(
+            modifier = Modifier.padding(top = 12.dp, bottom = 12.dp, start = 20.dp),
+            matchedKeywords = receivedSignalDetail.keywords
+        )
+        KeyLinkRoundButton(
+            modifier = Modifier.padding(top = 16.dp, bottom = 40.dp).align(Alignment.CenterHorizontally),
+            text = stringResource(R.string.button_send_reply),
+            onClick = { onReplyButtonClick(receivedSignalDetail.signalId) }
+        )
     }
 }
 
