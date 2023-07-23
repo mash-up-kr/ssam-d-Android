@@ -1,10 +1,7 @@
 package com.mashup.presentation.feature.signal.received
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -20,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.detail.chat.compose.MessageDetailUiState
+import com.mashup.presentation.feature.detail.message.compose.MatchedKeywordContainer
 import com.mashup.presentation.feature.detail.message.compose.MessageDetailContainer
 import com.mashup.presentation.feature.detail.message.compose.MessageDetailScreen
 import com.mashup.presentation.feature.signal.received.model.ReceivedSignalDetailUiModel
@@ -91,8 +89,7 @@ fun ReceivedSignalDetailScreen(
     ) { paddingValues ->
         val contentPadding = PaddingValues(
             top = paddingValues.calculateTopPadding() + 16.dp,
-            start = 20.dp,
-            end = 20.dp
+            start = 20.dp
         )
         when (receivedSignalDetailUiState) {
             Loading -> KeyLinkLoading()
@@ -121,18 +118,18 @@ private fun ReceivedSignalDetailContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MessageDetailContainer(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1f),
+            modifier = Modifier.weight(1f).padding(end = 20.dp),
             othersName = receivedSignalDetail.nickname,
             date = receivedSignalDetail.receivedTimeMillis,
             message = receivedSignalDetail.content,
-            matchedKeywords = receivedSignalDetail.keywords,
             profileImage = receivedSignalDetail.profileImageUrl
         )
-
+        MatchedKeywordContainer(
+            modifier = Modifier.padding(vertical = 12.dp),
+            matchedKeywords = receivedSignalDetail.keywords
+        )
         KeyLinkRoundButton(
-            modifier = Modifier.padding(top = 48.dp, bottom = 42.dp),
+            modifier = Modifier.padding(top = 16.dp, bottom = 40.dp).align(Alignment.CenterHorizontally),
             text = stringResource(R.string.button_send_reply),
             onClick = { onReplyButtonClick(receivedSignalDetail.signalId) }
         )

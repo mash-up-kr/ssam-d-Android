@@ -12,7 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -57,11 +56,8 @@ class LoginViewModel @Inject constructor(
             val param = LoginParam(email = email, socialId = socialId, deviceToken = deviceToken)
             loginUseCase.execute(param)
                 .onSuccess {
-                    Timber.i("드디어 로그인 성공~!")
                     goToNextPage()
-                }.onFailure {
-                    Timber.i("삐빅- 로그인 실패")
-                }
+                }.onFailure {}
         }
     }
 
@@ -73,15 +69,13 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             checkNicknameDuplicationUseCase.execute(nickname)
                 .onSuccess {
-                    Timber.i("중복된 닉네임 없음ㅋ")
                     _nicknameState.value = ValidationState.SUCCESS
                 }.onFailure {
                     when (it) {
                         is ConflictException -> {
-                            Timber.e("중복된 닉네임당")
                             _nicknameState.value = ValidationState.FAILED
                         }
-                        else -> Timber.e("삐빅- 에러 발생 WHY? " + it.message)
+                        else -> {}
                     }
                 }
         }
@@ -91,12 +85,9 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             patchNicknameUseCase.execute(nickname)
                 .onSuccess {
-                    Timber.i("닉네임 세팅 성공~!")
                     this@LoginViewModel.nickname = nickname
                     goToNextPage()
-                }.onFailure {
-                    Timber.e("삐빅- 닉네임 세팅 실패 WHY? " + it.message)
-                }
+                }.onFailure {}
         }
     }
 }

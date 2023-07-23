@@ -16,7 +16,6 @@ import com.mashup.presentation.feature.detail.chat.model.ChatUiModel.Companion.t
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,10 +44,8 @@ class ChatDetailViewModel @Inject constructor(
         viewModelScope.launch {
             getChatInfoUseCase.execute(id)
                 .catch {
-                    Timber.e("채팅방 정보 get 실패.")
                     _chatInfoUiState.value = ChatInfoUiState.Failure(it.message)
                 }.collect {
-                    Timber.i("채팅방 정보 get 성공~!")
                     _chatInfoUiState.value = ChatInfoUiState.Success(it.toUiModel())
                 }
         }
@@ -59,7 +56,6 @@ class ChatDetailViewModel @Inject constructor(
             getChatsUseCase.execute(id).cachedIn(viewModelScope).map { pagingData ->
                 pagingData.map { chat -> chat.toUiModel() }
             }.collect {
-                Timber.i("채팅방 채팅 목록 get 성공~!")
                 _chatPagingData.value = it
             }
         }

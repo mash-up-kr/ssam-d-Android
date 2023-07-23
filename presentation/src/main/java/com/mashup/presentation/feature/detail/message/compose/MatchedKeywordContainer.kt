@@ -1,6 +1,7 @@
 package com.mashup.presentation.feature.detail.message.compose
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -26,14 +27,18 @@ fun MatchedKeywordContainer(
     matchedKeywords: List<String>,
     modifier: Modifier = Modifier
 ) {
-    MatchedKeywordHeader(
-        modifier = modifier,
-        matchedKeywords = matchedKeywords.size
-    )
-    MatchedKeywordsContent(
-        modifier = Modifier.padding(top = 20.dp),
-        matchedKeywords = matchedKeywords
-    )
+    Column(
+        modifier = modifier.fillMaxWidth()
+    ) {
+        MatchedKeywordHeader(
+            modifier = Modifier,
+            matchedKeywords = matchedKeywords.size
+        )
+        MatchedKeywordsContent(
+            modifier = Modifier.padding(top = 20.dp),
+            matchedKeywords = matchedKeywords
+        )
+    }
 }
 
 @Composable
@@ -64,20 +69,20 @@ fun MatchedKeywordHeader(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MatchedKeywordsContent(
     matchedKeywords: List<String>,
     modifier: Modifier = Modifier,
 ) {
-    FlowRow(
+    LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(end = 20.dp)
     ) {
-        matchedKeywords.forEach { keyword ->
+        items(matchedKeywords.size) { idx ->
             KeywordChip(
                 modifier = Modifier.padding(top = 8.dp),
-                keyword = keyword,
+                keyword = matchedKeywords[idx],
                 style = Caption2
             )
         }

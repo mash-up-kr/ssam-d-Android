@@ -1,10 +1,7 @@
 package com.mashup.presentation.feature.detail.message.compose
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -94,8 +91,7 @@ fun MessageDetailScreen(
     ) { paddingValues ->
         val contentPadding = PaddingValues(
             top = paddingValues.calculateTopPadding() + 16.dp,
-            start = 20.dp,
-            end = 20.dp
+            start = 20.dp
         )
         when (messageDetailUiState) {
             is MessageDetailUiState.Loading -> KeyLinkLoading()
@@ -124,20 +120,22 @@ private fun MessageDetailContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MessageDetailContainer(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1f),
+            modifier = Modifier.weight(1f).padding(end = 20.dp),
             othersName = messageDetail.nickname,
             date = messageDetail.receivedTimeMillis.getDisplayedDateWithDay(),
             message = messageDetail.content,
-            matchedKeywords = messageDetail.keywords,
             profileImage = messageDetail.profileImage
+        )
+
+        MatchedKeywordContainer(
+            modifier = Modifier.padding(vertical = 12.dp),
+            matchedKeywords = messageDetail.keywords
         )
 
         // 남이 보낸 메세지고, 메세지가 살아있는 경우만 답장 버튼을 노출합니다.
         if (!messageDetail.isMine && messageDetail.isAlive) {
             KeyLinkRoundButton(
-                modifier = Modifier.padding(top = 48.dp, bottom = 42.dp),
+                modifier = Modifier.padding(top = 16.dp, bottom = 40.dp).align(Alignment.CenterHorizontally),
                 text = stringResource(R.string.button_send_reply),
                 onClick = onReplyButtonClick
             )
