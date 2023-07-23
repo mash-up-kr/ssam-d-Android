@@ -121,7 +121,7 @@ fun KeyLinkChatBottomSheetPreview() {
 @Preview(showBackground = true, backgroundColor = 0XFFFFFFFF)
 @Composable
 fun KeyLinkKeywordBottomSheetPreview() {
-    val matchedKeywords = listOf("매쉬업", "일상", "디자인", "IT", "취준", "매쉬업", "일상", "디자인", "IT", "취준")
+    val matchedKeywords = listOf("매쉬업")
     SsamDTheme {
         Surface(color = Gray02) {
             KeyLinkKeywordBottomSheet(
