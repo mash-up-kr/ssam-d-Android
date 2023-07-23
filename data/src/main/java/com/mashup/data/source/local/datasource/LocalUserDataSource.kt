@@ -40,10 +40,6 @@ class LocalUserDataSource @Inject constructor(
         preferences.edit().putString(NICKNAME, nickname).apply()
     }
 
-    fun removeNickname() {
-        preferences.edit().putString(NICKNAME, "").apply()
-    }
-
     fun getKeywords(): List<String> {
         val json = preferences.getString(KEYWOREDS, null)
         return if (json == null) {
