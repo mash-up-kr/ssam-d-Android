@@ -106,4 +106,7 @@ dependencies {
     // paging
     implementation Dep.AndroidX.Paging3.pagingCompose
     implementation Dep.AndroidX.Paging3.pagingRuntime
+
+    // accompanist
+    implementation Dep.Google.Accompanist.webview
 }
