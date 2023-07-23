@@ -1,6 +1,5 @@
-package com.mashup.presentation.feature.signal
+package com.mashup.presentation.feature.signal.send
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +10,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import okhttp3.internal.toImmutableList
-import timber.log.Timber
 import javax.inject.Inject
 
 /**

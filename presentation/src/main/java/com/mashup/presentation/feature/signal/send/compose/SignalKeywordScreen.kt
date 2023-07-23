@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
-import com.mashup.presentation.feature.signal.KeywordUiState
-import com.mashup.presentation.feature.signal.SignalUiEvent
-import com.mashup.presentation.feature.signal.SignalViewModel
+import com.mashup.presentation.feature.signal.send.KeywordUiState
+import com.mashup.presentation.feature.signal.send.SignalUiEvent
+import com.mashup.presentation.feature.signal.send.SignalViewModel
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.Black
 import com.mashup.presentation.ui.theme.Gray06

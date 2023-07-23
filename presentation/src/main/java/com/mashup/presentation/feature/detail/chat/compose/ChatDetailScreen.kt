@@ -129,14 +129,12 @@ private fun ChatDetailScreen(
             when (currentBottomSheetType) {
                 BottomSheetType.KEYWORD -> KeyLinkKeywordBottomSheet(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentWidth(),
+                        .fillMaxWidth(),
                     matchedKeywords = matchedKeywords
                 )
                 BottomSheetType.MORE -> KeyLinkChatBottomSheet(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentWidth(),
+                        .fillMaxWidth(),
                     onDisconnectSignal = {
                         coroutineScope.launch {
                             chatMoreMenuBottomSheetState.hide()

@@ -30,8 +30,7 @@ fun KeyLinkBottomSheetSample() {
         bottomSheetContent = {
             KeyLinkKeywordBottomSheet(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentWidth(),
+                    .fillMaxWidth(),
                 matchedKeywords = listOf("매쉬업", "일상", "디자인", "IT", "취준", "매쉬업", "일상", "디자인", "IT", "취준")
             )
         },
