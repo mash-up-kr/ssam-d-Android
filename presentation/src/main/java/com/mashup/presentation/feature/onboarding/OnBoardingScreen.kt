@@ -64,11 +64,7 @@ fun OnBoardingScreen(
                 KeyLinkLoading()
             }
             OnBoardingViewModel.UiState.SaveSuccess -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    navigateToNotificationPermission()
-                } else {
-                    navigateToHome()
-                }
+                navigateToHome()
             }
             is OnBoardingViewModel.UiState.Editing -> {
                 OnBoardingContent(
