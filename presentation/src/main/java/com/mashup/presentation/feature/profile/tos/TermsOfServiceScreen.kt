@@ -1,6 +1,5 @@
 package com.mashup.presentation.feature.profile.tos
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -39,7 +38,7 @@ private fun TermsOfServiceScreen(
     ) { paddingValues ->
         KeyLinkWebView(
             modifier = Modifier.padding(paddingValues),
-            webViewUrl = "https://jslee-tech.tistory.com/63",
+            webViewUrl = "https://keylink.kr/term.html",
             onBackPressed = onBackClick
         )
     }

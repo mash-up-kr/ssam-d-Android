@@ -38,7 +38,7 @@ private fun PrivacyPolicyScreen(
     ) { paddingValues ->
         KeyLinkWebView(
             modifier = Modifier.padding(paddingValues),
-            webViewUrl = "https://jslee-tech.tistory.com/64",
+            webViewUrl = "https://keylink.kr/private.html",
             onBackPressed = onBackClick
         )
     }
