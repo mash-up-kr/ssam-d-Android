@@ -25,6 +25,7 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.mashup.presentation.R
@@ -59,9 +60,9 @@ fun ChatRoomList(
     chatRoomList: LazyPagingItems<RoomUiModel>
 ) {
     LazyColumn(modifier = modifier) {
-        // TODO: chatRoomList id값 unique한걸로 서버에 더미 요청 후 key값 추가
         items(
             count = chatRoomList.itemCount,
+            key = chatRoomList.itemKey(RoomUiModel::id),
             contentType = chatRoomList.itemContentType { "ChatRoom" }
         ) { index ->
             chatRoomList[index]?.let {
@@ -170,7 +171,9 @@ private fun ChatRoomMessageInfo(
             text = recentMessage,
             style = Caption2,
             color = Gray06,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            maxLines = 1,
+            overflow= TextOverflow.Ellipsis,
         )
 
         if (isNewMessage) {

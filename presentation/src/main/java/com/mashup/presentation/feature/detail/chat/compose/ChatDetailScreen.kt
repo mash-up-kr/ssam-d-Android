@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.detail.chat.compose
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.LazyGridState
@@ -13,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -64,7 +67,11 @@ fun ChatDetailRoute(
             isRefreshing = false
     }
 
-    Box(modifier = Modifier.pullRefresh(pullRefreshState).fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+    Box(
+        modifier = Modifier
+            .pullRefresh(pullRefreshState)
+            .fillMaxSize(), contentAlignment = Alignment.TopCenter
+    ) {
         ChatDetailScreen(
             modifier = modifier,
             onBackClick = onBackClick,
@@ -216,7 +223,9 @@ private fun ChatDetailContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         when (chatInfoUiState) {
-            is ChatInfoUiState.Loading -> { KeyLinkLoading() }
+            is ChatInfoUiState.Loading -> {
+                KeyLinkLoading()
+            }
             is ChatInfoUiState.Success -> {
                 ChatInfoContent(
                     chatInfoUiModel = chatInfoUiState.chatInfoUiModel,
@@ -250,28 +259,48 @@ private fun ChatInfoContent(
     isMatchedKeywordVisible: Boolean,
     coroutineScope: CoroutineScope
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(start = 20.dp, end = 20.dp, bottom = 16.dp),
-    ) {
-        OtherUserInfo(
-            modifier = Modifier.padding(bottom = 16.dp),
-            othersNickName = chatInfoUiModel.othersNickName,
-            othersProfileImage = chatInfoUiModel.othersProfileImage
-        )
-        MatchedKeywords(
+    Column {
+        Column(
             modifier = modifier
-                .clickable {
-                    onChangeBottomSheetType(BottomSheetType.KEYWORD)
-                    coroutineScope.launch {
-                        if (keywordBottomSheetState.isVisible) keywordBottomSheetState.hide()
-                        else keywordBottomSheetState.show()
-                    }
-                },
-            matchedKeywords = chatInfoUiModel.getMatchedKeywordSummery(),
-            visible = isMatchedKeywordVisible
-        )
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp, bottom = 16.dp),
+        ) {
+            OtherUserInfo(
+                modifier = Modifier.padding(bottom = 16.dp),
+                othersNickName = chatInfoUiModel.othersNickName,
+                othersProfileImage = chatInfoUiModel.othersProfileImage
+            )
+            MatchedKeywords(
+                modifier = modifier
+                    .clickable {
+                        onChangeBottomSheetType(BottomSheetType.KEYWORD)
+                        coroutineScope.launch {
+                            if (keywordBottomSheetState.isVisible) keywordBottomSheetState.hide()
+                            else keywordBottomSheetState.show()
+                        }
+                    },
+                matchedKeywords = chatInfoUiModel.getMatchedKeywordSummery(),
+                visible = isMatchedKeywordVisible
+            )
+
+        }
+        if (!chatInfoUiModel.isAlive) {
+            Box(
+                modifier = Modifier
+                    .background(color = Gray01),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp, vertical = 12.dp),
+                    text = stringResource(id = R.string.chat_room_disconnect_room_guide),
+                    style = Title3,
+                    color = White,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
     }
 }
 

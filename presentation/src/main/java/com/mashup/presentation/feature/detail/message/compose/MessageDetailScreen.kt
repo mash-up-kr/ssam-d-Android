@@ -132,8 +132,7 @@ private fun MessageDetailContent(
             matchedKeywords = messageDetail.keywords
         )
 
-        // 남이 보낸 메세지고, 메세지가 살아있는 경우만 답장 버튼을 노출합니다.
-        if (!messageDetail.isMine && messageDetail.isAlive) {
+        if (messageDetail.isReplyable) {
             KeyLinkRoundButton(
                 modifier = Modifier.padding(top = 16.dp, bottom = 40.dp).align(Alignment.CenterHorizontally),
                 text = stringResource(R.string.button_send_reply),

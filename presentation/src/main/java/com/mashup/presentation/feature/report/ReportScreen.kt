@@ -103,7 +103,12 @@ fun ReportTypeContent(
         modifier = modifier
     ) {
         Row(
-            modifier = Modifier.padding(vertical = 16.dp),
+            modifier = Modifier
+                .padding(vertical = 16.dp)
+                .clickable {
+                    onReportIconClick()
+                    onShowSnackbar(snackbarMessage, SnackbarDuration.Short)
+                },
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -113,10 +118,6 @@ fun ReportTypeContent(
                 color = White
             )
             Icon(
-                modifier = Modifier.clickable {
-                    onReportIconClick()
-                    onShowSnackbar(snackbarMessage, SnackbarDuration.Short)
-                },
                 painter = painterResource(id = R.drawable.ic_chevron_right_24),
                 tint = White,
                 contentDescription = stringResource(R.string.content_description_report),

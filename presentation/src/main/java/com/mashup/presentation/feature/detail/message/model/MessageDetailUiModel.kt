@@ -13,7 +13,8 @@ data class MessageDetailUiModel(
     val content: String,
     val receivedTimeMillis: Long,
     val isAlive: Boolean,
-    val isMine: Boolean
+    val isMine: Boolean,
+    val isReplyable: Boolean
 ) {
     companion object {
         fun fromDomainModel(domain: MessageDetail): MessageDetailUiModel {
@@ -27,7 +28,8 @@ data class MessageDetailUiModel(
                     content = content,
                     receivedTimeMillis = receivedTimeMillis,
                     isAlive = isAlive,
-                    isMine = isMine
+                    isMine = isMine,
+                    isReplyable = isReplyable
                 )
             }
         }

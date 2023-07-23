@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemContentType
@@ -90,7 +91,8 @@ private fun ReceivedSignalCard(
                 text = receivedSignal.signalContent,
                 style = Body1,
                 color = White,
-                maxLines = 3
+                maxLines = 2,
+                overflow= TextOverflow.Ellipsis,
             )
             KeywordsChips(
                 keywords = receivedSignal.keywords,
