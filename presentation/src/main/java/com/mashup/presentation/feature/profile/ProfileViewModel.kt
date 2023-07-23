@@ -7,9 +7,7 @@ import com.mashup.domain.usecase.mypage.SaveAlarmStateUseCase
 import com.mashup.presentation.feature.profile.model.ProfileUiModel
 import com.mashup.domain.usecase.mypage.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,6 +26,9 @@ class ProfileViewModel @Inject constructor(
     private val _uiState: MutableStateFlow<UiState> =
         MutableStateFlow(UiState.Loading)
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
+
+    private val _eventFlow: MutableSharedFlow<LogoutUiEvent> = MutableSharedFlow<LogoutUiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     init {
         initProfile()
@@ -57,6 +58,12 @@ class ProfileViewModel @Inject constructor(
     fun logout() {
         viewModelScope.launch {
             logout.execute(Unit)
+                .onSuccess {
+                    _eventFlow.emit(Logout)
+                }
+                .onFailure {
+                    _eventFlow.emit(LogoutFailed(it.message))
+                }
         }
     }
 
@@ -71,3 +78,8 @@ class ProfileViewModel @Inject constructor(
         ) : UiState()
     }
 }
+
+sealed interface LogoutUiEvent
+object Idle : LogoutUiEvent
+object Logout : LogoutUiEvent
+data class LogoutFailed(val message: String?) : LogoutUiEvent

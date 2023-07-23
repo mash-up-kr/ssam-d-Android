@@ -6,7 +6,7 @@ import com.mashup.domain.usecase.login.LoginParam
 interface UserRepository {
     suspend fun login(param: LoginParam)
 
-    suspend fun logout()
+    suspend fun logout(): Result<Unit>
 
     suspend fun getNicknameDuplication(nickname: String): Result<Unit>
 
