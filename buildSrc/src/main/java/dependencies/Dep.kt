@@ -59,6 +59,10 @@ object Dep {
 
     object Google {
         const val material = "com.google.android.material:material:1.8.0"
+
+        object Accompanist {
+            const val webview = "com.google.accompanist:accompanist-webview:0.30.1"
+        }
     }
 
     object UnitTest {
