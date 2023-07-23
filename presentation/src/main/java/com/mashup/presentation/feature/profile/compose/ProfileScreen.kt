@@ -7,11 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -19,8 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.common.extension.findActivity
 import com.mashup.presentation.feature.login.LoginActivity
-import com.mashup.presentation.feature.profile.ProfileViewModel
-import com.mashup.presentation.feature.profile.ProfileViewType
+import com.mashup.presentation.feature.profile.*
 import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.common.KeyLinkLogoutDialog
 import com.mashup.presentation.ui.common.KeyLinkToolbar
@@ -39,21 +35,27 @@ fun ProfileRoute(
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val logoutEvent by viewModel.eventFlow.collectAsStateWithLifecycle(initialValue = Idle)
     val context = LocalContext.current
+
+    LaunchedEffect(logoutEvent) {
+        when (logoutEvent) {
+            Logout -> {
+                context.startActivity(Intent(context, LoginActivity::class.java))
+                context.findActivity().finish()
+            }
+            is LogoutFailed -> {}
+            else -> {}
+        }
+    }
 
     ProfileScreen(
         modifier = modifier,
-        onCheckedChange = {
-            viewModel.toggleNotificationSwitch(it)
-        },
+        onCheckedChange = viewModel::toggleNotificationSwitch,
         onEditClick = {},
         onBackClick = onBackClick,
         onNavigateClick = onNavigateClick,
-        onLogoutClick = {
-            viewModel.logout()
-            context.startActivity(Intent(context, LoginActivity::class.java))
-            context.findActivity().finish()
-        },
+        onLogoutClick = viewModel::logout,
         uiState = uiState
     )
 }
