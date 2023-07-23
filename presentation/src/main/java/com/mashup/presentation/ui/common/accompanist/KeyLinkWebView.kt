@@ -1,17 +1,17 @@
 package com.mashup.presentation.ui.common.accompanist
 
+import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.google.accompanist.web.WebView
-import com.google.accompanist.web.rememberWebViewNavigator
-import com.google.accompanist.web.rememberWebViewState
+import com.google.accompanist.web.*
 
 /**
  * Ssam_D_Android
  * @author jaesung
  * @created 2023/07/23
  */
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun KeyLinkWebView(
     webViewUrl: String,
@@ -32,6 +32,7 @@ fun KeyLinkWebView(
         onCreated = { webView ->
             with(webView) {
                 settings.run {
+                    javaScriptEnabled = true
                     domStorageEnabled = true
                     loadWithOverviewMode = true
                     defaultTextEncodingName = "UTF-8"
