@@ -38,11 +38,11 @@ fun Long.getDisplayedTime(): String {
 }
 
 fun Long.getDisplayedDate(): String {
-    val formatter = SimpleDateFormat("yyyy년 M월 d일", Locale.KOREA)
+    val formatter = SimpleDateFormat("yyyy년 M월 d일 HH:mm", Locale.KOREA)
     return formatter.format(Date(this))
 }
 
 fun Long.getDisplayedDateWithDay(): String {
-    val formatter = SimpleDateFormat("yyyy년 M월 d일 E요일", Locale.KOREA)
+    val formatter = SimpleDateFormat("yyyy년 M월 d일 E요일 HH:mm", Locale.KOREA)
     return formatter.format(Date(this))
 }

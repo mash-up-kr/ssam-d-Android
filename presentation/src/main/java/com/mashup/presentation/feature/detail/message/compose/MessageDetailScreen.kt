@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.getDisplayedDateWithDay
+import com.mashup.presentation.common.extension.visible
 import com.mashup.presentation.feature.detail.ChatDetailViewModel
 import com.mashup.presentation.feature.detail.chat.compose.MessageDetailUiState
 import com.mashup.presentation.feature.detail.message.model.MessageDetailUiModel
@@ -132,16 +133,16 @@ private fun MessageDetailContent(
             matchedKeywords = messageDetail.keywords
         )
 
-        if (messageDetail.isReplyable) {
-            KeyLinkRoundButton(
-                modifier = Modifier.padding(top = 16.dp, bottom = 40.dp).align(Alignment.CenterHorizontally),
-                text = stringResource(R.string.button_send_reply),
-                onClick = onReplyButtonClick
-            )
-        }
+        KeyLinkRoundButton(
+            modifier = Modifier
+                .padding(top = 16.dp, bottom = 40.dp, end = 20.dp)
+                .align(Alignment.CenterHorizontally)
+                .visible(messageDetail.isReplyable),
+            text = stringResource(R.string.button_send_reply),
+            onClick = onReplyButtonClick
+        )
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

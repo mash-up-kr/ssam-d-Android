@@ -10,7 +10,7 @@ import javax.inject.Inject
  * @created 2023/07/20
  */
 
-class GetFirstEntryScreenTypeUseCase @Inject constructor(
+class GetEntryScreenTypeUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) : CoroutineUseCase<Unit, ScreenType>() {
     override suspend fun invoke(param: Unit): ScreenType {

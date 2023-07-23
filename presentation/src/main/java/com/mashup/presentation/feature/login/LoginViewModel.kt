@@ -19,11 +19,11 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val checkNicknameDuplicationUseCase: CheckNicknameDuplicationUseCase,
     private val patchNicknameUseCase: PatchNicknameUseCase,
-    private val getFirstEntryScreenTypeUseCase: GetFirstEntryScreenTypeUseCase,
+    private val getEntryScreenTypeUseCase: GetEntryScreenTypeUseCase
 ) : ViewModel() {
 
     init {
-        initScreenType()
+        checkScreenType()
     }
 
     var currentPage by mutableStateOf(0)
@@ -40,9 +40,9 @@ class LoginViewModel @Inject constructor(
 
     fun backToPrevPage() = currentPage--
 
-    private fun initScreenType() {
+    private fun checkScreenType() {
         viewModelScope.launch {
-            when (getFirstEntryScreenTypeUseCase.execute(Unit)) {
+            when (getEntryScreenTypeUseCase.execute(Unit)) {
                 ScreenType.LOGIN -> _loginUiState.emit(LoginUiState.LOGIN)
                 ScreenType.NICKNAME -> _loginUiState.emit(LoginUiState.NICKNAME)
                 ScreenType.KEYWORD -> _loginUiState.emit(LoginUiState.KEYWORD)
@@ -56,7 +56,7 @@ class LoginViewModel @Inject constructor(
             val param = LoginParam(email = email, socialId = socialId, deviceToken = deviceToken)
             loginUseCase.execute(param)
                 .onSuccess {
-                    goToNextPage()
+                    checkScreenType()
                 }.onFailure {}
         }
     }
