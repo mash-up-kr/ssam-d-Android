@@ -43,6 +43,29 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      # Keystore 파일 생성
+      - name: Generate Keystore file from Github Secrets
+        run: |
+          echo "$KEYSTORE" > ./app/keystore/keystore.b64
+          base64 -d -i ./app/keystore/keystore.b64 > ./app/keystore/keylink-keystore.jks
+        env:
+          KEYSTORE: ${{ secrets.KEYSTORE_BASE64 }}
+
+      # keystore.properties 생성
+      - name: Generate keystore.properties from Github Secrets
+        run: |
+          touch $path
+          echo storePassword=\"$KEYSTORE_STORE_PASSWORD\" > $path
+          echo keyPassword=\"$KEYSTORE_KEY_PASSWORD\" > $path
+          echo keyAlias=\"$KEYSTORE_KEY_ALIAS\" > $path
+          echo storeFile=\"$KEYSTORE_PATH\" > $path
+        env:
+          KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
+          KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
+          KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
+          KEYSTORE_PATH: ${{ secrets.KEYSTORE_PATH }}
+          path: ./keystore.properties
+
       # ci 빌드를 위한 secrets 세팅
       - name: Generate file from Github actions secrets
         env:
