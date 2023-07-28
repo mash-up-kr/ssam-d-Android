@@ -1,12 +1,12 @@
 package com.mashup.data.di
 
-import com.mashup.data.BuildConfig
+import com.mashup.data.BuildConfig.IS_DEBUG
+import com.mashup.data.network.BASE_URL
 import com.mashup.data.network.TokenInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -42,14 +42,10 @@ class NetworkModule {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(tokenInterceptor)
 
-        if (BuildConfig.IS_DEBUG) {
+        if (IS_DEBUG) {
             okHttpClient
                 .addInterceptor(httpLoggingInterceptor)
         }
         return okHttpClient.build()
-    }
-
-    companion object {
-        const val BASE_URL = "http://49.50.166.183:30000/api/"
     }
 }
