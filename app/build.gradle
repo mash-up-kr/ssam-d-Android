@@ -8,7 +8,19 @@ plugins {
     id 'com.google.dagger.hilt.android'
 }
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
     namespace 'com.mashup.ssamd'
     compileSdk 33
 
@@ -17,7 +29,7 @@ android {
         minSdk 24
         targetSdk 33
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -30,21 +42,22 @@ android {
         debug {
             debuggable true
             minifyEnabled false
-            manifestPlaceholders = ["appName":"@string/app_name_debug"]
+            manifestPlaceholders = ["appName": "@string/app_name_debug"]
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationIdSuffix '.debug'
             versionNameSuffix '-debug'
-
-            buildConfigField "boolean","IS_DEBUG","true"
+            signingConfig signingConfigs.debug
+            buildConfigField "boolean", "IS_DEBUG", "true"
         }
 
         release {
             debuggable false
             minifyEnabled true
-            manifestPlaceholders = ["appName":"@string/app_name"]
+            shrinkResources true
+            manifestPlaceholders = ["appName": "@string/app_name"]
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-            buildConfigField "boolean","IS_DEBUG","false"
+            signingConfig signingConfigs.release
+            buildConfigField "boolean", "IS_DEBUG", "false"
         }
     }
     compileOptions {
