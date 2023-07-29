@@ -51,7 +51,7 @@ class HomeViewModel @Inject constructor(
     val subscribeKeywordsState = _subscribeKeywordsState.asStateFlow()
 
     private val _eventFlow: MutableSharedFlow<SubscribeKeywordUiEvent> =
-        MutableSharedFlow<SubscribeKeywordUiEvent>()
+        MutableSharedFlow()
     val eventFlow = _eventFlow.asSharedFlow()
 
     fun getSubscribedKeywords() {
