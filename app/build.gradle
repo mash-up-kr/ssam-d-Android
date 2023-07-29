@@ -1,26 +1,63 @@
+import dependencies.Dep
+import dependencies.Modules
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
     namespace 'com.mashup.ssamd'
     compileSdk 33
 
     defaultConfig {
         applicationId "com.mashup.ssamd"
-        minSdk 23
+        minSdk 24
         targetSdk 33
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    lintOptions {
+        lintConfig = file("$rootDir/lint.xml")
+    }
+
     buildTypes {
-        release {
+        debug {
+            debuggable true
             minifyEnabled false
+            manifestPlaceholders = ["appName": "@string/app_name_debug"]
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
+            signingConfig signingConfigs.debug
+            buildConfigField "boolean", "IS_DEBUG", "true"
+        }
+
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            manifestPlaceholders = ["appName": "@string/app_name"]
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            buildConfigField "boolean", "IS_DEBUG", "false"
         }
     }
     compileOptions {
@@ -30,15 +67,32 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        dataBinding true
+    }
 }
 
 dependencies {
+    implementation(project(Modules.data))
+    implementation(project(Modules.domain))
+    implementation(project(Modules.presentation))
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation Dep.AndroidX.Core.core
+    implementation Dep.AndroidX.appCompat
+    implementation Dep.Google.material
+    implementation Dep.AndroidX.constraintLayout
+
+    testImplementation Dep.UnitTest.junit
+    androidTestImplementation Dep.AndroidTest.junit
+    androidTestImplementation Dep.AndroidTest.espresso
+
+    // hilt
+    implementation Dep.Dagger.Hilt.hilt
+    kapt Dep.Dagger.Hilt.compiler
+
+    // timber - log
+    implementation Dep.Logger.timber
+
+    // kakao login
+    implementation Dep.Kakao.sdk
 }

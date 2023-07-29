@@ -1,0 +1,140 @@
+<resources>
+    <string name="app_name">키링</string>
+    <string name="empty_text" />
+
+    // 공통
+    <string name="app_finish_toast">한 번 더 클릭하면 앱이 종료됩니다.</string>
+
+    <string name="navigation_home">홈</string>
+    <string name="navigation_signal">보내기</string>
+    <string name="navigation_chat">연결됨</string>
+    <string name="input_maximum_10">최대 10자 입력</string>
+    <string name="close">닫기</string>
+    <string name="look_around">둘러보기</string>
+    <string name="logout">로그아웃</string>
+    <string name="update">변경</string>
+    <string name="logout_title">정말 로그아웃 하세요?</string>
+    <string name="logout_subtitle">정보는 유지되지만 다시 로그인 해야하는 번거로움이 생겨요 ㅠ</string>
+    <string name="settings">환경설정</string>
+    <string name="notification">알림 소식 받기</string>
+    <string name="get_notification">알림 수신 동의</string>
+    <string name="tos">이용약관</string>
+    <string name="privacy_policy">개인정보 정책</string>
+    <string name="open_source">오픈소스</string>
+    <string name="app_version">버전</string>
+    <string name="information">정보</string>
+    <string name="login_title">내 관심사에 대한 쪽지를 받아보세요</string>
+    <string name="login_privacy_policy">이용 시 이용약관 프라이버시 정책에 동의한 것으로 합니다</string>
+    <string name="login_description_space">우주 배경 사진입니다.</string>
+    <string name="login_description_keylink">keylink 타이틀 사진입니다.</string>
+    <string name="login_description_kakao_btn">카카오 로그인 버튼입니다.</string>
+    <string name="login_nickname">먼저, 키링에서\n사용할 닉네임을 입력해주세요</string>
+    <string name="login_nickname_hint">확신의 일론머스크</string>
+    <string name="login_next_btn">다음</string>
+    <string name="login_completion_title">님\n반가워요!\n\n키링에선 내가 만든 키워드에\n어울리는 사람과 대화할 수 있어요.\n\n지금 대화하고 싶은 키워드를 만들어보세요.</string>
+    <string name="login_description_blueplanet">우주 배경 아래에 위치한 푸른 행성 사진입니다.</string>
+    <string name="login_description_profile_img">프로필 사진입니다.</string>
+    <string name="login_completion_btn">키워드 만들기</string>
+    <string name="notification_disallow">나중에 하기</string>
+    <string name="notification_subtitle">삐리삐리 삐리리...</string>
+    <string name="notification_signal">내 행성으로 온 시그널을\n 놓치지 않고 받아볼까요?</string>
+    <string name="notification_content">혁신앱키링에게 온 시그널</string>
+    <string name="notification_description">#인기앱 외 2개 키워드 일치!</string>
+    <string name="notification_img_content_description">알림 수신 동의 화면 이미지</string>
+    <string name="send_complete">보내기 완료!</string>
+    <string name="send_complete_subtitle">시그널이 연결되면 대화방이 만들어져요.</string>
+    <string name="profile_sent_signal">보낸 시그널</string>
+    <string name="create_signal">시그널 생성</string>
+    <string name="next">다음</string>
+    <string name="ok">확인</string>
+    <string name="exit">나가기</string>
+    <string name="disconnect">끊기</string>
+    <string name="hint_signal_content">오늘의 날씨, 기분, 나눈 대화들을 누군가에게 전달해보세요. 대화는 1:1로 프라이빗하게 이루어집니다.</string>
+    <string name="signal_keyword_title">쓴 내용의 키워드를 추출했어요</string>
+    <string name="signal_keyword_subtitle">키워드를 확인하고 시그널을 보내보세요</string>
+
+    // 온보딩
+    <string name="onboarding_keywords_complete">모두 입력했어요</string>
+    <string name="onboarding_keywords_input">대화하고 싶은 키워드를 적어주세요</string>
+    <string name="onboarding_keywords_input_description">입력한 키워드를 기반으로 매칭해드려요</string>
+    <string name="onboarding_keywords_chip_hint">예) 매쉬업, 운동</string>
+    <string name="onboarding_delete_keyword_content_description">키워드 지우기</string>
+
+    <!-- Dialog -->
+    <string name="dialog_signal_content_title">300자 까지 입력할 수 있어요.</string>
+    <string name="dialog_go_back_title">뒤로 갈까요?</string>
+    <string name="dialog_go_back_subtitle">지금까지 쓴 내용은 저장되지 않아요.</string>기
+    <string name="dialog_go_back">뒤로가기</string>
+    <string name="dialog_disconnect_signal_title">시그널을 끊을까요?</string>
+    <string name="dialog_disconnect_signal_subtitle">연결이 끊기면 대화 내용이 사라져요.</string>
+    <string name="dialog_disconnect_signal">끊기</string>
+    <string name="dialog_go_first_title">처음으로 돌아갈까요?</string>
+    <string name="dialog_go_first_subtitle">입력한 모든 내용이 초기화 돼요.</string>
+    <string name="dialog_go_first_yes">예</string>
+    <string name="dialog_go_first_no">아니요</string>
+    <string name="dialog_logout_title">정말 로그아웃 하세요?</string>
+    <string name="dialog_logout_subtitle">정보는 유지되지만 다시 로그인 해야하는 번거로움이 생겨요 ㅠ</string>
+    <string name="dialog_logout">로그아웃</string>
+
+    // 홈
+    <string name="home_my_planet">내 행성: Zylix-6</string>
+    <string name="home_my_page_icon_content_description">내 행성: Zylix-6</string>
+    <string name="home_planet_guide">당신은 Zylix-6 행성에 떨어졌습니다.\n지금 가이드를 확인해주세요</string>
+    <string name="home_planet_guide_button">가이드 보기</string>
+    <string name="home_signal_icon_content_description">시그널 아이콘</string>
+    <string name="home_subscribe_keywords">%d개 키워드 구독중</string>
+    <string name="signal_complete_title">시그널 보내기 완료!</string>
+    <string name="button_send_signal">시그널 보내기</string>
+    <string name="signal_complete_subtitle">연결되면 [채팅]에 대화방이 만들어져요.</string>
+    <string name="home_item_avatar_content_description">아바타</string>
+    <string name="content_description_empty_chat">연결된 채팅이 없음을 나타내는 이미지입니다.</string>
+    <string name="chat_empty_first_description">아직 연결된 사람이 없습니다.</string>
+    <string name="chat_empty_second_description">먼저 시그널을 보내보세요.</string>
+    <string name="toolbar_chat">연결됨</string>
+    <string name="content_description_chat_item_frequency">시그널 아이콘입니다.</string>
+    <string name="subscribe_keyword_title">구독중인 키워드</string>
+    <string name="subscribe_keyword_subtitle">키워드를 확인하고 시그널을 받아보세요</string>
+    <string name="button_save">저장하기</string>
+    <string name="content_description_snackbar_icon">스낵바 아이콘입니다.</string>
+    <string name="text_field_hint">예) 매쉬업</string>
+    <string name="signal_matched_count">%s개 일치</string>
+    <string name="bottom_sheet_disconnect">시그널 끊기</string>
+    <string name="bottom_sheet_declare">신고하기</string>
+    <string name="bottom_sheet_matched_keywords">연결된 키워드</string>
+    <string name="home_planet_background_empty">시그널이 없는 빈 화면 우주 배경입니다.</string>
+    <string name="home_planet_background_default">시그널이 있는 우주 배경입니다.</string>
+
+    // 홈 가이드
+    <string name="home_guide_planet">행성 Zylix-6</string>
+    <string name="home_guide_background_content_description">홈 가이드 백그라운드</string>
+    <string name="home_guide_new_feature_coming_soon">곧 다른 행성 이동 가능한 기능이 출시 예정입니다.\n거기는 어떤 종족들이 살고 있을까요?</string>
+    <string name="home_guide_current_planet_description">Zylix-6의 종족들은 상호 간의 연결성과 유대감을 중요시합니다. 그들은 공동체 의식을 갖고 있으며, 협력과 상호작용을 통해 문화적인 발전과 지식의 공유를 추구합니다. 이를 통해 행성 전체의 번영을 이루는데 기여합니다.</string>
+    <string name="home_guide_alien_content_description">외계 생명체</string>
+    <string name="home_guide_footer_description">“원하는 종족과 얘기하려면 시그널에 키워드를 추가해서 보내보세요. 같은 종족이라면 통하는 시그널이 있을 거예요.”</string>
+    <string name="home_guide_alien_card_keyword">키워드: %s</string>
+
+    <!-- 신고 -->
+    <string-array name="report">
+        <item>부적절한 글이에요</item>
+        <item>광고 / 홍보 글이에요</item>
+        <item>중독 / 도배성 게시글이에요</item>
+        <item>다른 채팅앱으로 유도하는 글이에요</item>
+        <item>종교 / 포교 목적의 게시글 같아요</item>
+    </string-array>
+    <string name="report_title">신고하는 이유를 선택해주세요.</string>
+  
+    <string name="content_description_report">신고하기 아이콘입니다.</string>
+    <string name="message_detail_matched_signal_count">%s개 키워드 일치</string>
+    <string name="button_send_reply">답장 보내기</string>
+    <string name="toolbar_reply">시그널 답장</string>
+    <string name="snackbar_subscribe_keyword">구독 키워드가 저장되었습니다.</string>
+    <string name="snackbar_reply">시그널에 대한 답장을 보냈습니다.</string>
+    <string name="snackbar_report">신고가 접수되었습니다.</string>
+
+    <string name="content_description_error">에러 아이콘입니다.</string>
+    <string name="network_error_title">네트워크 연결이 되지 않았어요\n다시 시도해주세요</string>
+    <string name="button_go_back">이전으로 돌아가기</string>
+
+    // 채팅
+    <string name="chat_room_disconnect_room_guide">상대방이 연결을 끊었습니다.\n더이상 대화를 할 수 없습니다.</string>
+</resources>

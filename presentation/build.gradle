@@ -1,0 +1,120 @@
+import dependencies.Dep
+import dependencies.Modules
+
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+android {
+    namespace 'com.mashup.presentation'
+    compileSdk 33
+
+    defaultConfig {
+        minSdk 24
+        targetSdk 33
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs += [
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${rootProject.file(".").absolutePath}/report/compose-metrics"
+        ]
+        freeCompilerArgs += [
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${rootProject.file(".").absolutePath}/report/compose-reports"
+        ]
+    }
+    buildFeatures {
+        dataBinding true
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.1"
+    }
+}
+
+dependencies {
+    implementation(project(Modules.domain))
+
+    implementation Dep.AndroidX.Core.core
+    implementation Dep.AndroidX.appCompat
+
+    testImplementation Dep.UnitTest.junit
+    androidTestImplementation Dep.AndroidTest.junit
+    androidTestImplementation Dep.AndroidTest.espresso
+
+    // lifecycle
+    implementation Dep.AndroidX.Lifecycle.viewModel
+    implementation Dep.AndroidX.Lifecycle.savedState
+    implementation Dep.AndroidX.Lifecycle.runtimeCompose
+    kapt Dep.AndroidX.Lifecycle.compiler
+
+    // ViewModel utilities for Compose
+    implementation Dep.AndroidX.Lifecycle.Compose.viewModel  // 추후 제거 필요
+    implementation Dep.AndroidX.Hilt.hiltNavigation
+
+    // glide
+    implementation Dep.Glide.glide
+    kapt Dep.Glide.compiler
+
+    // glide-compose
+    implementation Dep.GlideCompose.glideCompose
+
+    // hilt
+    implementation Dep.Dagger.Hilt.hilt
+    kapt Dep.Dagger.Hilt.compiler
+
+    // navigation
+    implementation Dep.Navigation.fragment
+    implementation Dep.Navigation.ui
+    implementation Dep.Navigation.compose
+
+    // coroutine
+    implementation Dep.Kotlin.Coroutine.core
+    implementation Dep.Kotlin.Coroutine.android
+
+    // timber - log
+    implementation Dep.Logger.timber
+
+    // compose
+    implementation Dep.Compose.ui
+    implementation Dep.Compose.preview
+    implementation Dep.Compose.material
+    implementation Dep.AndroidX.Activity.compose
+    implementation Dep.Compose.Navigation.navigationCompose
+    androidTestImplementation Dep.Compose.Test.ui
+    debugImplementation Dep.Compose.Debug.uiTooling
+    debugImplementation Dep.Compose.Debug.uiTestManifest
+
+    // kakao login
+    implementation Dep.Kakao.sdk
+
+    // lottie
+    implementation Dep.Airbnb.lottie
+    implementation Dep.Airbnb.lottieCompose
+
+    // paging
+    implementation Dep.AndroidX.Paging3.pagingCompose
+    implementation Dep.AndroidX.Paging3.pagingRuntime
+
+    // accompanist
+    implementation Dep.Google.Accompanist.webview
+}

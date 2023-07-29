@@ -1,0 +1,84 @@
+import dependencies.Dep
+import dependencies.Modules
+
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+}
+
+android {
+    namespace 'com.mashup.data'
+    compileSdk 33
+
+    defaultConfig {
+        minSdk 24
+        targetSdk 33
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            buildConfigField "boolean","IS_DEBUG","true"
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField "boolean","IS_DEBUG","false"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation(project(Modules.domain))
+
+    implementation Dep.AndroidX.Core.core
+    implementation Dep.AndroidX.appCompat
+
+    testImplementation Dep.UnitTest.junit
+    androidTestImplementation Dep.AndroidTest.junit
+    androidTestImplementation Dep.AndroidTest.espresso
+
+    // retrofit
+    implementation Dep.SquareUp.Retrofit.retrofit
+    implementation Dep.SquareUp.Retrofit.converterMoshi
+
+    // okhttp3
+    implementation Dep.SquareUp.OkHttp.okHttp
+    implementation Dep.SquareUp.OkHttp.loggingInterceptor
+
+    // moshi
+    implementation Dep.SquareUp.Moshi.moshi
+    implementation Dep.SquareUp.Moshi.moshiAdapter
+    kapt Dep.SquareUp.Moshi.moshiCodegen
+
+    // hilt
+    implementation Dep.Dagger.Hilt.hilt
+    kapt Dep.Dagger.Hilt.compiler
+
+    // coroutine
+    implementation Dep.Kotlin.Coroutine.core
+
+    // room
+    implementation Dep.AndroidX.Room.runtime
+    kapt Dep.AndroidX.Room.compiler
+
+    // Pagin3
+    implementation Dep.AndroidX.Paging3.pagingRuntime
+
+}

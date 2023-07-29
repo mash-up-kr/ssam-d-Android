@@ -6,6 +6,9 @@
 .gradle/
 build/
 
+# compose-metrics, compose-reports
+report/
+
 # Local configuration file (sdk path, etc)
 local.properties
 
@@ -85,7 +88,7 @@ proguard/
 *.swp
 
 # Keystore files
-
+keystore.properties
 # Google Services (e.g. APIs or Firebase)
 # google-services.json
 
