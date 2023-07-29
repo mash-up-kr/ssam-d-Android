@@ -34,7 +34,7 @@ import com.mashup.presentation.ui.theme.*
 fun UserInfoContent(
     userImageUrl: String,
     userName: String,
-    userEmail: String,
+    userEmail: String?,
     onEditClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -70,7 +70,7 @@ fun UserInfoContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 4.dp),
-                text = userEmail,
+                text = userEmail ?: "",
                 style = Body2,
                 color = Gray05,
             )

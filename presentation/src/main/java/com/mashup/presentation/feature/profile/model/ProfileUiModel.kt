@@ -5,7 +5,7 @@ import com.mashup.domain.model.User
 data class ProfileUiModel(
     val id: Long,
     val nickname: String,
-    val email: String,
+    val email: String?,
     val provider: String,
     val profileImageUrl: String,
     val agreeAlarm: Boolean
