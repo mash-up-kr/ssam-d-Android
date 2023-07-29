@@ -36,11 +36,13 @@ class LoginViewModel @Inject constructor(
     private val _loginUiState: MutableStateFlow<LoginUiState> = MutableStateFlow(LoginUiState.IDLE)
     val loginUiState = _loginUiState.asStateFlow()
 
-    fun goToNextPage() = currentPage++
+    fun goToNicknamePage() { currentPage = 1 }
+
+    private fun goToCompletionPage() { currentPage = 2 }
 
     fun backToPrevPage() = currentPage--
 
-    private fun checkScreenType() {
+    fun checkScreenType() {
         viewModelScope.launch {
             when (getEntryScreenTypeUseCase.execute(Unit)) {
                 ScreenType.LOGIN -> _loginUiState.emit(LoginUiState.LOGIN)
@@ -86,7 +88,7 @@ class LoginViewModel @Inject constructor(
             patchNicknameUseCase.execute(nickname)
                 .onSuccess {
                     this@LoginViewModel.nickname = nickname
-                    goToNextPage()
+                    goToCompletionPage()
                 }.onFailure {}
         }
     }
