@@ -63,9 +63,6 @@ fun HomeRoute(
 
     LaunchedEffect(Unit) {
         launch {
-            homeViewModel.getReceivedSignal()
-        }
-        launch {
             homeViewModel.getSubscribedKeywords()
         }
     }
