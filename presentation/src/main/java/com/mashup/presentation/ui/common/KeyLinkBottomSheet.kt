@@ -62,7 +62,8 @@ fun KeyLinkChatBottomSheetItem(
 ) {
     Row(
         modifier = modifier
-            .clickable { onAction() }.padding(vertical = 16.dp),
+            .clickable { onAction() }
+            .padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -105,6 +106,27 @@ fun KeyLinkKeywordBottomSheet(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun KeyLinkConnectedBottomSheet(
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.padding(horizontal = 20.dp, vertical = 20.dp),
+    ) {
+        Text(
+            modifier = Modifier.padding(bottom = 12.dp),
+            text = stringResource(R.string.bottom_sheet_connected_title),
+            style = Title2,
+            color = Gray10
+        )
+        Text(
+            text = stringResource(R.string.bottom_sheet_connected_content),
+            style = Body2,
+            color = Gray10
+        )
     }
 }
 

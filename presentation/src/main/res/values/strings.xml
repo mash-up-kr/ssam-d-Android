@@ -137,4 +137,6 @@
 
     // 채팅
     <string name="chat_room_disconnect_room_guide">상대방이 연결을 끊었습니다.\n더이상 대화를 할 수 없습니다.</string>
+    <string name="bottom_sheet_connected_title">연결 기준이 뭔가요?</string>
+    <string name="bottom_sheet_connected_content">1. 내가 보낸 시그널에 상대가 답신하면 연결돼요.\n2. 구독중인 키워드에 상대의 시그널이 도착하고, 내가 그 시그널에 답신하면 연결돼요. </string>
 </resources>
