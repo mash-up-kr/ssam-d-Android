@@ -1,4 +1,4 @@
-package com.mashup.data.source.remote.dto.responsebody
+package com.mashup.data.source.remote.dto.responsebody.user
 
 import com.mashup.domain.base.DomainMapper
 import com.mashup.domain.model.User

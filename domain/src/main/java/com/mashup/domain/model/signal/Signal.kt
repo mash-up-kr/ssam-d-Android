@@ -1,4 +1,4 @@
-package com.mashup.domain.model
+package com.mashup.domain.model.signal
 
 import com.mashup.domain.base.DomainModel
 
