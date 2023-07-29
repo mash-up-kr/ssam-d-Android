@@ -6,6 +6,9 @@
 .gradle/
 build/
 
+# compose-metrics, compose-reports
+report/
+
 # Local configuration file (sdk path, etc)
 local.properties
 
