@@ -1,17 +1,16 @@
 package com.mashup.presentation.feature.chat.compose
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -83,14 +82,26 @@ fun ChatScreen(
         backgroundColor = Black,
         topBar = {
             Column {
-                Text(
-                    text = stringResource(R.string.toolbar_chat),
-                    style = Heading3,
-                    color = White,
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 20.dp, top = 24.dp, bottom = 8.dp)
-                )
+                        .clickable {},
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.toolbar_chat),
+                        style = Heading3,
+                        color = White
+                    )
+
+                    Icon(
+                        modifier = Modifier.size(24.dp).padding(start = 6.dp),
+                        painter = painterResource(id = R.drawable.ic_chat_help_24),
+                        contentDescription = "",
+                        tint = Gray08
+                    )
+                }
 
                 Divider(
                     modifier = Modifier
