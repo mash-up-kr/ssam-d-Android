@@ -45,7 +45,6 @@ fun ChatDetailRoute(
     roomId: Long,
     onBackClick: () -> Unit,
     onMessageClick: (Long, Long) -> Unit,
-    onReportClick: () -> Unit,
     controlBottomSheet: (BottomSheetType, List<String>?) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChatDetailViewModel = hiltViewModel()
@@ -84,7 +83,6 @@ fun ChatDetailRoute(
             onMessageClick = { chatId ->
                 onMessageClick(roomId, chatId)
             },
-            onReportClick = onReportClick,
             onDisconnectRoom = { viewModel.disconnectRoom(roomId) },
             controlBottomSheet = controlBottomSheet,
             chatInfoUiState = chatInfoUiState,
@@ -102,7 +100,6 @@ private fun ChatDetailScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onMessageClick: (Long) -> Unit,
-    onReportClick: () -> Unit,
     onDisconnectRoom: () -> Unit,
     controlBottomSheet: (BottomSheetType, List<String>?) -> Unit,
     chatInfoUiState: ChatInfoUiState,

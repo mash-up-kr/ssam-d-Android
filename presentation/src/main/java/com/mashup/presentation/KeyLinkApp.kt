@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import com.mashup.presentation.feature.report.navigation.navigateToChatReport
 import com.mashup.presentation.navigation.KeyLinkNavHost
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.Black
@@ -34,17 +35,21 @@ fun KeyLinkApp(
                     modifier = Modifier.fillMaxWidth(),
                     matchedKeywords = currentBottomSheetStringList
                 )
-                else -> {}
-//                BottomSheetType.CHAT_DETAIL_MORE -> KeyLinkChatBottomSheet(
-//                    modifier = Modifier.fillMaxWidth(),
-//                    onDisconnectSignal = {
-//                        coroutineScope.launch {
-//                            appState.modalBottomSheetState.hide()
-//                        }
-//                        showDisconnectDialog = true
-//                    },
-//                    onReportUser = { onReportClick() }
-//                )
+                BottomSheetType.CHAT_DETAIL_MORE -> KeyLinkChatBottomSheet(
+                    modifier = Modifier.fillMaxWidth(),
+                    onDisconnectSignal = {
+                        coroutineScope.launch {
+                            appState.modalBottomSheetState.hide()
+                        }
+                        // showDisconnectDialog = true
+                    },
+                    onReportUser = {
+                        coroutineScope.launch {
+                            appState.modalBottomSheetState.hide()
+                            appState.navController.navigateToChatReport()
+                        }
+                    }
+                )
             }
         },
         modalSheetState = appState.modalBottomSheetState
