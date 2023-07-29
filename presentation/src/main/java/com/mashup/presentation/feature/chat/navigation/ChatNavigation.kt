@@ -3,6 +3,7 @@ package com.mashup.presentation.feature.chat.navigation
 import androidx.compose.material.SnackbarDuration
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import com.mashup.presentation.BottomSheetType
 import com.mashup.presentation.feature.chat.compose.ChatRoute
 import com.mashup.presentation.feature.detail.chat.compose.ChatDetailRoute
 import com.mashup.presentation.feature.detail.chat.navigation.navigateToChatRoomDetail
@@ -31,6 +32,7 @@ fun NavGraphBuilder.chatRoomGraph(
     navController: NavController,
     onBackClick: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
+    controlBottomSheet: (BottomSheetType) -> Unit
 ) {
     navigation(
         route = KeyLinkNavigationRoute.ChatRoomGraph.route,
@@ -38,8 +40,10 @@ fun NavGraphBuilder.chatRoomGraph(
     ) {
         composable(route = KeyLinkNavigationRoute.ChatRoomGraph.ChatRoomRoute.route) {
             ChatRoute(
+                onBackClick = onBackClick,
                 onEmptyScreenButtonClick = navController::navigateToSignal,
-                onChatRoomClick = navController::navigateToChatRoomDetail
+                onChatRoomClick = navController::navigateToChatRoomDetail,
+                controlBottomSheet = controlBottomSheet
             )
         }
         composable(
