@@ -50,12 +50,11 @@ fun NavGraphBuilder.chatRoomGraph(
             route = KeyLinkNavigationRoute.ChatRoomGraph.ChatRoomDetailRoute.route,
             arguments = listOf(
                 navArgument("roomId") {
-                    type = NavType.StringType
+                    type = NavType.LongType
                 }
             )
         ) { entry ->
             ChatDetailRoute(
-                roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
                 onBackClick = onBackClick,
                 onMessageClick = navController::navigateToChatDetail,
                 onReportClick = navController::navigateToChatReport
@@ -64,33 +63,36 @@ fun NavGraphBuilder.chatRoomGraph(
         composable(route = KeyLinkNavigationRoute.ChatRoomGraph.ChatDetailRoute.route,
             arguments = listOf(
                 navArgument("roomId") {
-                    type = NavType.StringType
+                    type = NavType.LongType
                 },
                 navArgument("chatId") {
-                    type = NavType.StringType
+                    type = NavType.LongType
                 }
             )
         ) { entry ->
             MessageDetailRoute(
-                roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
-                chatId = entry.arguments?.getString("chatId")?.toLong() ?: -1,
+                chatId = entry.arguments?.getLong("chatId") ?: -1,
                 onBackClick = onBackClick,
                 onReportMenuClick = navController::navigateToChatReport,
-                onReplyButtonClick = navController::navigateToChatReply
+                onReplyButtonClick = {
+                    val roomId = entry.arguments?.getLong("roomId") ?: -1
+                    navController.navigateToChatReply(roomId)
+                }
             )
         }
         composable(
             route = KeyLinkNavigationRoute.ChatRoomGraph.ChatReplyRoute.route,
             arguments = listOf(
                 navArgument("roomId") {
-                    type = NavType.StringType
+                    type = NavType.LongType
                 }
             )
         ) { entry ->
             ChatReplyRoute(
-                roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
                 onClickBack = onBackClick,
-                navigateToChat = { roomId ->
+                navigateToChat = {
+                    val roomId = entry.arguments?.getLong("roomId") ?: -1
+
                     navController.navigateToChatRoomDetail(
                         roomId = roomId,
                         navOptions {

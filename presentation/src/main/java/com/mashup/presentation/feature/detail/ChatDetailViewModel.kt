@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.detail
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.domain.usecase.chat.*
@@ -21,11 +22,13 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatDetailViewModel @Inject constructor(
     private val getChatInfoUseCase: GetChatInfoUseCase,
-    private val getChatsUseCase: GetChatsUseCase,
     private val disconnectRoomUseCase: DisconnectRoomUseCase,
     private val getMessageDetailUseCase: GetMessageDetailUseCase,
-    private val replyUseCase: ReplyUseCase
+    private val replyUseCase: ReplyUseCase,
+    getChatsUseCase: GetChatsUseCase,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+    val roomId = savedStateHandle.get<Long>("roomId") ?: -1
 
     private val _chatInfoUiState: MutableStateFlow<ChatInfoUiState> =
         MutableStateFlow(ChatInfoUiState.Loading)
@@ -46,12 +49,12 @@ class ChatDetailViewModel @Inject constructor(
         MutableStateFlow(MessageDetailUiState.Loading)
     val messageDetailUiState = _messageDetailUiState.asStateFlow()
 
-    private val _eventFlow: MutableSharedFlow<MessageReplyUiEvent> = MutableSharedFlow<MessageReplyUiEvent>()
+    private val _eventFlow: MutableSharedFlow<MessageReplyUiEvent> = MutableSharedFlow()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    fun getChatInfo(id: Long) {
+    fun getChatInfo() {
         viewModelScope.launch {
-            getChatInfoUseCase.execute(id)
+            getChatInfoUseCase.execute(roomId)
                 .catch {
                     _chatInfoUiState.value = ChatInfoUiState.Failure(it.message)
                 }.collect {
@@ -60,14 +63,13 @@ class ChatDetailViewModel @Inject constructor(
         }
     }
 
-
-    fun disconnectRoom(roomId: Long) {
+    fun disconnectRoom() {
         viewModelScope.launch {
             disconnectRoomUseCase.execute(roomId)
         }
     }
 
-    fun getMessageDetail(roomId: Long, chatId: Long) {
+    fun getMessageDetail(chatId: Long) {
         viewModelScope.launch {
             val param = GetMessageDetailUseCase.MessageDetailParam(
                 roomId = roomId,
@@ -83,7 +85,7 @@ class ChatDetailViewModel @Inject constructor(
         }
     }
 
-    fun reply(roomId: Long, content: String) {
+    fun reply(content: String) {
         val param = ReplyUseCase.Param(
             roomId = roomId,
             content = content
