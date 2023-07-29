@@ -21,7 +21,7 @@ import com.mashup.presentation.feature.signal.send.navigation.signalGraph
 fun KeyLinkNavHost(
     appState: KeyLinkAppState,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
-    controlBottomSheet: (BottomSheetType) -> Unit,
+    controlBottomSheet: (BottomSheetType, List<String>?) -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = KeyLinkNavigationRoute.HomeGraph.route

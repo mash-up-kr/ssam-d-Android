@@ -32,7 +32,7 @@ fun NavGraphBuilder.chatRoomGraph(
     navController: NavController,
     onBackClick: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
-    controlBottomSheet: (BottomSheetType) -> Unit
+    controlBottomSheet: (BottomSheetType, List<String>?) -> Unit
 ) {
     navigation(
         route = KeyLinkNavigationRoute.ChatRoomGraph.route,
@@ -58,7 +58,8 @@ fun NavGraphBuilder.chatRoomGraph(
                 roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
                 onBackClick = onBackClick,
                 onMessageClick = navController::navigateToChatDetail,
-                onReportClick = navController::navigateToChatReport
+                onReportClick = navController::navigateToChatReport,
+                controlBottomSheet = controlBottomSheet
             )
         }
         composable(route = KeyLinkNavigationRoute.ChatRoomGraph.ChatDetailRoute.route,

@@ -22,6 +22,7 @@ fun KeyLinkApp(
 ) {
     val coroutineScope = rememberCoroutineScope()
     var currentBottomSheetType by remember { mutableStateOf(BottomSheetType.CHAT_CONNECTED) }
+    var currentBottomSheetStringList by remember { mutableStateOf(mutableListOf<String>()) }
 
     KeyLinkBottomSheetLayout(
         bottomSheetContent = {
@@ -29,11 +30,11 @@ fun KeyLinkApp(
                 BottomSheetType.CHAT_CONNECTED -> KeyLinkConnectedBottomSheet(
                     modifier = Modifier.fillMaxWidth()
                 )
+                BottomSheetType.CHAT_DETAIL_KEYWORD -> KeyLinkKeywordBottomSheet(
+                    modifier = Modifier.fillMaxWidth(),
+                    matchedKeywords = currentBottomSheetStringList
+                )
                 else -> {}
-//                BottomSheetType.CHAT_DETAIL_KEYWORD -> KeyLinkKeywordBottomSheet(
-//                    modifier = Modifier.fillMaxWidth(),
-//                    matchedKeywords = matchedKeywords
-//                )
 //                BottomSheetType.CHAT_DETAIL_MORE -> KeyLinkChatBottomSheet(
 //                    modifier = Modifier.fillMaxWidth(),
 //                    onDisconnectSignal = {
@@ -71,8 +72,9 @@ fun KeyLinkApp(
                         duration = duration
                     )
                 },
-                controlBottomSheet = { bottomSheetType ->
+                controlBottomSheet = { bottomSheetType, stringList ->
                     currentBottomSheetType = bottomSheetType
+                    stringList?.let { currentBottomSheetStringList = it.toMutableList() }
                     appState.controlBottomSheet()
                 },
                 onBackClick = {
