@@ -1,7 +1,7 @@
 package com.mashup.domain.repository
 
 import androidx.paging.PagingData
-import com.mashup.domain.model.Signal
+import com.mashup.domain.model.signal.Signal
 import kotlinx.coroutines.flow.Flow
 
 /**

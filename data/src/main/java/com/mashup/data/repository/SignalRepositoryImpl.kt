@@ -4,7 +4,7 @@ import androidx.paging.PagingData
 import com.mashup.data.source.remote.source.datasource.RemoteSignalDataSource
 import com.mashup.data.util.createPager
 import com.mashup.data.util.suspendRunCatching
-import com.mashup.domain.model.Signal
+import com.mashup.domain.model.signal.Signal
 import com.mashup.domain.repository.SignalRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

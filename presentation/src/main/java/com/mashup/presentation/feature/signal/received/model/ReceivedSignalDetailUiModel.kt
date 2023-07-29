@@ -1,6 +1,6 @@
 package com.mashup.presentation.feature.signal.received.model
 
-import com.mashup.domain.model.Signal
+import com.mashup.domain.model.signal.Signal
 import com.mashup.presentation.common.extension.getDisplayedDateWithDay
 
 /**

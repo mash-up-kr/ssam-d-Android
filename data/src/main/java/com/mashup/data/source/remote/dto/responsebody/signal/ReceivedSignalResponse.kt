@@ -3,7 +3,7 @@ package com.mashup.data.source.remote.dto.responsebody.signal
 import com.mashup.domain.base.DomainMapper
 import com.mashup.domain.base.paging.PagedData
 import com.mashup.domain.base.paging.Paging
-import com.mashup.domain.model.Signal
+import com.mashup.domain.model.signal.Signal
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.mashup.data.source.remote.dto.responsebody.signal.ReceivedSignal as DReceivedSignal
