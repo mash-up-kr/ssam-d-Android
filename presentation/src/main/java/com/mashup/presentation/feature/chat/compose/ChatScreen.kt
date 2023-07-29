@@ -49,9 +49,6 @@ fun ChatRoute(
             pagedChatRoomList.refresh()
         })
 
-    LaunchedEffect(Unit) {
-        viewModel.getChatRooms()
-    }
     LaunchedEffect(pagedChatRoomList.loadState) {
         if (pagedChatRoomList.loadState.refresh is LoadState.NotLoading)
             isRefreshing = false
