@@ -6,6 +6,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'com.google.gms.google-services'
 }
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -95,4 +96,8 @@ dependencies {
 
     // kakao login
     implementation Dep.Kakao.sdk
+
+    // firebase
+    implementation platform(Dep.Firebase.firebaseBom)
+    implementation Dep.Firebase.cloudMessaging
 }
