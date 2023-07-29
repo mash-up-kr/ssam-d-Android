@@ -27,11 +27,20 @@ class ChatDetailViewModel @Inject constructor(
     private val replyUseCase: ReplyUseCase
 ) : ViewModel() {
 
-    private val _chatInfoUiState: MutableStateFlow<ChatInfoUiState> = MutableStateFlow(ChatInfoUiState.Loading)
+    private val _chatInfoUiState: MutableStateFlow<ChatInfoUiState> =
+        MutableStateFlow(ChatInfoUiState.Loading)
     val chatInfoUiState = _chatInfoUiState.asStateFlow()
 
-    private val _chatPagingData: MutableStateFlow<PagingData<ChatUiModel>> = MutableStateFlow(PagingData.empty())
-    val chatPagingData = _chatPagingData.asStateFlow()
+    private val _chatPagingData: Flow<PagingData<ChatUiModel>> =
+        getChatsUseCase.execute(roomId).cachedIn(viewModelScope).map { pagingData ->
+            pagingData.map { chat -> chat.toUiModel() }
+        }
+
+    val chatPagingData = _chatPagingData.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = PagingData.empty()
+    )
 
     private val _messageDetailUiState: MutableStateFlow<MessageDetailUiState> =
         MutableStateFlow(MessageDetailUiState.Loading)
@@ -51,15 +60,6 @@ class ChatDetailViewModel @Inject constructor(
         }
     }
 
-    fun getChats(id: Long) {
-        viewModelScope.launch {
-            getChatsUseCase.execute(id).cachedIn(viewModelScope).map { pagingData ->
-                pagingData.map { chat -> chat.toUiModel() }
-            }.collect {
-                _chatPagingData.value = it
-            }
-        }
-    }
 
     fun disconnectRoom(roomId: Long) {
         viewModelScope.launch {

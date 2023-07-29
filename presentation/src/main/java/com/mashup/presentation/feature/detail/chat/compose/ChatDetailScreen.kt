@@ -60,8 +60,7 @@ fun ChatDetailRoute(
         })
 
     LaunchedEffect(Unit) {
-        launch { viewModel.getChatInfo(roomId) }
-        launch { viewModel.getChats(roomId) }
+        launch { viewModel.getChatInfo() }
     }
     LaunchedEffect(pagedChatList.loadState) {
         if (pagedChatList.loadState.refresh is LoadState.NotLoading)
