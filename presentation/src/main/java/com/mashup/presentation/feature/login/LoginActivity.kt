@@ -48,8 +48,8 @@ class LoginActivity : ComponentActivity() {
         observeState()
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         loginViewModel.checkScreenType()
     }
 
