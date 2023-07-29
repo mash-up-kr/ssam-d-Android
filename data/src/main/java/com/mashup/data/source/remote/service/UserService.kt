@@ -4,7 +4,9 @@ import com.mashup.data.source.remote.dto.BaseResponse
 import com.mashup.data.source.remote.dto.requestbody.AlarmRequestBody
 import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody
 import com.mashup.data.source.remote.dto.responsebody.LoginResponseBody
-import com.mashup.data.source.remote.dto.responsebody.UserResponseBody
+import com.mashup.data.source.remote.dto.responsebody.user.SentSignalDetailResponse
+import com.mashup.data.source.remote.dto.responsebody.user.SentSignalPagingResponse
+import com.mashup.data.source.remote.dto.responsebody.user.UserResponseBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Field
@@ -47,4 +49,15 @@ interface UserService {
     suspend fun deleteUser(
         @Path("id") id: Long
     ): BaseResponse<Any>
+
+    @GET("users/signals")
+    suspend fun getSentSignal(
+        @Query("pageNo") pageNumber: Int,
+        @Query("pageLength") pageLength: Int?
+    ): BaseResponse<SentSignalPagingResponse>
+
+    @GET("users/signals/{id}")
+    suspend fun getSentSignalDetail(
+        @Path("id") signalId: Long,
+    ): BaseResponse<SentSignalDetailResponse>
 }
