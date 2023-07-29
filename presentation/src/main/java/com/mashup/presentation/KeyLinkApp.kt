@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import com.mashup.presentation.feature.report.navigation.navigateToChatReport
 import com.mashup.presentation.navigation.KeyLinkNavHost
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.Black
@@ -23,7 +22,6 @@ fun KeyLinkApp(
 ) {
     val coroutineScope = rememberCoroutineScope()
     var currentBottomSheetType by remember { mutableStateOf(BottomSheetType.CHAT_CONNECTED) }
-    var currentBottomSheetStringList by remember { mutableStateOf(mutableListOf<String>()) }
 
     KeyLinkBottomSheetLayout(
         bottomSheetContent = {
@@ -31,25 +29,7 @@ fun KeyLinkApp(
                 BottomSheetType.CHAT_CONNECTED -> KeyLinkConnectedBottomSheet(
                     modifier = Modifier.fillMaxWidth()
                 )
-                BottomSheetType.CHAT_DETAIL_KEYWORD -> KeyLinkKeywordBottomSheet(
-                    modifier = Modifier.fillMaxWidth(),
-                    matchedKeywords = currentBottomSheetStringList
-                )
-                BottomSheetType.CHAT_DETAIL_MORE -> KeyLinkChatBottomSheet(
-                    modifier = Modifier.fillMaxWidth(),
-                    onDisconnectSignal = {
-                        coroutineScope.launch {
-                            appState.modalBottomSheetState.hide()
-                        }
-                        // showDisconnectDialog = true
-                    },
-                    onReportUser = {
-                        coroutineScope.launch {
-                            appState.modalBottomSheetState.hide()
-                            appState.navController.navigateToChatReport()
-                        }
-                    }
-                )
+                else -> {}
             }
         },
         modalSheetState = appState.modalBottomSheetState
@@ -77,9 +57,8 @@ fun KeyLinkApp(
                         duration = duration
                     )
                 },
-                controlBottomSheet = { bottomSheetType, stringList ->
+                controlBottomSheet = { bottomSheetType ->
                     currentBottomSheetType = bottomSheetType
-                    stringList?.let { currentBottomSheetStringList = it.toMutableList() }
                     appState.controlBottomSheet()
                 },
                 onBackClick = {
@@ -94,5 +73,5 @@ fun KeyLinkApp(
 }
 
 enum class BottomSheetType {
-    CHAT_CONNECTED, CHAT_DETAIL_KEYWORD, CHAT_DETAIL_MORE
+    CHAT_CONNECTED
 }

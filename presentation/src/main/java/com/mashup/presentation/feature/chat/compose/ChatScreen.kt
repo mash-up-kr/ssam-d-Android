@@ -36,7 +36,7 @@ fun ChatRoute(
     onBackClick: () -> Unit,
     onEmptyScreenButtonClick: () -> Unit,
     onChatRoomClick: (Long) -> Unit,
-    controlBottomSheet: (BottomSheetType, List<String>?) -> Unit,
+    controlBottomSheet: (BottomSheetType) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
@@ -84,7 +84,7 @@ fun ChatRoute(
 fun ChatScreen(
     onEmptyScreenButtonClick: () -> Unit,
     onChatRoomClick: (Long) -> Unit,
-    controlBottomSheet: (BottomSheetType, List<String>?) -> Unit,
+    controlBottomSheet: (BottomSheetType) -> Unit,
     modifier: Modifier = Modifier,
     chatRoomList: LazyPagingItems<RoomUiModel>
 ) {
@@ -97,7 +97,7 @@ fun ChatScreen(
                     modifier = Modifier
                         .padding(start = 20.dp, top = 24.dp, bottom = 8.dp)
                         .clickable {
-                            controlBottomSheet(BottomSheetType.CHAT_CONNECTED, emptyList())
+                            controlBottomSheet(BottomSheetType.CHAT_CONNECTED)
                         },
                     verticalAlignment = Alignment.CenterVertically
                 ) {
