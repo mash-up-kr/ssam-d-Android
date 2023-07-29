@@ -1,12 +1,18 @@
 package com.mashup.data.repository
 
+import androidx.paging.PagingData
 import com.mashup.data.source.local.datasource.LocalUserDataSource
 import com.mashup.data.source.remote.source.datasource.RemoteUserDataSource
 import com.mashup.data.source.remote.dto.requestbody.LoginRequestBody
+import com.mashup.data.util.createPager
 import com.mashup.data.util.suspendRunCatching
 import com.mashup.domain.model.User
+import com.mashup.domain.model.signal.SentSignal
+import com.mashup.domain.model.signal.SentSignalDetail
 import com.mashup.domain.repository.UserRepository
 import com.mashup.domain.usecase.login.LoginParam
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -66,4 +72,18 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun getNickname(): String = localUserDataSource.getNickname()
 
     override suspend fun getKeywords(): List<String> = localUserDataSource.getKeywords()
+    
+    override fun getSentSignals(): Flow<PagingData<SentSignal>> {
+        return createPager { page, loadSize ->
+            remoteUserDataSource.getSentSignals(pageNumber = page, pageLength = loadSize)
+                .toDomainModel()
+        }.flow
+    }
+
+    override fun getSendSignalDetail(signalId: Long): Flow<SentSignalDetail> = flow {
+        val result = suspendRunCatching {
+            remoteUserDataSource.getSentSignalDetail(signalId).toDomainModel()
+        }.getOrThrow()
+        emit(result)
+    }
 }
