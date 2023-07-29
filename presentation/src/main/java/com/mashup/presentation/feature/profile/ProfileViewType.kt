@@ -20,7 +20,7 @@ sealed class ProfileViewType {
     data class UserInfo(
         val userImageUrl: String,
         val userName: String,
-        val userEmail: String
+        val userEmail: String?
     ) : ProfileViewType()
 
     data class Header(

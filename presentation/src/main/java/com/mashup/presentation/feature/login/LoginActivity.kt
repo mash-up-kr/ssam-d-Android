@@ -48,12 +48,17 @@ class LoginActivity : ComponentActivity() {
         observeState()
     }
 
+    override fun onStart() {
+        super.onStart()
+        loginViewModel.checkScreenType()
+    }
+
     private fun observeState() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.loginUiState.collectLatest { uiState ->
                     when (uiState) {
-                        LoginUiState.NICKNAME -> { loginViewModel.goToNextPage() }
+                        LoginUiState.NICKNAME -> { loginViewModel.goToNicknamePage() }
                         LoginUiState.KEYWORD -> {
                             startActivity(Intent(this@LoginActivity, OnBoardingActivity::class.java))
                             finish()
