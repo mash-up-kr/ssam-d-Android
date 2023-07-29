@@ -21,8 +21,11 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.chat.ChatViewModel
 import com.mashup.presentation.feature.chat.model.RoomUiModel
+import com.mashup.presentation.ui.common.KeyLinkBottomSheetLayout
+import com.mashup.presentation.ui.common.KeyLinkConnectedBottomSheet
 import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.theme.*
+import kotlinx.coroutines.launch
 
 /**
  * Ssam_D_Android
@@ -70,6 +73,7 @@ fun ChatRoute(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ChatScreen(
     onEmptyScreenButtonClick: () -> Unit,
@@ -77,47 +81,67 @@ fun ChatScreen(
     modifier: Modifier = Modifier,
     chatRoomList: LazyPagingItems<RoomUiModel>
 ) {
-    Scaffold(
-        modifier = modifier,
-        backgroundColor = Black,
-        topBar = {
-            Column {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 20.dp, top = 24.dp, bottom = 8.dp)
-                        .clickable {},
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = stringResource(R.string.toolbar_chat),
-                        style = Heading3,
-                        color = White
-                    )
+    val coroutineScope = rememberCoroutineScope()
+    val connectedBottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        animationSpec = SwipeableDefaults.AnimationSpec,
+        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
+        skipHalfExpanded = false
+    )
 
-                    Icon(
-                        modifier = Modifier.size(24.dp).padding(start = 6.dp),
-                        painter = painterResource(id = R.drawable.ic_chat_help_24),
-                        contentDescription = "",
-                        tint = Gray08
+    KeyLinkBottomSheetLayout(
+        bottomSheetContent = {
+            KeyLinkConnectedBottomSheet(
+                modifier = Modifier.fillMaxWidth(),
+            )
+        },
+        modalSheetState = connectedBottomSheetState
+    ) {
+        Scaffold(
+            modifier = modifier,
+            backgroundColor = Black,
+            topBar = {
+                Column {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 20.dp, top = 24.dp, bottom = 8.dp)
+                            .clickable {
+                                coroutineScope.launch {
+                                    if (connectedBottomSheetState.isVisible) connectedBottomSheetState.hide()
+                                    else connectedBottomSheetState.show()
+                                }
+                            },
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(R.string.toolbar_chat),
+                            style = Heading3,
+                            color = White
+                        )
+                        Icon(
+                            modifier = Modifier.size(24.dp).padding(start = 6.dp),
+                            painter = painterResource(id = R.drawable.ic_chat_help_24),
+                            contentDescription = "",
+                            tint = Gray08
+                        )
+                    }
+                    Divider(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Gray03),
+                        thickness = 1.dp
                     )
                 }
-
-                Divider(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Gray03),
-                    thickness = 1.dp
-                )
             }
+        ) { paddingValues ->
+            ChatContent(
+                onEmptyScreenButtonClick = onEmptyScreenButtonClick,
+                onChatRoomClick = onChatRoomClick,
+                modifier = Modifier.padding(paddingValues),
+                chatRoomList = chatRoomList
+            )
         }
-    ) { paddingValues ->
-        ChatContent(
-            onEmptyScreenButtonClick = onEmptyScreenButtonClick,
-            onChatRoomClick = onChatRoomClick,
-            modifier = Modifier.padding(paddingValues),
-            chatRoomList = chatRoomList
-        )
     }
 }
 
