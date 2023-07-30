@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.detail.chat.compose
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -101,57 +102,57 @@ private fun ChatDetailScreen(
     chatInfoUiState: ChatInfoUiState,
     pagedChatList: LazyPagingItems<ChatUiModel>
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    var currentBottomSheetType by remember { mutableStateOf(BottomSheetType.MORE) }
-    val keywordBottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        animationSpec = SwipeableDefaults.AnimationSpec,
-        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
-        skipHalfExpanded = false
-    )
-    val chatMoreMenuBottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        animationSpec = SwipeableDefaults.AnimationSpec,
-        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
-        skipHalfExpanded = false
-    )
     val scrollState = rememberLazyGridState()
     val isScrollingUp = scrollState.isScrollingUp()
     var showDisconnectDialog by remember { mutableStateOf(false) }
+
+    val coroutineScope = rememberCoroutineScope()
+    var currentBottomSheetType by remember { mutableStateOf(BottomSheetType.CHAT_DETAIL_MORE) }
+
+    val modalBottomSheetState: ModalBottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        animationSpec = SwipeableDefaults.AnimationSpec,
+        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
+        skipHalfExpanded = false
+    )
 
     val matchedKeywords = when (chatInfoUiState) {
         is ChatInfoUiState.Success -> chatInfoUiState.chatInfoUiModel.matchedKeywords
         else -> emptyList()
     }
 
+    BackHandler(true) {
+        coroutineScope.launch {
+            if (modalBottomSheetState.isVisible) modalBottomSheetState.hide()
+            else onBackClick()
+        }
+    }
+
     KeyLinkBottomSheetLayout(
         bottomSheetContent = {
             when (currentBottomSheetType) {
-                BottomSheetType.KEYWORD -> KeyLinkKeywordBottomSheet(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                BottomSheetType.CHAT_DETAIL_KEYWORD -> KeyLinkKeywordBottomSheet(
+                    modifier = Modifier.fillMaxWidth(),
                     matchedKeywords = matchedKeywords
                 )
-                BottomSheetType.MORE -> KeyLinkChatBottomSheet(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                BottomSheetType.CHAT_DETAIL_MORE -> KeyLinkChatBottomSheet(
+                    modifier = Modifier.fillMaxWidth(),
                     onDisconnectSignal = {
                         coroutineScope.launch {
-                            chatMoreMenuBottomSheetState.hide()
+                            modalBottomSheetState.hide()
                         }
                         showDisconnectDialog = true
-                     },
+                    },
                     onReportUser = {
-                        onReportClick()
+                        coroutineScope.launch {
+                            modalBottomSheetState.hide()
+                            onReportClick()
+                        }
                     }
                 )
             }
-
         },
-        modalSheetState = when (currentBottomSheetType) {
-            BottomSheetType.KEYWORD -> keywordBottomSheetState
-            BottomSheetType.MORE -> chatMoreMenuBottomSheetState
-        }
+        modalSheetState = modalBottomSheetState
     ) {
         Scaffold(
             modifier = modifier,
@@ -161,10 +162,10 @@ private fun ChatDetailScreen(
                     onClickBack = { onBackClick() },
                     menuAction = {
                         IconButton(onClick = {
-                            currentBottomSheetType = BottomSheetType.MORE
+                            currentBottomSheetType = BottomSheetType.CHAT_DETAIL_MORE
                             coroutineScope.launch {
-                                if (chatMoreMenuBottomSheetState.isVisible) chatMoreMenuBottomSheetState.hide()
-                                else chatMoreMenuBottomSheetState.show()
+                                if (modalBottomSheetState.isVisible) modalBottomSheetState.hide()
+                                else modalBottomSheetState.show()
                             }
                         }) {
                             Icon(
@@ -182,7 +183,7 @@ private fun ChatDetailScreen(
                 chatInfoUiState = chatInfoUiState,
                 pagedChatList = pagedChatList,
                 onChatItemClick = onMessageClick,
-                keywordBottomSheetState = keywordBottomSheetState,
+                modalBottomSheetState = modalBottomSheetState,
                 onChangeBottomSheetType = { currentBottomSheetType = it },
                 isMatchedKeywordVisible = isScrollingUp,
                 scrollState = scrollState,
@@ -190,6 +191,7 @@ private fun ChatDetailScreen(
             )
         }
     }
+
     if (showDisconnectDialog) {
         KeyLinkDisconnectSignalDialog(
             onDismissRequest = {},
@@ -210,7 +212,7 @@ private fun ChatDetailContent(
     chatInfoUiState: ChatInfoUiState,
     pagedChatList: LazyPagingItems<ChatUiModel>,
     onChatItemClick: (Long) -> Unit,
-    keywordBottomSheetState: ModalBottomSheetState,
+    modalBottomSheetState: ModalBottomSheetState,
     onChangeBottomSheetType: (BottomSheetType) -> Unit,
     isMatchedKeywordVisible: Boolean,
     scrollState: LazyGridState,
@@ -227,7 +229,7 @@ private fun ChatDetailContent(
             is ChatInfoUiState.Success -> {
                 ChatInfoContent(
                     chatInfoUiModel = chatInfoUiState.chatInfoUiModel,
-                    keywordBottomSheetState = keywordBottomSheetState,
+                    modalBottomSheetState = modalBottomSheetState,
                     onChangeBottomSheetType = onChangeBottomSheetType,
                     isMatchedKeywordVisible = isMatchedKeywordVisible,
                     coroutineScope = coroutineScope
@@ -252,7 +254,7 @@ private fun ChatDetailContent(
 private fun ChatInfoContent(
     modifier: Modifier = Modifier,
     chatInfoUiModel: ChatInfoUiModel,
-    keywordBottomSheetState: ModalBottomSheetState,
+    modalBottomSheetState: ModalBottomSheetState,
     onChangeBottomSheetType: (BottomSheetType) -> Unit,
     isMatchedKeywordVisible: Boolean,
     coroutineScope: CoroutineScope
@@ -271,10 +273,10 @@ private fun ChatInfoContent(
             MatchedKeywords(
                 modifier = modifier
                     .clickable {
-                        onChangeBottomSheetType(BottomSheetType.KEYWORD)
+                        onChangeBottomSheetType(BottomSheetType.CHAT_DETAIL_KEYWORD)
                         coroutineScope.launch {
-                            if (keywordBottomSheetState.isVisible) keywordBottomSheetState.hide()
-                            else keywordBottomSheetState.show()
+                            if (modalBottomSheetState.isVisible) modalBottomSheetState.hide()
+                            else modalBottomSheetState.show()
                         }
                     },
                 matchedKeywords = chatInfoUiModel.getMatchedKeywordSummery(),
@@ -303,5 +305,5 @@ private fun ChatInfoContent(
 }
 
 enum class BottomSheetType {
-    KEYWORD, MORE
+    CHAT_DETAIL_KEYWORD, CHAT_DETAIL_MORE
 }

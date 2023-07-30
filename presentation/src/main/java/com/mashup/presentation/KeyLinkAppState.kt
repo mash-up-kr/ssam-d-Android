@@ -1,13 +1,7 @@
 package com.mashup.presentation
 
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -28,18 +22,26 @@ import kotlinx.coroutines.launch
  * @created 2023/07/04
  */
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun rememberKeyLinkAppState(
     navController: NavHostController = rememberNavController(),
     scaffoldState: ScaffoldState = rememberScaffoldState(
         snackbarHostState = remember { SnackbarHostState() }
     ),
+    modalBottomSheetState: ModalBottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        animationSpec = SwipeableDefaults.AnimationSpec,
+        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
+        skipHalfExpanded = false
+    ),
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ): KeyLinkAppState {
-    return remember(navController, scaffoldState, coroutineScope) {
+    return remember(navController, scaffoldState, modalBottomSheetState, coroutineScope) {
         KeyLinkAppState(
             navController,
             scaffoldState,
+            modalBottomSheetState,
             coroutineScope
         )
     }
@@ -54,9 +56,10 @@ fun rememberKeyLinkAppState(
  * 5. ...
  */
 @Stable
-class KeyLinkAppState(
+class KeyLinkAppState @OptIn(ExperimentalMaterialApi::class) constructor(
     val navController: NavHostController,
     val scaffoldState: ScaffoldState,
+    val modalBottomSheetState: ModalBottomSheetState,
     val coroutineScope: CoroutineScope
 ) {
     val currentDestination: NavDestination?
@@ -72,6 +75,15 @@ class KeyLinkAppState(
             )
         }
     }
+
+    @OptIn(ExperimentalMaterialApi::class)
+    fun controlBottomSheet() {
+        coroutineScope.launch {
+            if (modalBottomSheetState.isVisible) modalBottomSheetState.hide()
+            else modalBottomSheetState.show()
+        }
+    }
+
     @Composable
     fun isBottomBarVisible(): Boolean {
         return when (currentDestination?.route) {
