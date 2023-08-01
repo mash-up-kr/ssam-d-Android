@@ -34,6 +34,7 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         initObservers()
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        loginViewModel.checkScreenType()
         setThemeContent {
             LoginRoute(
                 loginButtonClicked = { handleKakaoLogin() },
@@ -48,10 +49,10 @@ class LoginActivity : ComponentActivity() {
         observeState()
     }
 
-    override fun onStart() {
-        super.onStart()
-        loginViewModel.checkScreenType()
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        loginViewModel.checkScreenType()
+//    }
 
     private fun observeState() {
         lifecycleScope.launch {

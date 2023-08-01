@@ -3,7 +3,6 @@ package com.mashup.ssamd.notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.net.Uri.Builder
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -20,7 +19,7 @@ object NotificationConfigs {
     private const val SIGNAL_CHANNEL_NAME = "구독 키워드 시그널 도착 알림"
     private const val CHAT_NOTIFICATION_ID = 2
     private const val CHAT_CHANNEL_ID = "KeyLinkChat"
-    private const val CHAT_CHANNEL_NAME = "키링 채팅 도착 알림"
+    private const val CHAT_CHANNEL_NAME = "채팅 도착 알림"
 
     fun notifyReceivedSignal(
         context: Context,
