@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.domain.exception.ConflictException
+import com.mashup.domain.usecase.GetFCMDeviceTokenUseCase
 import com.mashup.domain.usecase.login.*
 import com.mashup.presentation.ui.common.ValidationState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,8 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val checkNicknameDuplicationUseCase: CheckNicknameDuplicationUseCase,
     private val patchNicknameUseCase: PatchNicknameUseCase,
-    private val getEntryScreenTypeUseCase: GetEntryScreenTypeUseCase
+    private val getEntryScreenTypeUseCase: GetEntryScreenTypeUseCase,
+    private val getFCMDeviceTokenUseCase: GetFCMDeviceTokenUseCase,
 ) : ViewModel() {
 
 //    init {
@@ -53,9 +55,13 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun login(email: String?, socialId: String, deviceToken: String? = "") {
+    fun login(email: String?, socialId: String) {
         viewModelScope.launch {
-            val param = LoginParam(email = email, socialId = socialId, deviceToken = deviceToken)
+            val param = LoginParam(
+                email = email,
+                socialId = socialId,
+                deviceToken = getFCMDeviceTokenUseCase.execute(Unit)
+            )
             loginUseCase.execute(param)
                 .onSuccess {
                     checkScreenType()
