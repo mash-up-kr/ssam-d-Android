@@ -31,4 +31,8 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun bindChatRepository(chatRepositoryImpl: ChatRepositoryImpl): ChatRepository
+
+    @Binds
+    @Singleton
+    fun bindFirebaseRepository(firebaseRepositoryImpl: FirebaseRepositoryImpl): FirebaseRepository
 }
