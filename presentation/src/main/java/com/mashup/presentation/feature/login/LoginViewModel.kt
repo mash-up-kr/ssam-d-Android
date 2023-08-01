@@ -22,9 +22,9 @@ class LoginViewModel @Inject constructor(
     private val getEntryScreenTypeUseCase: GetEntryScreenTypeUseCase
 ) : ViewModel() {
 
-    init {
-        checkScreenType()
-    }
+//    init {
+//        checkScreenType()
+//    }
 
     var currentPage by mutableStateOf(0)
     var nickname by mutableStateOf("")
