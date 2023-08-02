@@ -107,7 +107,7 @@ class KeyLinkAppState @OptIn(ExperimentalMaterialApi::class) constructor(
         }
         when (topLevelDestination) {
             TopLevelDestination.HOME -> navController.navigateToHome(topLevelNavOptions)
-            TopLevelDestination.SIGNAL -> navController.navigateToSignal(topLevelNavOptions)
+            TopLevelDestination.CRASHES -> navController.navigateToSignal(topLevelNavOptions)
             TopLevelDestination.CHAT_ROOM -> navController.navigateToChatRoom(topLevelNavOptions)
         }
     }

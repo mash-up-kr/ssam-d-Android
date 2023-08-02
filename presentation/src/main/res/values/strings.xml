@@ -6,6 +6,7 @@
     <string name="app_finish_toast">한 번 더 클릭하면 앱이 종료됩니다.</string>
 
     <string name="navigation_home">홈</string>
+    <string name="navigation_crashes">시그널존</string>
     <string name="navigation_signal">보내기</string>
     <string name="navigation_chat">연결됨</string>
     <string name="input_maximum_10">최대 10자 입력</string>
