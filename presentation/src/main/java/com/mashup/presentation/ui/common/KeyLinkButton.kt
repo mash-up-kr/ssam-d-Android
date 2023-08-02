@@ -53,21 +53,22 @@ fun KeyLinkButton(
 
 @Composable
 fun KeyLinkRoundButton(
-    text: String,
     modifier: Modifier = Modifier,
+    text: String,
+    backgroundColor: Color = Blurple,
     onClick: () -> Unit = {}
 ) {
     Button(
         modifier = modifier.wrapContentSize(),
         onClick = { onClick.invoke() },
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = Blurple,
+            backgroundColor = backgroundColor,
             contentColor = White,
             disabledBackgroundColor = Gray02,
             disabledContentColor = Gray06
         ),
         shape = RoundedCornerShape(24.dp),
-        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp)
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp)
     ) {
         Text(
             text = text,
