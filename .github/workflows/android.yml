@@ -45,9 +45,10 @@ jobs:
 
       # google-services 생성
       - name: Generate google_services.json from Github Secrets
-        run: echo "$GOOGLE_SERVICES" > ./app/google-services.json
+        run: |
+          echo "$GOOGLE_SERVICES" | base64 -d -i > ./app/google-services.json
         env:
-          GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES_DEBUG }}
+          GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES_DEBUG_BASE64 }}
 
       # Keystore 파일 생성
       - name: Generate Keystore file from Github Secrets
