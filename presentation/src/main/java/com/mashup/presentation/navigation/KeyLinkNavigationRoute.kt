@@ -39,4 +39,8 @@ sealed class KeyLinkNavigationRoute(val route: String) {
         object ReceivedSignalReplyRoute : KeyLinkNavigationRoute(RECEIVED_SIGNAL_REPLY_ROUTE)
         object ReceivedSignalReportRoute : KeyLinkNavigationRoute(RECEIVED_SIGNAL_REPORT_ROUTE)
     }
+
+    object CrashesGraph : KeyLinkNavigationRoute(CRASHES_GRAPH_PATTERN) {
+        object CrashesRoute : KeyLinkNavigationRoute(CRASHES_ROUTE)
+    }
 }

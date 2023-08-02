@@ -9,6 +9,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.mashup.presentation.feature.chat.navigation.navigateToChatRoom
+import com.mashup.presentation.feature.crashes.navigation.navigateToCrashes
 import com.mashup.presentation.feature.home.navigation.navigateToHome
 import com.mashup.presentation.feature.signal.send.navigation.navigateToSignal
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
@@ -88,6 +89,7 @@ class KeyLinkAppState @OptIn(ExperimentalMaterialApi::class) constructor(
     fun isBottomBarVisible(): Boolean {
         return when (currentDestination?.route) {
             KeyLinkNavigationRoute.HomeGraph.HomeRoute.route,
+            KeyLinkNavigationRoute.CrashesGraph.CrashesRoute.route,
             KeyLinkNavigationRoute.ChatRoomGraph.ChatRoomRoute.route -> true
             else -> false
         }
@@ -107,7 +109,7 @@ class KeyLinkAppState @OptIn(ExperimentalMaterialApi::class) constructor(
         }
         when (topLevelDestination) {
             TopLevelDestination.HOME -> navController.navigateToHome(topLevelNavOptions)
-            TopLevelDestination.CRASHES -> navController.navigateToSignal(topLevelNavOptions)
+            TopLevelDestination.CRASHES -> navController.navigateToCrashes(topLevelNavOptions)
             TopLevelDestination.CHAT_ROOM -> navController.navigateToChatRoom(topLevelNavOptions)
         }
     }

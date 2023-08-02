@@ -34,3 +34,6 @@ const val RECEIVED_SIGNAL_GRAPH = "chat_graph"
 const val RECEIVED_SIGNAL_DETAIL_ROUTE = "chat_graph/signal/{signalId}"
 const val RECEIVED_SIGNAL_REPLY_ROUTE = "chat_graph/signal/{signalId}/reply"
 const val RECEIVED_SIGNAL_REPORT_ROUTE = "chat_graph/report"
+
+const val CRASHES_GRAPH_PATTERN = "crashes_graph"
+const val CRASHES_ROUTE = "crashes_graph/crashes"
