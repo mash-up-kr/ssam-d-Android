@@ -43,6 +43,7 @@ fun HomeRoute(
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: (Long) -> Unit,
+    onSendSignalButtonClick: () -> Unit,
     homeViewModel: HomeViewModel,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier
@@ -93,7 +94,8 @@ fun HomeRoute(
             },
             onGuideClick = onGuideClick,
             onProfileMenuClick = onProfileMenuClick,
-            onReceivedSignalClick = onReceivedSignalClick
+            onReceivedSignalClick = onReceivedSignalClick,
+            onSendSignalButtonClick = onSendSignalButtonClick
         )
         PullRefreshIndicator(refreshing = isRefreshing, state = pullRefreshState)
     }
@@ -111,6 +113,7 @@ private fun HomeBackgroundScreen(
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: (Long) -> Unit,
+    onSendSignalButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val signalCount = pagedReceivedSignal.itemCount
@@ -121,7 +124,7 @@ private fun HomeBackgroundScreen(
             KeyLinkRoundButton(
                 text = stringResource(R.string.navigation_signal),
                 iconVisible = true,
-                onClick = {}
+                onClick = onSendSignalButtonClick
             )
         }
     ) { paddingValues ->
