@@ -7,7 +7,7 @@ package com.mashup.ssamd.notification.builder
  */
 interface NotificationBuilder {
 
-    fun showReceivedSignalNotification(title: String, body: String, receivedTimeMillis: String)
+    fun showReceivedSignalNotification(title: String, body: String)
 
-    fun showNewChatNotification(title: String, body: String, roomId: String, receivedTimeMillis: String)
+    fun showNewChatNotification(title: String, body: String, roomId: String)
 }
