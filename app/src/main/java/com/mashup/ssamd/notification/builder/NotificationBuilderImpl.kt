@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import com.mashup.presentation.common.extension.getDisplayedTime
 import com.mashup.presentation.navigation.MainActivity
 import com.mashup.ssamd.R
 import com.mashup.ssamd.notification.NotificationConfigs
@@ -21,44 +20,35 @@ class NotificationBuilderImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : NotificationBuilder {
 
-    override fun showReceivedSignalNotification(
-        title: String,
-        body: String,
-        receivedTimeMillis: String
-    ) {
+    override fun showReceivedSignalNotification(title: String, body: String) {
         NotificationConfigs.notifyReceivedSignal(context) {
             setStyle(NotificationCompat.BigTextStyle().bigText(body))
             setSmallIcon(R.mipmap.ic_launcher)
-            setWhen(receivedTimeMillis.toLong())
             setContentTitle(title)
             setContentText(body)
             priority = NotificationCompat.PRIORITY_HIGH
             setAutoCancel(true)
+            setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             setFullScreenIntent(makeLauncherPendingIntent(), true)
         }
     }
 
-    override fun showNewChatNotification(
-        title: String,
-        body: String,
-        roomId: String,
-        receivedTimeMillis: String
-    ) {
+    override fun showNewChatNotification(title: String, body: String, roomId: String) {
         NotificationConfigs.notifyNewChat(context) {
             setStyle(NotificationCompat.BigTextStyle().bigText(body))
             setSmallIcon(R.mipmap.ic_launcher)
-            setWhen(receivedTimeMillis.toLong())
             setContentTitle(title)
             setContentText(body)
             priority = NotificationCompat.PRIORITY_HIGH
             setAutoCancel(true)
+            setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             setFullScreenIntent(makeLauncherPendingIntent(), true)
         }
     }
 
     private fun createMainIntent(): Intent {
         return Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
     }
 
