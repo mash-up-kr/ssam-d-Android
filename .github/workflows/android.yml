@@ -45,8 +45,7 @@ jobs:
 
       # google-services 생성
       - name: Generate google_services.json from Github Secrets
-        run: |
-          echo "$GOOGLE_SERVICES" > ./app/src/debug/google-services.json
+        run: echo "$GOOGLE_SERVICES" > ./app/google-services.json
         env:
           GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES_DEBUG }}
 
