@@ -4,15 +4,19 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mashup.presentation.R
 import com.mashup.presentation.ui.theme.*
 
 @Composable
@@ -56,6 +60,7 @@ fun KeyLinkRoundButton(
     modifier: Modifier = Modifier,
     text: String,
     backgroundColor: Color = Blurple,
+    iconVisible: Boolean = false,
     onClick: () -> Unit = {}
 ) {
     Button(
@@ -70,6 +75,14 @@ fun KeyLinkRoundButton(
         shape = RoundedCornerShape(24.dp),
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp)
     ) {
+        if (iconVisible) {
+            Icon(
+                modifier = Modifier.size(28.dp).padding(end = 4.dp),
+                painter = painterResource(id = R.drawable.ic_signal_fill_32),
+                contentDescription = "",
+                tint = White
+            )
+        }
         Text(
             text = text,
             fontSize = 16.sp,

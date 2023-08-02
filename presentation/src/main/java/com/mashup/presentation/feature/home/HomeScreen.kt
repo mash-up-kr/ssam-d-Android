@@ -7,10 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -32,6 +29,7 @@ import com.mashup.presentation.common.extension.findActivity
 import com.mashup.presentation.common.extension.isScrollingUp
 import com.mashup.presentation.feature.home.model.SignalUiModel
 import com.mashup.presentation.ui.common.KeyLinkLoading
+import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.theme.Gray01
 import com.mashup.presentation.ui.theme.Gray08
 import com.mashup.presentation.ui.theme.Heading4
@@ -117,17 +115,29 @@ private fun HomeBackgroundScreen(
 ) {
     val signalCount = pagedReceivedSignal.itemCount
 
-    Box(modifier = modifier.fillMaxSize()) {
-        HomeBackgroundImage(signalCount = signalCount)
-        HomeScreen(
-            subscribeKeywordsUiState = subscribeKeywordsUiState,
-            signalCount = signalCount,
-            pagedReceivedSignal = pagedReceivedSignal,
-            onKeywordContainerClick = onKeywordContainerClick,
-            onGuideClick = onGuideClick,
-            onProfileMenuClick = onProfileMenuClick,
-            onReceivedSignalClick = onReceivedSignalClick
-        )
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        floatingActionButton = {
+            KeyLinkRoundButton(
+                text = stringResource(R.string.navigation_signal),
+                iconVisible = true,
+                onClick = {}
+            )
+        }
+    ) { paddingValues ->
+        Box(modifier = modifier.fillMaxSize().padding(paddingValues)) {
+            HomeBackgroundImage(signalCount = signalCount)
+            HomeScreen(
+                modifier = Modifier.padding(paddingValues),
+                subscribeKeywordsUiState = subscribeKeywordsUiState,
+                signalCount = signalCount,
+                pagedReceivedSignal = pagedReceivedSignal,
+                onKeywordContainerClick = onKeywordContainerClick,
+                onGuideClick = onGuideClick,
+                onProfileMenuClick = onProfileMenuClick,
+                onReceivedSignalClick = onReceivedSignalClick
+            )
+        }
     }
 }
 
