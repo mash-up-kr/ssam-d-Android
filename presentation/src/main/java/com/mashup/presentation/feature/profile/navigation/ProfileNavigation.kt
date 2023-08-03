@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.profile.navigation
 
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -9,6 +10,7 @@ import androidx.navigation.navigation
 import com.mashup.presentation.feature.profile.compose.ProfileRoute
 import com.mashup.presentation.feature.profile.policy.PrivacyPolicyRoute
 import com.mashup.presentation.feature.profile.tos.TermsOfServiceRoute
+import com.mashup.presentation.feature.profile.withdrawal.WithdrawalRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 import com.mashup.presentation.ui.theme.White
 
@@ -36,6 +38,7 @@ fun NavController.navigateToNavigationRoute(
 
 fun NavGraphBuilder.profileGraph(
     navController: NavController,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     onBackClick: () -> Unit,
 ) {
     navigation(
@@ -59,6 +62,13 @@ fun NavGraphBuilder.profileGraph(
         }
         composable(route = KeyLinkNavigationRoute.ProfileGraph.OpenSourceRoute.route) {
 
+        }
+        composable(route = KeyLinkNavigationRoute.ProfileGraph.WithdrawalRoute.route) {
+            WithdrawalRoute(
+                onBackClick = onBackClick,
+                onWithdrawal = {},
+                onShowSnackbar = onShowSnackbar
+            )
         }
     }
 }
