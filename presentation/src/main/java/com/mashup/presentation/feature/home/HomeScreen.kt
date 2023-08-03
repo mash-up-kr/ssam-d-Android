@@ -29,7 +29,7 @@ import com.mashup.presentation.common.extension.findActivity
 import com.mashup.presentation.common.extension.isScrollingUp
 import com.mashup.presentation.feature.home.model.SignalUiModel
 import com.mashup.presentation.ui.common.KeyLinkLoading
-import com.mashup.presentation.ui.common.KeyLinkRoundButton
+import com.mashup.presentation.ui.common.KeyLinkRoundIconButton
 import com.mashup.presentation.ui.theme.Gray01
 import com.mashup.presentation.ui.theme.Gray08
 import com.mashup.presentation.ui.theme.Heading4
@@ -121,9 +121,8 @@ private fun HomeBackgroundScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
-            KeyLinkRoundButton(
+            KeyLinkRoundIconButton(
                 text = stringResource(R.string.navigation_signal),
-                iconVisible = true,
                 onClick = onSendSignalButtonClick
             )
         }
