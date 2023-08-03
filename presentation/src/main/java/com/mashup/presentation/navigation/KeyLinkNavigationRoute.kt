@@ -32,6 +32,7 @@ sealed class KeyLinkNavigationRoute(val route: String) {
         object TermsOfServiceRoute : KeyLinkNavigationRoute(TERMS_OF_SERVICE_ROUTE)
         object PrivacyPolicyRoute : KeyLinkNavigationRoute(PRIVACY_POLICY_ROUTE)
         object OpenSourceRoute : KeyLinkNavigationRoute(OPEN_SOURCE_ROUTE)
+        object WithdrawalRoute : KeyLinkNavigationRoute(WITHDRAWAL_ROUTE)
     }
 
     object ReceivedSignalGraph : KeyLinkNavigationRoute(RECEIVED_SIGNAL_GRAPH) {
