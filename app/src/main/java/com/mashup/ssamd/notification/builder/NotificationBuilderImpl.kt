@@ -30,7 +30,7 @@ class NotificationBuilderImpl @Inject constructor(
             setAutoCancel(true)
             setCategory(NotificationCompat.CATEGORY_MESSAGE)
             setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            setContentIntent(makeChatLauncherPendingIntent())
+            setContentIntent(makeSignalLauncherPendingIntent())
         }
     }
 
@@ -64,7 +64,7 @@ class NotificationBuilderImpl @Inject constructor(
 
         return PendingIntent.getActivity(
             context,
-            CHAT_PENDING_REQUEST_CODE,
+            (System.currentTimeMillis()).toInt(),
             intent,
             pendingIntentFlags
         )
@@ -73,21 +73,16 @@ class NotificationBuilderImpl @Inject constructor(
     private fun makeSignalLauncherPendingIntent(): PendingIntent {
         val intent = createMainIntent()
         val pendingIntentFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.FLAG_ONE_SHOT
+            PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_ONE_SHOT
         } else {
             PendingIntent.FLAG_ONE_SHOT
         }
 
         return PendingIntent.getActivity(
             context,
-            SIGNAL_PENDING_REQUEST_CODE,
+            (System.currentTimeMillis()).toInt(),
             intent,
             pendingIntentFlags
         )
-    }
-
-    companion object {
-        private const val SIGNAL_PENDING_REQUEST_CODE = 1
-        private const val CHAT_PENDING_REQUEST_CODE = 2
     }
 }
