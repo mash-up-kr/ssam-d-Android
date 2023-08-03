@@ -28,8 +28,9 @@ class NotificationBuilderImpl @Inject constructor(
             setContentText(body)
             priority = NotificationCompat.PRIORITY_HIGH
             setAutoCancel(true)
-            setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
-            setFullScreenIntent(makeLauncherPendingIntent(), true)
+            setCategory(NotificationCompat.CATEGORY_MESSAGE)
+            setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            setContentIntent(makeChatLauncherPendingIntent())
         }
     }
 
@@ -41,8 +42,9 @@ class NotificationBuilderImpl @Inject constructor(
             setContentText(body)
             priority = NotificationCompat.PRIORITY_HIGH
             setAutoCancel(true)
-            setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
-            setFullScreenIntent(makeLauncherPendingIntent(), true)
+            setCategory(NotificationCompat.CATEGORY_MESSAGE)
+            setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            setContentIntent(makeChatLauncherPendingIntent())
         }
     }
 
@@ -52,7 +54,7 @@ class NotificationBuilderImpl @Inject constructor(
         }
     }
 
-    private fun makeLauncherPendingIntent(): PendingIntent {
+    private fun makeChatLauncherPendingIntent(): PendingIntent {
         val intent = createMainIntent()
         val pendingIntentFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_ONE_SHOT
@@ -62,13 +64,30 @@ class NotificationBuilderImpl @Inject constructor(
 
         return PendingIntent.getActivity(
             context,
-            PENDING_REQUEST_CODE,
+            CHAT_PENDING_REQUEST_CODE,
+            intent,
+            pendingIntentFlags
+        )
+    }
+
+    private fun makeSignalLauncherPendingIntent(): PendingIntent {
+        val intent = createMainIntent()
+        val pendingIntentFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.FLAG_ONE_SHOT
+        } else {
+            PendingIntent.FLAG_ONE_SHOT
+        }
+
+        return PendingIntent.getActivity(
+            context,
+            SIGNAL_PENDING_REQUEST_CODE,
             intent,
             pendingIntentFlags
         )
     }
 
     companion object {
-        private const val PENDING_REQUEST_CODE = 1
+        private const val SIGNAL_PENDING_REQUEST_CODE = 1
+        private const val CHAT_PENDING_REQUEST_CODE = 2
     }
 }

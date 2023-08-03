@@ -28,7 +28,7 @@ object NotificationConfigs {
         initializeNotificationChannel(context)
         context.getNotificationManager().run {
             notify(
-                SIGNAL_NOTIFICATION_ID,
+                (System.currentTimeMillis()/1000).toInt(),
                 NotificationCompat.Builder(
                     context,
                     SIGNAL_CHANNEL_ID
@@ -44,7 +44,7 @@ object NotificationConfigs {
         initializeNotificationChannel(context)
         context.getNotificationManager().run {
             notify(
-                CHAT_NOTIFICATION_ID,
+                (System.currentTimeMillis()/1000).toInt(),
                 NotificationCompat.Builder(
                     context,
                     CHAT_CHANNEL_ID
@@ -69,7 +69,6 @@ object NotificationConfigs {
                 )
                 createNotificationChannels(listOf(signalChannel, chatChannel))
             }
-
         }
     }
 
