@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
@@ -84,7 +85,8 @@ fun NavigationContent(
     description: String,
     route: String,
     onNavigateClick: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    contentColor: Color = White
 ) {
     Column(
         modifier = modifier
@@ -100,7 +102,7 @@ fun NavigationContent(
                 modifier = Modifier.weight(9f),
                 text = description,
                 style = Body1,
-                color = White
+                color = contentColor
             )
 
             Icon(
