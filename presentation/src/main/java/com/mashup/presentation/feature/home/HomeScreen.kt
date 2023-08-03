@@ -1,6 +1,5 @@
 package com.mashup.presentation.feature.home
 
-import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
@@ -8,9 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -32,7 +29,9 @@ import com.mashup.presentation.common.extension.findActivity
 import com.mashup.presentation.common.extension.isScrollingUp
 import com.mashup.presentation.feature.home.model.SignalUiModel
 import com.mashup.presentation.ui.common.KeyLinkLoading
+import com.mashup.presentation.ui.common.KeyLinkRoundIconButton
 import com.mashup.presentation.ui.theme.Gray01
+import com.mashup.presentation.ui.theme.Gray08
 import com.mashup.presentation.ui.theme.Heading4
 import com.mashup.presentation.ui.theme.White
 import kotlinx.coroutines.launch
@@ -44,6 +43,7 @@ fun HomeRoute(
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: (Long) -> Unit,
+    onSendSignalButtonClick: () -> Unit,
     homeViewModel: HomeViewModel,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier
@@ -94,7 +94,8 @@ fun HomeRoute(
             },
             onGuideClick = onGuideClick,
             onProfileMenuClick = onProfileMenuClick,
-            onReceivedSignalClick = onReceivedSignalClick
+            onReceivedSignalClick = onReceivedSignalClick,
+            onSendSignalButtonClick = onSendSignalButtonClick
         )
         PullRefreshIndicator(refreshing = isRefreshing, state = pullRefreshState)
     }
@@ -112,21 +113,33 @@ private fun HomeBackgroundScreen(
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: (Long) -> Unit,
+    onSendSignalButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val signalCount = pagedReceivedSignal.itemCount
 
-    Box(modifier = modifier.fillMaxSize()) {
-        HomeBackgroundImage(signalCount = signalCount)
-        HomeScreen(
-            subscribeKeywordsUiState = subscribeKeywordsUiState,
-            signalCount = signalCount,
-            pagedReceivedSignal = pagedReceivedSignal,
-            onKeywordContainerClick = onKeywordContainerClick,
-            onGuideClick = onGuideClick,
-            onProfileMenuClick = onProfileMenuClick,
-            onReceivedSignalClick = onReceivedSignalClick
-        )
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        floatingActionButton = {
+            KeyLinkRoundIconButton(
+                text = stringResource(R.string.navigation_signal),
+                onClick = onSendSignalButtonClick
+            )
+        }
+    ) { paddingValues ->
+        Box(modifier = modifier.fillMaxSize().padding(paddingValues)) {
+            HomeBackgroundImage(signalCount = signalCount)
+            HomeScreen(
+                modifier = Modifier.padding(paddingValues),
+                subscribeKeywordsUiState = subscribeKeywordsUiState,
+                signalCount = signalCount,
+                pagedReceivedSignal = pagedReceivedSignal,
+                onKeywordContainerClick = onKeywordContainerClick,
+                onGuideClick = onGuideClick,
+                onProfileMenuClick = onProfileMenuClick,
+                onReceivedSignalClick = onReceivedSignalClick
+            )
+        }
     }
 }
 
@@ -183,6 +196,7 @@ fun BoxScope.HomeScreen(
     ) {
         HomeScreenToolBar(
             topBarBackgroundColor = topBarBackgroundColor,
+            onGuideClick = onGuideClick,
             onProfileMenuClick = onProfileMenuClick
         )
         if (subscribeKeywordsUiState is Success) {
@@ -211,7 +225,8 @@ fun BoxScope.HomeScreen(
 @Composable
 private fun HomeScreenToolBar(
     topBarBackgroundColor: Color,
-    onProfileMenuClick: () -> Unit,
+    onGuideClick: () -> Unit,
+    onProfileMenuClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -223,6 +238,7 @@ private fun HomeScreenToolBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
+            modifier = Modifier.clickable { onGuideClick() },
             horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -230,6 +246,12 @@ private fun HomeScreenToolBar(
                 text = stringResource(id = R.string.home_my_planet),
                 style = Heading4,
                 color = White
+            )
+            Icon(
+                modifier = Modifier.size(20.dp),
+                painter = painterResource(id = R.drawable.ic_chat_help_24),
+                contentDescription = "",
+                tint = Gray08
             )
         }
         Image(

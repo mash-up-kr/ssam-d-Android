@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import com.mashup.presentation.BottomSheetType
 import com.mashup.presentation.KeyLinkAppState
 import com.mashup.presentation.feature.chat.navigation.chatRoomGraph
+import com.mashup.presentation.feature.crashes.navigation.crashesGraph
 import com.mashup.presentation.feature.detail.message.navigation.receivedSignalGraph
 import com.mashup.presentation.feature.home.navigation.homeGraph
 import com.mashup.presentation.feature.profile.navigation.profileGraph
@@ -52,6 +53,11 @@ fun KeyLinkNavHost(
             onBackClick = navController::navigateUp,
         )
         receivedSignalGraph(
+            navController = navController,
+            onBackClick = navController::navigateUp,
+            onShowSnackbar = onShowSnackbar
+        )
+        crashesGraph(
             navController = navController,
             onBackClick = navController::navigateUp,
             onShowSnackbar = onShowSnackbar
