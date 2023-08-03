@@ -51,6 +51,7 @@ fun KeyLinkNavHost(
         profileGraph(
             navController = navController,
             onBackClick = navController::navigateUp,
+            onShowSnackbar = onShowSnackbar
         )
         receivedSignalGraph(
             navController = navController,
