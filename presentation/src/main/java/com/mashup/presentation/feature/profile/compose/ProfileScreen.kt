@@ -151,6 +151,7 @@ fun ProfileContent(
                     NavigationContent(
                         description = viewType.description,
                         route = viewType.route,
+                        contentColor = viewType.color,
                         onNavigateClick = onNavigateClick
                     )
                 }
