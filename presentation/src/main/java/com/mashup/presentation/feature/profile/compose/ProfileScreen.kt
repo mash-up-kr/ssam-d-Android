@@ -116,8 +116,8 @@ fun ProfileContent(
     ) {
         itemsIndexed(optionsList) { index, viewType ->
             when (index) {
-                4 -> {
-                    Spacer(modifier = Modifier.height(52.dp))
+                2, 4, 9 -> {
+                    Spacer(modifier = Modifier.height(20.dp))
                 }
             }
 

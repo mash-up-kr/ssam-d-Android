@@ -32,6 +32,24 @@ class ProfileOptionsProvider @Inject constructor(
                 )
             )
             add(
+                ProfileViewType.NavigationContent(
+                    description = context.getString(R.string.profile_sent_signal),
+                    route = KeyLinkNavigationRoute.ProfileGraph.SendSignalRoute.route,
+                    color = Mint
+                )
+            )
+            add(
+                ProfileViewType.Header(
+                    description = context.getString(R.string.settings)
+                )
+            )
+            add(
+                ProfileViewType.NotificationContent(
+                    description = context.getString(R.string.notification),
+                    isAgree = profileUiModel.agreeAlarm
+                )
+            )
+            add(
                 ProfileViewType.Header(
                     description = context.getString(R.string.information)
                 )
@@ -49,9 +67,26 @@ class ProfileOptionsProvider @Inject constructor(
                 )
             )
             add(
+                ProfileViewType.NavigationContent(
+                    description = context.getString(R.string.open_source),
+                    route = KeyLinkNavigationRoute.ProfileGraph.OpenSourceRoute.route
+                )
+            )
+            add(
                 ProfileViewType.AppVersionContent(
                     description = context.getString(R.string.app_version),
                     appVersion = context.getAppVersion(),
+                )
+            )
+            add(
+                ProfileViewType.Header(
+                    description = context.getString(R.string.account)
+                )
+            )
+            add(
+                ProfileViewType.NavigationContent(
+                    description = context.getString(R.string.withdrawal),
+                    route = KeyLinkNavigationRoute.ProfileGraph.WithdrawalRoute.route
                 )
             )
             add(
