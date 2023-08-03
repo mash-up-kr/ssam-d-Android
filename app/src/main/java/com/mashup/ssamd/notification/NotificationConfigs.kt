@@ -14,10 +14,8 @@ import com.google.firebase.messaging.FirebaseMessagingService
  */
 object NotificationConfigs {
 
-    private const val SIGNAL_NOTIFICATION_ID = 1
     private const val SIGNAL_CHANNEL_ID = "KeyLinkSignal"
     private const val SIGNAL_CHANNEL_NAME = "구독 키워드 시그널 도착 알림"
-    private const val CHAT_NOTIFICATION_ID = 2
     private const val CHAT_CHANNEL_ID = "KeyLinkChat"
     private const val CHAT_CHANNEL_NAME = "채팅 도착 알림"
 
