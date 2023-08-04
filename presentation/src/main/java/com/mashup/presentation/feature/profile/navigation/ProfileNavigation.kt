@@ -51,17 +51,11 @@ fun NavGraphBuilder.profileGraph(
                 onNavigateClick = navController::navigateToNavigationRoute
             )
         }
-        composable(route = KeyLinkNavigationRoute.ProfileGraph.SendSignalRoute.route) {
-
-        }
         composable(route = KeyLinkNavigationRoute.ProfileGraph.TermsOfServiceRoute.route) {
             TermsOfServiceRoute(onBackClick = onBackClick)
         }
         composable(route = KeyLinkNavigationRoute.ProfileGraph.PrivacyPolicyRoute.route) {
             PrivacyPolicyRoute(onBackClick = onBackClick)
-        }
-        composable(route = KeyLinkNavigationRoute.ProfileGraph.OpenSourceRoute.route) {
-
         }
         composable(route = KeyLinkNavigationRoute.ProfileGraph.WithdrawalRoute.route) {
             WithdrawalRoute(

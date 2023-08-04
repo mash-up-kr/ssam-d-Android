@@ -116,11 +116,8 @@ fun ProfileContent(
     ) {
         itemsIndexed(optionsList) { index, viewType ->
             when (index) {
-                2, 4, 9 -> {
-                    Spacer(modifier = Modifier.height(20.dp))
-                }
+                3, 7 -> Spacer(modifier = Modifier.height(20.dp))
             }
-
             when (viewType) {
                 is ProfileViewType.UserInfo -> {
                     UserInfoContent(

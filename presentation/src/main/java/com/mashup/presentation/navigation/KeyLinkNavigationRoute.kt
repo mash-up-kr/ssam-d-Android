@@ -28,10 +28,8 @@ sealed class KeyLinkNavigationRoute(val route: String) {
 
     object ProfileGraph : KeyLinkNavigationRoute(PROFILE_GRAPH_PATTERN) {
         object ProfileRoute : KeyLinkNavigationRoute(PROFILE_ROUTE)
-        object SendSignalRoute : KeyLinkNavigationRoute(SEND_SIGNAL_ROUTE)
         object TermsOfServiceRoute : KeyLinkNavigationRoute(TERMS_OF_SERVICE_ROUTE)
         object PrivacyPolicyRoute : KeyLinkNavigationRoute(PRIVACY_POLICY_ROUTE)
-        object OpenSourceRoute : KeyLinkNavigationRoute(OPEN_SOURCE_ROUTE)
         object WithdrawalRoute : KeyLinkNavigationRoute(WITHDRAWAL_ROUTE)
     }
 
