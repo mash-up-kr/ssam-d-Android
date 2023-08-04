@@ -29,6 +29,7 @@ sealed class ProfileViewType {
 
     data class NavigationContent(
         override val description: String,
+        val userId: Long,
         val route: String,
         val color: Color = White
     ) : ProfileViewType(), BaseViewType
