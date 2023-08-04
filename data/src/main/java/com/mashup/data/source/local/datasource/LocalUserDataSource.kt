@@ -62,6 +62,10 @@ class LocalUserDataSource @Inject constructor(
         preferences.edit().putString(KEYWOREDS, jsonArr.toString()).apply()
     }
 
+    fun removeAll() {
+        preferences.edit().clear().apply()
+    }
+
     companion object {
         private const val LOGIN_PREFERENCE = "LOGIN_PREFERENCE"
 

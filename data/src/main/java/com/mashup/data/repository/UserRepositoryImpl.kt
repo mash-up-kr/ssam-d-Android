@@ -56,9 +56,14 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteUser() {
-        val id = localUserDataSource.getUserId()
-        remoteUserDataSource.deleteUser(id)
+    override suspend fun deleteUser(userId: Long): Result<Unit> {
+        return suspendRunCatching {
+            remoteUserDataSource.deleteUser(userId)
+        }.onSuccess {
+            localUserDataSource.removeAll()
+        }.onFailure {
+            throw Exception(it.message)
+        }
     }
 
     override suspend fun getUserAccessToken(): String = localUserDataSource.getToken()

@@ -24,9 +24,6 @@ class LoginViewModel @Inject constructor(
     private val getFCMDeviceTokenUseCase: GetFCMDeviceTokenUseCase,
 ) : ViewModel() {
 
-//    init {
-//        checkScreenType()
-//    }
 
     var currentPage by mutableStateOf(0)
     var nickname by mutableStateOf("")

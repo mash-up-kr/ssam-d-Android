@@ -49,11 +49,6 @@ class LoginActivity : ComponentActivity() {
         observeState()
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        loginViewModel.checkScreenType()
-//    }
-
     private fun observeState() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
