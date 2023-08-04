@@ -19,7 +19,7 @@ enum class TopLevelDestination(
         iconTextId = R.string.navigation_home,
         textLabelId = R.string.navigation_home,
     ),
-    CRASHES(
+    SIGNAL_ZONE(
         selectedIconId = R.drawable.ic_crashes_fill_32,
         unselectedIconId = R.drawable.ic_crashes_fill_32,
         iconTextId = R.string.navigation_crashes,
