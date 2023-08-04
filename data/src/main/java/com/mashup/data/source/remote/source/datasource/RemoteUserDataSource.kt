@@ -32,7 +32,7 @@ class RemoteUserDataSource @Inject constructor(
         return userService.getUser(id)
     }
 
-    suspend fun deleteUser(id: Long) {
-        userService.deleteUser(id)
+    suspend fun deleteUser(userId: Long) {
+        userService.deleteUser(userId)
     }
 }

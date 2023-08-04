@@ -2,6 +2,7 @@ package com.mashup.presentation.feature.profile.withdrawal
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mashup.domain.usecase.mypage.WithdrawalUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -15,15 +16,21 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class WithdrawalViewModel @Inject constructor(
-
+    private val withdrawalUseCase: WithdrawalUseCase
 ) : ViewModel() {
     private val _eventFlow: MutableSharedFlow<WithdrawalUiEvent> =
         MutableSharedFlow<WithdrawalUiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    fun withdrawal() {
+    fun withdrawal(userId: Long) {
         viewModelScope.launch {
-            _eventFlow.emit(Withdrawal)
+            withdrawalUseCase.execute(param = userId)
+                .onSuccess {
+                    _eventFlow.emit(Withdrawal)
+                }
+                .onFailure {
+                    _eventFlow.emit(Failure(it.message))
+                }
         }
     }
 }

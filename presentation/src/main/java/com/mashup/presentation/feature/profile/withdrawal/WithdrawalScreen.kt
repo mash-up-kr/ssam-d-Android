@@ -22,6 +22,7 @@ import com.mashup.presentation.ui.theme.*
  */
 @Composable
 fun WithdrawalRoute(
+    userId: Long = 9,
     onBackClick: () -> Unit,
     onWithdrawal: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
@@ -38,7 +39,7 @@ fun WithdrawalRoute(
 
     WithdrawalScreen(
         onBackClick = onBackClick,
-        onWithdrawalClick = viewModel::withdrawal,
+        onWithdrawalClick = { viewModel.withdrawal(userId) },
         modifier = modifier
     )
 }
