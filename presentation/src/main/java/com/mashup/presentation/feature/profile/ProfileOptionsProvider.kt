@@ -32,13 +32,6 @@ class ProfileOptionsProvider @Inject constructor(
                 )
             )
             add(
-                ProfileViewType.NavigationContent(
-                    description = context.getString(R.string.profile_sent_signal),
-                    route = KeyLinkNavigationRoute.ProfileGraph.SendSignalRoute.route,
-                    color = Mint
-                )
-            )
-            add(
                 ProfileViewType.Header(
                     description = context.getString(R.string.settings)
                 )
@@ -64,12 +57,6 @@ class ProfileOptionsProvider @Inject constructor(
                 ProfileViewType.NavigationContent(
                     description = context.getString(R.string.privacy_policy),
                     route = KeyLinkNavigationRoute.ProfileGraph.PrivacyPolicyRoute.route
-                )
-            )
-            add(
-                ProfileViewType.NavigationContent(
-                    description = context.getString(R.string.open_source),
-                    route = KeyLinkNavigationRoute.ProfileGraph.OpenSourceRoute.route
                 )
             )
             add(

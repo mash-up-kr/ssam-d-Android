@@ -25,10 +25,8 @@ const val CHAT_REPORT_ROUTE = "chat_room_graph/report"
 
 const val PROFILE_GRAPH_PATTERN = "profile_graph"
 const val PROFILE_ROUTE = "profile_graph/profile"
-const val SEND_SIGNAL_ROUTE = "profile_graph/send_signal"
 const val TERMS_OF_SERVICE_ROUTE = "profile_graph/toc"
 const val PRIVACY_POLICY_ROUTE = "profile_graph/policy"
-const val OPEN_SOURCE_ROUTE = "profile_graph/oss"
 const val WITHDRAWAL_ROUTE = "profile_graph/withdrawal"
 
 const val RECEIVED_SIGNAL_GRAPH = "chat_graph"
