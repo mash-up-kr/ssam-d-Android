@@ -125,7 +125,7 @@
         <item>종교 / 포교 목적의 게시글 같아요</item>
     </string-array>
     <string name="report_title">신고하는 이유를 선택해주세요.</string>
-  
+
     <string name="content_description_report">신고하기 아이콘입니다.</string>
     <string name="message_detail_matched_signal_count">%s개 키워드 일치</string>
     <string name="button_send_reply">답장 보내기</string>
@@ -142,4 +142,9 @@
     <string name="chat_room_disconnect_room_guide">상대방이 연결을 끊었습니다.\n더이상 대화를 할 수 없습니다.</string>
     <string name="bottom_sheet_connected_title">연결 기준이 뭔가요?</string>
     <string name="bottom_sheet_connected_content">1. 내가 보낸 시그널에 상대가 답신하면 연결돼요.\n2. 구독중인 키워드에 상대의 시그널이 도착하고, 내가 그 시그널에 답신하면 연결돼요. </string>
+
+    <string name="toolbar_withdrawal">키링 탈퇴하기</string>
+    <string name="withdrawal_description">탈퇴 전 다음을 확인해주세요.\n- 별도의 안내 없이 요청 즉시 탈퇴 처리됩니다.\n- 진행 중인 대화들이 모두 사라집니다.</string>
+    <string name="button_withdrawal">탈퇴 요청하기</string>
+
 </resources>

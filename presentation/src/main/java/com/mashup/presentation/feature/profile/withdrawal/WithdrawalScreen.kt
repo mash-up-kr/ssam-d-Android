@@ -7,10 +7,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.KeyLinkButton
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.*
@@ -57,7 +59,7 @@ fun WithdrawalScreen(
             KeyLinkToolbar(
                 title = {
                     Text(
-                        text = "키링 탈퇴하기",
+                        text = stringResource(R.string.toolbar_withdrawal),
                         style = Body2,
                         color = White
                     )
@@ -70,14 +72,18 @@ fun WithdrawalScreen(
             PaddingValues(top = paddingValues.calculateTopPadding(), start = 20.dp, end = 20.dp)
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPaddingValues),
+            modifier = Modifier.padding(innerPaddingValues),
         ) {
-
+            Spacer(modifier = Modifier.height(36.dp))
+            Text(
+                text = stringResource(id = R.string.withdrawal_description),
+                style = Body1,
+                color = White
+            )
+            Spacer(modifier = Modifier.height(36.dp))
             KeyLinkButton(
                 modifier = Modifier.fillMaxWidth(),
-                text = "탈퇴 요청하기",
+                text = stringResource(R.string.button_withdrawal),
                 backgroundColor = Gray02,
                 onClick = onWithdrawalClick
             )
