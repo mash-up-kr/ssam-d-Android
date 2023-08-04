@@ -49,12 +49,14 @@ class ProfileOptionsProvider @Inject constructor(
             )
             add(
                 ProfileViewType.NavigationContent(
+                    userId = profileUiModel.id,
                     description = context.getString(R.string.tos),
                     route = KeyLinkNavigationRoute.ProfileGraph.TermsOfServiceRoute.route
                 )
             )
             add(
                 ProfileViewType.NavigationContent(
+                    userId = profileUiModel.id,
                     description = context.getString(R.string.privacy_policy),
                     route = KeyLinkNavigationRoute.ProfileGraph.PrivacyPolicyRoute.route
                 )
@@ -72,6 +74,7 @@ class ProfileOptionsProvider @Inject constructor(
             )
             add(
                 ProfileViewType.NavigationContent(
+                    userId = profileUiModel.id,
                     description = context.getString(R.string.withdrawal),
                     route = KeyLinkNavigationRoute.ProfileGraph.WithdrawalRoute.route
                 )

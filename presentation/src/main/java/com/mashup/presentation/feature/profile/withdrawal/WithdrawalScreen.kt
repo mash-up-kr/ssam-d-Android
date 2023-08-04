@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.profile.withdrawal
 
+import android.content.Intent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
@@ -7,12 +8,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
+import com.mashup.presentation.common.extension.findActivity
+import com.mashup.presentation.feature.login.LoginActivity
 import com.mashup.presentation.ui.common.KeyLinkButton
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.*
@@ -24,17 +28,23 @@ import com.mashup.presentation.ui.theme.*
  */
 @Composable
 fun WithdrawalRoute(
-    userId: Long = 9,
+    userId: Long,
     onBackClick: () -> Unit,
-    onWithdrawal: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: WithdrawalViewModel = hiltViewModel()
 ) {
     val uiEvent by viewModel.eventFlow.collectAsStateWithLifecycle(Idle)
+    val context = LocalContext.current
 
     when (uiEvent) {
-        Withdrawal -> onWithdrawal()
+        Withdrawal -> {
+            with(context) {
+                startActivity(Intent(context, LoginActivity::class.java)).also {
+                    findActivity().finish()
+                }
+            }
+        }
         is Failure -> onShowSnackbar((uiEvent as Failure).message.orEmpty(), SnackbarDuration.Short)
         else -> Unit
     }

@@ -83,15 +83,16 @@ fun UserInfoContent(
 @Composable
 fun NavigationContent(
     description: String,
+    userId: Long,
     route: String,
-    onNavigateClick: (String) -> Unit,
+    onNavigateClick: (String, Long) -> Unit,
     modifier: Modifier = Modifier,
     contentColor: Color = White
 ) {
     Column(
         modifier = modifier
             .background(color = Gray02)
-            .clickable { onNavigateClick(route) }
+            .clickable { onNavigateClick(route, userId) }
             .padding(horizontal = 20.dp, vertical = 16.dp),
     ) {
         Row(
@@ -269,8 +270,9 @@ fun NavigationContentPreview() {
     SsamDTheme {
         NavigationContent(
             description = "이용약관",
-            onNavigateClick = {},
-            route = ""
+            onNavigateClick = { _, _ -> Unit },
+            route = "",
+            userId = 0
         )
     }
 }
