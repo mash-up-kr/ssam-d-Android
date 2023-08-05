@@ -35,8 +35,14 @@ fun KeyLinkTextField(
     hintAlign: TextAlign = TextAlign.Center,
     maxLength: Int = 0,
 ) {
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+
     TextField(
-        modifier = modifier,
+        modifier = modifier.focusRequester(focusRequester),
         value = value,
         onValueChange = {
             if (maxLength == 0 || it.length <= maxLength) {

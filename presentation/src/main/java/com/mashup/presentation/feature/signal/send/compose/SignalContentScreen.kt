@@ -13,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -98,8 +99,8 @@ fun SignalContent(
     onSignalChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     val scrollState = rememberScrollState()
+    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = modifier
@@ -122,10 +123,12 @@ fun SignalContent(
         KeyLinkButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 12.dp, horizontal = 20.dp)
-                .padding(bottom = 48.dp),
+                .padding(vertical = 12.dp, horizontal = 20.dp),
             text = stringResource(id = R.string.next),
-            onClick = onNextClick,
+            onClick = {
+                focusManager.clearFocus()
+                onNextClick()
+            },
             enable = signalContent.isNotEmpty()
         )
     }
