@@ -54,7 +54,7 @@
     <string name="disconnect">끊기</string>
     <string name="hint_signal_content">오늘의 날씨, 기분, 나눈 대화들을 누군가에게 전달해보세요. 대화는 1:1로 프라이빗하게 이루어집니다.</string>
     <string name="signal_keyword_title">전달할 키워드를 확인해주세요</string>
-    <string name="signal_keyword_subtitle">시그널은 키워드를 구독한 상대에게 전달돼요</string>
+    <string name="signal_keyword_subtitle">시그널은 아래 키워드를 구독중인 상대에게 전달됩니다</string>
 
     // 온보딩
     <string name="onboarding_keywords_complete">모두 입력했어요</string>

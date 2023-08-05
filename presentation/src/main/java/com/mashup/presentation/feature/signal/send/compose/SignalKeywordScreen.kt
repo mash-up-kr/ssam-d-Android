@@ -25,10 +25,7 @@ import com.mashup.presentation.feature.signal.send.KeywordUiState
 import com.mashup.presentation.feature.signal.send.SignalUiEvent
 import com.mashup.presentation.feature.signal.send.SignalViewModel
 import com.mashup.presentation.ui.common.*
-import com.mashup.presentation.ui.theme.Black
-import com.mashup.presentation.ui.theme.Gray06
-import com.mashup.presentation.ui.theme.SsamDTheme
-import com.mashup.presentation.ui.theme.White
+import com.mashup.presentation.ui.theme.*
 import okhttp3.internal.toImmutableList
 
 /**
@@ -187,11 +184,8 @@ fun SignalKeyword(
     Column(modifier = modifier.fillMaxSize()) {
         Text(
             text = stringResource(R.string.signal_keyword_title),
-            style = TextStyle(
-                fontSize = 22.sp,
-                color = White,
-                fontWeight = FontWeight.Bold
-            ),
+            style = Heading3,
+            color = White
         )
 
         Text(
