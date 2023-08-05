@@ -77,7 +77,7 @@ class KeyLinkAppState @OptIn(ExperimentalMaterialApi::class) constructor(
     }
 
     @OptIn(ExperimentalMaterialApi::class)
-    fun controlBottomSheet() {
+    fun showBottomSheet() {
         coroutineScope.launch {
             if (modalBottomSheetState.isVisible) modalBottomSheetState.hide()
             else modalBottomSheetState.show()

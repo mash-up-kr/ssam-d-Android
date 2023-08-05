@@ -22,7 +22,7 @@ import com.mashup.presentation.feature.signalzone.navigation.signalZoneGraph
 fun KeyLinkNavHost(
     appState: KeyLinkAppState,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
-    controlBottomSheet: (BottomSheetType) -> Unit,
+    onShowBottomSheet: (BottomSheetType) -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = KeyLinkNavigationRoute.HomeGraph.route
@@ -46,7 +46,7 @@ fun KeyLinkNavHost(
             navController = navController,
             onBackClick = onBackClick,
             onShowSnackbar = onShowSnackbar,
-            controlBottomSheet = controlBottomSheet
+            onShowBottomSheet = onShowBottomSheet
         )
         profileGraph(
             navController = navController,
@@ -61,7 +61,7 @@ fun KeyLinkNavHost(
         signalZoneGraph(
             navController = navController,
             onBackClick = navController::navigateUp,
-            onShowBottomSheet = controlBottomSheet,
+            onShowBottomSheet = onShowBottomSheet,
             onShowSnackbar = onShowSnackbar
         )
     }
