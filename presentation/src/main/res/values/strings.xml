@@ -100,7 +100,8 @@
     <string name="button_save">저장하기</string>
     <string name="content_description_snackbar_icon">스낵바 아이콘입니다.</string>
     <string name="text_field_hint">예) 일상, 커리어</string>
-    <string name="signal_matched_count">%s개 일치</string>
+    <string name="matched_keyword_count">%s개 일치</string>
+    <string name="no_matched_keyword_signal_zone">시그널존</string>
     <string name="bottom_sheet_disconnect">시그널 끊기</string>
     <string name="bottom_sheet_declare">신고하기</string>
     <string name="bottom_sheet_matched_keywords">연결된 키워드</string>
