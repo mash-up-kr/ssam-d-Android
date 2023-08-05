@@ -55,7 +55,7 @@ fun CrashDetailRoute(
 fun CrashDetailScreen(
     onBackClick: () -> Unit,
     onReportMenuClick: () -> Unit,
-    onReplyButtonClick: () -> Unit,
+    onReplyButtonClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -103,7 +103,7 @@ fun CrashDetailScreen(
 private fun CrashDetailContent(
     contentPadding: PaddingValues,
 //    crashDetail: MessageDetailUiModel,
-    onReplyButtonClick: () -> Unit
+    onReplyButtonClick: (Long) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -112,7 +112,9 @@ private fun CrashDetailContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CrashDetailContainer(
-            modifier = Modifier.weight(1f).padding(end = 20.dp),
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 20.dp),
             othersName = "슈퍼니카",
             date = "202020202020",
             message = "이번주 불참해서 공지를 못 들음 뭐시기 뭐시기 울랄라",
@@ -125,7 +127,7 @@ private fun CrashDetailContent(
                 .padding(top = 16.dp, bottom = 40.dp, end = 20.dp)
                 .align(Alignment.CenterHorizontally),
             text = stringResource(R.string.button_send_reply),
-            onClick = onReplyButtonClick
+            onClick = { onReplyButtonClick(0 /* CrashId */) }
         )
     }
 }
