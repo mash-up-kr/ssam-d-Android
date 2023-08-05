@@ -60,9 +60,9 @@ fun KeyLinkApp(
                         duration = duration
                     )
                 },
-                controlBottomSheet = { bottomSheetType ->
+                onShowBottomSheet = { bottomSheetType ->
                     currentBottomSheetType = bottomSheetType
-                    appState.controlBottomSheet()
+                    appState.showBottomSheet()
                 },
                 onBackClick = {
                     coroutineScope.launch {
