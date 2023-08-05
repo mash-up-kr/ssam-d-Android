@@ -1,12 +1,11 @@
 package com.mashup.presentation.feature.signalzone.navigation
 
 import androidx.compose.material.SnackbarDuration
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
+import androidx.navigation.*
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.mashup.presentation.BottomSheetType
+import com.mashup.presentation.feature.detail.crash.CrashDetailRoute
+import com.mashup.presentation.feature.detail.crash.navigation.navigateToCrashDetail
 import com.mashup.presentation.feature.signalzone.compose.SignalZoneRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 
@@ -30,7 +29,24 @@ fun NavGraphBuilder.signalZoneGraph(
         composable(route = KeyLinkNavigationRoute.SignalZoneGraph.SignalZoneRoute.route) {
             SignalZoneRoute(
                 onShowBottomSheet = onShowBottomSheet,
-                onCrashClick = {}
+                onCrashClick = navController::navigateToCrashDetail
+            )
+        }
+        composable(
+            route = KeyLinkNavigationRoute.SignalZoneGraph.CrashDetailRoute.route,
+            arguments = listOf(
+                navArgument("crashId") {
+                    type = NavType.StringType
+                }
+            )
+        ) { entry ->
+            val crashId = entry.arguments?.getString("crashId")?.toLong() ?: -1
+
+            CrashDetailRoute(
+                crashId = crashId,
+                onBackClick = onBackClick,
+                onReportMenuClick = {},
+                onReplyButtonClick = {}
             )
         }
     }
