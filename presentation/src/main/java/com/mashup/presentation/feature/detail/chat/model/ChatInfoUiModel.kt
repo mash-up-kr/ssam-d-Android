@@ -13,6 +13,8 @@ data class ChatInfoUiModel(
     val matchedKeywords: List<String>,
     val isAlive: Boolean
 ) {
+    fun fromSignalZone() = matchedKeywords.isEmpty()
+
     companion object {
         fun ChatInfo.toUiModel(): ChatInfoUiModel {
             return ChatInfoUiModel(
