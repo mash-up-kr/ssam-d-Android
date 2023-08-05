@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.presentation.ui.theme.*
+import kotlinx.coroutines.delay
 
 @Composable
 fun KeyLinkTextField(
@@ -34,8 +35,14 @@ fun KeyLinkTextField(
     hintAlign: TextAlign = TextAlign.Center,
     maxLength: Int = 0,
 ) {
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+
     TextField(
-        modifier = modifier,
+        modifier = modifier.focusRequester(focusRequester),
         value = value,
         onValueChange = {
             if (maxLength == 0 || it.length <= maxLength) {
@@ -148,6 +155,13 @@ fun KeyLinkBoxTextField(
     fontSize: TextUnit,
     validationState: ValidationState
 ) {
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(true) {
+        delay(300)
+        focusRequester.requestFocus()
+    }
+
     Column(
         modifier = modifier
     ) {
@@ -167,7 +181,8 @@ fun KeyLinkBoxTextField(
                 .padding(
                     horizontal = 16.dp,
                     vertical = 15.dp
-                ),
+                )
+                .focusRequester(focusRequester),
             value = value,
             onValueChange = {
                 if (maxLength == 0 || it.length <= maxLength) {
