@@ -21,7 +21,7 @@ fun KeyLinkApp(
     appState: KeyLinkAppState = rememberKeyLinkAppState()
 ) {
     val coroutineScope = rememberCoroutineScope()
-    var currentBottomSheetType by remember { mutableStateOf(BottomSheetType.CHAT_CONNECTED) }
+    var currentBottomSheetType by remember { mutableStateOf(BottomSheetType.IDLE) }
 
     KeyLinkBottomSheetLayout(
         bottomSheetContent = {
@@ -29,7 +29,10 @@ fun KeyLinkApp(
                 BottomSheetType.CHAT_CONNECTED -> KeyLinkConnectedBottomSheet(
                     modifier = Modifier.fillMaxWidth()
                 )
-                else -> {}
+                BottomSheetType.SIGNAL_ZONE -> KeyLinkSignalZoneBottomSheet(
+                    modifier = Modifier.fillMaxWidth()
+                )
+                else -> Unit
             }
         },
         modalSheetState = appState.modalBottomSheetState
@@ -73,5 +76,5 @@ fun KeyLinkApp(
 }
 
 enum class BottomSheetType {
-    CHAT_CONNECTED
+    IDLE, CHAT_CONNECTED, SIGNAL_ZONE
 }

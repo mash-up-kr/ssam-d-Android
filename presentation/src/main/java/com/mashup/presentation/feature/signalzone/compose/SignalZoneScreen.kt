@@ -6,9 +6,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,42 +20,46 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.mashup.presentation.BottomSheetType
 import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.drawColoredShadow
 import com.mashup.presentation.common.extension.pxToDp
+import com.mashup.presentation.ui.common.KeyLinkBottomSheetLayout
+import com.mashup.presentation.ui.common.KeyLinkSignalZoneBottomSheet
 import com.mashup.presentation.ui.theme.*
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignalZoneRoute(
-    onToolbarClick: () -> Unit,
+    onShowBottomSheet: (BottomSheetType) -> Unit,
     onCrashClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
     SignalZoneScreen(
         modifier = modifier,
-        onToolbarClick = onToolbarClick,
+        onShowBottomSheet = onShowBottomSheet,
         onCrashClick = onCrashClick
     )
 }
 
 @Composable
 private fun SignalZoneScreen(
-    onToolbarClick: () -> Unit,
+    onShowBottomSheet: (BottomSheetType) -> Unit,
     onCrashClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier.fillMaxSize()) {
         SignalZoneBackgroundImage()
         SignalZoneContentScreen(
-            onToolbarClick = onToolbarClick,
+            onToolbarClick = { onShowBottomSheet(BottomSheetType.SIGNAL_ZONE) },
             onCrashClick = onCrashClick
         )
     }
 }
 
 @Composable
-private fun SignalZoneBackgroundImage() {
+private fun BoxScope.SignalZoneBackgroundImage() {
     Image(
         modifier = Modifier.fillMaxSize(),
         painter = painterResource(id = R.drawable.img_signal_zone),
@@ -65,7 +69,7 @@ private fun SignalZoneBackgroundImage() {
 }
 
 @Composable
-private fun SignalZoneContentScreen(
+private fun BoxScope.SignalZoneContentScreen(
     onToolbarClick: () -> Unit,
     onCrashClick: (Long) -> Unit,
     modifier: Modifier = Modifier
@@ -199,7 +203,7 @@ private fun SignalZoneToolbar(
 private fun SignalZoneScreenPreview() {
     SsamDTheme {
         SignalZoneScreen(
-            onToolbarClick = {},
+            onShowBottomSheet = {},
             onCrashClick = {}
         )
     }
