@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,10 +23,7 @@ import com.mashup.presentation.BottomSheetType
 import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.drawColoredShadow
 import com.mashup.presentation.common.extension.pxToDp
-import com.mashup.presentation.ui.common.KeyLinkBottomSheetLayout
-import com.mashup.presentation.ui.common.KeyLinkSignalZoneBottomSheet
 import com.mashup.presentation.ui.theme.*
-import kotlinx.coroutines.launch
 
 @Composable
 fun SignalZoneRoute(
