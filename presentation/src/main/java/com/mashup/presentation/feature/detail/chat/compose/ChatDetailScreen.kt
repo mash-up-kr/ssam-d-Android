@@ -42,7 +42,6 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ChatDetailRoute(
-    roomId: Long,
     onBackClick: () -> Unit,
     onMessageClick: (Long, Long) -> Unit,
     onReportClick: () -> Unit,
@@ -60,8 +59,7 @@ fun ChatDetailRoute(
         })
 
     LaunchedEffect(Unit) {
-        launch { viewModel.getChatInfo(roomId) }
-        launch { viewModel.getChats(roomId) }
+        launch { viewModel.getChatInfo() }
     }
     LaunchedEffect(pagedChatList.loadState) {
         if (pagedChatList.loadState.refresh is LoadState.NotLoading)
@@ -77,10 +75,10 @@ fun ChatDetailRoute(
             modifier = modifier,
             onBackClick = onBackClick,
             onMessageClick = { chatId ->
-                onMessageClick(roomId, chatId)
+                onMessageClick(viewModel.roomId, chatId)
             },
             onReportClick = onReportClick,
-            onDisconnectRoom = { viewModel.disconnectRoom(roomId) },
+            onDisconnectRoom = { viewModel.disconnectRoom() },
             chatInfoUiState = chatInfoUiState,
             pagedChatList = pagedChatList
         )

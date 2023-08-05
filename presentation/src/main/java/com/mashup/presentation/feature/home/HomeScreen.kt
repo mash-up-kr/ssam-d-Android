@@ -48,7 +48,6 @@ fun HomeRoute(
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     val pagedReceivedSignal = homeViewModel.receivedSignals.collectAsLazyPagingItems()
     val subscribeKeywordsUiState by homeViewModel.subscribeKeywordsState.collectAsStateWithLifecycle()
     var isRefreshing by remember { mutableStateOf(false) }
@@ -60,18 +59,22 @@ fun HomeRoute(
         })
     val context = LocalContext.current
     var backPressedTime = 0L
+    var isSignalEmpty by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        launch {
-            homeViewModel.getReceivedSignal()
-        }
         launch {
             homeViewModel.getSubscribedKeywords()
         }
     }
     LaunchedEffect(pagedReceivedSignal.loadState) {
-        if (pagedReceivedSignal.loadState.refresh is LoadState.NotLoading)
+        if (pagedReceivedSignal.loadState.refresh is LoadState.NotLoading) {
             isRefreshing = false
+            isSignalEmpty = false
+        }
+
+        if (pagedReceivedSignal.loadState.refresh is LoadState.Error) {
+            isSignalEmpty = true
+        }
     }
 
 
@@ -95,11 +98,14 @@ fun HomeRoute(
             onGuideClick = onGuideClick,
             onProfileMenuClick = onProfileMenuClick,
             onReceivedSignalClick = onReceivedSignalClick,
-            onSendSignalButtonClick = onSendSignalButtonClick
+            onSendSignalButtonClick = onSendSignalButtonClick,
+            isSignalEmpty = isSignalEmpty
         )
         PullRefreshIndicator(refreshing = isRefreshing, state = pullRefreshState)
     }
-    if (pagedReceivedSignal.loadState.append == LoadState.Loading) {
+    if (pagedReceivedSignal.loadState.append == LoadState.Loading
+        || pagedReceivedSignal.loadState.refresh == LoadState.Loading
+    ) {
         KeyLinkLoading()
     }
 
@@ -114,6 +120,7 @@ private fun HomeBackgroundScreen(
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: (Long) -> Unit,
     onSendSignalButtonClick: () -> Unit,
+    isSignalEmpty: Boolean,
     modifier: Modifier = Modifier
 ) {
     val signalCount = pagedReceivedSignal.itemCount
@@ -127,8 +134,10 @@ private fun HomeBackgroundScreen(
             )
         }
     ) { paddingValues ->
-        Box(modifier = modifier.fillMaxSize().padding(paddingValues)) {
-            HomeBackgroundImage(signalCount = signalCount)
+        Box(modifier = modifier
+            .fillMaxSize()
+            .padding(paddingValues)) {
+            HomeBackgroundImage()
             HomeScreen(
                 modifier = Modifier.padding(paddingValues),
                 subscribeKeywordsUiState = subscribeKeywordsUiState,
@@ -137,7 +146,8 @@ private fun HomeBackgroundScreen(
                 onKeywordContainerClick = onKeywordContainerClick,
                 onGuideClick = onGuideClick,
                 onProfileMenuClick = onProfileMenuClick,
-                onReceivedSignalClick = onReceivedSignalClick
+                onReceivedSignalClick = onReceivedSignalClick,
+                isSignalEmpty = isSignalEmpty
             )
         }
     }
@@ -145,8 +155,6 @@ private fun HomeBackgroundScreen(
 
 @Composable
 fun BoxScope.HomeBackgroundImage(
-    signalCount: Int,
-    modifier: Modifier = Modifier
 ) {
     Image(
         modifier = Modifier.fillMaxSize(),
@@ -154,25 +162,6 @@ fun BoxScope.HomeBackgroundImage(
         contentDescription = stringResource(R.string.login_description_space),
         contentScale = ContentScale.Crop
     )
-    if (signalCount == 0) {
-        Image(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth(),
-            painter = painterResource(R.drawable.img_planet_home_empty),
-            contentDescription = stringResource(R.string.home_planet_background_empty),
-            contentScale = ContentScale.Crop
-        )
-    } else {
-        Image(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth(),
-            painter = painterResource(R.drawable.img_planet_home_default),
-            contentDescription = stringResource(R.string.home_planet_background_default),
-            contentScale = ContentScale.Crop
-        )
-    }
 }
 
 @Composable
@@ -184,7 +173,8 @@ fun BoxScope.HomeScreen(
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: (Long) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isSignalEmpty: Boolean
 ) {
     val scrollState = rememberLazyListState()
     val isScrollingUp = scrollState.isScrollingUp()
@@ -208,16 +198,35 @@ fun BoxScope.HomeScreen(
             )
         }
 
-        if (signalCount == 0) {
-            EmptyContent(
-                onGuideClick = onGuideClick
-            )
-        } else {
-            ReceivedSignalCards(
-                receivedSignals = pagedReceivedSignal,
-                scrollState = scrollState,
-                onReceivedSignalClick = onReceivedSignalClick,
-            )
+        Box(modifier = Modifier.fillMaxSize()) {
+
+            if (isSignalEmpty) {
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth(),
+                    painter = painterResource(R.drawable.img_planet_home_empty),
+                    contentDescription = stringResource(R.string.home_planet_background_empty),
+                    contentScale = ContentScale.Crop
+                )
+                EmptyContent(
+                    onGuideClick = onGuideClick
+                )
+            } else {
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth(),
+                    painter = painterResource(R.drawable.img_planet_home_default),
+                    contentDescription = stringResource(R.string.home_planet_background_default),
+                    contentScale = ContentScale.Crop
+                )
+                ReceivedSignalCards(
+                    receivedSignals = pagedReceivedSignal,
+                    scrollState = scrollState,
+                    onReceivedSignalClick = onReceivedSignalClick,
+                )
+            }
         }
     }
 }

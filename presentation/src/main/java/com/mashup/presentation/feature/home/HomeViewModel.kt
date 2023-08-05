@@ -34,16 +34,24 @@ class HomeViewModel @Inject constructor(
 
     var subscribeKeywords = mutableStateListOf<String>()
 
-    private val _receivedSignals: MutableStateFlow<PagingData<SignalUiModel>> =
-        MutableStateFlow(PagingData.empty())
-    val receivedSignals = _receivedSignals.asStateFlow()
+    private val _receivedSignals: Flow<PagingData<SignalUiModel>> =
+        getReceivedSignalUseCase.execute(Unit).cachedIn(viewModelScope)
+            .map { pagingData ->
+                pagingData.map { it.toUiModel() }
+            }
+
+    val receivedSignals = _receivedSignals.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = PagingData.empty()
+    )
 
     private val _subscribeKeywordsState: MutableStateFlow<SubscribeKeywordUiState> =
         MutableStateFlow(Loading)
     val subscribeKeywordsState = _subscribeKeywordsState.asStateFlow()
 
     private val _eventFlow: MutableSharedFlow<SubscribeKeywordUiEvent> =
-        MutableSharedFlow<SubscribeKeywordUiEvent>()
+        MutableSharedFlow()
     val eventFlow = _eventFlow.asSharedFlow()
 
     fun getSubscribedKeywords() {
@@ -67,18 +75,6 @@ class HomeViewModel @Inject constructor(
                 }
         }
     }
-
-    fun getReceivedSignal() {
-        viewModelScope.launch {
-            getReceivedSignalUseCase.execute(Unit).cachedIn(viewModelScope)
-                .map { pagingData ->
-                    pagingData.map { it.toUiModel() }
-                }.collect {
-                    _receivedSignals.value = it
-                }
-        }
-    }
-
 
     fun addSubscribeKeywords(keyword: String) {
         subscribeKeywords.add(keyword)

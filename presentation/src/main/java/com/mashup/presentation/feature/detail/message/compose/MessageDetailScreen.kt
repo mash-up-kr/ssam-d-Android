@@ -37,16 +37,15 @@ import com.mashup.presentation.ui.theme.White
 fun MessageDetailRoute(
     onBackClick: () -> Unit,
     onReportMenuClick: () -> Unit,
-    onReplyButtonClick: (Long) -> Unit,
+    onReplyButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
-    roomId: Long,
     chatId: Long,
     viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
     val messageDetailUiState by viewModel.messageDetailUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.getMessageDetail(roomId = roomId, chatId = chatId)
+        viewModel.getMessageDetail(chatId = chatId)
     }
 
     MessageDetailScreen(
@@ -54,7 +53,7 @@ fun MessageDetailRoute(
         onBackClick = onBackClick,
         onReportMenuClick = onReportMenuClick,
         onReplyButtonClick = {
-            onReplyButtonClick(roomId)
+            onReplyButtonClick()
         },
         messageDetailUiState = messageDetailUiState
     )

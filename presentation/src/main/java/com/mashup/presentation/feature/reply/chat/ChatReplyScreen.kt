@@ -33,9 +33,8 @@ import com.mashup.presentation.ui.theme.White
 
 @Composable
 fun ChatReplyRoute(
-    roomId: Long,
     onClickBack: () -> Unit,
-    navigateToChat: (Long) -> Unit,
+    navigateToChat: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChatDetailViewModel = hiltViewModel()
@@ -46,7 +45,7 @@ fun ChatReplyRoute(
     LaunchedEffect(key1 = event) {
         when (event) {
             is MessageReplyUiEvent.SaveSuccess -> {
-                navigateToChat(roomId)
+                navigateToChat()
             }
             is MessageReplyUiEvent.Failure -> {
 
@@ -60,7 +59,7 @@ fun ChatReplyRoute(
         modifier = modifier,
         onReplyTextChange = { reply = it },
         onClickBack = onClickBack,
-        onSendClick = { viewModel.reply(roomId, reply) },
+        onSendClick = { viewModel.reply(reply) },
         onShowSnackbar = onShowSnackbar,
     )
 }
@@ -128,7 +127,6 @@ private fun ChatReplyScreen(
 private fun ReplyScreenPreview() {
     SsamDTheme {
         ChatReplyRoute(
-            roomId = 1,
             onClickBack = {},
             navigateToChat = {},
             onShowSnackbar = { _, _ -> }

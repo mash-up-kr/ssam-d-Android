@@ -48,22 +48,29 @@ fun ChatRoute(
             isRefreshing = true
             pagedChatRoomList.refresh()
         })
+    var isChatRoomEmpty by remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) {
-        viewModel.getChatRooms()
-    }
     LaunchedEffect(pagedChatRoomList.loadState) {
-        if (pagedChatRoomList.loadState.refresh is LoadState.NotLoading)
+        if (pagedChatRoomList.loadState.refresh is LoadState.NotLoading) {
             isRefreshing = false
+            isChatRoomEmpty = false
+        }
+
+        if (pagedChatRoomList.loadState.refresh is LoadState.Error) {
+            isChatRoomEmpty = true
+        }
     }
 
     BackHandler(true) {
         onBackClick()
     }
 
-    Box(modifier = Modifier
-        .pullRefresh(pullRefreshState)
-        .fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+    Box(
+        modifier = Modifier
+            .pullRefresh(pullRefreshState)
+            .fillMaxSize(),
+        contentAlignment = Alignment.TopCenter
+    ) {
         ChatScreen(
             modifier = modifier,
             onEmptyScreenButtonClick = onEmptyScreenButtonClick,
@@ -71,7 +78,8 @@ fun ChatRoute(
                 onChatRoomClick(chatId)
             },
             controlBottomSheet = controlBottomSheet,
-            chatRoomList = pagedChatRoomList
+            chatRoomList = pagedChatRoomList,
+            isChatRoomEmpty = isChatRoomEmpty
         )
         PullRefreshIndicator(refreshing = isRefreshing, state = pullRefreshState)
     }
@@ -86,7 +94,8 @@ fun ChatScreen(
     onChatRoomClick: (Long) -> Unit,
     controlBottomSheet: (BottomSheetType) -> Unit,
     modifier: Modifier = Modifier,
-    chatRoomList: LazyPagingItems<RoomUiModel>
+    chatRoomList: LazyPagingItems<RoomUiModel>,
+    isChatRoomEmpty: Boolean
 ) {
     Scaffold(
         modifier = modifier,
@@ -128,7 +137,8 @@ fun ChatScreen(
             onEmptyScreenButtonClick = onEmptyScreenButtonClick,
             onChatRoomClick = onChatRoomClick,
             modifier = Modifier.padding(paddingValues),
-            chatRoomList = chatRoomList
+            chatRoomList = chatRoomList,
+            isChatRoomEmpty = isChatRoomEmpty
         )
     }
 }
@@ -138,9 +148,10 @@ fun ChatContent(
     onEmptyScreenButtonClick: () -> Unit,
     onChatRoomClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
-    chatRoomList: LazyPagingItems<RoomUiModel>
+    chatRoomList: LazyPagingItems<RoomUiModel>,
+    isChatRoomEmpty: Boolean
 ) {
-    if (chatRoomList.itemCount == 0) {
+    if (isChatRoomEmpty) {
         EmptyChatScreen(
             onButtonClick = onEmptyScreenButtonClick,
             modifier = modifier.fillMaxSize(),

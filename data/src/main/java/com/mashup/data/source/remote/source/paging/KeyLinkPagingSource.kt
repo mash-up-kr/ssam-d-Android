@@ -28,6 +28,8 @@ class KeyLinkPagingSource<T : Any> (
             val result = executor.invoke(page, loadSize)
             val isLastPage = (page == result.paging?.totalPage) || (result.paging?.totalPage == 0)
 
+            if (result.data.isEmpty()) return LoadResult.Error(EmptyListException)
+
             LoadResult.Page(
                 data = result.data,
                 prevKey = if (page == INITIAL_PAGE) null else page - 1,
@@ -37,6 +39,9 @@ class KeyLinkPagingSource<T : Any> (
             LoadResult.Error(e)
         }
     }
+
+    object EmptyListException: Exception()
+
 
     companion object {
         private const val INITIAL_PAGE = 1
