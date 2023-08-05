@@ -61,6 +61,7 @@ fun KeyLinkNavHost(
         signalZoneGraph(
             navController = navController,
             onBackClick = navController::navigateUp,
+            onShowBottomSheet = controlBottomSheet,
             onShowSnackbar = onShowSnackbar
         )
     }

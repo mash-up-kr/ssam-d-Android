@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.mashup.presentation.BottomSheetType
 import com.mashup.presentation.feature.signalzone.compose.SignalZoneRoute
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 
@@ -18,6 +19,7 @@ fun NavController.navigateToSignalZone(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.signalZoneGraph(
     navController: NavController,
+    onShowBottomSheet: (BottomSheetType) -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     onBackClick: () -> Unit
 ) {
@@ -26,7 +28,10 @@ fun NavGraphBuilder.signalZoneGraph(
         startDestination = KeyLinkNavigationRoute.SignalZoneGraph.SignalZoneRoute.route
     ) {
         composable(route = KeyLinkNavigationRoute.SignalZoneGraph.SignalZoneRoute.route) {
-            SignalZoneRoute()
+            SignalZoneRoute(
+                onShowBottomSheet = onShowBottomSheet,
+                onCrashClick = {}
+            )
         }
     }
 }
