@@ -1,6 +1,7 @@
 package com.mashup.presentation.feature.subscribe
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -8,6 +9,8 @@ import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,12 +74,21 @@ fun SubscribeKeywordScreen(
     val keywords = remember { mutableStateListOf<String>() }
     var showGoBackDialog by remember { mutableStateOf(false) }
     val snackbarMessage = stringResource(id = R.string.snackbar_subscribe_keyword)
+    val focusManager = LocalFocusManager.current
 
     BackHandler(true) {
         showGoBackDialog = true
     }
 
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .pointerInput(Unit) {
+            detectTapGestures(onTap = {
+                focusManager.clearFocus()
+            })
+        }
+    ) {
         KeyLinkToolbar(
             onClickBack = { showGoBackDialog = true }
         )
@@ -90,9 +102,10 @@ fun SubscribeKeywordScreen(
             text = stringResource(R.string.button_save),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 12.dp, start = 20.dp, end = 20.dp),
+                .padding(vertical = 12.dp, horizontal = 20.dp),
             enable = subscribeKeywords.isNotEmpty(),
             onClick = {
+                focusManager.clearFocus()
                 onShowSnackbar(snackbarMessage, SnackbarDuration.Short)
                 onSaveButtonClick()
             }
@@ -142,7 +155,7 @@ fun SubscribeKeywordContent(
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
-                .padding(top = 28.dp)
+                .padding(top = 20.dp)
                 .verticalScroll(scrollState)
         ) {
             keywords.forEachIndexed { i, keyword ->
