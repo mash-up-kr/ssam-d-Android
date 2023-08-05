@@ -151,5 +151,7 @@
     <string name="toolbar_withdrawal">키링 탈퇴하기</string>
     <string name="withdrawal_description">탈퇴 전 다음을 확인해주세요.\n- 별도의 안내 없이 요청 즉시 탈퇴 처리됩니다.\n- 진행 중인 대화들이 모두 사라집니다.</string>
     <string name="button_withdrawal">탈퇴 요청하기</string>
+    <string name="toolbar_signal_zone">시그널존</string>
+    <string name="content_description_signal_zone">시그널존 바텀시트 아이콘입니다.</string>
 
 </resources>
