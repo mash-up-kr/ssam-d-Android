@@ -1,6 +1,7 @@
 package com.mashup.presentation.feature.signal.send.compose
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -9,6 +10,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -81,6 +84,7 @@ fun SignalKeywordScreen(
 ) {
     var keyword by rememberSaveable { mutableStateOf("") }
     var showGoBackDialog by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
 
     BackHandler(true) {
         showGoBackDialog = true
@@ -96,21 +100,21 @@ fun SignalKeywordScreen(
         }
     ) { paddingValues ->
         val innerPaddingValues = PaddingValues(
-            top = paddingValues.calculateTopPadding() + 8.dp,
+            top = paddingValues.calculateTopPadding(),
             start = 20.dp,
             end = 20.dp
         )
 
         when (keywordUiState) {
             is KeywordUiState.Loading -> {
-                Column(modifier = Modifier.padding(innerPaddingValues)) {
+                Column(modifier = Modifier.padding(innerPaddingValues).padding(top = 8.dp)) {
                     ShimmerScreen(
                         modifier = Modifier.weight(1f)
                     )
                     KeyLinkButton(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 48.dp),
+                            .padding(vertical = 12.dp),
                         text = stringResource(R.string.button_send_signal),
                         enable = false,
                         onClick = onSendClick
@@ -118,7 +122,15 @@ fun SignalKeywordScreen(
                 }
             }
             is KeywordUiState.Success -> {
-                Column(modifier = Modifier.padding(innerPaddingValues)) {
+                Column(
+                    modifier = Modifier
+                        .padding(innerPaddingValues)
+                        .pointerInput(Unit) {
+                            detectTapGestures(onTap = {
+                                focusManager.clearFocus()
+                            })
+                        }
+                ) {
                     SignalKeyword(
                         modifier = Modifier.weight(1f),
                         keywords = keywords,
@@ -131,10 +143,13 @@ fun SignalKeywordScreen(
                     KeyLinkButton(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 48.dp),
+                            .padding(vertical = 12.dp),
                         text = stringResource(R.string.button_send_signal),
                         enable = keywords.isNotEmpty(),
-                        onClick = onSendClick
+                        onClick = {
+                            focusManager.clearFocus()
+                            onSendClick()
+                        }
                     )
                 }
             }
@@ -191,7 +206,7 @@ fun SignalKeyword(
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
-                .padding(top = 28.dp)
+                .padding(top = 20.dp)
                 .verticalScroll(scrollState)
         ) {
             keywords.forEachIndexed { i, keyword ->
