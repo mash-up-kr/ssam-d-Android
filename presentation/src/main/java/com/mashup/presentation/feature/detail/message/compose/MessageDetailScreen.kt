@@ -127,10 +127,12 @@ private fun MessageDetailContent(
             profileImage = messageDetail.profileImage
         )
 
-        MatchedKeywordContainer(
-            modifier = Modifier.padding(vertical = 12.dp),
-            matchedKeywords = messageDetail.keywords
-        )
+        if (!messageDetail.fromSignalZone()) {
+            MatchedKeywordContainer(
+                modifier = Modifier.padding(vertical = 12.dp),
+                matchedKeywords = messageDetail.keywords
+            )
+        }
 
         KeyLinkRoundButton(
             modifier = Modifier
