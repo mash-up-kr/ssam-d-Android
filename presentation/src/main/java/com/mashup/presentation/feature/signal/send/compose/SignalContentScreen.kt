@@ -1,9 +1,7 @@
 package com.mashup.presentation.feature.signal.send.compose
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
@@ -13,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -61,8 +60,17 @@ fun SignalContentScreen(
     modifier: Modifier = Modifier
 ) {
     var dialogState by rememberSaveable { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
 
-    Column(modifier = modifier.fillMaxSize()) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                })
+            }
+    ) {
         KeyLinkToolbar(
             title = {
                 Text(
@@ -77,7 +85,10 @@ fun SignalContentScreen(
         SignalContent(
             modifier = modifier,
             signalContent = signalContent,
-            onNextClick = onNextClick,
+            onNextClick = {
+                focusManager.clearFocus()
+                onNextClick()
+            },
             onLengthOver = { dialogState = true },
             onSignalChange = onSignalChange
         )
@@ -100,35 +111,33 @@ fun SignalContent(
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
-    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
-        KeyLinkTextField(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1f),
-            value = signalContent,
-            onValueChange = { text ->
-                if (text.length >= 300) onLengthOver()
-                else onSignalChange(text)
-            },
-            hint = stringResource(id = R.string.hint_signal_content),
-            hintAlign = TextAlign.Start,
-            maxLength = 300
-        )
+        Box(
+            modifier = Modifier.weight(1f)
+        ) {
+            KeyLinkTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = signalContent,
+                onValueChange = { text ->
+                    if (text.length >= 300) onLengthOver()
+                    else onSignalChange(text)
+                },
+                hint = stringResource(id = R.string.hint_signal_content),
+                hintAlign = TextAlign.Start,
+                maxLength = 300
+            )
+        }
         KeyLinkButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 12.dp, horizontal = 20.dp),
             text = stringResource(id = R.string.next),
-            onClick = {
-                focusManager.clearFocus()
-                onNextClick()
-            },
+            onClick = onNextClick,
             enable = signalContent.isNotEmpty()
         )
     }
