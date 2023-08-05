@@ -60,17 +60,8 @@ fun SignalContentScreen(
     modifier: Modifier = Modifier
 ) {
     var dialogState by rememberSaveable { mutableStateOf(false) }
-    val focusManager = LocalFocusManager.current
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .pointerInput(Unit) {
-                detectTapGestures(onTap = {
-                    focusManager.clearFocus()
-                })
-            }
-    ) {
+    Column(modifier = modifier.fillMaxSize()) {
         KeyLinkToolbar(
             title = {
                 Text(
@@ -85,10 +76,7 @@ fun SignalContentScreen(
         SignalContent(
             modifier = modifier,
             signalContent = signalContent,
-            onNextClick = {
-                focusManager.clearFocus()
-                onNextClick()
-            },
+            onNextClick = onNextClick,
             onLengthOver = { dialogState = true },
             onSignalChange = onSignalChange
         )
@@ -111,11 +99,17 @@ fun SignalContent(
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
+    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                })
+            }
     ) {
         Box(
             modifier = Modifier.weight(1f)
@@ -137,7 +131,10 @@ fun SignalContent(
                 .fillMaxWidth()
                 .padding(vertical = 12.dp, horizontal = 20.dp),
             text = stringResource(id = R.string.next),
-            onClick = onNextClick,
+            onClick = {
+                focusManager.clearFocus()
+                onNextClick()
+            },
             enable = signalContent.isNotEmpty()
         )
     }

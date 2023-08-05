@@ -80,20 +80,18 @@ fun SubscribeKeywordScreen(
         showGoBackDialog = true
     }
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .pointerInput(Unit) {
-            detectTapGestures(onTap = {
-                focusManager.clearFocus()
-            })
-        }
-    ) {
+    Column(modifier = modifier.fillMaxSize()) {
         KeyLinkToolbar(
             onClickBack = { showGoBackDialog = true }
         )
         SubscribeKeywordContent(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .pointerInput(Unit) {
+                    detectTapGestures(onTap = {
+                        focusManager.clearFocus()
+                    })
+                },
             keywords = subscribeKeywords,
             onKeywordAdd = onAddKeyword,
             onKeywordDelete = onDeleteKeyword
@@ -138,7 +136,7 @@ fun SubscribeKeywordContent(
         scrollState.animateScrollTo(Int.MAX_VALUE)
     }
 
-    Column(modifier = modifier.padding(top = 8.dp, start = 20.dp, end = 20.dp)) {
+    Column(modifier = modifier.padding(horizontal = 20.dp)) {
         Text(
             text = stringResource(R.string.subscribe_keyword_title),
             style = Heading3,
