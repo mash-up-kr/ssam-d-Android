@@ -13,6 +13,8 @@ data class RoomUiModel (
     val nickname: String,
     val isChatRead: Boolean
 ) {
+    fun isSignalRoom() = matchingKeywordCount == 0
+
     companion object {
         fun fromDomainModel(domain: Room): RoomUiModel {
             return with(domain) {
