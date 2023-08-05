@@ -43,5 +43,6 @@ sealed class KeyLinkNavigationRoute(val route: String) {
         object SignalZoneRoute : KeyLinkNavigationRoute(SIGNAL_ZONE_ROUTE)
         object CrashDetailRoute : KeyLinkNavigationRoute(SIGNAL_ZONE_DETAIL_ROUTE)
         object CrashReplyRoute : KeyLinkNavigationRoute(SIGNAL_ZONE_REPLY_ROUTE)
+        object CrashReportRoute : KeyLinkNavigationRoute(SIGNAL_ZONE_REPORT_ROUTE)
     }
 }
