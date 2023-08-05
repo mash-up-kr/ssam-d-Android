@@ -153,5 +153,7 @@
     <string name="button_withdrawal">탈퇴 요청하기</string>
     <string name="toolbar_signal_zone">시그널존</string>
     <string name="content_description_signal_zone">시그널존 바텀시트 아이콘입니다.</string>
+    <string name="bottom_sheet_signal_zone_title">시그널존이 무엇인가요?</string>
+    <string name="bottom_sheet_signal_zone_content">키링에서 생성된 모든 시그널이 떠도는 공간이에요. 키워드를 구독하지 않았더라도 확인할 수 있어요. 시그널존에서 다양한 관심 분야를 만나보세요.</string>
 
 </resources>

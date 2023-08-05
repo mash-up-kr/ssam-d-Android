@@ -2,6 +2,7 @@ package com.mashup.presentation.ui.common
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -116,14 +117,46 @@ fun KeyLinkConnectedBottomSheet(
     Column(
         modifier = modifier.padding(horizontal = 20.dp, vertical = 20.dp),
     ) {
+        Image(
+            modifier = Modifier.size(48.dp),
+            painter = painterResource(id = R.drawable.img_cubic),
+            contentDescription = ""
+        )
         Text(
-            modifier = Modifier.padding(bottom = 12.dp),
+            modifier = Modifier.padding(vertical = 12.dp),
             text = stringResource(R.string.bottom_sheet_connected_title),
             style = Title2,
             color = Gray10
         )
         Text(
             text = stringResource(R.string.bottom_sheet_connected_content),
+            style = Body2,
+            color = Gray10
+        )
+    }
+}
+
+
+@Composable
+fun KeyLinkSignalZoneBottomSheet(
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.padding(horizontal = 20.dp, vertical = 20.dp),
+    ) {
+        Image(
+            modifier = Modifier.size(48.dp),
+            painter = painterResource(id = R.drawable.img_cubic),
+            contentDescription = ""
+        )
+        Text(
+            modifier = Modifier.padding(vertical = 12.dp),
+            text = stringResource(R.string.bottom_sheet_signal_zone_title),
+            style = Title2,
+            color = Gray10
+        )
+        Text(
+            text = stringResource(R.string.bottom_sheet_signal_zone_content),
             style = Body2,
             color = Gray10
         )
