@@ -20,7 +20,7 @@ data class ChatInfoUiModel(
             return ChatInfoUiModel(
                 othersProfileImage = matchingUserProfileImage,
                 othersNickName = matchingUserName,
-                matchedKeywords = keywords,
+                matchedKeywords = keywords.map { "#$it" },
                 isAlive = isAlive
             )
         }
