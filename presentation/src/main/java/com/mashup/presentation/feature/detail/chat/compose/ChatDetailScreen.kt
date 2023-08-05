@@ -61,6 +61,7 @@ fun ChatDetailRoute(
     LaunchedEffect(Unit) {
         launch { viewModel.getChatInfo() }
     }
+
     LaunchedEffect(pagedChatList.loadState) {
         if (pagedChatList.loadState.refresh is LoadState.NotLoading)
             isRefreshing = false
@@ -183,7 +184,7 @@ private fun ChatDetailScreen(
                 onChatItemClick = onMessageClick,
                 modalBottomSheetState = modalBottomSheetState,
                 onChangeBottomSheetType = { currentBottomSheetType = it },
-                isMatchedKeywordVisible = isScrollingUp,
+                isScrollingUp = isScrollingUp,
                 scrollState = scrollState,
                 coroutineScope = coroutineScope
             )
@@ -212,7 +213,7 @@ private fun ChatDetailContent(
     onChatItemClick: (Long) -> Unit,
     modalBottomSheetState: ModalBottomSheetState,
     onChangeBottomSheetType: (BottomSheetType) -> Unit,
-    isMatchedKeywordVisible: Boolean,
+    isScrollingUp: Boolean,
     scrollState: LazyGridState,
     coroutineScope: CoroutineScope
 ) {
@@ -229,7 +230,8 @@ private fun ChatDetailContent(
                     chatInfoUiModel = chatInfoUiState.chatInfoUiModel,
                     modalBottomSheetState = modalBottomSheetState,
                     onChangeBottomSheetType = onChangeBottomSheetType,
-                    isMatchedKeywordVisible = isMatchedKeywordVisible,
+                    isScrollingUp = isScrollingUp,
+                    fromSignalZone = chatInfoUiState.chatInfoUiModel.fromSignalZone(),
                     coroutineScope = coroutineScope
                 )
             }
@@ -254,33 +256,36 @@ private fun ChatInfoContent(
     chatInfoUiModel: ChatInfoUiModel,
     modalBottomSheetState: ModalBottomSheetState,
     onChangeBottomSheetType: (BottomSheetType) -> Unit,
-    isMatchedKeywordVisible: Boolean,
+    isScrollingUp: Boolean,
+    fromSignalZone: Boolean,
     coroutineScope: CoroutineScope
 ) {
     Column {
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp, bottom = 16.dp),
+                .padding(start = 20.dp, end = 20.dp),
         ) {
             OtherUserInfo(
                 modifier = Modifier.padding(bottom = 16.dp),
                 othersNickName = chatInfoUiModel.othersNickName,
                 othersProfileImage = chatInfoUiModel.othersProfileImage
             )
-            MatchedKeywords(
-                modifier = modifier
-                    .clickable {
-                        onChangeBottomSheetType(BottomSheetType.CHAT_DETAIL_KEYWORD)
-                        coroutineScope.launch {
-                            if (modalBottomSheetState.isVisible) modalBottomSheetState.hide()
-                            else modalBottomSheetState.show()
-                        }
-                    },
-                matchedKeywords = chatInfoUiModel.getMatchedKeywordSummery(),
-                visible = isMatchedKeywordVisible
-            )
-
+            if (!fromSignalZone) {
+                MatchedKeywords(
+                    modifier = modifier
+                        .padding(bottom = 16.dp)
+                        .clickable {
+                            onChangeBottomSheetType(BottomSheetType.CHAT_DETAIL_KEYWORD)
+                            coroutineScope.launch {
+                                if (modalBottomSheetState.isVisible) modalBottomSheetState.hide()
+                                else modalBottomSheetState.show()
+                            }
+                        },
+                    matchedKeywords = chatInfoUiModel.getMatchedKeywordSummery(),
+                    visible = isScrollingUp
+                )
+            }
         }
         if (!chatInfoUiModel.isAlive) {
             Box(
