@@ -149,7 +149,7 @@ private fun KeywordsChips(
         horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.Start),
     ) {
         items(keywordChipItems.size) {
-            KeywordChip(keyword = keywordChipItems[it])
+            KeywordChip(keyword = keywordChipItems[it], style = Caption3)
         }
     }
 }

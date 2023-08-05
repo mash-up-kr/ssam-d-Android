@@ -32,7 +32,7 @@ import com.mashup.presentation.ui.theme.*
 fun KeywordChip(
     keyword: String,
     modifier: Modifier = Modifier,
-    style: TextStyle = Caption3
+    style: TextStyle = Caption2
 ) {
     Box(
         modifier = modifier
