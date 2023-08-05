@@ -16,6 +16,9 @@ data class MessageDetailUiModel(
     val isMine: Boolean,
     val isReplyable: Boolean
 ) {
+
+    fun fromSignalZone() = matchingKeywordCount == 0
+
     companion object {
         fun fromDomainModel(domain: MessageDetail): MessageDetailUiModel {
             with(domain) {
