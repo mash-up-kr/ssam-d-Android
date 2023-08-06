@@ -47,11 +47,15 @@ fun ChatDetailRoute(
     onBackClick: () -> Unit,
     onMessageClick: (Long, Long) -> Unit,
     onReportClick: () -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
     val chatInfoUiState by viewModel.chatInfoUiState.collectAsStateWithLifecycle()
+    val showErrorMessage by viewModel.showSnackbarMessage.collectAsStateWithLifecycle(
+        DisconnectRoomUiEvent.Idle
+    )
     val pagedChatList = viewModel.chatPagingData.collectAsLazyPagingItems()
     var isRefreshing by remember { mutableStateOf(false) }
     val pullRefreshState = rememberPullRefreshState(
@@ -80,6 +84,22 @@ fun ChatDetailRoute(
                 }
             }
         }
+    }
+
+    LaunchedEffect(showErrorMessage) {
+        when (showErrorMessage) {
+            is DisconnectRoomUiEvent.Disconnect -> {
+                onBackClick()
+            }
+            is DisconnectRoomUiEvent.Failure -> {
+                onShowSnackbar(
+                    (showErrorMessage as DisconnectRoomUiEvent.Failure).message.orEmpty(),
+                    SnackbarDuration.Short
+                )
+            }
+            else -> Unit
+        }
+
     }
 
     Box(
@@ -210,9 +230,8 @@ private fun ChatDetailScreen(
         KeyLinkDisconnectSignalDialog(
             onDismissRequest = {},
             onDisconnectClick = {
-                onDisconnectRoom()
-                onBackClick()
                 showDisconnectDialog = false
+                onDisconnectRoom()
             },
             onCloseClick = { showDisconnectDialog = false }
         )
@@ -250,7 +269,8 @@ private fun ChatDetailContent(
                     coroutineScope = coroutineScope
                 )
             }
-            is ChatInfoUiState.Failure -> { /* failure */ }
+            is ChatInfoUiState.Failure -> { /* failure */
+            }
         }
 
         Divider(color = Gray01)
