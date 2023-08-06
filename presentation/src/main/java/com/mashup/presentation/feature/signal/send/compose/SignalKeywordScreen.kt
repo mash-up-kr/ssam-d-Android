@@ -194,13 +194,12 @@ fun SignalKeyword(
                 fontSize = 16.sp,
                 color = Gray06
             ),
-            modifier = Modifier.padding(top = 8.dp)
+            modifier = Modifier.padding(vertical = 8.dp)
         )
 
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier
-                .padding(top = 20.dp)
                 .verticalScroll(scrollState)
         ) {
             keywords.forEachIndexed { i, keyword ->
