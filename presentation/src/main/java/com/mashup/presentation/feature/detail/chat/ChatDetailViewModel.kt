@@ -60,10 +60,19 @@ class ChatDetailViewModel @Inject constructor(
     fun getChatInfo() {
         viewModelScope.launch {
             getChatInfoUseCase.execute(roomId)
-                .catch {
-                    _chatInfoUiState.value = ChatInfoUiState.Failure(it.message)
-                }.collect {
-                    _chatInfoUiState.value = ChatInfoUiState.Success(it.toUiModel())
+                .collect { result ->
+                    result.onSuccess {
+                        val model = requireNotNull(it)
+                        _chatInfoUiState.value = ChatInfoUiState.Success(model.toUiModel())
+                    }.onFailure { exception ->
+                        when (exception) {
+                            is KeyLinkException -> {
+                                val errorMessage = exception.message.orEmpty()
+                                _chatInfoUiState.value = ChatInfoUiState.Failure("")
+                                _eventFlow.emit(MessageReplyUiEvent.Failure(errorMessage))
+                            }
+                        }
+                    }
                 }
         }
     }
@@ -127,7 +136,7 @@ class ChatDetailViewModel @Inject constructor(
                 .onFailure { exception ->
                     when (exception) {
                         is KeyLinkException -> {
-                            _eventFlow.emit(MessageReplyUiEvent.Failure(exception.message))
+                            _eventFlow.emit(MessageReplyUiEvent.Failure(exception.message.orEmpty()))
                         }
                     }
                 }
