@@ -99,15 +99,15 @@ fun KeyLinkGuide() {
             horizontalAlignment = Alignment.Start
         ) {
             NumberedText(
-                number = "1",
+                number = "1. ",
                 guide = stringResource(id = R.string.home_guide_description_1),
             )
             NumberedText(
-                number = "2",
+                number = "2. ",
                 guide = stringResource(id = R.string.home_guide_description_2),
             )
             NumberedText(
-                number = "3",
+                number = "3. ",
                 guide = stringResource(id = R.string.home_guide_description_3),
             )
         }
