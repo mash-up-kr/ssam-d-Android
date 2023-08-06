@@ -35,7 +35,8 @@ fun NavGraphBuilder.signalZoneGraph(
         composable(route = KeyLinkNavigationRoute.SignalZoneGraph.SignalZoneRoute.route) {
             SignalZoneRoute(
                 onShowBottomSheet = onShowBottomSheet,
-                onCrashClick = navController::navigateToCrashDetail
+                onCrashClick = navController::navigateToCrashDetail,
+                onShowSnackbar = onShowSnackbar
             )
         }
         composable(
