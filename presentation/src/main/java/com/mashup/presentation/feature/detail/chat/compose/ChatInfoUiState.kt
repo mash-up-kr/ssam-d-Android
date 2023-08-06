@@ -44,6 +44,6 @@ sealed class DisconnectRoomUiEvent {
     object Idle: DisconnectRoomUiEvent()
     object Disconnect: DisconnectRoomUiEvent()
     data class Failure(
-        val message: String?
+        val message: String
     ): DisconnectRoomUiEvent()
 }
