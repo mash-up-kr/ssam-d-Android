@@ -26,7 +26,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.detail.chat.model.ChatInfoUiModel
 import com.mashup.presentation.common.extension.isScrollingUp
-import com.mashup.presentation.feature.detail.ChatDetailViewModel
+import com.mashup.presentation.feature.detail.chat.ChatDetailViewModel
 import com.mashup.presentation.feature.detail.chat.model.ChatUiModel
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.*

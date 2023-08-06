@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
-import com.mashup.presentation.feature.detail.ChatDetailViewModel
+import com.mashup.presentation.feature.detail.chat.ChatDetailViewModel
 import com.mashup.presentation.feature.detail.chat.compose.MessageReplyUiEvent
 import com.mashup.presentation.feature.reply.ReplyContent
 import com.mashup.presentation.ui.common.KeyLinkContentLengthDialog

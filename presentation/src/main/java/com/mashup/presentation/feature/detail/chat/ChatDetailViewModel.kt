@@ -1,4 +1,4 @@
-package com.mashup.presentation.feature.detail
+package com.mashup.presentation.feature.detail.chat
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
