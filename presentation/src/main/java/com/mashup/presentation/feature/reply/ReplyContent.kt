@@ -27,13 +27,12 @@ private const val MAX_LENGTH = 300
 fun ReplyContent(
     reply: String,
     onReplyTextChange: (String) -> Unit,
-    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     onSendClick: () -> Unit,
     onLengthOver: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
-    val snackbarMessage = stringResource(R.string.snackbar_reply)
+
     val focusManager = LocalFocusManager.current
 
     Column(
@@ -68,7 +67,6 @@ fun ReplyContent(
             text = stringResource(id = R.string.button_send_reply),
             onClick = {
                 focusManager.clearFocus()
-                onShowSnackbar(snackbarMessage, SnackbarDuration.Short)
                 onSendClick()
             },
             enable = reply.isNotEmpty()

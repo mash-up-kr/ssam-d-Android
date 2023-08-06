@@ -100,7 +100,6 @@ private fun ReceivedSignalReplyScreen(
             onReplyTextChange = onReplyTextChange,
             onSendClick = onSendClick,
             onLengthOver = { showLengthOverDialog = true },
-            onShowSnackbar = onShowSnackbar
         )
 
         if (showGoBackDialog) {

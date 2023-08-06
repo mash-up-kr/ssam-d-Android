@@ -42,13 +42,17 @@ fun ChatReplyRoute(
     val event by viewModel.eventFlow.collectAsStateWithLifecycle(MessageReplyUiEvent.Idle)
     var reply by rememberSaveable { mutableStateOf("") }
 
-    LaunchedEffect(key1 = event) {
+    val snackbarMessage = stringResource(R.string.snackbar_reply)
+
+    LaunchedEffect(event) {
         when (event) {
             is MessageReplyUiEvent.SaveSuccess -> {
+                onShowSnackbar(snackbarMessage, SnackbarDuration.Short)
                 navigateToChat()
             }
             is MessageReplyUiEvent.Failure -> {
-
+                val errorMessage = (event as MessageReplyUiEvent.Failure).message.orEmpty()
+                onShowSnackbar(errorMessage, SnackbarDuration.Short)
             }
             else -> {}
         }
@@ -60,7 +64,6 @@ fun ChatReplyRoute(
         onReplyTextChange = { reply = it },
         onClickBack = onClickBack,
         onSendClick = { viewModel.reply(reply) },
-        onShowSnackbar = onShowSnackbar,
     )
 }
 
@@ -70,7 +73,6 @@ private fun ChatReplyScreen(
     onReplyTextChange: (String) -> Unit,
     onClickBack: () -> Unit,
     onSendClick: () -> Unit,
-    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showGoBackDialog by rememberSaveable { mutableStateOf(false) }
@@ -102,7 +104,6 @@ private fun ChatReplyScreen(
             onReplyTextChange = onReplyTextChange,
             onSendClick = onSendClick,
             onLengthOver = { showLengthOverDialog = true },
-            onShowSnackbar = onShowSnackbar
         )
 
         if (showGoBackDialog) {
