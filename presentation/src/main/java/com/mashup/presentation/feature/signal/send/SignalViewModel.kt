@@ -3,8 +3,10 @@ package com.mashup.presentation.feature.signal.send
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mashup.domain.exception.KeyLinkException
 import com.mashup.domain.usecase.GetRecommendKeywordUseCase
 import com.mashup.domain.usecase.SendSignalUseCase
+import com.mashup.presentation.feature.profile.withdrawal.Failure
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -62,7 +64,7 @@ class SignalViewModel @Inject constructor(
                     _eventFlow.emit(SignalUiEvent.SendSignalSuccess)
                 }
                 .onFailure {
-                    _eventFlow.emit(SignalUiEvent.Error(it))
+                    _eventFlow.emit(SignalUiEvent.Error(it.message))
                 }
         }
     }
@@ -76,6 +78,6 @@ sealed interface KeywordUiState {
 
 sealed interface SignalUiEvent {
     object SendSignalSuccess : SignalUiEvent
-    data class Error(val throwable: Throwable) : SignalUiEvent
+    data class Error(val message: String?) : SignalUiEvent
     object Nothing : SignalUiEvent
 }

@@ -15,12 +15,9 @@ class SendSignalUseCase @Inject constructor(
 ) : CoroutineUseCase<Pair<String, List<String>>, Result<Unit>>() {
 
     override suspend fun invoke(param: Pair<String, List<String>>): Result<Unit> {
-        val response = runCatching {
-            signalRepository.sendSignal(
-                content = param.first,
-                keywords = param.second
-            )
-        }
-        return response
+        return signalRepository.sendSignal(
+            content = param.first,
+            keywords = param.second
+        )
     }
 }
