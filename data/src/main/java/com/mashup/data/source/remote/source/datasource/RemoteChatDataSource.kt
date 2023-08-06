@@ -1,5 +1,6 @@
 package com.mashup.data.source.remote.source.datasource
 
+import com.mashup.data.source.remote.dto.BaseResponse
 import com.mashup.data.source.remote.dto.responsebody.chat.MessageDetailResponse
 import com.mashup.data.source.remote.dto.requestbody.ReplyRequestBody
 import com.mashup.data.source.remote.dto.responsebody.chat.GetChatInfoResponseBody
@@ -25,9 +26,8 @@ class RemoteChatDataSource @Inject constructor(
     suspend fun getMessageDetail(
         roomId: Long,
         chatId: Long
-    ): MessageDetailResponse {
-        val response = chatService.getMessageDetail(roomId, chatId)
-        return response.data ?: throw Exception(response.message)
+    ): BaseResponse<MessageDetailResponse> {
+        return chatService.getMessageDetail(roomId, chatId)
     }
 
     suspend fun getChatRooms(

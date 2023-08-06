@@ -16,7 +16,7 @@ interface ChatRepository {
     fun getMessageDetail(
         roomId: Long,
         chatId: Long
-    ): Flow<MessageDetail>
+    ): Flow<Result<MessageDetail?>>
     fun getChatRooms(): Flow<PagingData<Room>>
 
     suspend fun disconnectRoom(roomId: Long): Result<Unit>

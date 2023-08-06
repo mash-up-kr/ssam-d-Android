@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 class GetMessageDetailUseCase @Inject constructor(
     private val chatRepository: ChatRepository
-) : FlowUseCase<GetMessageDetailUseCase.MessageDetailParam, MessageDetail>() {
+) : FlowUseCase<GetMessageDetailUseCase.MessageDetailParam, Result<MessageDetail?>>() {
 
-    override fun invoke(params: MessageDetailParam): Flow<MessageDetail> {
+    override fun invoke(params: MessageDetailParam): Flow<Result<MessageDetail?>> {
         return chatRepository.getMessageDetail(roomId = params.roomId, chatId = params.chatId)
     }
 
