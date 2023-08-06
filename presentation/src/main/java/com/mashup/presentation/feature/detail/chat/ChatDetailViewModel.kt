@@ -7,10 +7,12 @@ import com.mashup.domain.usecase.chat.*
 import androidx.paging.map
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.mashup.domain.exception.KeyLinkException
 import com.mashup.presentation.feature.detail.chat.compose.MessageDetailUiState
 import com.mashup.presentation.feature.detail.chat.compose.MessageReplyUiEvent
 import com.mashup.presentation.feature.detail.message.model.MessageDetailUiModel
 import com.mashup.presentation.feature.detail.chat.compose.ChatInfoUiState
+import com.mashup.presentation.feature.detail.chat.compose.DisconnectRoomUiEvent
 import com.mashup.presentation.feature.detail.chat.model.ChatInfoUiModel.Companion.toUiModel
 import com.mashup.presentation.feature.detail.chat.model.ChatUiModel
 import com.mashup.presentation.feature.detail.chat.model.ChatUiModel.Companion.toUiModel
@@ -52,6 +54,9 @@ class ChatDetailViewModel @Inject constructor(
     private val _eventFlow: MutableSharedFlow<MessageReplyUiEvent> = MutableSharedFlow()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    private val _showSnackbarMessage: MutableSharedFlow<DisconnectRoomUiEvent> = MutableSharedFlow()
+    val showSnackbarMessage = _showSnackbarMessage.asSharedFlow()
+
     fun getChatInfo() {
         viewModelScope.launch {
             getChatInfoUseCase.execute(roomId)
@@ -66,6 +71,18 @@ class ChatDetailViewModel @Inject constructor(
     fun disconnectRoom() {
         viewModelScope.launch {
             disconnectRoomUseCase.execute(roomId)
+                .onSuccess {
+                    _showSnackbarMessage.emit(DisconnectRoomUiEvent.Disconnect)
+                }
+                .onFailure { exception ->
+                    when (exception) {
+                        is KeyLinkException -> {
+                            _showSnackbarMessage.emit(
+                                DisconnectRoomUiEvent.Failure(exception.message.orEmpty())
+                            )
+                        }
+                    }
+                }
         }
     }
 
