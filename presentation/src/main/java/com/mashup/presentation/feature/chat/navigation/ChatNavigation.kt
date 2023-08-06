@@ -58,7 +58,8 @@ fun NavGraphBuilder.chatRoomGraph(
             ChatDetailRoute(
                 onBackClick = onBackClick,
                 onMessageClick = navController::navigateToChatDetail,
-                onReportClick = navController::navigateToChatReport
+                onReportClick = navController::navigateToChatReport,
+                onShowSnackbar = onShowSnackbar
             )
         }
         composable(route = KeyLinkNavigationRoute.ChatRoomGraph.ChatDetailRoute.route,

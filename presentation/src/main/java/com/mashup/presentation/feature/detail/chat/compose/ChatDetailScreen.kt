@@ -23,6 +23,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.mashup.domain.exception.EmptyListException
+import com.mashup.domain.exception.KeyLinkException
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.detail.chat.model.ChatInfoUiModel
 import com.mashup.presentation.common.extension.isScrollingUp
@@ -46,6 +48,7 @@ fun ChatDetailRoute(
     onMessageClick: (Long, Long) -> Unit,
     onReportClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
     val chatInfoUiState by viewModel.chatInfoUiState.collectAsStateWithLifecycle()
@@ -65,6 +68,18 @@ fun ChatDetailRoute(
     LaunchedEffect(pagedChatList.loadState) {
         if (pagedChatList.loadState.refresh is LoadState.NotLoading)
             isRefreshing = false
+
+        if (pagedChatList.loadState.refresh is LoadState.Error) {
+            val e = pagedChatList.loadState.refresh as LoadState.Error
+            when (e.error) {
+                is KeyLinkException -> e.error.message?.let {
+                    onShowSnackbar(
+                        it,
+                        SnackbarDuration.Short
+                    )
+                }
+            }
+        }
     }
 
     Box(
