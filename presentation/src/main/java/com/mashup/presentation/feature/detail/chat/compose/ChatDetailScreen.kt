@@ -49,7 +49,6 @@ fun ChatDetailRoute(
     onReportClick: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
-    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
     val chatInfoUiState by viewModel.chatInfoUiState.collectAsStateWithLifecycle()
