@@ -19,7 +19,7 @@ data class CrashUiModel(
                 return CrashUiModel(
                     id = id,
                     content = content,
-                    keywords = keywords.split(","),
+                    keywords = keywords,
                     userId = userId,
                     matchingKeywordCount = matchingKeywordCount,
                     profileImage = profileImage,
