@@ -104,7 +104,6 @@ fun CrashReplyScreen(
             onReplyTextChange = onReplyTextChange,
             onSendClick = onSendClick,
             onLengthOver = { showLengthOverDialog = true },
-            onShowSnackbar = onShowSnackbar
         )
 
         if (showGoBackDialog) {
