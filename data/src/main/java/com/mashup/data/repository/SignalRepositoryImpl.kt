@@ -19,8 +19,10 @@ class SignalRepositoryImpl @Inject constructor(
     private val remoteSignalDataSource: RemoteSignalDataSource
 ) : SignalRepository {
 
-    override suspend fun sendSignal(content: String, keywords: List<String>) {
-        remoteSignalDataSource.postSignal(content, keywords)
+    override suspend fun sendSignal(content: String, keywords: List<String>): Result<Unit> {
+        return suspendRunCatching {
+            remoteSignalDataSource.postSignal(content, keywords)
+        }
     }
 
     override fun getReceivedSignal(): Flow<PagingData<Signal>> {

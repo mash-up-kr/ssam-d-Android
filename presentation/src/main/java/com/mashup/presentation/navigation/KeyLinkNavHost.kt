@@ -41,6 +41,7 @@ fun KeyLinkNavHost(
         signalGraph(
             navController = navController,
             onBackClick = navController::navigateUp,
+            onShowSnackbar = onShowSnackbar,
         )
         chatRoomGraph(
             navController = navController,

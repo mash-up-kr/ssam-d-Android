@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
+import com.mashup.presentation.feature.profile.withdrawal.Failure
 import com.mashup.presentation.feature.signal.send.KeywordUiState
 import com.mashup.presentation.feature.signal.send.SignalUiEvent
 import com.mashup.presentation.feature.signal.send.SignalViewModel
@@ -38,7 +40,7 @@ fun SignalKeywordRoute(
     content: String,
     onBackClick: () -> Unit,
     onSendSuccess: () -> Unit,
-    onSendFailed: () -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SignalViewModel = hiltViewModel()
 ) {
@@ -52,8 +54,10 @@ fun SignalKeywordRoute(
 
     LaunchedEffect(sendSignalEvent) {
         when (sendSignalEvent) {
-            SignalUiEvent.SendSignalSuccess -> onSendSuccess()
-            is SignalUiEvent.Error -> onSendFailed()
+            is SignalUiEvent.SendSignalSuccess -> onSendSuccess()
+            is SignalUiEvent.Error -> {
+                onShowSnackbar((sendSignalEvent as SignalUiEvent.Error).message.orEmpty(), SnackbarDuration.Short)
+            }
             else -> {}
         }
     }
