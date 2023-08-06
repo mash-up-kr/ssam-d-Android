@@ -50,7 +50,8 @@ fun NavGraphBuilder.receivedSignalGraph(
                 signalId = entry.arguments?.getString("signalId")?.toLong() ?: -1,
                 onBackClick = onBackClick,
                 onReportMenuClick = navController::navigateToReceivedSignalReport,
-                onReplyButtonClick = navController::navigateToSignalReplyRoute
+                onReplyButtonClick = navController::navigateToSignalReplyRoute,
+                onShowSnackbar = onShowSnackbar
             )
         }
         composable(
