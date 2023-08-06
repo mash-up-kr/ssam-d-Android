@@ -18,6 +18,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.mashup.domain.exception.EmptyListException
+import com.mashup.domain.exception.KeyLinkException
 import com.mashup.presentation.BottomSheetType
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.chat.ChatViewModel
@@ -39,6 +41,7 @@ fun ChatRoute(
     onChatRoomClick: (Long) -> Unit,
     onShowBottomSheet: (BottomSheetType) -> Unit,
     modifier: Modifier = Modifier,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
     val pagedChatRoomList = viewModel.pagingData.collectAsLazyPagingItems()
@@ -64,7 +67,18 @@ fun ChatRoute(
         }
 
         if (pagedChatRoomList.loadState.refresh is LoadState.Error) {
-            isChatRoomEmpty = true
+            val e = pagedChatRoomList.loadState.refresh as LoadState.Error
+            when (e.error) {
+                is KeyLinkException -> e.error.message?.let {
+                    onShowSnackbar(
+                        it,
+                        SnackbarDuration.Short
+                    )
+                }
+                is EmptyListException -> {
+                    isChatRoomEmpty = true
+                }
+            }
         }
     }
 
