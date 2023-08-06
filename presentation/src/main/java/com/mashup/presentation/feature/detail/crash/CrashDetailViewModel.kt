@@ -15,7 +15,7 @@ class CrashDetailViewModel @Inject constructor(
     private val getCrashDetailUseCase: GetCrashDetailUseCase
 ) : ViewModel() {
     private val _crashUiState: MutableStateFlow<CrashDetailUiState> =
-        MutableStateFlow<CrashDetailUiState>(CrashDetailUiState.Loading)
+        MutableStateFlow(CrashDetailUiState.Loading)
     val crashUiState = _crashUiState.asStateFlow()
 
     fun getCrashDetail(crashId: Long) {
