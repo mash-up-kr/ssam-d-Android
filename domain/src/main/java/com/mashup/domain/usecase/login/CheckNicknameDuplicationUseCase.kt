@@ -9,8 +9,6 @@ class CheckNicknameDuplicationUseCase @Inject constructor(
 ) : CoroutineUseCase<String, Result<Unit>>() {
 
     override suspend fun invoke(param: String): Result<Unit> {
-        return runCatching {
-            userRepository.getNicknameDuplication(param)
-        }
+        return userRepository.getNicknameDuplication(param)
     }
 }

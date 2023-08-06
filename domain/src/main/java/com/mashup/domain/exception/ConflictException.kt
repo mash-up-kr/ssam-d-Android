@@ -1,3 +1,3 @@
 package com.mashup.domain.exception
 
-class ConflictException(message: String) : Exception(message)
+data class ConflictException(override val message: String?) : Exception(message)
