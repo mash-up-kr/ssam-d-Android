@@ -30,6 +30,8 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.mashup.domain.exception.EmptyListException
+import com.mashup.domain.exception.KeyLinkException
 import com.mashup.domain.model.Signal
 import com.mashup.presentation.BottomSheetType
 import com.mashup.presentation.R
@@ -78,7 +80,18 @@ fun SignalZoneRoute(
         }
 
         if (pagedCrashes.loadState.refresh is LoadState.Error) {
-            isCrashesEmpty = true
+            val e = pagedCrashes.loadState.refresh as LoadState.Error
+            when (e.error) {
+                is KeyLinkException -> e.error.message?.let {
+                    onShowSnackbar(
+                        it,
+                        SnackbarDuration.Short
+                    )
+                }
+                is EmptyListException -> {
+                    isCrashesEmpty = true
+                }
+            }
         }
     }
 
@@ -90,7 +103,7 @@ fun SignalZoneRoute(
         }
         backPressedTime = System.currentTimeMillis()
     }
-    
+
     Box(modifier = Modifier.pullRefresh(pullRefreshState), contentAlignment = Alignment.TopCenter) {
         SignalZoneScreen(
             modifier = modifier,
