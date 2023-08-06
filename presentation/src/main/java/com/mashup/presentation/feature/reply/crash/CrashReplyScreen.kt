@@ -46,7 +46,7 @@ fun CrashReplyRoute(
             CrashReplyUiEvent.SendReplySuccess -> navigateToHome()
             is CrashReplyUiEvent.SendReplyFailed -> {
                 onShowSnackbar(
-                    (event as CrashReplyUiEvent.SendReplyFailed).message ?: "",
+                    (event as CrashReplyUiEvent.SendReplyFailed).message.orEmpty(),
                     SnackbarDuration.Short
                 )
             }
