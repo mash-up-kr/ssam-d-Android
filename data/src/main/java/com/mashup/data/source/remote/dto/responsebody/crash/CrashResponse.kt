@@ -29,7 +29,7 @@ data class CrashPagingResponse(
 data class CrashResponse(
     val id: Long,
     val content: String,
-    val keywords: String,
+    val keywords: List<String>,
     val userId: Long,
     val matchingKeywordCount: Int,
     val profileImage: String,
