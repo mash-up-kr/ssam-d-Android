@@ -30,10 +30,10 @@ class ChatRepositoryImpl @Inject constructor(
         }.flow
     }
 
-    override fun getMessageDetail(roomId: Long, chatId: Long): Flow<MessageDetail> = flow {
+    override fun getMessageDetail(roomId: Long, chatId: Long): Flow<Result<MessageDetail?>> = flow {
         val result = suspendRunCatching {
-            remoteChatDataSource.getMessageDetail(roomId, chatId).toDomainModel()
-        }.getOrThrow()
+            remoteChatDataSource.getMessageDetail(roomId, chatId).data?.toDomainModel()
+        }
         emit(result)
     }
 

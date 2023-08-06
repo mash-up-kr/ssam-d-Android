@@ -92,13 +92,25 @@ class ChatDetailViewModel @Inject constructor(
                 roomId = roomId,
                 chatId = chatId
             )
-            getMessageDetailUseCase.execute(param).collectLatest {
-                _messageDetailUiState.emit(
-                    MessageDetailUiState.Success(
-                        messageDetail = MessageDetailUiModel.fromDomainModel(it)
-                    )
-                )
-            }
+            getMessageDetailUseCase.execute(param)
+                .collectLatest { result ->
+                    result.onSuccess {
+                        val model = requireNotNull(it)
+                        _messageDetailUiState.emit(
+                            MessageDetailUiState.Success(
+                                messageDetail = MessageDetailUiModel.fromDomainModel(model)
+                            )
+                        )
+                    }.onFailure { exception ->
+                        when (exception) {
+                            is KeyLinkException -> {
+                                val errorMessage = exception.message.orEmpty()
+                                _messageDetailUiState.emit(MessageDetailUiState.Failure(""))
+                                _eventFlow.emit(MessageReplyUiEvent.Failure(errorMessage))
+                            }
+                        }
+                    }
+                }
         }
     }
 

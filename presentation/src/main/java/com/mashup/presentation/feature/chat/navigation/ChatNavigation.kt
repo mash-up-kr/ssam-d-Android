@@ -79,7 +79,8 @@ fun NavGraphBuilder.chatRoomGraph(
                 onReplyButtonClick = {
                     val roomId = entry.arguments?.getLong("roomId") ?: -1
                     navController.navigateToChatReply(roomId)
-                }
+                },
+                onShowSnackbar = onShowSnackbar
             )
         }
         composable(
