@@ -2,6 +2,7 @@ package com.mashup.presentation.feature.reply.crash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mashup.domain.exception.KeyLinkException
 import com.mashup.domain.usecase.crash.ReceivedCrashReplyParams
 import com.mashup.domain.usecase.crash.SendCrashReplyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,8 +31,12 @@ class CrashReplyViewModel @Inject constructor(
                 .onSuccess {
                     _eventFlow.emit(CrashReplyUiEvent.SendReplySuccess)
                 }
-                .onFailure {
-                    _eventFlow.emit(CrashReplyUiEvent.SendReplyFailed(it.message))
+                .onFailure { exception ->
+                    when (exception) {
+                        is KeyLinkException -> {
+                            _eventFlow.emit(CrashReplyUiEvent.SendReplyFailed(exception.message))
+                        }
+                    }
                 }
         }
     }
