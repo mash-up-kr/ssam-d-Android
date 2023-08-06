@@ -43,7 +43,8 @@ fun NavGraphBuilder.chatRoomGraph(
                 onBackClick = onBackClick,
                 onEmptyScreenButtonClick = navController::navigateToSignal,
                 onChatRoomClick = navController::navigateToChatRoomDetail,
-                onShowBottomSheet = onShowBottomSheet
+                onShowBottomSheet = onShowBottomSheet,
+                onShowSnackbar = onShowSnackbar
             )
         }
         composable(
