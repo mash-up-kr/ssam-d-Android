@@ -24,6 +24,7 @@ import com.mashup.presentation.feature.chat.ChatViewModel
 import com.mashup.presentation.feature.chat.model.RoomUiModel
 import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.theme.*
+import kotlinx.coroutines.launch
 
 /**
  * Ssam_D_Android
@@ -49,6 +50,12 @@ fun ChatRoute(
             pagedChatRoomList.refresh()
         })
     var isChatRoomEmpty by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        launch {
+            pagedChatRoomList.refresh()
+        }
+    }
 
     LaunchedEffect(pagedChatRoomList.loadState) {
         if (pagedChatRoomList.loadState.refresh is LoadState.NotLoading) {
