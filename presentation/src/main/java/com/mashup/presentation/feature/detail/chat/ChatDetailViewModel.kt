@@ -112,8 +112,12 @@ class ChatDetailViewModel @Inject constructor(
                 .onSuccess {
                     _eventFlow.emit(MessageReplyUiEvent.SaveSuccess)
                 }
-                .onFailure {
-                    _eventFlow.emit(MessageReplyUiEvent.Failure(it.message))
+                .onFailure { exception ->
+                    when (exception) {
+                        is KeyLinkException -> {
+                            _eventFlow.emit(MessageReplyUiEvent.Failure(exception.message))
+                        }
+                    }
                 }
         }
     }
