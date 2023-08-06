@@ -90,7 +90,7 @@ fun KeyLinkOnBoardingTextField(
     }
 
     Box(modifier = modifier
-        .padding(top = 22.dp)
+        .padding(top = 20.dp, bottom = 10.dp)
         .fillMaxWidth()
     ) {
         BasicTextField(

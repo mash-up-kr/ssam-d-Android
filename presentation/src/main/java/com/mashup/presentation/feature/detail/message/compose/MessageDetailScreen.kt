@@ -18,7 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.getDisplayedDateWithDay
 import com.mashup.presentation.common.extension.visible
-import com.mashup.presentation.feature.detail.ChatDetailViewModel
+import com.mashup.presentation.feature.detail.chat.ChatDetailViewModel
 import com.mashup.presentation.feature.detail.chat.compose.MessageDetailUiState
 import com.mashup.presentation.feature.detail.message.model.MessageDetailUiModel
 import com.mashup.presentation.ui.common.KeyLinkLoading

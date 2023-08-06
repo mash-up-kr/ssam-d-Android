@@ -28,8 +28,8 @@ data class CrashPagingResponse(
 @JsonClass(generateAdapter = true)
 data class CrashResponse(
     val id: Long,
-    val content: Long,
-    val keywords: Long,
+    val content: String,
+    val keywords: List<String>,
     val userId: Long,
     val matchingKeywordCount: Int,
     val profileImage: String,

@@ -66,7 +66,7 @@
     <!-- Dialog -->
     <string name="dialog_signal_content_title">300자 까지 입력할 수 있어요.</string>
     <string name="dialog_go_back_title">뒤로 갈까요?</string>
-    <string name="dialog_go_back_subtitle">지금까지 쓴 내용은 저장되지 않아요.</string>기
+    <string name="dialog_go_back_subtitle">지금까지 쓴 내용은 저장되지 않아요.</string>
     <string name="dialog_go_back">뒤로가기</string>
     <string name="dialog_disconnect_signal_title">시그널을 끊을까요?</string>
     <string name="dialog_disconnect_signal_subtitle">연결이 끊기면 대화 내용이 사라져요.</string>
@@ -82,7 +82,7 @@
     // 홈
     <string name="home_my_planet">내 행성: Zylix-6</string>
     <string name="home_my_page_icon_content_description">내 행성: Zylix-6</string>
-    <string name="home_planet_guide">당신은 Zylix-6 행성에 떨어졌습니다.\n지금 가이드를 확인해주세요</string>
+    <string name="home_planet_guide">당신은 Zylix-6 행성에 떨어졌습니다.\n지금 가이드를 확인해주세요.</string>
     <string name="home_planet_guide_button">가이드 보기</string>
     <string name="home_signal_icon_content_description">시그널 아이콘</string>
     <string name="home_subscribe_keywords">%d개 키워드 구독중</string>
@@ -110,9 +110,9 @@
 
     // 홈 가이드
     <string name="home_guide_title">키링 가이드</string>
-    <string name="home_guide_description_1">. 키링에선 모든 소통이 시그널로 이루어져요.</string>
-    <string name="home_guide_description_2">. 시그널을 보내면 랜덤한 상대에게 내가 쓴 쪽지가 전달돼요.</string>
-    <string name="home_guide_description_3">. 시그널을 안 보내도, 구독중인 키워드가 있다면 자동으로 쪽지를 받을 수 있어요.</string>
+    <string name="home_guide_description_1">키링에선 모든 소통이 시그널로 이루어져요.</string>
+    <string name="home_guide_description_2">시그널을 보내면 랜덤한 상대에게 내가 쓴 쪽지가 전달돼요.</string>
+    <string name="home_guide_description_3">시그널을 안 보내도, 구독중인 키워드가 있다면 자동으로 쪽지를 받을 수 있어요.</string>
     <string name="home_planet_guide_title">Zylix-6 행성 탐험 가이드</string>
     <string name="home_planet_guide_description">Zylix-6 행성에는 5개의 종족이 있어요.\n당신은 이 중 하나의 종족을 부여 받아요.</string>
     <string name="home_guide_background_content_description">홈 가이드 백그라운드</string>

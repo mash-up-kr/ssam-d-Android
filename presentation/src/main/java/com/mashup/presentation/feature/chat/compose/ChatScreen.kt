@@ -18,12 +18,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.mashup.domain.exception.EmptyListException
+import com.mashup.domain.exception.KeyLinkException
 import com.mashup.presentation.BottomSheetType
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.chat.ChatViewModel
 import com.mashup.presentation.feature.chat.model.RoomUiModel
 import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.theme.*
+import kotlinx.coroutines.launch
 
 /**
  * Ssam_D_Android
@@ -38,6 +41,7 @@ fun ChatRoute(
     onChatRoomClick: (Long) -> Unit,
     onShowBottomSheet: (BottomSheetType) -> Unit,
     modifier: Modifier = Modifier,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
     val pagedChatRoomList = viewModel.pagingData.collectAsLazyPagingItems()
@@ -50,6 +54,12 @@ fun ChatRoute(
         })
     var isChatRoomEmpty by remember { mutableStateOf(false) }
 
+    LaunchedEffect(Unit) {
+        launch {
+            pagedChatRoomList.refresh()
+        }
+    }
+
     LaunchedEffect(pagedChatRoomList.loadState) {
         if (pagedChatRoomList.loadState.refresh is LoadState.NotLoading) {
             isRefreshing = false
@@ -57,7 +67,18 @@ fun ChatRoute(
         }
 
         if (pagedChatRoomList.loadState.refresh is LoadState.Error) {
-            isChatRoomEmpty = true
+            val e = pagedChatRoomList.loadState.refresh as LoadState.Error
+            when (e.error) {
+                is KeyLinkException -> e.error.message?.let {
+                    onShowSnackbar(
+                        it,
+                        SnackbarDuration.Short
+                    )
+                }
+                is EmptyListException -> {
+                    isChatRoomEmpty = true
+                }
+            }
         }
     }
 
@@ -117,8 +138,8 @@ fun ChatScreen(
                     )
                     Icon(
                         modifier = Modifier
-                            .size(24.dp)
-                            .padding(start = 6.dp),
+                            .padding(start = 6.dp)
+                            .size(20.dp),
                         painter = painterResource(id = R.drawable.ic_chat_help_24),
                         contentDescription = "",
                         tint = Gray08

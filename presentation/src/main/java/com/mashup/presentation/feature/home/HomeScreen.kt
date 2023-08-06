@@ -24,6 +24,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.mashup.domain.exception.EmptyListException
+import com.mashup.domain.exception.KeyLinkException
 import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.findActivity
 import com.mashup.presentation.common.extension.isScrollingUp
@@ -64,6 +66,7 @@ fun HomeRoute(
     LaunchedEffect(Unit) {
         launch {
             homeViewModel.getSubscribedKeywords()
+            pagedReceivedSignal.refresh()
         }
     }
     LaunchedEffect(pagedReceivedSignal.loadState) {
@@ -73,7 +76,18 @@ fun HomeRoute(
         }
 
         if (pagedReceivedSignal.loadState.refresh is LoadState.Error) {
-            isSignalEmpty = true
+            val e = pagedReceivedSignal.loadState.refresh as LoadState.Error
+            when (e.error) {
+                is KeyLinkException -> e.error.message?.let {
+                    onShowSnackbar(
+                        it,
+                        SnackbarDuration.Short
+                    )
+                }
+                is EmptyListException -> {
+                    isSignalEmpty = true
+                }
+            }
         }
     }
 

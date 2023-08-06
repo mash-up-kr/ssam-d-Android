@@ -14,11 +14,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.drawColoredShadow
 import com.mashup.presentation.common.extension.pxToDp
+import com.mashup.presentation.feature.signalzone.SignalZoneUiModel
 import com.mashup.presentation.ui.theme.*
 
 /**
@@ -30,6 +34,7 @@ import com.mashup.presentation.ui.theme.*
 @Composable
 fun CrashesContent(
     onCardClick: (Long) -> Unit,
+    crashes: LazyPagingItems<SignalZoneUiModel>,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -39,8 +44,17 @@ fun CrashesContent(
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
     ) {
         /* 페이징 적용 필요 */
-        items(20) {
-            CrashCard(onCardClick = onCardClick)
+        items(
+            count = crashes.itemCount,
+            key = crashes.itemKey(SignalZoneUiModel::crashId),
+            contentType = crashes.itemContentType { "SignalZone Crashe" }
+        ) { index ->
+            crashes[index]?.let { crash ->
+                CrashCard(
+                    crash = crash,
+                    onCardClick = onCardClick
+                )
+            }
         }
     }
 }
@@ -49,6 +63,7 @@ fun CrashesContent(
 @Composable
 fun CrashCard(
     onCardClick: (Long) -> Unit,
+    crash: SignalZoneUiModel,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -60,17 +75,18 @@ fun CrashCard(
                 borderRadius = 28.pxToDp().dp,
                 shadowRadius = 20.pxToDp().dp
             )
+            .fillMaxWidth()
             .background(shape = RoundedCornerShape(12.dp), color = Black.copy(alpha = 0.6f))
-            .clickable { onCardClick(0 /* id */) }
+            .clickable { onCardClick(crash.crashId) }
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
                 .padding(vertical = 12.dp, horizontal = 16.dp),
         ) {
-            SenderInfo(/* UI Model */)
+            SenderInfo(crash)
             Text(
-                text = "이번주 불참해서 공지를 못 들음...다음 전체회의에 준비할 내용이 어떤거였죠?",
+                text = crash.content,
                 style = Body1,
                 color = White,
                 maxLines = 2,
@@ -83,7 +99,7 @@ fun CrashCard(
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 private fun SenderInfo(
-
+    crash: SignalZoneUiModel,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -93,17 +109,17 @@ private fun SenderInfo(
     ) {
         GlideImage(
             modifier = Modifier.size(24.dp),
-            model = "receivedSignal.senderImageUrl",  // model
+            model = crash.profileImage,
             contentDescription = stringResource(id = R.string.home_item_avatar_content_description),
             contentScale = ContentScale.Inside
         )
         Text(
-            text = "슈퍼니카",  // model
+            text = crash.nickname,
             style = Body2,
             color = White
         )
         Text(
-            text = "지금",  // model
+            text = crash.receivedDisplayedTime,
             style = Caption2,
             color = Gray06
         )

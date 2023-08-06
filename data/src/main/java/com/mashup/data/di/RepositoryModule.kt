@@ -34,5 +34,9 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
+    fun bindCrashRepository(crashRepositoryImpl: CrashRepositoryImpl): CrashRepository
+
+    @Binds
+    @Singleton
     fun bindFirebaseRepository(firebaseRepositoryImpl: FirebaseRepositoryImpl): FirebaseRepository
 }

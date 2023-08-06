@@ -160,18 +160,18 @@ fun KeywordScreen(
     Column(
         modifier = modifier
     ) {
-        Spacer(modifier = Modifier.height(12.dp))
-        KeyLinkMintText(text = stringResource(id = R.string.onboarding_keywords_input))
         Spacer(modifier = Modifier.height(16.dp))
+        KeyLinkMintText(text = stringResource(id = R.string.onboarding_keywords_input))
+        Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = stringResource(id = R.string.onboarding_keywords_input_description),
             fontSize = 14.sp,
             color = Gray07
         )
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.verticalScroll(scrollState)
+            modifier = Modifier.verticalScroll(scrollState),
         ) {
             keywords.forEachIndexed { i, keyword ->
                 KeywordActionChip(

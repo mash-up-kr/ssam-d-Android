@@ -9,18 +9,22 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
-import com.mashup.presentation.common.extension.getDisplayedDateWithDay
-import com.mashup.presentation.common.extension.visible
 import com.mashup.presentation.feature.detail.message.compose.MessageInfo
-import com.mashup.presentation.feature.detail.message.model.MessageDetailUiModel
+import com.mashup.presentation.feature.reply.crash.CrashReplyUiEvent
+import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.common.KeyLinkToolbar
 import com.mashup.presentation.ui.theme.Black
@@ -39,15 +43,25 @@ fun CrashDetailRoute(
     onBackClick: () -> Unit,
     onReportMenuClick: () -> Unit,
     onReplyButtonClick: (Long) -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: CrashDetailViewModel = hiltViewModel()
 ) {
+    val crashDetailUiState by viewModel.crashUiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.getCrashDetail(crashId = crashId)
+    }
+
     CrashDetailScreen(
         modifier = modifier,
         onBackClick = onBackClick,
         onReportMenuClick = onReportMenuClick,
         onReplyButtonClick = {
             onReplyButtonClick(crashId)
-        }
+        },
+        onShowSnackbar = onShowSnackbar,
+        crashDetailUiState = crashDetailUiState
     )
 }
 
@@ -56,7 +70,9 @@ fun CrashDetailScreen(
     onBackClick: () -> Unit,
     onReportMenuClick: () -> Unit,
     onReplyButtonClick: (Long) -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
+    crashDetailUiState: CrashDetailUiState
 ) {
     Scaffold(
         modifier = modifier,
@@ -76,7 +92,6 @@ fun CrashDetailScreen(
                         contentDescription = stringResource(R.string.content_description_report)
                     )
                 }
-
             )
         },
     ) { paddingValues ->
@@ -84,25 +99,28 @@ fun CrashDetailScreen(
             top = paddingValues.calculateTopPadding() + 16.dp,
             start = 20.dp
         )
-//        when (messageDetailUiState) {
-//            is MessageDetailUiState.Loading -> KeyLinkLoading()
-//            is MessageDetailUiState.Success -> {
-//
-//            }
-//            is MessageDetailUiState.Failure -> {}
-//        }
-        CrashDetailContent(
-            contentPadding = contentPadding,
-//            crashDetail = messageDetailUiState.messageDetail,
-            onReplyButtonClick = onReplyButtonClick
-        )
+        when (crashDetailUiState) {
+            is CrashDetailUiState.Loading -> KeyLinkLoading()
+            is CrashDetailUiState.Success -> {
+                CrashDetailContent(
+                    contentPadding = contentPadding,
+                    crash = crashDetailUiState.crash,
+                    onReplyButtonClick = onReplyButtonClick
+                )
+            }
+            is CrashDetailUiState.Error -> {
+                crashDetailUiState.message?.let {
+                    onShowSnackbar(it, SnackbarDuration.Short)
+                }
+            }
+        }
     }
 }
 
 @Composable
 private fun CrashDetailContent(
     contentPadding: PaddingValues,
-//    crashDetail: MessageDetailUiModel,
+    crash: CrashUiModel,
     onReplyButtonClick: (Long) -> Unit
 ) {
     Column(
@@ -115,10 +133,10 @@ private fun CrashDetailContent(
             modifier = Modifier
                 .weight(1f)
                 .padding(end = 20.dp),
-            othersName = "슈퍼니카",
-            date = "202020202020",
-            message = "이번주 불참해서 공지를 못 들음 뭐시기 뭐시기 울랄라",
-            profileImage = ""
+            othersName = crash.nickname,
+            date = crash.receivedTime,
+            message = crash.content,
+            profileImage = crash.profileImage
         )
 
 
@@ -127,7 +145,7 @@ private fun CrashDetailContent(
                 .padding(top = 16.dp, bottom = 40.dp, end = 20.dp)
                 .align(Alignment.CenterHorizontally),
             text = stringResource(R.string.button_send_reply),
-            onClick = { onReplyButtonClick(0 /* CrashId */) }
+            onClick = { onReplyButtonClick(crash.id) }
         )
     }
 }
