@@ -64,6 +64,7 @@ fun HomeRoute(
     LaunchedEffect(Unit) {
         launch {
             homeViewModel.getSubscribedKeywords()
+            pagedReceivedSignal.refresh()
         }
     }
     LaunchedEffect(pagedReceivedSignal.loadState) {
