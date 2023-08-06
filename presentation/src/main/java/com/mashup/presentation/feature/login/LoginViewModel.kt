@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.domain.exception.ConflictException
+import com.mashup.domain.exception.KeyLinkException
 import com.mashup.domain.usecase.GetFCMDeviceTokenUseCase
 import com.mashup.domain.usecase.login.*
 import com.mashup.presentation.ui.common.ValidationState
