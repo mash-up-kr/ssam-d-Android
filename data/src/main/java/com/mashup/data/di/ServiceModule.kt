@@ -36,4 +36,9 @@ class ServiceModule {
     @Singleton
     fun provideChatService(retrofit: Retrofit): ChatService =
         retrofit.create(ChatService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideCrashService(retrofit: Retrofit): CrashService =
+        retrofit.create(CrashService::class.java)
 }
