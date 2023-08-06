@@ -20,7 +20,7 @@ sealed class ProfileViewType {
     data class UserInfo(
         val userImageUrl: String,
         val userName: String,
-        val userEmail: String
+        val userEmail: String?
     ) : ProfileViewType()
 
     data class Header(
@@ -29,6 +29,7 @@ sealed class ProfileViewType {
 
     data class NavigationContent(
         override val description: String,
+        val userId: Long,
         val route: String,
         val color: Color = White
     ) : ProfileViewType(), BaseViewType

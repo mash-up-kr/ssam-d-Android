@@ -19,11 +19,11 @@ enum class TopLevelDestination(
         iconTextId = R.string.navigation_home,
         textLabelId = R.string.navigation_home,
     ),
-    SIGNAL(
-        selectedIconId = R.drawable.ic_signal_fill_32,
-        unselectedIconId = R.drawable.ic_signal_fill_32,
-        iconTextId = R.string.navigation_signal,
-        textLabelId = R.string.navigation_signal,
+    SIGNAL_ZONE(
+        selectedIconId = R.drawable.ic_crashes_fill_32,
+        unselectedIconId = R.drawable.ic_crashes_fill_32,
+        iconTextId = R.string.navigation_crashes,
+        textLabelId = R.string.navigation_crashes,
     ),
     CHAT_ROOM(
         selectedIconId = R.drawable.ic_chat_fill_32,

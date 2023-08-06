@@ -22,3 +22,10 @@ fun NavController.navigateToReceivedSignalReport(navOptions: NavOptions? = null)
         navOptions = navOptions
     )
 }
+
+fun NavController.navigateToCrashReport(navOptions: NavOptions? = null) {
+    navigate(
+        route = KeyLinkNavigationRoute.SignalZoneGraph.CrashReportRoute.route,
+        navOptions = navOptions
+    )
+}

@@ -13,12 +13,14 @@ data class ChatInfoUiModel(
     val matchedKeywords: List<String>,
     val isAlive: Boolean
 ) {
+    fun fromSignalZone() = matchedKeywords.isEmpty()
+
     companion object {
         fun ChatInfo.toUiModel(): ChatInfoUiModel {
             return ChatInfoUiModel(
                 othersProfileImage = matchingUserProfileImage,
                 othersNickName = matchingUserName,
-                matchedKeywords = keywords,
+                matchedKeywords = keywords.map { "#$it" },
                 isAlive = isAlive
             )
         }

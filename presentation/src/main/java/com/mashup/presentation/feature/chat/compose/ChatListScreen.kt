@@ -20,7 +20,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -30,7 +29,6 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.chat.model.RoomUiModel
-import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.theme.*
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -104,6 +102,7 @@ fun ChatRoomItem(
                 date = chatRoom.receivedTime,
                 userName = chatRoom.nickname,
                 matchedCount = chatRoom.matchingKeywordCount,
+                fromSignalZone = chatRoom.isSignalRoom(),
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -124,6 +123,7 @@ private fun ChatRoomInfo(
     userName: String,
     matchedCount: Int,
     date: String,
+    fromSignalZone: Boolean,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -140,8 +140,9 @@ private fun ChatRoomInfo(
             modifier = Modifier.wrapContentWidth()
         )
 
-        SignalChip(
+        MatchedKeywordCountChip(
             matchedCount = matchedCount,
+            fromSignalZone = fromSignalZone,
             modifier = Modifier.padding(start = 4.dp)
         )
 
@@ -173,7 +174,7 @@ private fun ChatRoomMessageInfo(
             color = Gray06,
             modifier = Modifier.weight(1f),
             maxLines = 1,
-            overflow= TextOverflow.Ellipsis,
+            overflow = TextOverflow.Ellipsis,
         )
 
         if (isNewMessage) {
@@ -191,8 +192,9 @@ private fun ChatRoomMessageInfo(
 }
 
 @Composable
-fun SignalChip(
+fun MatchedKeywordCountChip(
     matchedCount: Int,
+    fromSignalZone: Boolean,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -208,9 +210,12 @@ fun SignalChip(
             tint = Gray09,
             contentDescription = stringResource(R.string.content_description_chat_item_frequency)
         )
-
         Text(
-            text = stringResource(R.string.signal_matched_count, matchedCount),
+            text = if (fromSignalZone) {
+                stringResource(R.string.no_matched_keyword_signal_zone)
+            } else {
+                stringResource(R.string.matched_keyword_count, matchedCount)
+            },
             style = Caption3.copy(fontWeight = FontWeight.Bold),
             color = Gray09,
             modifier = Modifier
@@ -224,7 +229,7 @@ fun SignalChip(
 @Composable
 private fun SignalChipPreview() {
     SsamDTheme {
-        SignalChip(matchedCount = 10)
+        MatchedKeywordCountChip(matchedCount = 10, fromSignalZone = false)
     }
 }
 

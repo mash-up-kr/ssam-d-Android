@@ -16,7 +16,7 @@ interface UserRepository {
 
     suspend fun getUser(): User
 
-    suspend fun deleteUser()
+    suspend fun deleteUser(userId: Long): Result<Unit>
 
     suspend fun getUserAccessToken(): String
 

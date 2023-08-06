@@ -4,15 +4,18 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mashup.presentation.R
 import com.mashup.presentation.ui.theme.*
 
 @Composable
@@ -53,22 +56,57 @@ fun KeyLinkButton(
 
 @Composable
 fun KeyLinkRoundButton(
-    text: String,
     modifier: Modifier = Modifier,
+    text: String,
+    backgroundColor: Color = Blurple,
     onClick: () -> Unit = {}
 ) {
     Button(
         modifier = modifier.wrapContentSize(),
         onClick = { onClick.invoke() },
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = Blurple,
+            backgroundColor = backgroundColor,
             contentColor = White,
             disabledBackgroundColor = Gray02,
             disabledContentColor = Gray06
         ),
         shape = RoundedCornerShape(24.dp),
-        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp)
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp)
     ) {
+        Text(
+            text = text,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.W500,
+            maxLines = 1
+        )
+    }
+}
+
+@Composable
+fun KeyLinkRoundIconButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    backgroundColor: Color = Blurple,
+    onClick: () -> Unit = {}
+) {
+    Button(
+        modifier = modifier.wrapContentSize(),
+        onClick = { onClick.invoke() },
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = backgroundColor,
+            contentColor = White,
+            disabledBackgroundColor = Gray02,
+            disabledContentColor = Gray06
+        ),
+        shape = RoundedCornerShape(24.dp),
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp)
+    ) {
+        Icon(
+            modifier = Modifier.size(28.dp).padding(end = 4.dp),
+            painter = painterResource(id = R.drawable.ic_signal_fill_32),
+            contentDescription = "",
+            tint = White
+        )
         Text(
             text = text,
             fontSize = 16.sp,

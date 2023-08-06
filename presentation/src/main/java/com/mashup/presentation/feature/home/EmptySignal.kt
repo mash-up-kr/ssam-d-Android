@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.mashup.presentation.R
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.theme.Body1
+import com.mashup.presentation.ui.theme.Gray02
 import com.mashup.presentation.ui.theme.White
 
 /**
@@ -53,6 +54,7 @@ private fun EmptySignal(
         )
         KeyLinkRoundButton(
             text = stringResource(id = R.string.home_planet_guide_button),
+            backgroundColor = Gray02,
             onClick = onGuideClick
         )
     }

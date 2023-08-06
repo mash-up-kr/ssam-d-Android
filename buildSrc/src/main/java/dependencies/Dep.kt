@@ -192,4 +192,10 @@ object Dep {
         const val lottie = "com.airbnb.android:lottie:$lottieVersion"
         const val lottieCompose = "com.airbnb.android:lottie-compose:$lottieVersion"
     }
+
+    object Firebase {
+        const val firebaseBom = "com.google.firebase:firebase-bom:32.2.0"
+        const val analytics = "com.google.firebase:firebase-analytics-ktx:21.3.0"
+        const val cloudMessaging = "com.google.firebase:firebase-messaging-ktx:23.2.0"
+    }
 }

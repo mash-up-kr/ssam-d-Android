@@ -16,6 +16,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
@@ -96,6 +97,7 @@ fun MessageContent(
                         color = Gray01
                     )
                 }
+
                 false -> {
                     Modifier.background(
                         brush = Brush.linearGradient(
@@ -110,14 +112,6 @@ fun MessageContent(
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    modifier = Modifier.weight(8f),
-                    text = message,
-                    overflow = TextOverflow.Ellipsis,
-                    style = Body3,
-                    color = White
-                )
-
-                Text(
                     modifier = Modifier.weight(1f),
                     text = userName,
                     style = Body2,
@@ -131,6 +125,14 @@ fun MessageContent(
                     text = date,
                     style = Caption3,
                     color = if (isMine) Gray06 else White
+                )
+
+                Text(
+                    modifier = Modifier.weight(8f).padding(top = 17.dp),
+                    text = message,
+                    overflow = TextOverflow.Ellipsis,
+                    style = Body3.copy(lineHeight = 18.sp),
+                    color = White
                 )
             }
         }

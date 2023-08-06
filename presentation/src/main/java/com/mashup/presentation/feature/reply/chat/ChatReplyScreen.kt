@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
-import com.mashup.presentation.feature.detail.ChatDetailViewModel
+import com.mashup.presentation.feature.detail.chat.ChatDetailViewModel
 import com.mashup.presentation.feature.detail.chat.compose.MessageReplyUiEvent
 import com.mashup.presentation.feature.reply.ReplyContent
 import com.mashup.presentation.ui.common.KeyLinkContentLengthDialog
@@ -33,9 +33,8 @@ import com.mashup.presentation.ui.theme.White
 
 @Composable
 fun ChatReplyRoute(
-    roomId: Long,
     onClickBack: () -> Unit,
-    navigateToChat: (Long) -> Unit,
+    navigateToChat: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChatDetailViewModel = hiltViewModel()
@@ -43,13 +42,17 @@ fun ChatReplyRoute(
     val event by viewModel.eventFlow.collectAsStateWithLifecycle(MessageReplyUiEvent.Idle)
     var reply by rememberSaveable { mutableStateOf("") }
 
-    LaunchedEffect(key1 = event) {
+    val snackbarMessage = stringResource(R.string.snackbar_reply)
+
+    LaunchedEffect(event) {
         when (event) {
             is MessageReplyUiEvent.SaveSuccess -> {
-                navigateToChat(roomId)
+                onShowSnackbar(snackbarMessage, SnackbarDuration.Short)
+                navigateToChat()
             }
             is MessageReplyUiEvent.Failure -> {
-
+                val errorMessage = (event as MessageReplyUiEvent.Failure).message.orEmpty()
+                onShowSnackbar(errorMessage, SnackbarDuration.Short)
             }
             else -> {}
         }
@@ -60,8 +63,7 @@ fun ChatReplyRoute(
         modifier = modifier,
         onReplyTextChange = { reply = it },
         onClickBack = onClickBack,
-        onSendClick = { viewModel.reply(roomId, reply) },
-        onShowSnackbar = onShowSnackbar,
+        onSendClick = { viewModel.reply(reply) },
     )
 }
 
@@ -71,7 +73,6 @@ private fun ChatReplyScreen(
     onReplyTextChange: (String) -> Unit,
     onClickBack: () -> Unit,
     onSendClick: () -> Unit,
-    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showGoBackDialog by rememberSaveable { mutableStateOf(false) }
@@ -103,7 +104,6 @@ private fun ChatReplyScreen(
             onReplyTextChange = onReplyTextChange,
             onSendClick = onSendClick,
             onLengthOver = { showLengthOverDialog = true },
-            onShowSnackbar = onShowSnackbar
         )
 
         if (showGoBackDialog) {
@@ -128,7 +128,6 @@ private fun ChatReplyScreen(
 private fun ReplyScreenPreview() {
     SsamDTheme {
         ChatReplyRoute(
-            roomId = 1,
             onClickBack = {},
             navigateToChat = {},
             onShowSnackbar = { _, _ -> }

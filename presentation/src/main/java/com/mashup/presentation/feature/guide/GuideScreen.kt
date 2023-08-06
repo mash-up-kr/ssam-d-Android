@@ -69,6 +69,8 @@ fun GuideScreen(
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                KeyLinkGuide()
+                Spacer(modifier = Modifier.height(70.dp))
                 PlanetGuide()
                 Spacer(modifier = Modifier.height(72.dp))
                 Aliens()
@@ -83,36 +85,66 @@ fun GuideScreen(
 }
 
 @Composable
+fun KeyLinkGuide() {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = stringResource(id = R.string.home_guide_title),
+            style = Heading2,
+            color = Mint
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Column(
+            horizontalAlignment = Alignment.Start
+        ) {
+            NumberedText(
+                number = "1. ",
+                guide = stringResource(id = R.string.home_guide_description_1),
+            )
+            NumberedText(
+                number = "2. ",
+                guide = stringResource(id = R.string.home_guide_description_2),
+            )
+            NumberedText(
+                number = "3. ",
+                guide = stringResource(id = R.string.home_guide_description_3),
+            )
+        }
+    }
+}
+
+@Composable
+fun NumberedText(number: String, guide: String) {
+    Row {
+        Text(
+            text = number,
+            style = Title2,
+            color = White
+        )
+        Text(
+            text = guide,
+            style = Title2,
+            color = White
+        )
+    }
+}
+
+@Composable
 fun PlanetGuide() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(id = R.string.home_guide_planet),
-            style = Heading1,
-            color = White
+            text = stringResource(id = R.string.home_planet_guide_title),
+            style = Heading2,
+            color = Mint
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = stringResource(id = R.string.home_guide_new_feature_coming_soon),
-
-            modifier = Modifier
-                .graphicsLayer(alpha = 0.99f)
-                .drawWithCache {
-                    val brush = Brush.horizontalGradient(listOf(Purple, Mint))
-                    onDrawWithContent {
-                        drawContent()
-                        drawRect(brush, blendMode = BlendMode.SrcAtop)
-                    }
-                },
-            textAlign = TextAlign.Center,
-        )
-        Spacer(modifier = Modifier.height(40.dp))
-        Text(
-            text = stringResource(id = R.string.home_guide_current_planet_description),
-            style = Body1,
-            color = Gray07,
-            textAlign = TextAlign.Center
+            text = stringResource(id = R.string.home_planet_guide_description),
+            style = Title2,
+            color = White
         )
     }
 }

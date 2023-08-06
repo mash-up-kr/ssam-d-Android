@@ -1,9 +1,13 @@
 package com.mashup.presentation.feature.detail.message.compose
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -18,8 +22,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.getDisplayedDateWithDay
 import com.mashup.presentation.common.extension.visible
-import com.mashup.presentation.feature.detail.ChatDetailViewModel
+import com.mashup.presentation.feature.detail.chat.ChatDetailViewModel
 import com.mashup.presentation.feature.detail.chat.compose.MessageDetailUiState
+import com.mashup.presentation.feature.detail.chat.compose.MessageReplyUiEvent
 import com.mashup.presentation.feature.detail.message.model.MessageDetailUiModel
 import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
@@ -37,16 +42,25 @@ import com.mashup.presentation.ui.theme.White
 fun MessageDetailRoute(
     onBackClick: () -> Unit,
     onReportMenuClick: () -> Unit,
-    onReplyButtonClick: (Long) -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
+    onReplyButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
-    roomId: Long,
     chatId: Long,
     viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
     val messageDetailUiState by viewModel.messageDetailUiState.collectAsStateWithLifecycle()
-
+    val event by viewModel.eventFlow.collectAsStateWithLifecycle(initialValue = MessageReplyUiEvent.Idle)
     LaunchedEffect(Unit) {
-        viewModel.getMessageDetail(roomId = roomId, chatId = chatId)
+        viewModel.getMessageDetail(chatId = chatId)
+    }
+    LaunchedEffect(event) {
+        when (event) {
+            is MessageReplyUiEvent.Failure -> {
+                val message = (event as MessageReplyUiEvent.Failure).message.orEmpty()
+                onShowSnackbar(message, SnackbarDuration.Short)
+            }
+            else -> {}
+        }
     }
 
     MessageDetailScreen(
@@ -54,7 +68,7 @@ fun MessageDetailRoute(
         onBackClick = onBackClick,
         onReportMenuClick = onReportMenuClick,
         onReplyButtonClick = {
-            onReplyButtonClick(roomId)
+            onReplyButtonClick()
         },
         messageDetailUiState = messageDetailUiState
     )
@@ -121,17 +135,21 @@ private fun MessageDetailContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MessageDetailContainer(
-            modifier = Modifier.weight(1f).padding(end = 20.dp),
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 20.dp),
             othersName = messageDetail.nickname,
             date = messageDetail.receivedTimeMillis.getDisplayedDateWithDay(),
             message = messageDetail.content,
             profileImage = messageDetail.profileImage
         )
 
-        MatchedKeywordContainer(
-            modifier = Modifier.padding(vertical = 12.dp),
-            matchedKeywords = messageDetail.keywords
-        )
+        if (!messageDetail.fromSignalZone()) {
+            MatchedKeywordContainer(
+                modifier = Modifier.padding(vertical = 12.dp),
+                matchedKeywords = messageDetail.keywords
+            )
+        }
 
         KeyLinkRoundButton(
             modifier = Modifier

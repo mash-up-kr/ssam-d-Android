@@ -1,6 +1,5 @@
 package com.mashup.presentation.feature.home
 
-import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
@@ -8,9 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -27,12 +24,16 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.mashup.domain.exception.EmptyListException
+import com.mashup.domain.exception.KeyLinkException
 import com.mashup.presentation.R
 import com.mashup.presentation.common.extension.findActivity
 import com.mashup.presentation.common.extension.isScrollingUp
 import com.mashup.presentation.feature.home.model.SignalUiModel
 import com.mashup.presentation.ui.common.KeyLinkLoading
+import com.mashup.presentation.ui.common.KeyLinkRoundIconButton
 import com.mashup.presentation.ui.theme.Gray01
+import com.mashup.presentation.ui.theme.Gray08
 import com.mashup.presentation.ui.theme.Heading4
 import com.mashup.presentation.ui.theme.White
 import kotlinx.coroutines.launch
@@ -44,11 +45,11 @@ fun HomeRoute(
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: (Long) -> Unit,
+    onSendSignalButtonClick: () -> Unit,
     homeViewModel: HomeViewModel,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     val pagedReceivedSignal = homeViewModel.receivedSignals.collectAsLazyPagingItems()
     val subscribeKeywordsUiState by homeViewModel.subscribeKeywordsState.collectAsStateWithLifecycle()
     var isRefreshing by remember { mutableStateOf(false) }
@@ -60,18 +61,34 @@ fun HomeRoute(
         })
     val context = LocalContext.current
     var backPressedTime = 0L
+    var isSignalEmpty by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         launch {
-            homeViewModel.getReceivedSignal()
-        }
-        launch {
             homeViewModel.getSubscribedKeywords()
+            pagedReceivedSignal.refresh()
         }
     }
     LaunchedEffect(pagedReceivedSignal.loadState) {
-        if (pagedReceivedSignal.loadState.refresh is LoadState.NotLoading)
+        if (pagedReceivedSignal.loadState.refresh is LoadState.NotLoading) {
             isRefreshing = false
+            isSignalEmpty = false
+        }
+
+        if (pagedReceivedSignal.loadState.refresh is LoadState.Error) {
+            val e = pagedReceivedSignal.loadState.refresh as LoadState.Error
+            when (e.error) {
+                is KeyLinkException -> e.error.message?.let {
+                    onShowSnackbar(
+                        it,
+                        SnackbarDuration.Short
+                    )
+                }
+                is EmptyListException -> {
+                    isSignalEmpty = true
+                }
+            }
+        }
     }
 
 
@@ -94,11 +111,15 @@ fun HomeRoute(
             },
             onGuideClick = onGuideClick,
             onProfileMenuClick = onProfileMenuClick,
-            onReceivedSignalClick = onReceivedSignalClick
+            onReceivedSignalClick = onReceivedSignalClick,
+            onSendSignalButtonClick = onSendSignalButtonClick,
+            isSignalEmpty = isSignalEmpty
         )
         PullRefreshIndicator(refreshing = isRefreshing, state = pullRefreshState)
     }
-    if (pagedReceivedSignal.loadState.append == LoadState.Loading) {
+    if (pagedReceivedSignal.loadState.append == LoadState.Loading
+        || pagedReceivedSignal.loadState.refresh == LoadState.Loading
+    ) {
         KeyLinkLoading()
     }
 
@@ -112,28 +133,42 @@ private fun HomeBackgroundScreen(
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: (Long) -> Unit,
+    onSendSignalButtonClick: () -> Unit,
+    isSignalEmpty: Boolean,
     modifier: Modifier = Modifier
 ) {
     val signalCount = pagedReceivedSignal.itemCount
 
-    Box(modifier = modifier.fillMaxSize()) {
-        HomeBackgroundImage(signalCount = signalCount)
-        HomeScreen(
-            subscribeKeywordsUiState = subscribeKeywordsUiState,
-            signalCount = signalCount,
-            pagedReceivedSignal = pagedReceivedSignal,
-            onKeywordContainerClick = onKeywordContainerClick,
-            onGuideClick = onGuideClick,
-            onProfileMenuClick = onProfileMenuClick,
-            onReceivedSignalClick = onReceivedSignalClick
-        )
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        floatingActionButton = {
+            KeyLinkRoundIconButton(
+                text = stringResource(R.string.navigation_signal),
+                onClick = onSendSignalButtonClick
+            )
+        }
+    ) { paddingValues ->
+        Box(modifier = modifier
+            .fillMaxSize()
+            .padding(paddingValues)) {
+            HomeBackgroundImage()
+            HomeScreen(
+                modifier = Modifier.padding(paddingValues),
+                subscribeKeywordsUiState = subscribeKeywordsUiState,
+                signalCount = signalCount,
+                pagedReceivedSignal = pagedReceivedSignal,
+                onKeywordContainerClick = onKeywordContainerClick,
+                onGuideClick = onGuideClick,
+                onProfileMenuClick = onProfileMenuClick,
+                onReceivedSignalClick = onReceivedSignalClick,
+                isSignalEmpty = isSignalEmpty
+            )
+        }
     }
 }
 
 @Composable
 fun BoxScope.HomeBackgroundImage(
-    signalCount: Int,
-    modifier: Modifier = Modifier
 ) {
     Image(
         modifier = Modifier.fillMaxSize(),
@@ -141,25 +176,6 @@ fun BoxScope.HomeBackgroundImage(
         contentDescription = stringResource(R.string.login_description_space),
         contentScale = ContentScale.Crop
     )
-    if (signalCount == 0) {
-        Image(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth(),
-            painter = painterResource(R.drawable.img_planet_home_empty),
-            contentDescription = stringResource(R.string.home_planet_background_empty),
-            contentScale = ContentScale.Crop
-        )
-    } else {
-        Image(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth(),
-            painter = painterResource(R.drawable.img_planet_home_default),
-            contentDescription = stringResource(R.string.home_planet_background_default),
-            contentScale = ContentScale.Crop
-        )
-    }
 }
 
 @Composable
@@ -171,7 +187,8 @@ fun BoxScope.HomeScreen(
     onGuideClick: () -> Unit,
     onProfileMenuClick: () -> Unit,
     onReceivedSignalClick: (Long) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isSignalEmpty: Boolean
 ) {
     val scrollState = rememberLazyListState()
     val isScrollingUp = scrollState.isScrollingUp()
@@ -183,6 +200,7 @@ fun BoxScope.HomeScreen(
     ) {
         HomeScreenToolBar(
             topBarBackgroundColor = topBarBackgroundColor,
+            onGuideClick = onGuideClick,
             onProfileMenuClick = onProfileMenuClick
         )
         if (subscribeKeywordsUiState is Success) {
@@ -194,16 +212,35 @@ fun BoxScope.HomeScreen(
             )
         }
 
-        if (signalCount == 0) {
-            EmptyContent(
-                onGuideClick = onGuideClick
-            )
-        } else {
-            ReceivedSignalCards(
-                receivedSignals = pagedReceivedSignal,
-                scrollState = scrollState,
-                onReceivedSignalClick = onReceivedSignalClick,
-            )
+        Box(modifier = Modifier.fillMaxSize()) {
+
+            if (isSignalEmpty) {
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth(),
+                    painter = painterResource(R.drawable.img_planet_home_empty),
+                    contentDescription = stringResource(R.string.home_planet_background_empty),
+                    contentScale = ContentScale.Crop
+                )
+                EmptyContent(
+                    onGuideClick = onGuideClick
+                )
+            } else {
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth(),
+                    painter = painterResource(R.drawable.img_planet_home_default),
+                    contentDescription = stringResource(R.string.home_planet_background_default),
+                    contentScale = ContentScale.Crop
+                )
+                ReceivedSignalCards(
+                    receivedSignals = pagedReceivedSignal,
+                    scrollState = scrollState,
+                    onReceivedSignalClick = onReceivedSignalClick,
+                )
+            }
         }
     }
 }
@@ -211,7 +248,8 @@ fun BoxScope.HomeScreen(
 @Composable
 private fun HomeScreenToolBar(
     topBarBackgroundColor: Color,
-    onProfileMenuClick: () -> Unit,
+    onGuideClick: () -> Unit,
+    onProfileMenuClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -223,6 +261,7 @@ private fun HomeScreenToolBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
+            modifier = Modifier.clickable { onGuideClick() },
             horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -230,6 +269,12 @@ private fun HomeScreenToolBar(
                 text = stringResource(id = R.string.home_my_planet),
                 style = Heading4,
                 color = White
+            )
+            Icon(
+                modifier = Modifier.size(20.dp),
+                painter = painterResource(id = R.drawable.ic_chat_help_24),
+                contentDescription = "",
+                tint = Gray08
             )
         }
         Image(

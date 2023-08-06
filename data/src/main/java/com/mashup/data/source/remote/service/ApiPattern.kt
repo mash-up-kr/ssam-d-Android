@@ -16,4 +16,9 @@ object ApiPattern {
         const val SEND_SIGNAL = "$PREFIX/send"
         const val REPLY_SIGNAL = "/reply"
     }
+
+    object Crash {
+        const val PREFIX = "crashes"
+        const val REPLY_CRASH = "/reply"
+    }
 }

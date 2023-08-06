@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -39,6 +40,7 @@ fun ReceivedSignalDetailRoute(
     onBackClick: () -> Unit,
     onReportMenuClick: () -> Unit,
     onReplyButtonClick: (Long) -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ReceivedSignalViewModel = hiltViewModel()
 ) {
@@ -52,6 +54,7 @@ fun ReceivedSignalDetailRoute(
         onBackClick = onBackClick,
         onReportMenuClick = onReportMenuClick,
         onReplyButtonClick = onReplyButtonClick,
+        onShowSnackbar = onShowSnackbar,
         receivedSignalDetailUiState = detailUiState
     )
 }
@@ -62,6 +65,7 @@ fun ReceivedSignalDetailScreen(
     onBackClick: () -> Unit,
     onReportMenuClick: () -> Unit,
     onReplyButtonClick: (Long) -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     receivedSignalDetailUiState: ReceivedSignalDetailUiState
 ) {
@@ -92,7 +96,7 @@ fun ReceivedSignalDetailScreen(
             start = 20.dp
         )
         when (receivedSignalDetailUiState) {
-            Loading -> KeyLinkLoading()
+            is Loading -> KeyLinkLoading()
             is Success -> {
                 ReceivedSignalDetailContent(
                     contentPadding = contentPadding,
@@ -100,7 +104,7 @@ fun ReceivedSignalDetailScreen(
                     onReplyButtonClick = onReplyButtonClick
                 )
             }
-            is Error -> {}
+            is Error -> onShowSnackbar(receivedSignalDetailUiState.message.orEmpty(), SnackbarDuration.Short)
         }
     }
 }

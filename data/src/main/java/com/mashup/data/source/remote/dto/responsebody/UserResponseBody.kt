@@ -12,7 +12,7 @@ data class UserResponseBody (
     @field:Json(name = "nickname")
     val nickname: String,
     @field:Json(name = "email")
-    val email: String,
+    val email: String?,
     @field:Json(name = "provider")
     val provider: String,
     @field:Json(name = "profileImageUrl")

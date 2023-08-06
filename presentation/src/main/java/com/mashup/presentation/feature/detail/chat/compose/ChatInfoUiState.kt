@@ -36,6 +36,14 @@ sealed class MessageReplyUiEvent {
     object Idle: MessageReplyUiEvent()
     object SaveSuccess: MessageReplyUiEvent()
     data class Failure(
-        val message: String?
+        val message: String
     ): MessageReplyUiEvent()
+}
+
+sealed class DisconnectRoomUiEvent {
+    object Idle: DisconnectRoomUiEvent()
+    object Disconnect: DisconnectRoomUiEvent()
+    data class Failure(
+        val message: String
+    ): DisconnectRoomUiEvent()
 }

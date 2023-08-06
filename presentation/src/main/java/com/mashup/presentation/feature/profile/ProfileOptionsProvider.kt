@@ -33,17 +33,30 @@ class ProfileOptionsProvider @Inject constructor(
             )
             add(
                 ProfileViewType.Header(
+                    description = context.getString(R.string.settings)
+                )
+            )
+            add(
+                ProfileViewType.NotificationContent(
+                    description = context.getString(R.string.notification),
+                    isAgree = profileUiModel.agreeAlarm
+                )
+            )
+            add(
+                ProfileViewType.Header(
                     description = context.getString(R.string.information)
                 )
             )
             add(
                 ProfileViewType.NavigationContent(
+                    userId = profileUiModel.id,
                     description = context.getString(R.string.tos),
                     route = KeyLinkNavigationRoute.ProfileGraph.TermsOfServiceRoute.route
                 )
             )
             add(
                 ProfileViewType.NavigationContent(
+                    userId = profileUiModel.id,
                     description = context.getString(R.string.privacy_policy),
                     route = KeyLinkNavigationRoute.ProfileGraph.PrivacyPolicyRoute.route
                 )
@@ -52,6 +65,18 @@ class ProfileOptionsProvider @Inject constructor(
                 ProfileViewType.AppVersionContent(
                     description = context.getString(R.string.app_version),
                     appVersion = context.getAppVersion(),
+                )
+            )
+            add(
+                ProfileViewType.Header(
+                    description = context.getString(R.string.account)
+                )
+            )
+            add(
+                ProfileViewType.NavigationContent(
+                    userId = profileUiModel.id,
+                    description = context.getString(R.string.withdrawal),
+                    route = KeyLinkNavigationRoute.ProfileGraph.WithdrawalRoute.route
                 )
             )
             add(

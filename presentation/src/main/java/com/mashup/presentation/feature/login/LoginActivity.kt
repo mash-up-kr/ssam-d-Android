@@ -34,6 +34,7 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         initObservers()
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        loginViewModel.checkScreenType()
         setThemeContent {
             LoginRoute(
                 loginButtonClicked = { handleKakaoLogin() },
@@ -53,7 +54,7 @@ class LoginActivity : ComponentActivity() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.loginUiState.collectLatest { uiState ->
                     when (uiState) {
-                        LoginUiState.NICKNAME -> { loginViewModel.goToNextPage() }
+                        LoginUiState.NICKNAME -> { loginViewModel.goToNicknamePage() }
                         LoginUiState.KEYWORD -> {
                             startActivity(Intent(this@LoginActivity, OnBoardingActivity::class.java))
                             finish()

@@ -8,9 +8,12 @@ import androidx.paging.map
 import com.mashup.domain.usecase.chat.GetChatRoomsUseCase
 import com.mashup.presentation.feature.chat.model.RoomUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,19 +27,15 @@ class ChatViewModel @Inject constructor(
     private val getChatRooms: GetChatRoomsUseCase
 ) : ViewModel() {
 
-    private val _pagingData: MutableStateFlow<PagingData<RoomUiModel>> =
-        MutableStateFlow(PagingData.empty())
-    val pagingData = _pagingData.asStateFlow()
-
-    fun getChatRooms() {
-        viewModelScope.launch {
-            getChatRooms.execute(Unit).cachedIn(viewModelScope).map { pagingData ->
-                    pagingData.map {room ->RoomUiModel.fromDomainModel(room) }
-                }.collect {
-                    _pagingData.value = it
-                }
+    private val _pagingData: Flow<PagingData<RoomUiModel>> =
+        getChatRooms.execute(Unit).cachedIn(viewModelScope).map { pagingData ->
+            pagingData.map {room ->RoomUiModel.fromDomainModel(room) }
         }
-    }
+    val pagingData = _pagingData.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Lazily,
+        initialValue = PagingData.empty()
+    )
 
     sealed class ChatRoomUiState {
         object Loading : ChatRoomUiState()

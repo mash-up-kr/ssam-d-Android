@@ -28,15 +28,21 @@ sealed class KeyLinkNavigationRoute(val route: String) {
 
     object ProfileGraph : KeyLinkNavigationRoute(PROFILE_GRAPH_PATTERN) {
         object ProfileRoute : KeyLinkNavigationRoute(PROFILE_ROUTE)
-        object SendSignalRoute : KeyLinkNavigationRoute(SEND_SIGNAL_ROUTE)
         object TermsOfServiceRoute : KeyLinkNavigationRoute(TERMS_OF_SERVICE_ROUTE)
         object PrivacyPolicyRoute : KeyLinkNavigationRoute(PRIVACY_POLICY_ROUTE)
-        object OpenSourceRoute : KeyLinkNavigationRoute(OPEN_SOURCE_ROUTE)
+        object WithdrawalRoute : KeyLinkNavigationRoute(WITHDRAWAL_ROUTE)
     }
 
     object ReceivedSignalGraph : KeyLinkNavigationRoute(RECEIVED_SIGNAL_GRAPH) {
         object ReceivedSignalDetailRoute : KeyLinkNavigationRoute(RECEIVED_SIGNAL_DETAIL_ROUTE)
         object ReceivedSignalReplyRoute : KeyLinkNavigationRoute(RECEIVED_SIGNAL_REPLY_ROUTE)
         object ReceivedSignalReportRoute : KeyLinkNavigationRoute(RECEIVED_SIGNAL_REPORT_ROUTE)
+    }
+
+    object SignalZoneGraph : KeyLinkNavigationRoute(SIGNAL_ZONE_GRAPH_PATTERN) {
+        object SignalZoneRoute : KeyLinkNavigationRoute(SIGNAL_ZONE_ROUTE)
+        object CrashDetailRoute : KeyLinkNavigationRoute(SIGNAL_ZONE_DETAIL_ROUTE)
+        object CrashReplyRoute : KeyLinkNavigationRoute(SIGNAL_ZONE_REPLY_ROUTE)
+        object CrashReportRoute : KeyLinkNavigationRoute(SIGNAL_ZONE_REPORT_ROUTE)
     }
 }

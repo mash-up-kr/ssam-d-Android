@@ -4,12 +4,14 @@ import androidx.compose.material.SnackbarDuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import com.mashup.presentation.BottomSheetType
 import com.mashup.presentation.KeyLinkAppState
 import com.mashup.presentation.feature.chat.navigation.chatRoomGraph
 import com.mashup.presentation.feature.detail.message.navigation.receivedSignalGraph
 import com.mashup.presentation.feature.home.navigation.homeGraph
 import com.mashup.presentation.feature.profile.navigation.profileGraph
 import com.mashup.presentation.feature.signal.send.navigation.signalGraph
+import com.mashup.presentation.feature.signalzone.navigation.signalZoneGraph
 
 /**
  * Ssam_D_Android
@@ -20,6 +22,8 @@ import com.mashup.presentation.feature.signal.send.navigation.signalGraph
 fun KeyLinkNavHost(
     appState: KeyLinkAppState,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
+    onShowBottomSheet: (BottomSheetType) -> Unit,
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     startDestination: String = KeyLinkNavigationRoute.HomeGraph.route
 ) {
@@ -37,19 +41,28 @@ fun KeyLinkNavHost(
         signalGraph(
             navController = navController,
             onBackClick = navController::navigateUp,
+            onShowSnackbar = onShowSnackbar,
         )
         chatRoomGraph(
             navController = navController,
-            onBackClick = navController::navigateUp,
-            onShowSnackbar = onShowSnackbar
+            onBackClick = onBackClick,
+            onShowSnackbar = onShowSnackbar,
+            onShowBottomSheet = onShowBottomSheet
         )
         profileGraph(
             navController = navController,
             onBackClick = navController::navigateUp,
+            onShowSnackbar = onShowSnackbar
         )
         receivedSignalGraph(
             navController = navController,
             onBackClick = navController::navigateUp,
+            onShowSnackbar = onShowSnackbar
+        )
+        signalZoneGraph(
+            navController = navController,
+            onBackClick = navController::navigateUp,
+            onShowBottomSheet = onShowBottomSheet,
             onShowSnackbar = onShowSnackbar
         )
     }

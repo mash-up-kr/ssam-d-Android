@@ -3,11 +3,14 @@ package com.mashup.presentation.feature.onboarding
 import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -64,7 +67,11 @@ fun OnBoardingScreen(
                 KeyLinkLoading()
             }
             OnBoardingViewModel.UiState.SaveSuccess -> {
-                navigateToHome()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    navigateToNotificationPermission()
+                } else {
+                    navigateToHome()
+                }
             }
             is OnBoardingViewModel.UiState.Editing -> {
                 OnBoardingContent(
@@ -101,10 +108,16 @@ fun OnBoardingContent(
     removeKeyword: (Int) -> Unit,
     saveKeywords: (List<String>) -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = modifier
             .fillMaxSize()
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                })
+            }
             .padding(horizontal = 20.dp),
     ) {
         KeywordScreen(
@@ -121,6 +134,7 @@ fun OnBoardingContent(
                 .padding(vertical = 12.dp),
             text = stringResource(id = R.string.onboarding_keywords_complete),
             onClick = {
+                focusManager.clearFocus()
                 saveKeywords(keywords)
             },
             enable = keywords.isNotEmpty()
@@ -146,18 +160,18 @@ fun KeywordScreen(
     Column(
         modifier = modifier
     ) {
-        Spacer(modifier = Modifier.height(12.dp))
-        KeyLinkMintText(text = stringResource(id = R.string.onboarding_keywords_input))
         Spacer(modifier = Modifier.height(16.dp))
+        KeyLinkMintText(text = stringResource(id = R.string.onboarding_keywords_input))
+        Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = stringResource(id = R.string.onboarding_keywords_input_description),
             fontSize = 14.sp,
             color = Gray07
         )
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         FlowRow(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.verticalScroll(scrollState)
+            modifier = Modifier.verticalScroll(scrollState),
         ) {
             keywords.forEachIndexed { i, keyword ->
                 KeywordActionChip(

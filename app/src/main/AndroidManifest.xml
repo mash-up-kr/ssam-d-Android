@@ -8,7 +8,6 @@
 
     <application
         android:name=".SsamDApplication"
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,6 +15,16 @@
         android:label="${appName}"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ssam_D_Android"
-        tools:targetApi="31" />
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+
+        <service
+            android:name=".KeyLinkService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+    </application>
 
 </manifest>

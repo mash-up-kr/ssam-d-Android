@@ -6,6 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.domain.exception.ConflictException
+import com.mashup.domain.exception.KeyLinkException
+import com.mashup.domain.usecase.GetFCMDeviceTokenUseCase
 import com.mashup.domain.usecase.login.*
 import com.mashup.presentation.ui.common.ValidationState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,12 +21,10 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
     private val checkNicknameDuplicationUseCase: CheckNicknameDuplicationUseCase,
     private val patchNicknameUseCase: PatchNicknameUseCase,
-    private val getEntryScreenTypeUseCase: GetEntryScreenTypeUseCase
+    private val getEntryScreenTypeUseCase: GetEntryScreenTypeUseCase,
+    private val getFCMDeviceTokenUseCase: GetFCMDeviceTokenUseCase,
 ) : ViewModel() {
 
-    init {
-        checkScreenType()
-    }
 
     var currentPage by mutableStateOf(0)
     var nickname by mutableStateOf("")
@@ -36,11 +36,13 @@ class LoginViewModel @Inject constructor(
     private val _loginUiState: MutableStateFlow<LoginUiState> = MutableStateFlow(LoginUiState.IDLE)
     val loginUiState = _loginUiState.asStateFlow()
 
-    fun goToNextPage() = currentPage++
+    fun goToNicknamePage() { currentPage = 1 }
+
+    private fun goToCompletionPage() { currentPage = 2 }
 
     fun backToPrevPage() = currentPage--
 
-    private fun checkScreenType() {
+    fun checkScreenType() {
         viewModelScope.launch {
             when (getEntryScreenTypeUseCase.execute(Unit)) {
                 ScreenType.LOGIN -> _loginUiState.emit(LoginUiState.LOGIN)
@@ -51,9 +53,13 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun login(email: String?, socialId: String, deviceToken: String? = "") {
+    fun login(email: String?, socialId: String) {
         viewModelScope.launch {
-            val param = LoginParam(email = email, socialId = socialId, deviceToken = deviceToken)
+            val param = LoginParam(
+                email = email,
+                socialId = socialId,
+                deviceToken = getFCMDeviceTokenUseCase.execute(Unit)
+            )
             loginUseCase.execute(param)
                 .onSuccess {
                     checkScreenType()
@@ -86,7 +92,7 @@ class LoginViewModel @Inject constructor(
             patchNicknameUseCase.execute(nickname)
                 .onSuccess {
                     this@LoginViewModel.nickname = nickname
-                    goToNextPage()
+                    goToCompletionPage()
                 }.onFailure {}
         }
     }

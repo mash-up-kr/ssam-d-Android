@@ -81,4 +81,8 @@ dependencies {
     // Pagin3
     implementation Dep.AndroidX.Paging3.pagingRuntime
 
+    // google firebase
+    implementation platform(Dep.Firebase.firebaseBom)
+    implementation Dep.Firebase.cloudMessaging
+
 }

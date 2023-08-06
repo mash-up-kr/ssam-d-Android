@@ -1,29 +1,32 @@
 package com.mashup.presentation.feature.chat.compose
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.mashup.domain.exception.EmptyListException
+import com.mashup.domain.exception.KeyLinkException
+import com.mashup.presentation.BottomSheetType
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.chat.ChatViewModel
 import com.mashup.presentation.feature.chat.model.RoomUiModel
 import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.theme.*
+import kotlinx.coroutines.launch
 
 /**
  * Ssam_D_Android
@@ -33,9 +36,12 @@ import com.mashup.presentation.ui.theme.*
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ChatRoute(
+    onBackClick: () -> Unit,
     onEmptyScreenButtonClick: () -> Unit,
     onChatRoomClick: (Long) -> Unit,
+    onShowBottomSheet: (BottomSheetType) -> Unit,
     modifier: Modifier = Modifier,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     viewModel: ChatViewModel = hiltViewModel()
 ) {
     val pagedChatRoomList = viewModel.pagingData.collectAsLazyPagingItems()
@@ -46,23 +52,55 @@ fun ChatRoute(
             isRefreshing = true
             pagedChatRoomList.refresh()
         })
+    var isChatRoomEmpty by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        viewModel.getChatRooms()
-    }
-    LaunchedEffect(pagedChatRoomList.loadState) {
-        if (pagedChatRoomList.loadState.refresh is LoadState.NotLoading)
-            isRefreshing = false
+        launch {
+            pagedChatRoomList.refresh()
+        }
     }
 
-    Box(modifier = Modifier.pullRefresh(pullRefreshState).fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+    LaunchedEffect(pagedChatRoomList.loadState) {
+        if (pagedChatRoomList.loadState.refresh is LoadState.NotLoading) {
+            isRefreshing = false
+            isChatRoomEmpty = false
+        }
+
+        if (pagedChatRoomList.loadState.refresh is LoadState.Error) {
+            val e = pagedChatRoomList.loadState.refresh as LoadState.Error
+            when (e.error) {
+                is KeyLinkException -> e.error.message?.let {
+                    onShowSnackbar(
+                        it,
+                        SnackbarDuration.Short
+                    )
+                }
+                is EmptyListException -> {
+                    isChatRoomEmpty = true
+                }
+            }
+        }
+    }
+
+    BackHandler(true) {
+        onBackClick()
+    }
+
+    Box(
+        modifier = Modifier
+            .pullRefresh(pullRefreshState)
+            .fillMaxSize(),
+        contentAlignment = Alignment.TopCenter
+    ) {
         ChatScreen(
             modifier = modifier,
             onEmptyScreenButtonClick = onEmptyScreenButtonClick,
             onChatRoomClick = { chatId ->
                 onChatRoomClick(chatId)
             },
-            chatRoomList = pagedChatRoomList
+            onShowBottomSheet = onShowBottomSheet,
+            chatRoomList = pagedChatRoomList,
+            isChatRoomEmpty = isChatRoomEmpty
         )
         PullRefreshIndicator(refreshing = isRefreshing, state = pullRefreshState)
     }
@@ -75,23 +113,38 @@ fun ChatRoute(
 fun ChatScreen(
     onEmptyScreenButtonClick: () -> Unit,
     onChatRoomClick: (Long) -> Unit,
+    onShowBottomSheet: (BottomSheetType) -> Unit,
     modifier: Modifier = Modifier,
-    chatRoomList: LazyPagingItems<RoomUiModel>
+    chatRoomList: LazyPagingItems<RoomUiModel>,
+    isChatRoomEmpty: Boolean
 ) {
     Scaffold(
         modifier = modifier,
         backgroundColor = Black,
         topBar = {
             Column {
-                Text(
-                    text = stringResource(R.string.toolbar_chat),
-                    style = Heading3,
-                    color = White,
+                Row(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .padding(start = 20.dp, top = 24.dp, bottom = 8.dp)
-                )
-
+                        .clickable {
+                            onShowBottomSheet(BottomSheetType.CHAT_CONNECTED)
+                        },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.toolbar_chat),
+                        style = Heading3,
+                        color = White
+                    )
+                    Icon(
+                        modifier = Modifier
+                            .padding(start = 6.dp)
+                            .size(20.dp),
+                        painter = painterResource(id = R.drawable.ic_chat_help_24),
+                        contentDescription = "",
+                        tint = Gray08
+                    )
+                }
                 Divider(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -105,7 +158,8 @@ fun ChatScreen(
             onEmptyScreenButtonClick = onEmptyScreenButtonClick,
             onChatRoomClick = onChatRoomClick,
             modifier = Modifier.padding(paddingValues),
-            chatRoomList = chatRoomList
+            chatRoomList = chatRoomList,
+            isChatRoomEmpty = isChatRoomEmpty
         )
     }
 }
@@ -115,9 +169,10 @@ fun ChatContent(
     onEmptyScreenButtonClick: () -> Unit,
     onChatRoomClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
-    chatRoomList: LazyPagingItems<RoomUiModel>
+    chatRoomList: LazyPagingItems<RoomUiModel>,
+    isChatRoomEmpty: Boolean
 ) {
-    if (chatRoomList.itemCount == 0) {
+    if (isChatRoomEmpty) {
         EmptyChatScreen(
             onButtonClick = onEmptyScreenButtonClick,
             modifier = modifier.fillMaxSize(),
@@ -132,19 +187,3 @@ fun ChatContent(
         )
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-private fun ChatScreenPreview() {
-    val viewModel: ChatViewModel = hiltViewModel()
-    val pagedChatRoomList = viewModel.pagingData.collectAsLazyPagingItems()
-
-    SsamDTheme(darkTheme = true) {
-        ChatScreen(
-            onEmptyScreenButtonClick = {},
-            onChatRoomClick = {},
-            chatRoomList = pagedChatRoomList
-        )
-    }
-}
-

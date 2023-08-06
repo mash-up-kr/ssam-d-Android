@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
@@ -34,7 +35,7 @@ import com.mashup.presentation.ui.theme.*
 fun UserInfoContent(
     userImageUrl: String,
     userName: String,
-    userEmail: String,
+    userEmail: String?,
     onEditClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -70,7 +71,7 @@ fun UserInfoContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 4.dp),
-                text = userEmail,
+                text = userEmail ?: "",
                 style = Body2,
                 color = Gray05,
             )
@@ -82,14 +83,16 @@ fun UserInfoContent(
 @Composable
 fun NavigationContent(
     description: String,
+    userId: Long,
     route: String,
-    onNavigateClick: (String) -> Unit,
-    modifier: Modifier = Modifier
+    onNavigateClick: (String, Long) -> Unit,
+    modifier: Modifier = Modifier,
+    contentColor: Color = White
 ) {
     Column(
         modifier = modifier
             .background(color = Gray02)
-            .clickable { onNavigateClick(route) }
+            .clickable { onNavigateClick(route, userId) }
             .padding(horizontal = 20.dp, vertical = 16.dp),
     ) {
         Row(
@@ -100,7 +103,7 @@ fun NavigationContent(
                 modifier = Modifier.weight(9f),
                 text = description,
                 style = Body1,
-                color = White
+                color = contentColor
             )
 
             Icon(
@@ -267,8 +270,9 @@ fun NavigationContentPreview() {
     SsamDTheme {
         NavigationContent(
             description = "이용약관",
-            onNavigateClick = {},
-            route = ""
+            onNavigateClick = { _, _ -> Unit },
+            route = "",
+            userId = 0
         )
     }
 }

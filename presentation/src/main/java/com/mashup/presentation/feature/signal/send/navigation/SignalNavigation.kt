@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.signal.send.navigation
 
+import androidx.compose.material.SnackbarDuration
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.mashup.presentation.feature.home.navigation.navigateToHome
@@ -37,6 +38,7 @@ fun NavController.navigateToSignalComplete(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.signalGraph(
     navController: NavController,
     onBackClick: () -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit
 ) {
     navigation(
         route = KeyLinkNavigationRoute.SignalGraph.route,
@@ -62,7 +64,7 @@ fun NavGraphBuilder.signalGraph(
                 content = backStackEntry.arguments?.getString("content") ?: "",
                 onBackClick = onBackClick,
                 onSendSuccess = navController::navigateToSignalComplete,
-                onSendFailed = {}
+                onShowSnackbar = onShowSnackbar
             )
         }
 

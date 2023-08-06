@@ -65,7 +65,7 @@ fun SignalCompleteScreen(
             text = stringResource(id = R.string.close),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 48.dp, start = 20.dp, end = 20.dp),
+                .padding(vertical = 12.dp, horizontal = 20.dp),
             backgroundColor = Gray02,
             contentColor = Gray06,
             enable = true,

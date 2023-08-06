@@ -1,14 +1,14 @@
 package com.mashup.presentation.feature.reply
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -27,40 +27,46 @@ private const val MAX_LENGTH = 300
 fun ReplyContent(
     reply: String,
     onReplyTextChange: (String) -> Unit,
-    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     onSendClick: () -> Unit,
     onLengthOver: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
-    val snackbarMessage = stringResource(R.string.snackbar_reply)
+
+    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = {
+                    focusManager.clearFocus()
+                })
+            }
     ) {
-        KeyLinkTextField(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1f),
-            value = reply,
-            onValueChange = { reply ->
-                if (reply.length >= MAX_LENGTH) onLengthOver()
-                else onReplyTextChange(reply)
-            },
-            hint = stringResource(id = R.string.hint_signal_content),
-            hintAlign = TextAlign.Start,
-            maxLength = 300
-        )
+        Box(
+            modifier = Modifier.weight(1f)
+        ) {
+            KeyLinkTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = reply,
+                onValueChange = { reply ->
+                    if (reply.length >= MAX_LENGTH) onLengthOver()
+                    else onReplyTextChange(reply)
+                },
+                hint = stringResource(id = R.string.hint_signal_content),
+                hintAlign = TextAlign.Start,
+                maxLength = 300
+            )
+        }
         KeyLinkButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 12.dp, horizontal = 20.dp)
-                .padding(bottom = 48.dp),
+                .padding(vertical = 12.dp, horizontal = 20.dp),
             text = stringResource(id = R.string.button_send_reply),
             onClick = {
-                onShowSnackbar(snackbarMessage, SnackbarDuration.Short)
+                focusManager.clearFocus()
                 onSendClick()
             },
             enable = reply.isNotEmpty()

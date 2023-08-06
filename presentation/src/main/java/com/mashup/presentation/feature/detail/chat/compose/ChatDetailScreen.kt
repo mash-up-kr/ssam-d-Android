@@ -1,5 +1,6 @@
 package com.mashup.presentation.feature.detail.chat.compose
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,10 +23,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.mashup.domain.exception.EmptyListException
+import com.mashup.domain.exception.KeyLinkException
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.detail.chat.model.ChatInfoUiModel
 import com.mashup.presentation.common.extension.isScrollingUp
-import com.mashup.presentation.feature.detail.ChatDetailViewModel
+import com.mashup.presentation.feature.detail.chat.ChatDetailViewModel
 import com.mashup.presentation.feature.detail.chat.model.ChatUiModel
 import com.mashup.presentation.ui.common.*
 import com.mashup.presentation.ui.theme.*
@@ -41,14 +44,17 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ChatDetailRoute(
-    roomId: Long,
     onBackClick: () -> Unit,
     onMessageClick: (Long, Long) -> Unit,
     onReportClick: () -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ChatDetailViewModel = hiltViewModel()
 ) {
     val chatInfoUiState by viewModel.chatInfoUiState.collectAsStateWithLifecycle()
+    val showErrorMessage by viewModel.showSnackbarMessage.collectAsStateWithLifecycle(
+        DisconnectRoomUiEvent.Idle
+    )
     val pagedChatList = viewModel.chatPagingData.collectAsLazyPagingItems()
     var isRefreshing by remember { mutableStateOf(false) }
     val pullRefreshState = rememberPullRefreshState(
@@ -59,12 +65,40 @@ fun ChatDetailRoute(
         })
 
     LaunchedEffect(Unit) {
-        launch { viewModel.getChatInfo(roomId) }
-        launch { viewModel.getChats(roomId) }
+        launch { viewModel.getChatInfo() }
     }
+
     LaunchedEffect(pagedChatList.loadState) {
         if (pagedChatList.loadState.refresh is LoadState.NotLoading)
             isRefreshing = false
+
+        if (pagedChatList.loadState.refresh is LoadState.Error) {
+            val e = pagedChatList.loadState.refresh as LoadState.Error
+            when (e.error) {
+                is KeyLinkException -> e.error.message?.let {
+                    onShowSnackbar(
+                        it,
+                        SnackbarDuration.Short
+                    )
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(showErrorMessage) {
+        when (showErrorMessage) {
+            is DisconnectRoomUiEvent.Disconnect -> {
+                onBackClick()
+            }
+            is DisconnectRoomUiEvent.Failure -> {
+                onShowSnackbar(
+                    (showErrorMessage as DisconnectRoomUiEvent.Failure).message.orEmpty(),
+                    SnackbarDuration.Short
+                )
+            }
+            else -> Unit
+        }
+
     }
 
     Box(
@@ -76,10 +110,10 @@ fun ChatDetailRoute(
             modifier = modifier,
             onBackClick = onBackClick,
             onMessageClick = { chatId ->
-                onMessageClick(roomId, chatId)
+                onMessageClick(viewModel.roomId, chatId)
             },
             onReportClick = onReportClick,
-            onDisconnectRoom = { viewModel.disconnectRoom(roomId) },
+            onDisconnectRoom = { viewModel.disconnectRoom() },
             chatInfoUiState = chatInfoUiState,
             pagedChatList = pagedChatList
         )
@@ -101,57 +135,57 @@ private fun ChatDetailScreen(
     chatInfoUiState: ChatInfoUiState,
     pagedChatList: LazyPagingItems<ChatUiModel>
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    var currentBottomSheetType by remember { mutableStateOf(BottomSheetType.MORE) }
-    val keywordBottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        animationSpec = SwipeableDefaults.AnimationSpec,
-        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
-        skipHalfExpanded = false
-    )
-    val chatMoreMenuBottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        animationSpec = SwipeableDefaults.AnimationSpec,
-        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
-        skipHalfExpanded = false
-    )
     val scrollState = rememberLazyGridState()
     val isScrollingUp = scrollState.isScrollingUp()
     var showDisconnectDialog by remember { mutableStateOf(false) }
+
+    val coroutineScope = rememberCoroutineScope()
+    var currentBottomSheetType by remember { mutableStateOf(BottomSheetType.CHAT_DETAIL_MORE) }
+
+    val modalBottomSheetState: ModalBottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        animationSpec = SwipeableDefaults.AnimationSpec,
+        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
+        skipHalfExpanded = false
+    )
 
     val matchedKeywords = when (chatInfoUiState) {
         is ChatInfoUiState.Success -> chatInfoUiState.chatInfoUiModel.matchedKeywords
         else -> emptyList()
     }
 
+    BackHandler(true) {
+        coroutineScope.launch {
+            if (modalBottomSheetState.isVisible) modalBottomSheetState.hide()
+            else onBackClick()
+        }
+    }
+
     KeyLinkBottomSheetLayout(
         bottomSheetContent = {
             when (currentBottomSheetType) {
-                BottomSheetType.KEYWORD -> KeyLinkKeywordBottomSheet(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                BottomSheetType.CHAT_DETAIL_KEYWORD -> KeyLinkKeywordBottomSheet(
+                    modifier = Modifier.fillMaxWidth(),
                     matchedKeywords = matchedKeywords
                 )
-                BottomSheetType.MORE -> KeyLinkChatBottomSheet(
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                BottomSheetType.CHAT_DETAIL_MORE -> KeyLinkChatBottomSheet(
+                    modifier = Modifier.fillMaxWidth(),
                     onDisconnectSignal = {
                         coroutineScope.launch {
-                            chatMoreMenuBottomSheetState.hide()
+                            modalBottomSheetState.hide()
                         }
                         showDisconnectDialog = true
-                     },
+                    },
                     onReportUser = {
-                        onReportClick()
+                        coroutineScope.launch {
+                            modalBottomSheetState.hide()
+                            onReportClick()
+                        }
                     }
                 )
             }
-
         },
-        modalSheetState = when (currentBottomSheetType) {
-            BottomSheetType.KEYWORD -> keywordBottomSheetState
-            BottomSheetType.MORE -> chatMoreMenuBottomSheetState
-        }
+        modalSheetState = modalBottomSheetState
     ) {
         Scaffold(
             modifier = modifier,
@@ -161,10 +195,10 @@ private fun ChatDetailScreen(
                     onClickBack = { onBackClick() },
                     menuAction = {
                         IconButton(onClick = {
-                            currentBottomSheetType = BottomSheetType.MORE
+                            currentBottomSheetType = BottomSheetType.CHAT_DETAIL_MORE
                             coroutineScope.launch {
-                                if (chatMoreMenuBottomSheetState.isVisible) chatMoreMenuBottomSheetState.hide()
-                                else chatMoreMenuBottomSheetState.show()
+                                if (modalBottomSheetState.isVisible) modalBottomSheetState.hide()
+                                else modalBottomSheetState.show()
                             }
                         }) {
                             Icon(
@@ -182,21 +216,21 @@ private fun ChatDetailScreen(
                 chatInfoUiState = chatInfoUiState,
                 pagedChatList = pagedChatList,
                 onChatItemClick = onMessageClick,
-                keywordBottomSheetState = keywordBottomSheetState,
+                modalBottomSheetState = modalBottomSheetState,
                 onChangeBottomSheetType = { currentBottomSheetType = it },
-                isMatchedKeywordVisible = isScrollingUp,
+                isScrollingUp = isScrollingUp,
                 scrollState = scrollState,
                 coroutineScope = coroutineScope
             )
         }
     }
+
     if (showDisconnectDialog) {
         KeyLinkDisconnectSignalDialog(
             onDismissRequest = {},
             onDisconnectClick = {
-                onDisconnectRoom()
-                onBackClick()
                 showDisconnectDialog = false
+                onDisconnectRoom()
             },
             onCloseClick = { showDisconnectDialog = false }
         )
@@ -210,9 +244,9 @@ private fun ChatDetailContent(
     chatInfoUiState: ChatInfoUiState,
     pagedChatList: LazyPagingItems<ChatUiModel>,
     onChatItemClick: (Long) -> Unit,
-    keywordBottomSheetState: ModalBottomSheetState,
+    modalBottomSheetState: ModalBottomSheetState,
     onChangeBottomSheetType: (BottomSheetType) -> Unit,
-    isMatchedKeywordVisible: Boolean,
+    isScrollingUp: Boolean,
     scrollState: LazyGridState,
     coroutineScope: CoroutineScope
 ) {
@@ -227,13 +261,15 @@ private fun ChatDetailContent(
             is ChatInfoUiState.Success -> {
                 ChatInfoContent(
                     chatInfoUiModel = chatInfoUiState.chatInfoUiModel,
-                    keywordBottomSheetState = keywordBottomSheetState,
+                    modalBottomSheetState = modalBottomSheetState,
                     onChangeBottomSheetType = onChangeBottomSheetType,
-                    isMatchedKeywordVisible = isMatchedKeywordVisible,
+                    isScrollingUp = isScrollingUp,
+                    fromSignalZone = chatInfoUiState.chatInfoUiModel.fromSignalZone(),
                     coroutineScope = coroutineScope
                 )
             }
-            is ChatInfoUiState.Failure -> { /* failure */ }
+            is ChatInfoUiState.Failure -> { /* failure */
+            }
         }
 
         Divider(color = Gray01)
@@ -252,35 +288,38 @@ private fun ChatDetailContent(
 private fun ChatInfoContent(
     modifier: Modifier = Modifier,
     chatInfoUiModel: ChatInfoUiModel,
-    keywordBottomSheetState: ModalBottomSheetState,
+    modalBottomSheetState: ModalBottomSheetState,
     onChangeBottomSheetType: (BottomSheetType) -> Unit,
-    isMatchedKeywordVisible: Boolean,
+    isScrollingUp: Boolean,
+    fromSignalZone: Boolean,
     coroutineScope: CoroutineScope
 ) {
     Column {
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp, bottom = 16.dp),
+                .padding(start = 20.dp, end = 20.dp),
         ) {
             OtherUserInfo(
                 modifier = Modifier.padding(bottom = 16.dp),
                 othersNickName = chatInfoUiModel.othersNickName,
                 othersProfileImage = chatInfoUiModel.othersProfileImage
             )
-            MatchedKeywords(
-                modifier = modifier
-                    .clickable {
-                        onChangeBottomSheetType(BottomSheetType.KEYWORD)
-                        coroutineScope.launch {
-                            if (keywordBottomSheetState.isVisible) keywordBottomSheetState.hide()
-                            else keywordBottomSheetState.show()
-                        }
-                    },
-                matchedKeywords = chatInfoUiModel.getMatchedKeywordSummery(),
-                visible = isMatchedKeywordVisible
-            )
-
+            if (!fromSignalZone) {
+                MatchedKeywords(
+                    modifier = modifier
+                        .padding(bottom = 16.dp)
+                        .clickable {
+                            onChangeBottomSheetType(BottomSheetType.CHAT_DETAIL_KEYWORD)
+                            coroutineScope.launch {
+                                if (modalBottomSheetState.isVisible) modalBottomSheetState.hide()
+                                else modalBottomSheetState.show()
+                            }
+                        },
+                    matchedKeywords = chatInfoUiModel.getMatchedKeywordSummery(),
+                    visible = isScrollingUp
+                )
+            }
         }
         if (!chatInfoUiModel.isAlive) {
             Box(
@@ -303,5 +342,5 @@ private fun ChatInfoContent(
 }
 
 enum class BottomSheetType {
-    KEYWORD, MORE
+    CHAT_DETAIL_KEYWORD, CHAT_DETAIL_MORE
 }

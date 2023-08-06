@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 class GetChatInfoUseCase @Inject constructor(
     private val chatRepository: ChatRepository
-) : FlowUseCase<Long, ChatInfo>() {
+) : FlowUseCase<Long, Result<ChatInfo?>>() {
 
-    override fun invoke(param: Long): Flow<ChatInfo> {
+    override fun invoke(param: Long): Flow<Result<ChatInfo?>> {
         return chatRepository.getChatInfo(param)
     }
 }

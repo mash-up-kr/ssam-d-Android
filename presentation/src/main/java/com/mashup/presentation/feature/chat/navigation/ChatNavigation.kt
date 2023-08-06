@@ -3,6 +3,7 @@ package com.mashup.presentation.feature.chat.navigation
 import androidx.compose.material.SnackbarDuration
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import com.mashup.presentation.BottomSheetType
 import com.mashup.presentation.feature.chat.compose.ChatRoute
 import com.mashup.presentation.feature.detail.chat.compose.ChatDetailRoute
 import com.mashup.presentation.feature.detail.chat.navigation.navigateToChatRoomDetail
@@ -31,6 +32,7 @@ fun NavGraphBuilder.chatRoomGraph(
     navController: NavController,
     onBackClick: () -> Unit,
     onShowSnackbar: (String, SnackbarDuration) -> Unit,
+    onShowBottomSheet: (BottomSheetType) -> Unit
 ) {
     navigation(
         route = KeyLinkNavigationRoute.ChatRoomGraph.route,
@@ -38,55 +40,62 @@ fun NavGraphBuilder.chatRoomGraph(
     ) {
         composable(route = KeyLinkNavigationRoute.ChatRoomGraph.ChatRoomRoute.route) {
             ChatRoute(
+                onBackClick = onBackClick,
                 onEmptyScreenButtonClick = navController::navigateToSignal,
-                onChatRoomClick = navController::navigateToChatRoomDetail
+                onChatRoomClick = navController::navigateToChatRoomDetail,
+                onShowBottomSheet = onShowBottomSheet,
+                onShowSnackbar = onShowSnackbar
             )
         }
         composable(
             route = KeyLinkNavigationRoute.ChatRoomGraph.ChatRoomDetailRoute.route,
             arguments = listOf(
                 navArgument("roomId") {
-                    type = NavType.StringType
+                    type = NavType.LongType
                 }
             )
         ) { entry ->
             ChatDetailRoute(
-                roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
                 onBackClick = onBackClick,
                 onMessageClick = navController::navigateToChatDetail,
-                onReportClick = navController::navigateToChatReport
+                onReportClick = navController::navigateToChatReport,
+                onShowSnackbar = onShowSnackbar
             )
         }
         composable(route = KeyLinkNavigationRoute.ChatRoomGraph.ChatDetailRoute.route,
             arguments = listOf(
                 navArgument("roomId") {
-                    type = NavType.StringType
+                    type = NavType.LongType
                 },
                 navArgument("chatId") {
-                    type = NavType.StringType
+                    type = NavType.LongType
                 }
             )
         ) { entry ->
             MessageDetailRoute(
-                roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
-                chatId = entry.arguments?.getString("chatId")?.toLong() ?: -1,
+                chatId = entry.arguments?.getLong("chatId") ?: -1,
                 onBackClick = onBackClick,
                 onReportMenuClick = navController::navigateToChatReport,
-                onReplyButtonClick = navController::navigateToChatReply
+                onReplyButtonClick = {
+                    val roomId = entry.arguments?.getLong("roomId") ?: -1
+                    navController.navigateToChatReply(roomId)
+                },
+                onShowSnackbar = onShowSnackbar
             )
         }
         composable(
             route = KeyLinkNavigationRoute.ChatRoomGraph.ChatReplyRoute.route,
             arguments = listOf(
                 navArgument("roomId") {
-                    type = NavType.StringType
+                    type = NavType.LongType
                 }
             )
         ) { entry ->
             ChatReplyRoute(
-                roomId = entry.arguments?.getString("roomId")?.toLong() ?: -1,
                 onClickBack = onBackClick,
-                navigateToChat = { roomId ->
+                navigateToChat = {
+                    val roomId = entry.arguments?.getLong("roomId") ?: -1
+
                     navController.navigateToChatRoomDetail(
                         roomId = roomId,
                         navOptions {

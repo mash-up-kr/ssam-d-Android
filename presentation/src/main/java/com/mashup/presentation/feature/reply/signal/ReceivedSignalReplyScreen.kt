@@ -42,7 +42,7 @@ fun ReceivedSignalReplyRoute(
             SendReplySuccess -> navigateToHome()
             is SendReplyFailed -> {
                 onShowSnackbar(
-                    (event as SendReplyFailed).message ?: "",
+                    (event as SendReplyFailed).message.orEmpty(),
                     SnackbarDuration.Short
                 )
             }
@@ -57,7 +57,6 @@ fun ReceivedSignalReplyRoute(
         onSendClick = {
             viewModel.sendReceivedSignalReply(signalId, reply)
         },
-        onShowSnackbar = onShowSnackbar,
         modifier = modifier
     )
 }
@@ -68,7 +67,6 @@ private fun ReceivedSignalReplyScreen(
     onReplyTextChange: (String) -> Unit,
     onClickBack: () -> Unit,
     onSendClick: () -> Unit,
-    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showGoBackDialog by rememberSaveable { mutableStateOf(false) }
@@ -100,7 +98,6 @@ private fun ReceivedSignalReplyScreen(
             onReplyTextChange = onReplyTextChange,
             onSendClick = onSendClick,
             onLengthOver = { showLengthOverDialog = true },
-            onShowSnackbar = onShowSnackbar
         )
 
         if (showGoBackDialog) {

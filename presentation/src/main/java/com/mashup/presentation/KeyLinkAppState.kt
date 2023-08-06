@@ -1,13 +1,7 @@
 package com.mashup.presentation
 
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -16,7 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.mashup.presentation.feature.chat.navigation.navigateToChatRoom
 import com.mashup.presentation.feature.home.navigation.navigateToHome
-import com.mashup.presentation.feature.signal.send.navigation.navigateToSignal
+import com.mashup.presentation.feature.signalzone.navigation.navigateToSignalZone
 import com.mashup.presentation.navigation.KeyLinkNavigationRoute
 import com.mashup.presentation.navigation.TopLevelDestination
 import kotlinx.coroutines.CoroutineScope
@@ -28,18 +22,26 @@ import kotlinx.coroutines.launch
  * @created 2023/07/04
  */
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun rememberKeyLinkAppState(
     navController: NavHostController = rememberNavController(),
     scaffoldState: ScaffoldState = rememberScaffoldState(
         snackbarHostState = remember { SnackbarHostState() }
     ),
+    modalBottomSheetState: ModalBottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        animationSpec = SwipeableDefaults.AnimationSpec,
+        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
+        skipHalfExpanded = false
+    ),
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ): KeyLinkAppState {
-    return remember(navController, scaffoldState, coroutineScope) {
+    return remember(navController, scaffoldState, modalBottomSheetState, coroutineScope) {
         KeyLinkAppState(
             navController,
             scaffoldState,
+            modalBottomSheetState,
             coroutineScope
         )
     }
@@ -54,9 +56,10 @@ fun rememberKeyLinkAppState(
  * 5. ...
  */
 @Stable
-class KeyLinkAppState(
+class KeyLinkAppState @OptIn(ExperimentalMaterialApi::class) constructor(
     val navController: NavHostController,
     val scaffoldState: ScaffoldState,
+    val modalBottomSheetState: ModalBottomSheetState,
     val coroutineScope: CoroutineScope
 ) {
     val currentDestination: NavDestination?
@@ -72,10 +75,20 @@ class KeyLinkAppState(
             )
         }
     }
+
+    @OptIn(ExperimentalMaterialApi::class)
+    fun showBottomSheet() {
+        coroutineScope.launch {
+            if (modalBottomSheetState.isVisible) modalBottomSheetState.hide()
+            else modalBottomSheetState.show()
+        }
+    }
+
     @Composable
     fun isBottomBarVisible(): Boolean {
         return when (currentDestination?.route) {
             KeyLinkNavigationRoute.HomeGraph.HomeRoute.route,
+            KeyLinkNavigationRoute.SignalZoneGraph.SignalZoneRoute.route,
             KeyLinkNavigationRoute.ChatRoomGraph.ChatRoomRoute.route -> true
             else -> false
         }
@@ -95,7 +108,7 @@ class KeyLinkAppState(
         }
         when (topLevelDestination) {
             TopLevelDestination.HOME -> navController.navigateToHome(topLevelNavOptions)
-            TopLevelDestination.SIGNAL -> navController.navigateToSignal(topLevelNavOptions)
+            TopLevelDestination.SIGNAL_ZONE -> navController.navigateToSignalZone(topLevelNavOptions)
             TopLevelDestination.CHAT_ROOM -> navController.navigateToChatRoom(topLevelNavOptions)
         }
     }
