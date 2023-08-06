@@ -9,7 +9,7 @@ import com.mashup.domain.model.chat.Room
 
 interface ChatRepository {
 
-    fun getChatInfo(id: Long): Flow<ChatInfo>
+    fun getChatInfo(id: Long): Flow<Result<ChatInfo?>>
 
     fun getChats(id: Long): Flow<PagingData<Chat>>
 

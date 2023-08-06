@@ -36,7 +36,7 @@ sealed class MessageReplyUiEvent {
     object Idle: MessageReplyUiEvent()
     object SaveSuccess: MessageReplyUiEvent()
     data class Failure(
-        val message: String?
+        val message: String
     ): MessageReplyUiEvent()
 }
 
