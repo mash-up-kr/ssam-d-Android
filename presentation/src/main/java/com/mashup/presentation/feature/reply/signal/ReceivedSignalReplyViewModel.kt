@@ -2,6 +2,7 @@ package com.mashup.presentation.feature.reply.signal
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mashup.domain.exception.KeyLinkException
 import com.mashup.domain.usecase.ReceivedSignalReplyParams
 import com.mashup.domain.usecase.SendReceivedSignalReplyUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,8 +36,12 @@ class ReceivedSignalReplyViewModel @Inject constructor(
                 .onSuccess {
                     _eventFlow.emit(SendReplySuccess)
                 }
-                .onFailure {
-                    _eventFlow.emit(SendReplyFailed(it.message))
+                .onFailure { exception ->
+                    when (exception) {
+                        is KeyLinkException -> {
+                            _eventFlow.emit(SendReplyFailed(exception.message))
+                        }
+                    }
                 }
         }
     }
