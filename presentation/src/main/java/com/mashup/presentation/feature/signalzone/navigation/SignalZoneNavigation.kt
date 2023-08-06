@@ -53,7 +53,8 @@ fun NavGraphBuilder.signalZoneGraph(
                 crashId = crashId,
                 onBackClick = onBackClick,
                 onReportMenuClick = navController::navigateToCrashReport,
-                onReplyButtonClick = navController::navigateToCrashReply
+                onReplyButtonClick = navController::navigateToCrashReply,
+                onShowSnackbar = onShowSnackbar,
             )
         }
         composable(

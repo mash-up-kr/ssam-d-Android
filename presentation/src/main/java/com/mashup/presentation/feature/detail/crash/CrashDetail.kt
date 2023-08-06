@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mashup.presentation.R
 import com.mashup.presentation.feature.detail.message.compose.MessageInfo
+import com.mashup.presentation.feature.reply.crash.CrashReplyUiEvent
 import com.mashup.presentation.ui.common.KeyLinkLoading
 import com.mashup.presentation.ui.common.KeyLinkRoundButton
 import com.mashup.presentation.ui.common.KeyLinkToolbar
@@ -41,6 +43,7 @@ fun CrashDetailRoute(
     onBackClick: () -> Unit,
     onReportMenuClick: () -> Unit,
     onReplyButtonClick: (Long) -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CrashDetailViewModel = hiltViewModel()
 ) {
@@ -57,6 +60,7 @@ fun CrashDetailRoute(
         onReplyButtonClick = {
             onReplyButtonClick(crashId)
         },
+        onShowSnackbar = onShowSnackbar,
         crashDetailUiState = crashDetailUiState
     )
 }
@@ -66,6 +70,7 @@ fun CrashDetailScreen(
     onBackClick: () -> Unit,
     onReportMenuClick: () -> Unit,
     onReplyButtonClick: (Long) -> Unit,
+    onShowSnackbar: (String, SnackbarDuration) -> Unit,
     modifier: Modifier = Modifier,
     crashDetailUiState: CrashDetailUiState
 ) {
@@ -87,7 +92,6 @@ fun CrashDetailScreen(
                         contentDescription = stringResource(R.string.content_description_report)
                     )
                 }
-
             )
         },
     ) { paddingValues ->
@@ -104,7 +108,11 @@ fun CrashDetailScreen(
                     onReplyButtonClick = onReplyButtonClick
                 )
             }
-            is CrashDetailUiState.Error -> {}
+            is CrashDetailUiState.Error -> {
+                crashDetailUiState.message?.let {
+                    onShowSnackbar(it, SnackbarDuration.Short)
+                }
+            }
         }
     }
 }
