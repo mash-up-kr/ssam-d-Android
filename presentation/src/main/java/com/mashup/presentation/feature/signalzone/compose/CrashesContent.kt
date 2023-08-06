@@ -75,6 +75,7 @@ fun CrashCard(
                 borderRadius = 28.pxToDp().dp,
                 shadowRadius = 20.pxToDp().dp
             )
+            .fillMaxWidth()
             .background(shape = RoundedCornerShape(12.dp), color = Black.copy(alpha = 0.6f))
             .clickable { onCardClick(crash.crashId) }
     ) {
