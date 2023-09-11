@@ -57,52 +57,6 @@
 
 - Kotlin DSL과 buildSrc를 이용하여 종속성을 관리하고 있습니다.
 
-## Features
-
-> feature 1
-> 
-
-<div align="center">
-
-| description1 | description2 | description3 |
-| --- | --- | --- |
-| <img src="" align="center" width="300px"/> | <img src="p" align="center" width="300px"/> | <img src="p" align="center" width="300px"/> |
-
-</div>
-
-> feature 2
-> 
-
-<div align="center">
-
-| description1 | description2 | description3 |
-| --- | --- | --- |
-| <img src="" align="center" width="300px"/> | <img src="p" align="center" width="300px"/> | <img src="p" align="center" width="300px"/> |
-
-</div>
-
-> feature 3
-> 
-
-<div align="center">
-
-| description1 | description2 | description3 |
-| --- | --- | --- |
-| <img src="" align="center" width="300px"/> | <img src="p" align="center" width="300px"/> | <img src="p" align="center" width="300px"/> |
-
-</div>
-
-> feature 4
-> 
-
-<div align="center">
-
-| description1 | description2 | description3 |
-| --- | --- | --- |
-| <img src="" align="center" width="300px"/> | <img src="p" align="center" width="300px"/> | <img src="p" align="center" width="300px"/> |
-
-</div>
-
 ## Architecture
 
 키링(KeyLink)은 MVVM 기반의 클린 아키텍처 구조로 설계되어있습니다. <br>
